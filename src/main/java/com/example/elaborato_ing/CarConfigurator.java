@@ -3,8 +3,11 @@ package com.example.elaborato_ing;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class CarConfigurator extends Application {
@@ -116,6 +119,17 @@ public class CarConfigurator extends Application {
         });
 
         grid.add(createQuoteButton, 0, 5);
+
+        // Creazione dell'icona del carrello
+        Canvas cartIcon = new Canvas(30, 30);
+        GraphicsContext gc = cartIcon.getGraphicsContext2D();
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0, 0, 30, 30); // Rettangolo nero
+        gc.setFill(Color.WHITE);
+        gc.fillText("Carrello", 5, 20); // Testo "Carrello" posizionato correttamente
+
+        // Aggiungi l'icona del carrello al layout principale
+        grid.add(cartIcon, 2, 5);
 
         // Creazione della scena e visualizzazione della finestra
         Scene scene = new Scene(grid, 400, 300);
