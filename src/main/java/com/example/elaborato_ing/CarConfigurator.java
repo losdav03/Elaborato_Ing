@@ -1,4 +1,5 @@
 package com.example.elaborato_ing;
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -7,6 +8,9 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class CarConfigurator extends Application {
+    private String selectedModel;
+    private double totalPrice;
+    private String pickupLocation;
 
     @Override
     public void start(Stage primaryStage) {
@@ -42,10 +46,10 @@ public class CarConfigurator extends Application {
 
         // Evento per calcolare il prezzo totale
         calculatePriceButton.setOnAction(event -> {
-            double totalPrice = 0;
+            totalPrice = 0;
 
             // Calcolo del prezzo in base ai modelli e agli optional selezionati
-            String selectedModel = modelComboBox.getValue();
+            selectedModel = modelComboBox.getValue();
             if (selectedModel != null) {
                 // Calcola il prezzo del modello
                 totalPrice += calculateModelPrice(selectedModel);
@@ -64,7 +68,57 @@ public class CarConfigurator extends Application {
             totalPriceLabel.setText("Prezzo Totale: " + totalPrice);
         });
 
-        Scene scene = new Scene(grid, 400, 200);
+        // Visualizzazione delle sedi disponibili per il ritiro dell'auto
+        Label pickupLocationLabel = new Label("Sede di Ritiro:");
+        ComboBox<String> pickupLocationComboBox = new ComboBox<>();
+        pickupLocationComboBox.getItems().addAll("Sede 1", "Sede 2", "Sede 3"); // Aggiungere le sedi disponibili per il ritiro
+
+        // Layout per la visualizzazione delle sedi di ritiro
+        GridPane pickupLocationGrid = new GridPane();
+        pickupLocationGrid.setPadding(new Insets(20));
+        pickupLocationGrid.setHgap(10);
+        pickupLocationGrid.setVgap(10);
+
+        pickupLocationGrid.add(pickupLocationLabel, 0, 0);
+        pickupLocationGrid.add(pickupLocationComboBox, 1, 0);
+
+        // Evento per memorizzare la sede di ritiro selezionata
+        pickupLocationComboBox.setOnAction(event -> {
+            pickupLocation = pickupLocationComboBox.getValue();
+        });
+
+        // Aggiungi il layout delle sedi di ritiro al layout principale
+        grid.add(pickupLocationGrid, 0, 4);
+
+        // Evento per creare il preventivo
+        Button createQuoteButton = new Button("Crea Preventivo");
+        createQuoteButton.setOnAction(actionEvent -> {
+
+            // Controllo se è stato selezionato un modello
+            if (selectedModel == null) {
+                showAlert("Errore", "Selezionare un modello di auto.");
+                return;
+            }
+
+            // Controllo se è stata selezionata una sede di ritiro
+            if (pickupLocation == null) {
+                showAlert("Errore", "Selezionare una sede di ritiro dell'auto.");
+                return;
+            }
+
+            // Qui verrà implementata la logica per creare il preventivo
+            String quoteDetails = "Modello: " + selectedModel + "\n" +
+                    "Prezzo Totale: " + totalPrice + "\n" +
+                    "Sede di Ritiro: " + pickupLocation;
+
+            // Esempio: visualizzazione del preventivo in una finestra di dialogo
+            showAlert("Preventivo", quoteDetails);
+        });
+
+        grid.add(createQuoteButton, 0, 5);
+
+        // Creazione della scena e visualizzazione della finestra
+        Scene scene = new Scene(grid, 400, 300);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -93,8 +147,16 @@ public class CarConfigurator extends Application {
         };
     }
 
+    // Metodo per mostrare una finestra di dialogo con un messaggio
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
 }
-
