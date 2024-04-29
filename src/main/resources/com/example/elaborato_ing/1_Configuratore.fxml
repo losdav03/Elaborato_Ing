@@ -22,6 +22,9 @@
 
     <Label text="Modello:" />
     <ComboBox fx:id="modelloComboBox" />
+    <!-- Aggiungi altri optional qui -->
+
+    <Button onAction="#calcolaPrezzo" text="Calcola Prezzo" textAlignment="CENTER" />
 
     <Label text="Colore:" />
     <ComboBox fx:id="coloreComboBox">
@@ -38,7 +41,4 @@
     <Label text="Optional:" />
     <CheckBox fx:id="climatizzatoreCheckBox" text="Climatizzatore" />
     <CheckBox fx:id="cerchiInLegaCheckBox" text="Cerchi in lega" />
-    <!-- Aggiungi altri optional qui -->
-
-    <Button onAction="#calcolaPrezzo" text="Calcola Prezzo" />
 </VBox>
