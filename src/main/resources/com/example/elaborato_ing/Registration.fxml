@@ -7,7 +7,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.LoginController">
 
     <!-- Immagine di sfondo -->
-    <ImageView fitHeight="441.0" fitWidth="608.0" layoutX="-5.0">
+    <ImageView fitHeight="400.0" fitWidth="608.0" layoutX="-5.0">
         <Image url="@sfondoLogin.jpeg" />
     </ImageView>
 
@@ -31,7 +31,7 @@
     <PasswordField fx:id="passwordField" layoutX="199.0" layoutY="288.0" prefWidth="200" />
 
     <!-- Pulsante Registrati -->
-    <Button layoutX="249.0" layoutY="327.0" prefWidth="100" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Registrati" />
+    <Button layoutX="249.0" layoutY="327.0" onAction="#registrati" prefWidth="100" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Registrati" />
 
     <!-- Link per tornare al login -->
     <Hyperlink layoutX="226.0" layoutY="363.0" onAction="#goToLogin" style="-fx-font-size: 12px; -fx-text-fill: white;" text="Hai già un account? Login" />
