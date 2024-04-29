@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox pickOnBounds="false" prefHeight="219.0" prefWidth="471.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="1_Configuratore">
+    <Label text="Configuratore Auto" />
+
+    <Label text="Marca:" />
+    <ComboBox fx:id="marcaComboBox">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Fiat" />
+                <String fx:value="Ford" />
+                <String fx:value="Toyota" />
+                <!-- Aggiungi altre marche qui -->
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Label text="Modello:" />
+    <ComboBox fx:id="modelloComboBox" />
+
+    <Label text="Colore:" />
+    <ComboBox fx:id="coloreComboBox">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Bianco" />
+                <String fx:value="Nero" />
+                <String fx:value="Rosso" />
+                <!-- Aggiungi altri colori qui -->
+            </FXCollections>
+        </items>
+    </ComboBox>
+
+    <Label text="Optional:" />
+    <CheckBox fx:id="climatizzatoreCheckBox" text="Climatizzatore" />
+    <CheckBox fx:id="cerchiInLegaCheckBox" text="Cerchi in lega" />
+    <!-- Aggiungi altri optional qui -->
+
+    <Button onAction="#calcolaPrezzo" text="Calcola Prezzo" />
+</VBox>
