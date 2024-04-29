@@ -24,7 +24,7 @@
     <ComboBox fx:id="modelloComboBox" layoutX="14.0" layoutY="128.0" />
 
     <Label layoutX="14.0" layoutY="165.0" text="Colore:" />
-    <ComboBox fx:id="coloreComboBox" layoutX="14.0" layoutY="186.0">
+    <ComboBox fx:id="coloreComboBox" layoutX="10.0" layoutY="188.0">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Bianco" />
