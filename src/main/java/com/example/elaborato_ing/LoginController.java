@@ -27,7 +27,7 @@ public class LoginController {
         stage.setScene(scene);
         stage.show();
     }
-
+    @FXML
     public void goToLogin(ActionEvent event) throws IOException {
         // Carica il file FXML della pagina di registrazione
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
