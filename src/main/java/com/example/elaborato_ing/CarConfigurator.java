@@ -12,13 +12,12 @@ import javafx.stage.Stage;
 
 public class CarConfigurator extends Application {
     private String selectedModel;
-    private double totalPrice;//taoal
-    private String pickupLocation;
-
+    private double totalPrice;
+    private String pickupLocation; //prafafw
+// csdjasdhsdhshdahas
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Configuratore Auto");
-
 
         //CIAOooo
         // Creazione dei componenti UI
