@@ -19,6 +19,8 @@ public class CarConfigurator extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Configuratore Auto");
 
+
+        //CIAOooo
         // Creazione dei componenti UI
         Label modelLabel = new Label("Modello:");
         ComboBox<String> modelComboBox = new ComboBox<>();
