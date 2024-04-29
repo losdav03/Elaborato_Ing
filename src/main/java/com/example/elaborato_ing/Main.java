@@ -6,27 +6,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class MainProva extends Application {
 
-    @Override
+public class Main extends Application {
+
+
     public void start(Stage primaryStage) throws Exception {
-        // Carica il file FXML della finestra di login
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-
-        // Crea la scena
+        primaryStage.setTitle("JavaFX App with FXML and CSS");
         Scene scene = new Scene(root);
-
-        // Imposta il titolo della finestra
-        primaryStage.setTitle("Login");
-
-        // Imposta la scena nella finestra
         primaryStage.setScene(scene);
-
-        // Mostra la finestra
         primaryStage.show();
     }
 
     public static void main(String[] args) {
+
         launch(args);
     }
 }
