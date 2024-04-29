@@ -16,6 +16,7 @@ public class CarConfigurator extends Application {
     private String pickupLocation;
 
     @Override
+    //CIAO
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Configuratore Auto");
 
