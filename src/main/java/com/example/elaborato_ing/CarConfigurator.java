@@ -1,4 +1,4 @@
-package com.example.elaborato_ing;
+/*package com.example.elaborato_ing;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -175,3 +175,4 @@ public class CarConfigurator extends Application {
         launch(args);
     }
 }
+*/
