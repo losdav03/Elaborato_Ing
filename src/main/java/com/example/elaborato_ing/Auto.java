@@ -3,7 +3,6 @@ package com.example.elaborato_ing;
 import javafx.scene.image.Image;
 
 import java.util.List;
-import java.util.Optional;
 
 public class Auto {
     private String id;
