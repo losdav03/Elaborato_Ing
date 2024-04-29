@@ -7,17 +7,21 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class MainProva extends Application {
-
-        public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
+        try {
             Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-            primaryStage.setTitle("JavaFX App with FXML and CSS");
             Scene scene = new Scene(root);
+            primaryStage.setTitle("JavaFX App with FXML and CSS");
             primaryStage.setScene(scene);
             primaryStage.show();
-        }
-
-        public static void main(String[] args) {
-            launch(args);
+        } catch (Exception e) {
+            System.err.println("Errore durante il caricamento della scena: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
 
