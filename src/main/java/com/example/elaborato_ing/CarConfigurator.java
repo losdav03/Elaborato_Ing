@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class CarConfigurator extends Application {
     private String selectedModel;
-    private double totalPrice;
+    private double totalPrice;//taoal
     private String pickupLocation;
 
     @Override
