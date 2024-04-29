@@ -14,7 +14,7 @@ public class LoginController {
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
         // Carica il file FXML della pagina di registrazione
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Registrazione.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Registration.fxml"));
         Parent root = loader.load();
 
         // Crea la scena
@@ -27,7 +27,7 @@ public class LoginController {
         stage.setScene(scene);
         stage.show();
     }
-
+    @FXML
     public void goToLogin(ActionEvent event) throws IOException {
         // Carica il file FXML della pagina di registrazione
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));

@@ -24,7 +24,7 @@
     <PasswordField fx:id="passwordField" layoutX="214.0" layoutY="211.0" prefWidth="200" />
 
     <!-- Pulsante Accedi -->
-    <Button layoutX="251.0" layoutY="290.0" onAction="#login" prefWidth="100" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Accedi" />
+    <Button layoutX="251.0" layoutY="290.0" prefWidth="100" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Accedi" />
 
     <!-- Link per la registrazione -->
     <Hyperlink layoutX="274.0" layoutY="327.0" onAction="#goToRegistration" style="-fx-font-size: 12px; -fx-text-fill: white;" text="Register" />
