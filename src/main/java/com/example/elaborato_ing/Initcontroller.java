@@ -36,6 +36,7 @@ public class Initcontroller {
         prezzo.setText(vuota);
 
         marca.setOnAction(e -> aggiornaModello());
+        img.setImage(new Image("com/example/elaborato_ing/car.png"));
     }
 
     private void aggiornaModello() {
