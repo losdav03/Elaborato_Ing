@@ -50,7 +50,7 @@ public class Initcontroller {
     }
 
     private void aggiornaModello() {
-        String marcaS = (String)marca.getValue();
+        String marcaS = marca.getValue();
         if(marcaS!=null){
             modello.setDisable(false);
             modello.getItems().clear();
