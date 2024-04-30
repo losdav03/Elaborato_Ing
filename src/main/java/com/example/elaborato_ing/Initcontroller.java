@@ -62,8 +62,12 @@ public class Initcontroller {
     public void setImage(ActionEvent actionEvent) {
         String marcaS = marca.getValue();
         String modelloS = modello.getValue();
-
-
+         /*if (marcaS != null && modelloS != null) {
+            String path = "/com/example/elaborato_ing/images/" + marcaS+ modelloS + ".jpg";
+            Image newImage = new Image(path, true);
+            img.setImage(newImage);
+        }
+*/
         try {
             img.setImage(new Image(""));
             img.setFitWidth(250);
