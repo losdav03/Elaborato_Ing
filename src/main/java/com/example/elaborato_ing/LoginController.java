@@ -16,7 +16,7 @@ import java.io.*;
 public class LoginController {
 
     @FXML
-    private TextField usernameField;
+    private TextField emailField;
     @FXML
     private PasswordField passwordField;
     @FXML
@@ -36,7 +36,7 @@ public class LoginController {
 
     @FXML
     public void accedi(ActionEvent event) {
-        String username = usernameField.getText();
+        String username = emailField.getText();
         String password = passwordField.getText();
 
         try {
@@ -73,17 +73,21 @@ public class LoginController {
     }
 
     public void registrati(ActionEvent actionEvent) {
-        String name = nameField.getText();
-        String surname = surnameField.getText();
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+
+        Cliente cliente = new Cliente(emailField.getText(), nameField.getText(), surnameField.getText(), passwordField.getText(), 1);
 
 
-        if (name != null && name.length() > 0 && surname != null && surname.length() > 0 && username != null && username.length() > 0 && password != null && password.length() > 0) {
+        if (cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0 && cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0) {
             // Apertura del file in modalità append
             try (FileWriter writer = new FileWriter("C:\\Users\\dlosc\\IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile", true)) {
                 // Scrivi i dati dell'utente nel file, separati da virgole
-                writer.write(username + "," + name + "," + surname + "," + password + "\n");
+                writer.write(cliente.getEmail() + "," + cliente.getNome() + "," + cliente.getCognome() + "," + cliente.getPassword() + "\n");
+
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Successo");
+                alert.setHeaderText("Registrazione avvenuta con successo");
+                alert.setContentText("Messaggio dettagliato sull'errore.");
+                alert.showAndWait();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

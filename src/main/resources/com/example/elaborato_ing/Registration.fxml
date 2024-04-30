@@ -24,7 +24,7 @@
 
     <!-- Username -->
     <Label layoutX="120.0" layoutY="241.0" style="-fx-font-size: 14px; -fx-text-fill: white;" text="Username:" />
-    <TextField fx:id="usernameField" layoutX="200.0" layoutY="238.0" prefWidth="200" />
+    <TextField fx:id="emailField" layoutX="200.0" layoutY="238.0" prefWidth="200" />
 
     <!-- Password -->
     <Label layoutX="115.0" layoutY="291.0" style="-fx-font-size: 14px; -fx-text-fill: white;" text="Password:" />
