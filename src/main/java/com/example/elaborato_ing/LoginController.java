@@ -70,7 +70,7 @@ public class LoginController {
             System.err.println("Errore durante la lettura del file di login: " + e.getMessage());
         }
     }
-
+@FXML
     private boolean autenticato(String username, String password) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("LoginFile.txt"))) {
             String line;
