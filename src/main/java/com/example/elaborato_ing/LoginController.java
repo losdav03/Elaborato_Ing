@@ -60,7 +60,7 @@ public class LoginController {
     }
 
     private boolean autenticato(String username, String password) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parti = line.split(",");
@@ -79,7 +79,7 @@ public class LoginController {
 
         if (cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0 && cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0) {
             // Apertura del file in modalità append
-            try (FileWriter writer = new FileWriter("IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile", true)) {
+            try (FileWriter writer = new FileWriter("src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile.txt", true)) {
                 // Scrivi i dati dell'utente nel file, separati da virgole
                 writer.write(cliente.getEmail() + "," + cliente.getNome() + "," + cliente.getCognome() + "," + cliente.getPassword() + "\n");
 
