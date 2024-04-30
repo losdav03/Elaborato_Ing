@@ -59,7 +59,7 @@ public class LoginController {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        boolean authenticated = authenticate(username, password);
+        boolean authenticated = autenticato(username, password);
         if (authenticated) {
             System.out.println("Login successful!");
         } else
@@ -81,7 +81,7 @@ public class LoginController {
         stage.show();
     }
 
-    private boolean authenticate(String username, String password) {
+    private boolean autenticato(String username, String password) {
 
     }
 
