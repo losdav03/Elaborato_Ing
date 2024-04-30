@@ -63,7 +63,7 @@ public class Initcontroller {
 
 
         try {
-            img.setImage(new Image("@car.png"));
+            img.setImage(new Image(""));
             img.setFitWidth(250);
             img.setFitHeight(350);
         } catch (IllegalArgumentException | NullPointerException e) {
