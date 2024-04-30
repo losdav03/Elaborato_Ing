@@ -5,13 +5,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class LoginController {
 
@@ -19,39 +19,19 @@ public class LoginController {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private TextField nameField;
+    @FXML
+    private TextField surnameField;
 
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
-        // Carica il file FXML della pagina di registrazione
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Registration.fxml"));
-        Parent root = loader.load();
-
-        // Crea la scena
-        Scene scene = new Scene(root);
-
-        // Ottieni il palcoscenico corrente
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-        // Imposta la nuova scena
-        stage.setScene(scene);
-        stage.show();
+        loadScene("Registration.fxml", event);
     }
 
     @FXML
     private void goToLogin(ActionEvent event) throws IOException {
-        // Carica il file FXML della pagina di login
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
-        Parent root = loader.load();
-
-        // Crea la scena
-        Scene scene = new Scene(root);
-
-        // Ottieni il palcoscenico corrente
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-
-        // Imposta la nuova scena
-        stage.setScene(scene);
-        stage.show();
+        loadScene("Login.fxml", event);
     }
 
     @FXML
@@ -66,27 +46,60 @@ public class LoginController {
                 System.out.println("Credenziali non valide.");
             }
         } catch (IOException e) {
-
             System.err.println("Errore durante la lettura del file di login: " + e.getMessage());
         }
     }
-@FXML
+
+    private void loadScene(String fxmlFile, ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
+
     private boolean autenticato(String username, String password) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("LoginFile.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\dlosc\\IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 4) {
-                    String storedUsername = parts[0];
-                    String storedPassword = parts[3];
-                    if (storedUsername.equals(username) && storedPassword.equals(password)) {
-                        return true;
-                    }
+                String[] parti = line.split(",");
+                if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
+                    return true;
                 }
             }
-        } catch (IOException e){
-            e.printStackTrace();
         }
         return false;
+    }
+
+    public void registrati(ActionEvent actionEvent) {
+        String name = nameField.getText();
+        String surname = surnameField.getText();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+
+        if (name != null && name.length() > 0 && surname != null && surname.length() > 0 && username != null && username.length() > 0 && password != null && password.length() > 0) {
+            // Apertura del file in modalità append
+            try (FileWriter writer = new FileWriter("C:\\Users\\dlosc\\IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile", true)) {
+                // Scrivi i dati dell'utente nel file, separati da virgole
+                writer.write(username + "," + name + "," + surname + "," + password + "\n");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText("Devi completare tutti i campi prima di registrarti");
+            alert.setContentText("Messaggio dettagliato sull'errore.");
+
+            // Aggiunta di un pulsante "OK" al box di errore
+            alert.getButtonTypes().setAll(ButtonType.OK);
+
+            // Visualizzazione del box di errore
+            alert.showAndWait();
+        }
+
     }
 }
