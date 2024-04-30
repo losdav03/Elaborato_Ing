@@ -23,7 +23,7 @@ public class Initcontroller {
     public void initialize() {
         String vuota = "";
         marca.getItems().addAll("DODGE", "FERRARI", "LAMBORGHINI", "TESLA", "AUDI", "JEEP");
-        colori.getItems().addAll("BIANCO, NERO, ROSSO");
+        colori.getItems().addAll("BIANCO", "NERO", "ROSSO");
         altezza.setText(vuota);
         lunghezza.setText(vuota);
         larghezza.setText(vuota);
