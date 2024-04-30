@@ -1,5 +1,6 @@
 package com.example.elaborato_ing;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -13,13 +14,14 @@ public class Initcontroller {
     private ComboBox<String> marca, modello, colori;
 
     @FXML
-    private CheckBox infot, sensori, fari,sedili, scorta, vetri, interni, ruote, cruise;
+    private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
 
     @FXML
     private Button acquistabtn, vendibtn;
 
     @FXML
     private ImageView img;
+
     public void initialize() {
         String vuota = "";
         marca.getItems().addAll("DODGE", "FERRARI", "LAMBORGHINI", "TESLA", "AUDI", "JEEP");
@@ -32,29 +34,16 @@ public class Initcontroller {
         alimentazione.setText(vuota);
         motore.setText(vuota);
         prezzo.setText(vuota);
-        
-        marca.setOnAction(e->aggiornaModello());
-        modello.setOnAction(e->aggiornaImg());
 
-    }
-
-    private void aggiornaImg() {
-        String marcaS = marca.getValue();
-        String modelloS = modello.getValue();
-
-        if(marcaS != null && modelloS !=null){
-            String path = "src/main/resources/com/example/elaborato_ing/sfondoLogin.jpeg";
-            Image nuova = new Image(path,true);
-            img.setImage(nuova);
-        }
+        marca.setOnAction(e -> aggiornaModello());
     }
 
     private void aggiornaModello() {
         String marcaS = marca.getValue();
-        if(marcaS!=null){
+        if (marcaS != null) {
             modello.setDisable(false);
             modello.getItems().clear();
-            if("DODGE".equals(marcaS)){
+            if ("DODGE".equals(marcaS)) {
                 modello.getItems().addAll("CHARGER", "CHALLENGER", "DURANGO");
             } else if ("FERRARI".equals(marcaS)) {
                 modello.getItems().addAll("SF90", "PORTOFINO", "GTS296");
@@ -63,10 +52,24 @@ public class Initcontroller {
             } else if ("TESLA".equals(marcaS)) {
                 modello.getItems().addAll("MODELX", "MODELY", "CYBERTRUCK");
             }
-            aggiornaImg();
-        }
-        else {
+        } else {
             modello.setDisable(true);
         }
     }
+
+    public void setImage(ActionEvent actionEvent) {
+        String marcaS = marca.getValue();
+        String modelloS = modello.getValue();
+
+
+        try {
+            img.setImage(new Image("@car.png"));
+            img.setFitWidth(250);
+            img.setFitHeight(350);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            System.err.println("Errore durante il caricamento dell'immagine: " + e.getMessage());
+        }
+    }
 }
+
+
