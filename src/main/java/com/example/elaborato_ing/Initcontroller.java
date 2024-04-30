@@ -43,7 +43,7 @@ public class Initcontroller {
         String modelloS = modello.getValue();
 
         if(marcaS != null && modelloS !=null){
-            String path = ""+modelloS;
+            String path = "src/main/resources/com/example/elaborato_ing/sfondoLogin.jpeg"+modelloS;
             Image nuova = new Image(path,true);
             img.setImage(nuova);
         }
