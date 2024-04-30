@@ -60,7 +60,7 @@ public class LoginController {
     }
 
     private boolean autenticato(String username, String password) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\dlosc\\IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parti = line.split(",");
