@@ -63,7 +63,7 @@ public class Initcontroller {
         String marcaS = marca.getValue();
         String modelloS = modello.getValue();
          /*if (marcaS != null && modelloS != null) {
-            String path = "/com/example/elaborato_ing/images/" + marcaS+ modelloS + ".jpg";
+            String path = "/com/example/elaborato_ing/" + marcaS+ modelloS + ".jpg";
             Image newImage = new Image(path, true);
             img.setImage(newImage);
         }
