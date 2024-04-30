@@ -79,7 +79,7 @@ public class LoginController {
 
         if (cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0 && cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0) {
             // Apertura del file in modalità append
-            try (FileWriter writer = new FileWriter("C:\\Users\\dlosc\\IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile", true)) {
+            try (FileWriter writer = new FileWriter("IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile", true)) {
                 // Scrivi i dati dell'utente nel file, separati da virgole
                 writer.write(cliente.getEmail() + "," + cliente.getNome() + "," + cliente.getCognome() + "," + cliente.getPassword() + "\n");
 
