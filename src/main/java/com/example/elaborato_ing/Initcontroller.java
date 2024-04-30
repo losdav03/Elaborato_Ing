@@ -23,7 +23,7 @@ public class Initcontroller {
     public void initialize() {
         String vuota = "";
         marca.getItems().addAll("DODGE", "FERRARI", "LAMBORGHINI", "TESLA", "AUDI", "JEEP");
-        colori.getItems().addAll("BIANCO, NERO, ROSSO");
+        colori.getItems().addAll("BIANCO", "NERO", "ROSSO");
         altezza.setText(vuota);
         lunghezza.setText(vuota);
         larghezza.setText(vuota);
@@ -50,7 +50,7 @@ public class Initcontroller {
     }
 
     private void aggiornaModello() {
-        String marcaS = (String)marca.getValue();
+        String marcaS = marca.getValue();
         if(marcaS!=null){
             modello.setDisable(false);
             modello.getItems().clear();
