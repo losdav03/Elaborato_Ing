@@ -11,7 +11,7 @@ public class Main extends Application {
 
 
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("Configuratore.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         primaryStage.setTitle("JavaFX App with FXML and CSS");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
