@@ -1,12 +1,11 @@
 package com.example.elaborato_ing;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Initcontroller {
+public class InitController {
     @FXML
     private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, motore, prezzo;
 
@@ -34,10 +33,19 @@ public class Initcontroller {
         alimentazione.setText(vuota);
         motore.setText(vuota);
         prezzo.setText(vuota);
-
         marca.setOnAction(e -> aggiornaModello());
-        Image nuova = new Image("",true);
-        img.setImage(nuova);
+        modello.setOnAction(e -> aggiornaImg());
+    }
+
+    private void aggiornaImg() {
+        String marcaS = marca.getValue();
+        String modelloS = modello.getValue();
+
+        if (marcaS != null && modelloS != null) {
+            String imagePath = "/com/example/elaborato_ing/imgs/" + marcaS + modelloS + ".png";
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            img.setImage(image);
+        }
     }
 
     private void aggiornaModello() {
@@ -58,24 +66,4 @@ public class Initcontroller {
             modello.setDisable(true);
         }
     }
-
-    public void setImage(ActionEvent actionEvent) {
-        String marcaS = marca.getValue();
-        String modelloS = modello.getValue();
-         /*if (marcaS != null && modelloS != null) {
-            String path = "/com/example/elaborato_ing/" + marcaS+ modelloS + ".jpg";
-            Image newImage = new Image(path, true);
-            img.setImage(newImage);
-        }
-*/
-        try {
-            img.setImage(new Image(""));
-            img.setFitWidth(250);
-            img.setFitHeight(350);
-        } catch (IllegalArgumentException | NullPointerException e) {
-            System.err.println("Errore durante il caricamento dell'immagine: " + e.getMessage());
-        }
-    }
 }
-
-

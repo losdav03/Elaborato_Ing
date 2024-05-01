@@ -3,12 +3,14 @@ package com.example.elaborato_ing;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -50,13 +52,24 @@ public class LoginController {
         }
     }
 
-    private void loadScene(String fxmlFile, ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+    public void loadScene(String fxmlFile, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+
+            if (event != null && event.getSource() instanceof Node) {
+                // Se l'evento non è null e proviene da un Node
+                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                primaryStage.close(); // Chiudi la finestra precedente se necessario
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            }
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean autenticato(String username, String password) throws IOException {
@@ -77,17 +90,34 @@ public class LoginController {
         Cliente cliente = new Cliente(emailField.getText(), nameField.getText(), surnameField.getText(), passwordField.getText(), 1);
 
 
-        if (cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0 && cliente.getEmail().length() > 0 && cliente.getPassword().length() > 0) {
+        if (!cliente.getEmail().isEmpty() && !cliente.getNome().isEmpty() && !cliente.getCognome().isEmpty() && !cliente.getPassword().isEmpty()) {
             // Apertura del file in modalità append
             try (FileWriter writer = new FileWriter("src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile.txt", true)) {
-                // Scrivi i dati dell'utente nel file, separati da virgole
-                writer.write(cliente.getEmail() + "," + cliente.getNome() + "," + cliente.getCognome() + "," + cliente.getPassword() + "\n");
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Successo");
-                alert.setHeaderText("Registrazione avvenuta con successo");
-                alert.setContentText("Messaggio dettagliato sull'errore.");
-                alert.showAndWait();
+                // controllo se l'utente è già inserito nel file login, si controlla solo l'email, quella è la chiave e deve essere unica
+                if (utenteEsiste(cliente.getEmail())) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Attenzione");
+                    alert.setHeaderText("L'utente sembra già essere registrato");
+                    alert.setContentText("Questa email esiste già");
+                    alert.showAndWait();
+                } else {
+                    // Scrivi i dati dell'utente nel file, separati da virgole
+                    writer.write(cliente.getEmail() + "," + cliente.getNome() + "," + cliente.getCognome() + "," + cliente.getPassword() + "\n");
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Successo");
+                    alert.setHeaderText("Registrazione avvenuta con successo");
+                    alert.setContentText("Messaggio dettagliato sull'errore.");
+
+                    // Gestione dell'azione del bottone OK
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            loadScene("Login.fxml", null);
+                        }
+                    });
+
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -105,5 +135,19 @@ public class LoginController {
             alert.showAndWait();
         }
 
+    }
+
+    // se trovo l'email allora return TRUE se no FALSE
+    private boolean utenteEsiste(String email) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parti = line.split(",");
+                if (parti[0].equals(email)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

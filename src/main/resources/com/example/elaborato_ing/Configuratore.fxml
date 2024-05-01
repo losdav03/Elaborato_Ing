@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.Initcontroller">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.InitController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="463.0" prefWidth="185.0">
          <children>
@@ -20,7 +20,7 @@
             <Label layoutX="14.0" layoutY="247.0" text="Alimentazione" />
             <Label layoutX="14.0" layoutY="295.0" text="Colori" />
             <ComboBox fx:id="marca" layoutX="60.0" layoutY="43.0" prefHeight="25.0" prefWidth="104.0" />
-            <ComboBox fx:id="modello" layoutX="60.0" layoutY="89.0" onAction="#setImage" prefHeight="25.0" prefWidth="104.0" />
+            <ComboBox fx:id="modello" layoutX="60.0" layoutY="89.0" prefHeight="25.0" prefWidth="104.0" />
             <Label fx:id="altezza" layoutX="95.0" layoutY="150.0" text="Label" />
             <Label fx:id="lunghezza" layoutX="95.0" layoutY="167.0" text="Label" />
             <Label fx:id="larghezza" layoutX="95.0" layoutY="184.0" text="Label" />
@@ -56,7 +56,7 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <ImageView fx:id="img" fitHeight="250.0" fitWidth="350.0" layoutX="34.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true"/>
+            <ImageView fx:id="img" fitHeight="250.0" fitWidth="350.0" layoutX="34.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
 
 
             <Label layoutX="14.0" layoutY="331.0" text="PREZZO">
