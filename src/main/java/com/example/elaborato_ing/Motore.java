@@ -7,4 +7,5 @@ public class Motore {
     private int potenza;
     private double consumi;
 
+
 }
