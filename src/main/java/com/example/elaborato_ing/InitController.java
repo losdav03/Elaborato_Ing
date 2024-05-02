@@ -60,7 +60,7 @@ public class InitController {
                     int peso = Integer.parseInt(parts[3]);
 
                     Auto auto = new Auto(marca, modello, altezza, peso);
-
+                    catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
             }
