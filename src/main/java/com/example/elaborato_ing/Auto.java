@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import java.util.List;
 
 public class Auto {
-    private String id;
     private Marca marca;
     private Modello modello;
     private double altezza,lunghezza, larghezza,peso, volumeBagagliaio;
@@ -13,8 +12,7 @@ public class Auto {
     private Motore motore;
     private List<Optional> optionals;
 
-    public Auto(String id, Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, List<Optional> optionals) {
-        this.id = id;
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, List<Optional> optionals) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -25,14 +23,6 @@ public class Auto {
         this.immagine = immagine;
         this.motore = motore;
         this.optionals = optionals;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public Marca getMarca() {
