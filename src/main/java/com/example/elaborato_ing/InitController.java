@@ -19,6 +19,8 @@ public class InitController {
     @FXML
     private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, motore, prezzo;
 
+    private int costo = 0;
+
     @FXML
     private ComboBox<Marca> marca;
 
@@ -80,9 +82,9 @@ public class InitController {
                     int potenza = Integer.parseInt(parts[10].trim());
                     double consumi = Double.parseDouble(parts[11]);
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
-                    double prezzo = Double.parseDouble(parts[12]);
+                    costo = Integer.parseInt(parts[12]);
                     String sconto = parts[13];
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore,prezzo,sconto);
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore,costo,sconto);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -131,6 +133,7 @@ public class InitController {
             Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
             colori.setDisable(false);
+
             if (auto != null) {
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
                 altezza.setText(String.valueOf(auto.getAltezza()));
@@ -139,7 +142,7 @@ public class InitController {
                 volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
                 alimentazione.setText(String.valueOf(auto.getAlimentazione()));
                 motore.setText(String.valueOf(auto.getMotore()));
-                prezzo.setText(String.valueOf(auto.getCosto()));
+                prezzo.setText(costo+" €");
             }
         }
     }

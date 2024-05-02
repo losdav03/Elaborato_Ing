@@ -12,10 +12,10 @@ public class Auto {
     private Motore motore;
     private Alimentazione alimentazione;
     private List<Optional> optionals;
-    private double costo;
+    private int costo;
     private String sconto;
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, double costo, String sconto) {
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int costo, String sconto) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -120,11 +120,11 @@ public class Auto {
         return sconto;
     }
 
-    public double getCosto() {
+    public int getCosto() {
         return costo;
     }
 
-    public void setCosto(double costo) {
+    public void setCosto(int costo) {
         this.costo = costo;
     }
 
