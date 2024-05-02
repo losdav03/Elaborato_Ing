@@ -55,6 +55,9 @@ public class InitController {
         marca.getItems().addAll(map.keySet());
         marca.setOnAction(e -> aggiornaModello());
         modello.setOnAction(e -> aggiornaConfiguratore());
+        colori.getItems().setAll("BIANCO", "NERO", "ROSSO");
+        colori.setDisable(true);
+
     }
 
     private Map<Marca, List<Auto>> caricaFile(String file) {
@@ -125,6 +128,8 @@ public class InitController {
             }
             // aggiorno le informazioni della macchina (peso larghezza lunghezza ...)
             Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
+
+            colori.setDisable(false);
             if (auto != null) {
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
                 altezza.setText(String.valueOf(auto.getAltezza()));
