@@ -58,7 +58,6 @@ public class InitController {
                     Modello modello = Modello.valueOf(parts[1].trim());
                     int altezza = Integer.parseInt(parts[2]);
                     int peso = Integer.parseInt(parts[3]);
-
                     Auto auto = new Auto(marca, modello, altezza, peso);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
