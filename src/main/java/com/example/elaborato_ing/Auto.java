@@ -12,4 +12,8 @@ public class Auto {
     private List<Image> immagine;
     private Motore motore;
     private List<Optional> optionals;
+
+    public Auto(Marca marca,Modello modello,altezza altezza,peso peso){
+
+    }
 }
