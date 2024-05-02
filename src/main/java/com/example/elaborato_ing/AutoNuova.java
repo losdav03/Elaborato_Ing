@@ -9,8 +9,7 @@ public class AutoNuova extends Auto{
     private double costo;
     private int sconto;
 
-
-    public AutoNuova(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, Alimentazione alimentazione, List<Optional> optionals) {
-        super(marca, modello, lunghezza, altezza, larghezza, peso, volumeBagagliaio, immagine, motore, alimentazione, optionals);
+    public AutoNuova(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, double costo, String sconto) {
+        super(marca, modello, lunghezza, altezza, larghezza, peso, volumeBagagliaio, motore, costo, sconto);
     }
 }
