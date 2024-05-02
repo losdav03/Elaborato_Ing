@@ -2,18 +2,19 @@ package com.example.elaborato_ing;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 public class Catalogo {
-    private final SortedSet<Auto> catalogo = new TreeSet<Auto>();
+    private final List<Auto> catalogo = new ArrayList<>();
 
-    public Catalogo(Auto... auto){
-        for (Auto a: auto)
+    public Catalogo(Auto... auto) {
+        for (Auto a : auto)
             catalogo.add(a);
     }
+
     public Catalogo(Auto auto) {
-            catalogo.add(auto);
+
+        catalogo.add(auto);
     }
 }
