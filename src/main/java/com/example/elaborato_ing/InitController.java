@@ -66,7 +66,7 @@ public class InitController {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 12) {
+                if (parts.length == 14) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     Modello modello = Modello.valueOf(parts[1].trim());
                     double lunghezza = Double.parseDouble(parts[2]);
@@ -80,8 +80,9 @@ public class InitController {
                     int potenza = Integer.parseInt(parts[10].trim());
                     double consumi = Double.parseDouble(parts[11]);
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
-
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, alimentazione);
+                    double prezzo = Double.parseDouble(parts[12]);
+                    String sconto = parts[13];
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore,prezzo,sconto);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -138,6 +139,7 @@ public class InitController {
                 volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
                 alimentazione.setText(String.valueOf(auto.getAlimentazione()));
                 motore.setText(String.valueOf(auto.getMotore()));
+                prezzo.setText(String.valueOf(auto.getCosto()));
             }
         }
     }

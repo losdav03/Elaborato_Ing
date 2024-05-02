@@ -12,22 +12,10 @@ public class Auto {
     private Motore motore;
     private Alimentazione alimentazione;
     private List<Optional> optionals;
+    private double costo;
+    private String sconto;
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, Alimentazione alimentazione, List<Optional> optionals) {
-        this.marca = marca;
-        this.modello = modello;
-        this.lunghezza = lunghezza;
-        this.altezza = altezza;
-        this.larghezza = larghezza;
-        this.peso = peso;
-        this.volumeBagagliaio = volumeBagagliaio;
-        this.immagine = immagine;
-        this.motore = motore;
-        this.alimentazione = alimentazione;
-        this.optionals = optionals;
-    }
-
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, Alimentazione alimentazione) {
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, double costo, String sconto) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -36,7 +24,8 @@ public class Auto {
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
-        this.alimentazione = alimentazione;
+        this.costo=costo;
+        this.sconto=sconto;
     }
 
     public Marca getMarca() {
@@ -125,5 +114,21 @@ public class Auto {
 
     public void setOptionals(List<Optional> optionals) {
         this.optionals = optionals;
+    }
+
+    public String getSconto() {
+        return sconto;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
+
+    public void setSconto(String sconto) {
+        this.sconto = sconto;
     }
 }
