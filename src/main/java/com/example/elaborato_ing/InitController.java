@@ -66,11 +66,11 @@ public class InitController {
                 if (parts.length == 13) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     Modello modello = Modello.valueOf(parts[1].trim());
-                    Double lunghezza = Double.parseDouble(parts[2]);
-                    Double altezza = Double.parseDouble(parts[3]);
-                    Double larghezza = Double.parseDouble(parts[4]);
-                    Double peso = Double.parseDouble(parts[5]);
-                    Double volume = Double.parseDouble(parts[6]);
+                    double lunghezza = Double.parseDouble(parts[2]);
+                    double altezza = Double.parseDouble(parts[3]);
+                    double larghezza = Double.parseDouble(parts[4]);
+                    double peso = Double.parseDouble(parts[5]);
+                    double volume = Double.parseDouble(parts[6]);
                     String nomeMotore = parts[7];
                     Alimentazione alimentazione = Alimentazione.valueOf(parts[8].trim());
                     int cilindrata = Integer.parseInt(parts[9].trim());
