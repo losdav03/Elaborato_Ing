@@ -12,7 +12,9 @@ public class Catalogo {
         for (Auto a : auto)
             catalogo.add(a);
     }
+    public Catalogo(){
 
+    }
     public Catalogo(Auto auto) {
 
         catalogo.add(auto);

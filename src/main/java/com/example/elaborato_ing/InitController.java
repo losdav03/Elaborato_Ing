@@ -37,7 +37,7 @@ public class InitController {
     @FXML
     private ImageView img;
     private Map<String, List<Auto>> map;
-
+    Catalogo catalogo = new Catalogo();
 
     public void initialize() {
         map=caricaFile("auto.txt");
@@ -54,12 +54,13 @@ public class InitController {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(":");
                 if (parts.length == 4) {
-                    String marca = parts[0];
-                    String modello = parts[1];
+                    Marca marca = Marca.valueOf(parts[0].trim());
+                    Modello modello = Modello.valueOf(parts[1].trim());
                     int altezza = Integer.parseInt(parts[2]);
                     int peso = Integer.parseInt(parts[3]);
 
                     Auto auto = new Auto(marca, modello, altezza, peso);
+
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
             }
