@@ -15,4 +15,5 @@ public class Catalogo {
     public void add(Auto a){
         catalogo.add(a);
     }
+
 }
