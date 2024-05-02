@@ -8,7 +8,7 @@
 
     <!-- Immagine di sfondo -->
     <ImageView fitHeight="400.0" fitWidth="608.0" layoutX="-5.0">
-        <Image url="@imgs/sfondoLogin.jpeg" />
+        <Image url="@images/sfondoLogin.jpeg" />
     </ImageView>
 
     <!-- Titolo -->

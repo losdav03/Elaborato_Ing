@@ -1,9 +1,18 @@
 package com.example.elaborato_ing;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class InitController {
     @FXML
@@ -42,7 +51,7 @@ public class InitController {
         String modelloS = modello.getValue();
 
         if (marcaS != null && modelloS != null) {
-            String imagePath = "/com/example/elaborato_ing/imgs/" + marcaS + modelloS + ".png";
+            String imagePath = "/com/example/elaborato_ing/images/" + marcaS + modelloS + ".png";
             Image image = new Image(getClass().getResourceAsStream(imagePath));
             img.setImage(image);
         }
@@ -53,17 +62,53 @@ public class InitController {
         if (marcaS != null) {
             modello.setDisable(false);
             modello.getItems().clear();
-            if ("DODGE".equals(marcaS)) {
-                modello.getItems().addAll("CHARGER", "CHALLENGER", "DURANGO");
-            } else if ("FERRARI".equals(marcaS)) {
-                modello.getItems().addAll("SF90", "PORTOFINO", "GTS296");
-            } else if ("LAMBORGHINI".equals(marcaS)) {
-                modello.getItems().addAll("URUS", "REVUELTO", "HURUCAN");
-            } else if ("TESLA".equals(marcaS)) {
-                modello.getItems().addAll("MODELX", "MODELY", "CYBERTRUCK");
+            switch (marcaS) {
+                case "DODGE":
+                    modello.getItems().addAll("CHARGER", "CHALLENGER", "DURANGO");
+                    break;
+                case "FERRARI":
+                    modello.getItems().addAll("SF90", "PORTOFINO", "GTS296");
+                    break;
+                case "LAMBORGHINI":
+                    modello.getItems().addAll("URUS", "REVUELTO", "HURUCAN");
+                    break;
+                case "TESLA":
+                    modello.getItems().addAll("MODELX", "MODELY", "CYBERTRUCK");
+                    break;
+                case "AUDI":
+                    modello.getItems().addAll("Q8etron", "A8", "RS3");
+                    break;
+                case "JEEP":
+                    modello.getItems().addAll("RENEGADE", "COMPASS", "GLADIETOR");
+                    break;
             }
         } else {
             modello.setDisable(true);
+        }
+    }
+
+    public void goToUsatoForm(ActionEvent event) {
+        loadScene("Usato.fxml", event);
+    }
+
+
+    public void loadScene(String fxmlFile, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+
+            if (event != null && event.getSource() instanceof Node) {
+                // Se l'evento non è null e proviene da un Node
+                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                primaryStage.close(); // Chiudi la finestra precedente se necessario
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            }
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

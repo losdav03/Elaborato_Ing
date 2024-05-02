@@ -70,7 +70,7 @@
                </font>
             </Label>
             <Button fx:id="acquistabtn" layoutX="79.0" layoutY="400.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="91.0" text="Acquista" textFill="#227916" />
-            <Button fx:id="vendibtn" layoutX="253.0" layoutY="400.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="91.0" text="Vendi usato" textFill="RED" />
+            <Button fx:id="vendibtn" layoutX="253.0" layoutY="400.0" mnemonicParsing="false" onAction="#goToUsatoForm" prefHeight="43.0" prefWidth="91.0" text="Vendi usato" textFill="RED" />
          </children></AnchorPane>
   </items>
 </SplitPane>
