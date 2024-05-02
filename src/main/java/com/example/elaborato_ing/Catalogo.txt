@@ -7,13 +7,14 @@ FERRARI, GTS296, 457, 119, 195, 1470, 296, Twin-Turbo V6, Benzina, 2992, 663, 11
 LAMBORGHINI, URUS, 511, 165, 201, 2200, 616, Twin-Turbo V8, Benzina, 3996, 650, 12.7
 LAMBORGHINI, REVUELTO, 494, 114, 204, 1775, 80, V12 Ibrido, Benzina, 6498, 814, 14.0
 LAMBORGHINI, HURACAN, 452, 116, 192, 1422, 100, V10, Benzina, 5204, 610, 13.2
-TESLA, MODELX, 503, 168, 207, 2440, 498, Motore Elettrico, Elettrico, N/A, 1020, N/A
-TESLA, MODELY, 475, 162, 192, 2000, 566, Motore Elettrico, Elettrico, N/A, 534, N/A
-TESLA, CYBERTRUCK, 588, 190, 210, 3000, 2832, Motore Elettrico, Elettrico, N/A, 800, N/A
-AUDI, Q8 etron, 492, 163, 196, 2500, 569, Motore Elettrico, Elettrico, N/A, 408, N/A
+TESLA, MODELX, 503, 168, 207, 2440, 498, Motore Elettrico, Elettrico, 0, 1020, 0
+TESLA, MODELY, 475, 162, 192, 2000, 566, Motore Elettrico, Elettrico, 0, 534, 0
+TESLA, CYBERTRUCK, 588, 190, 210, 3000, 2832, Motore Elettrico, Elettrico, 0, 800, 0
+AUDI, Q8 etron, 492, 163, 196, 2500, 569, Motore Elettrico, Elettrico, 0, 408, 0
 AUDI, A8, 518, 147, 194, 2000, 505, V6, Benzina, 2995, 340, 8.0
 AUDI, RS3, 438, 141, 180, 1575, 280, Inline-5, Benzina, 2480, 400, 9.1
 JEEP, RENEGADE, 423, 172, 180, 1525, 330, Inline-4, Benzina, 1368, 140, 7.5
 JEEP, COMPASS, 440, 165, 183, 1640, 476, Inline-4, Benzina, 2360, 177, 8.0
 JEEP, GLADIATOR, 554, 183, 187, 2180, 206, Pentastar V6, Benzina, 3604, 285, 11.0
+
 
