@@ -12,7 +12,14 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InitController {
     @FXML
@@ -29,21 +36,39 @@ public class InitController {
 
     @FXML
     private ImageView img;
+    private Map<String, List<Auto>> map;
+
 
     public void initialize() {
-        String vuota = "";
-        marca.getItems().addAll("DODGE", "FERRARI", "LAMBORGHINI", "TESLA", "AUDI", "JEEP");
-        colori.getItems().addAll("BIANCO", "NERO", "ROSSO");
-        altezza.setText(vuota);
-        lunghezza.setText(vuota);
-        larghezza.setText(vuota);
-        peso.setText(vuota);
-        volume.setText(vuota);
-        alimentazione.setText(vuota);
-        motore.setText(vuota);
-        prezzo.setText(vuota);
-        marca.setOnAction(e -> aggiornaModello());
+        map=caricaFile("auto.txt");
+
+        marca.getItems().addAll(map.keySet());
+        marca.setOnAction(e->aggiornaModello());
         modello.setOnAction(e -> aggiornaImg());
+    }
+
+    private Map<String, List<Auto>> caricaFile(String file) {
+        Map<String, List<Auto>> dati = new HashMap<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(":");
+                if (parts.length == 4) {
+                    String marca = parts[0];
+                    String modello = parts[1];
+                    int altezza = Integer.parseInt(parts[2]);
+                    int peso = Integer.parseInt(parts[3]);
+
+                    Auto auto = new Auto(marca, modello, altezza, peso);
+                    dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return dati;
     }
 
     private void aggiornaImg() {
