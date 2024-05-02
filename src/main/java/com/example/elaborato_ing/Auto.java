@@ -10,10 +10,10 @@ public class Auto {
     private double altezza, lunghezza, larghezza, peso, volumeBagagliaio;
     private List<Image> immagine;
     private Motore motore;
-    private String colore;
+    private Alimentazione alimentazione;
     private List<Optional> optionals;
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, String colore, List<Optional> optionals) {
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, Alimentazione alimentazione, List<Optional> optionals) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -23,11 +23,11 @@ public class Auto {
         this.volumeBagagliaio = volumeBagagliaio;
         this.immagine = immagine;
         this.motore = motore;
-        this.colore = colore;
+        this.alimentazione = alimentazione;
         this.optionals = optionals;
     }
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, String colore) {
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, Alimentazione alimentazione) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -36,7 +36,7 @@ public class Auto {
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
-        this.colore = colore;
+        this.alimentazione = alimentazione;
     }
 
     public Marca getMarca() {
@@ -111,12 +111,12 @@ public class Auto {
         this.motore = motore;
     }
 
-    public String getColore() {
-        return colore;
+    public Alimentazione getAlimentazione() {
+        return alimentazione;
     }
 
-    public void setColore(String colore) {
-        this.colore = colore;
+    public void setAlimentazione(Alimentazione alimentazione) {
+        this.alimentazione = alimentazione;
     }
 
     public List<Optional> getOptionals() {

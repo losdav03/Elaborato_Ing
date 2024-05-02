@@ -63,7 +63,7 @@ public class InitController {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 13) {
+                if (parts.length == 12) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     Modello modello = Modello.valueOf(parts[1].trim());
                     double lunghezza = Double.parseDouble(parts[2]);
@@ -77,9 +77,8 @@ public class InitController {
                     int potenza = Integer.parseInt(parts[10].trim());
                     double consumi = Double.parseDouble(parts[11]);
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
-                    String colore = parts[12];
 
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, colore);
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, alimentazione);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -103,11 +102,6 @@ public class InitController {
 
             modello.getItems().setAll(listaModelli);
             modello.setDisable(false);
-
-            // aggiorno le informazioni della macchina (peso larghezza lunghezza ...)
-
-            double altezza = listaAuto.getAltezza();
-            altezza.setText();
         } else {
             modello.getItems().clear();
             modello.setDisable(true);
@@ -128,6 +122,17 @@ public class InitController {
                 img.setImage(image);
             } else {
                 System.err.println("Immagine non trovata: " + imagePath);
+            }
+            // aggiorno le informazioni della macchina (peso larghezza lunghezza ...)
+            Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
+            if (auto != null) {
+                lunghezza.setText(String.valueOf(auto.getLunghezza()));
+                altezza.setText(String.valueOf(auto.getAltezza()));
+                larghezza.setText(String.valueOf(auto.getLarghezza()));
+                peso.setText(String.valueOf(auto.getPeso()));
+                volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
+                alimentazione.setText(String.valueOf(auto.getAlimentazione()));
+                motore.setText(String.valueOf(auto.getMotore()));
             }
         }
     }
