@@ -8,15 +8,11 @@ import java.util.List;
 public class Catalogo {
     private final List<Auto> catalogo = new ArrayList<>();
 
-    public Catalogo(Auto... auto) {
-        for (Auto a : auto)
-            catalogo.add(a);
-    }
     public Catalogo(){
 
     }
-    public Catalogo(Auto auto) {
 
-        catalogo.add(auto);
+    public void add(Auto a){
+        catalogo.add(a);
     }
 }

@@ -36,30 +36,39 @@ public class InitController {
 
     @FXML
     private ImageView img;
-    private Map<String, List<Auto>> map;
+    private Map<Marca, List<Auto>> map;
     Catalogo catalogo = new Catalogo();
 
     public void initialize() {
-        map=caricaFile("auto.txt");
+        map=caricaFile("Catalogo.txt");
 
-        marca.getItems().addAll(map.keySet());
+        marca.getItems().addAll(String.valueOf(map.keySet()));
         marca.setOnAction(e->aggiornaModello());
         modello.setOnAction(e -> aggiornaImg());
     }
 
-    private Map<String, List<Auto>> caricaFile(String file) {
-        Map<String, List<Auto>> dati = new HashMap<>();
+    private Map<Marca, List<Auto>> caricaFile(String file) {
+        Map<Marca, List<Auto>> dati = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(":");
-                if (parts.length == 4) {
+                String[] parts = line.split(",");
+                if (parts.length == 13) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     Modello modello = Modello.valueOf(parts[1].trim());
-                    int altezza = Integer.parseInt(parts[2]);
-                    int peso = Integer.parseInt(parts[3]);
+                    Double lunghezza = Double.parseDouble(parts[2]);
+                    Double altezza = Double.parseDouble(parts[3]);
+                    Double larghezza = Double.parseDouble(parts[4]);
+                    Double peso = Double.parseDouble(parts[5]);
+                    Double volume = Double.parseDouble(parts[6]);
+                    String nome = parts[7];
+                    Alimentazione alimentazione = Alimentazione.valueOf(parts[8]);
+                    int cilindrata = Integer.parseInt(parts[9]);
+                    int potenza = Integer.parseInt(parts[10]);
+                    double consumi = Double.parseDouble(parts[11]);;
+                    Motore motore = new Motore(nome,alimentazione,cilindrata,potenza,consumi);
 
-                    Auto auto = new Auto(marca, modello, altezza, peso);
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza,larghezza,peso,volume,motore);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
