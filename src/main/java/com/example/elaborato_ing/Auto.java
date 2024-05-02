@@ -7,12 +7,13 @@ import java.util.List;
 public class Auto {
     private Marca marca;
     private Modello modello;
-    private double altezza,lunghezza, larghezza,peso, volumeBagagliaio;
+    private double altezza, lunghezza, larghezza, peso, volumeBagagliaio;
     private List<Image> immagine;
     private Motore motore;
+    private String colore;
     private List<Optional> optionals;
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, List<Optional> optionals) {
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, List<Image> immagine, Motore motore, String colore, List<Optional> optionals) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -22,10 +23,11 @@ public class Auto {
         this.volumeBagagliaio = volumeBagagliaio;
         this.immagine = immagine;
         this.motore = motore;
+        this.colore = colore;
         this.optionals = optionals;
     }
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore) {
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, String colore) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -34,6 +36,7 @@ public class Auto {
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
+        this.colore = colore;
     }
 
     public Marca getMarca() {
@@ -106,6 +109,14 @@ public class Auto {
 
     public void setMotore(Motore motore) {
         this.motore = motore;
+    }
+
+    public String getColore() {
+        return colore;
+    }
+
+    public void setColore(String colore) {
+        this.colore = colore;
     }
 
     public List<Optional> getOptionals() {

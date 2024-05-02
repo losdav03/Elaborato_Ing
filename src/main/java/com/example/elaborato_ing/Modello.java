@@ -9,7 +9,7 @@ public enum Modello {
     GTS296,
     URUS,
     REVUELTO,
-    HURUCAN,
+    HURACAN,
     MODELX,
     MODELY,
     CYBERTRUCK,

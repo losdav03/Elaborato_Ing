@@ -54,7 +54,7 @@ public class InitController {
         System.out.println("Valori in marca ComboBox: " + marca.getItems());
         marca.getItems().addAll(map.keySet());
         marca.setOnAction(e -> aggiornaModello());
-        modello.setOnAction(e -> aggiornaImg());
+        modello.setOnAction(e -> aggiornaConfiguratore());
     }
 
     private Map<Marca, List<Auto>> caricaFile(String file) {
@@ -63,7 +63,7 @@ public class InitController {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 12) {
+                if (parts.length == 13) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     Modello modello = Modello.valueOf(parts[1].trim());
                     double lunghezza = Double.parseDouble(parts[2]);
@@ -77,8 +77,9 @@ public class InitController {
                     int potenza = Integer.parseInt(parts[10].trim());
                     double consumi = Double.parseDouble(parts[11]);
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
+                    String colore = parts[12];
 
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore);
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, colore);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -93,23 +94,6 @@ public class InitController {
         return dati;
     }
 
-    private void aggiornaImg() {
-        Marca marcaSelezionata = marca.getValue();
-        Modello modelloSelezionato = modello.getValue();
-
-        if (marcaSelezionata != null && modelloSelezionato != null) {
-            String imagePath = "/com/example/elaborato_ing/images/" + marcaSelezionata + "_" + modelloSelezionato + ".png";
-            InputStream imageStream = getClass().getResourceAsStream(imagePath);
-
-            if (imageStream != null) {
-                Image image = new Image(imageStream);
-                img.setImage(image);
-            } else {
-                System.err.println("Immagine non trovata: " + imagePath);
-            }
-        }
-    }
-
     private void aggiornaModello() {
         Marca marcaSelezionata = marca.getValue();
 
@@ -119,9 +103,32 @@ public class InitController {
 
             modello.getItems().setAll(listaModelli);
             modello.setDisable(false);
+
+            // aggiorno le informazioni della macchina (peso larghezza lunghezza ...)
+
+            double altezza = listaAuto.getAltezza();
+            altezza.setText();
         } else {
             modello.getItems().clear();
             modello.setDisable(true);
+        }
+    }
+
+
+    private void aggiornaConfiguratore() {
+        Marca marcaSelezionata = marca.getValue();
+        Modello modelloSelezionato = modello.getValue();
+
+        if (marcaSelezionata != null && modelloSelezionato != null) {
+            String imagePath = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
+            InputStream imageStream = getClass().getResourceAsStream(imagePath);
+
+            if (imageStream != null) {
+                Image image = new Image(imageStream);
+                img.setImage(image);
+            } else {
+                System.err.println("Immagine non trovata: " + imagePath);
+            }
         }
     }
 
