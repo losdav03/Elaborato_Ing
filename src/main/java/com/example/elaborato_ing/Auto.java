@@ -11,7 +11,7 @@ public class Auto {
     private List<Image> immagine;
     private Motore motore;
     private Alimentazione alimentazione;
-    private List<Optional> optionals;
+    private Optionals optionals;
     private int costo;
     private String sconto;
 
@@ -108,13 +108,7 @@ public class Auto {
         this.alimentazione = alimentazione;
     }
 
-    public List<Optional> getOptionals() {
-        return optionals;
-    }
 
-    public void setOptionals(List<Optional> optionals) {
-        this.optionals = optionals;
-    }
 
     public String getSconto() {
         return sconto;

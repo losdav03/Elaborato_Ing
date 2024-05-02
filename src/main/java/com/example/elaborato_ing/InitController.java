@@ -59,7 +59,15 @@ public class InitController {
         modello.setOnAction(e -> aggiornaConfiguratore());
         colori.getItems().setAll("BIANCO", "NERO", "ROSSO");
         colori.setDisable(true);
-
+        infot.setDisable(true);
+        sensori.setDisable(true);
+        fari.setDisable(true);
+        sedili.setDisable(true);
+        scorta.setDisable(true);
+        vetri.setDisable(true);
+        interni.setDisable(true);
+        ruote.setDisable(true);
+        cruise.setDisable(true);
     }
 
     private Map<Marca, List<Auto>> caricaFile(String file) {
@@ -84,7 +92,7 @@ public class InitController {
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
                     costo = Integer.parseInt(parts[12]);
                     String sconto = parts[13];
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore,costo,sconto);
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, costo, sconto);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -133,6 +141,15 @@ public class InitController {
             Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
             colori.setDisable(false);
+            infot.setDisable(false);
+            sensori.setDisable(false);
+            fari.setDisable(false);
+            sedili.setDisable(false);
+            scorta.setDisable(false);
+            vetri.setDisable(false);
+            interni.setDisable(false);
+            ruote.setDisable(false);
+            cruise.setDisable(false);
 
             if (auto != null) {
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
@@ -142,7 +159,7 @@ public class InitController {
                 volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
                 alimentazione.setText(String.valueOf(auto.getAlimentazione()));
                 motore.setText(String.valueOf(auto.getMotore()));
-                prezzo.setText(costo+" €");
+                prezzo.setText(String.valueOf(auto.getCosto()));
             }
         }
     }
@@ -168,5 +185,17 @@ public class InitController {
         } catch (IOException e) {
             System.err.println("Errore nel caricamento della scena: " + e.getMessage());
         }
+    }
+
+    public void addOption(ActionEvent actionEvent) {
+        Modello modelloSelezionato = modello.getValue();
+        Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
+        if (infot.isSelected()) {
+           prezzo.setText(String.valueOf(Integer.parseInt(prezzo.getText()) + auto.getCosto()/300));
+        }
+        if(!infot.isSelected()) {
+            prezzo.setText(String.valueOf(Integer.parseInt(prezzo.getText()) - auto.getCosto()/300));
+        }
+
     }
 }
