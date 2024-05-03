@@ -39,6 +39,7 @@ public class InitController {
     @FXML
     private ImageView img;
 
+
     private Map<Marca, List<Auto>> map;
     private Catalogo catalogo = new Catalogo();
 
@@ -128,12 +129,13 @@ public class InitController {
         Modello modelloSelezionato = modello.getValue();
 
         if (marcaSelezionata != null && modelloSelezionato != null) {
-            String imagePath = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
+            String imagePath = "/com/example/elaborato_ing/images/" + marcaSelezionata.toString().toLowerCase() + modelloSelezionato.toString().toLowerCase() + "bianco1" + ".png";
             InputStream imageStream = getClass().getResourceAsStream(imagePath);
 
             if (imageStream != null) {
                 Image image = new Image(imageStream);
                 img.setImage(image);
+                img.setUserData(imagePath);
             } else {
                 System.err.println("Immagine non trovata: " + imagePath);
             }
@@ -233,64 +235,76 @@ public class InitController {
     }
 
     public void vistaAutoPosteriore(ActionEvent actionEvent) {
-        Marca marcaSelezionata = marca.getValue();
-        Modello modelloSelezionato = modello.getValue();
-        Image image = img.getImage();
-        String imgPath = image.getUrl();
+        String marcaSelezionata = String.valueOf(marca.getValue()).toLowerCase();
+        String modelloSelezionato = String.valueOf(modello.getValue()).toLowerCase();
 
-        String pathPosteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "0" + ".png";
-        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "1" + ".png";
-        String pathAnteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
 
-        String nuovoPath = "";
+        String imgPathCorrente = (String) img.getUserData();
+        String basePath = "/com/example/elaborato_ing/images/";
 
-       if(imgPath.equals(pathPosteriore)){
-           nuovoPath = pathLaterale;
-       }else if(imgPath.equals(pathLaterale)){
-           nuovoPath = pathAnteriore;
-       }else if(imgPath.equals(pathAnteriore)){
-           nuovoPath = pathPosteriore;
-       }
+        String pathPosteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco3.png";
+        String pathLaterale = basePath + marcaSelezionata + modelloSelezionato + "bianco2.png";
+        String pathAnteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco1.png";
+
+        String nuovoPath;
+
+        if (pathPosteriore.equals(imgPathCorrente)) {
+            nuovoPath = pathLaterale;
+        } else if (pathLaterale.equals(imgPathCorrente)) {
+            nuovoPath = pathAnteriore;
+        } else if (pathAnteriore.equals(imgPathCorrente)) {
+            nuovoPath = pathPosteriore;
+        } else {
+            System.err.println("Percorso dell'immagine non riconosciuto: " + imgPathCorrente);
+            return;
+        }
 
         InputStream imageStream = getClass().getResourceAsStream(nuovoPath);
         if (imageStream != null) {
-            image = new Image(imageStream);
-            img.setImage(image);
+            Image nuovaImmagine = new Image(imageStream);
+            img.setImage(nuovaImmagine);
+            img.setUserData(nuovoPath);
         } else {
             System.err.println("Immagine non trovata: " + nuovoPath);
         }
     }
 
     public void vistaAutoLaterale(ActionEvent actionEvent) {
-        Marca marcaSelezionata = marca.getValue();
-        Modello modelloSelezionato = modello.getValue();
-        Image image = img.getImage();
-        String imgPath = image.getUrl();
+        String marcaSelezionata = String.valueOf(marca.getValue()).toLowerCase();
+        String modelloSelezionato = String.valueOf(modello.getValue()).toLowerCase();
 
-        String pathPosteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "0" + ".png";
-        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "1" + ".png";
-        String pathAnteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
 
-        String nuovoPath = "";
+        String imgPathCorrente = (String) img.getUserData();
+        String basePath = "/com/example/elaborato_ing/images/";
 
-        if(imgPath.equals(pathLaterale)){
-            nuovoPath = pathPosteriore;
-        }else if(imgPath.equals(pathPosteriore)){
+        String pathPosteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco3.png";
+        String pathLaterale = basePath + marcaSelezionata + modelloSelezionato + "bianco2.png";
+        String pathAnteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco1.png";
+
+        // Controlla se il percorso dell'immagine corrente corrisponde a uno dei percorsi noti
+        String nuovoPath;
+
+        if (pathPosteriore.equals(imgPathCorrente)) {
             nuovoPath = pathAnteriore;
-        }else if(imgPath.equals(pathAnteriore)){
+        } else if (pathLaterale.equals(imgPathCorrente)) {
+            nuovoPath = pathPosteriore;
+        } else if (pathAnteriore.equals(imgPathCorrente)) {
             nuovoPath = pathLaterale;
+        } else {
+            System.err.println("Percorso dell'immagine non riconosciuto: " + imgPathCorrente);
+            return;
         }
 
+        // Carica e imposta la nuova immagine
         InputStream imageStream = getClass().getResourceAsStream(nuovoPath);
         if (imageStream != null) {
-            image = new Image(imageStream);
-            img.setImage(image);
+            Image nuovaImmagine = new Image(imageStream);
+            img.setImage(nuovaImmagine);
+            img.setUserData(nuovoPath);
         } else {
             System.err.println("Immagine non trovata: " + nuovoPath);
         }
-
     }
-
 
 }
 
