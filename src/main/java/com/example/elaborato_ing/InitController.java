@@ -43,7 +43,7 @@ public class InitController {
     private Catalogo catalogo = new Catalogo();
 
     public void initialize() {
-        String filePath = "src\\main\\java\\com\\example\\elaborato_ing\\Catalogo.txt";
+        String filePath = "src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\Catalogo.txt";
         File file = new File(filePath);
 
         if (!file.exists()) {

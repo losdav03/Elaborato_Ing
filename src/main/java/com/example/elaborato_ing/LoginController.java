@@ -73,7 +73,7 @@ public class LoginController {
     }
 
     private boolean autenticato(String username, String password) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\LoginFile.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parti = line.split(",");
@@ -92,7 +92,7 @@ public class LoginController {
 
         if (!cliente.getEmail().isEmpty() && !cliente.getNome().isEmpty() && !cliente.getCognome().isEmpty() && !cliente.getPassword().isEmpty()) {
             // Apertura del file in modalità append
-            try (FileWriter writer = new FileWriter("src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile.txt", true)) {
+            try (FileWriter writer = new FileWriter("src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\LoginFile.txt", true)) {
 
                 // controllo se l'utente è già inserito nel file login, si controlla solo l'email, quella è la chiave e deve essere unica
                 if (utenteEsiste(cliente.getEmail())) {
@@ -139,7 +139,7 @@ public class LoginController {
 
     // se trovo l'email allora return TRUE se no FALSE
     private boolean utenteEsiste(String email) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\example\\elaborato_ing\\LoginFile.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\LoginFile.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parti = line.split(",");
