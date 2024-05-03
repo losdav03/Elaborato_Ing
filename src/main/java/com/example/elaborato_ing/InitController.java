@@ -34,7 +34,7 @@ public class InitController {
     private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
 
     @FXML
-    private Button acquistabtn, vendibtn;
+    private Button acquistabtn, vendibtn, btnSx, btnDx;
 
     @FXML
     private ImageView img;
@@ -231,6 +231,66 @@ public class InitController {
             prezzo.setText(String.valueOf(costo));
         }
     }
+
+    public void vistaAutoPosteriore(ActionEvent actionEvent) {
+        Marca marcaSelezionata = marca.getValue();
+        Modello modelloSelezionato = modello.getValue();
+        Image image = img.getImage();
+        String imgPath = image.getUrl();
+
+        String pathPosteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "0" + ".png";
+        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "1" + ".png";
+        String pathAnteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
+
+        String nuovoPath = "";
+
+       if(imgPath.equals(pathPosteriore)){
+           nuovoPath = pathLaterale;
+       }else if(imgPath.equals(pathLaterale)){
+           nuovoPath = pathAnteriore;
+       }else if(imgPath.equals(pathAnteriore)){
+           nuovoPath = pathPosteriore;
+       }
+
+        InputStream imageStream = getClass().getResourceAsStream(nuovoPath);
+        if (imageStream != null) {
+            image = new Image(imageStream);
+            img.setImage(image);
+        } else {
+            System.err.println("Immagine non trovata: " + nuovoPath);
+        }
+    }
+
+    public void vistaAutoLaterale(ActionEvent actionEvent) {
+        Marca marcaSelezionata = marca.getValue();
+        Modello modelloSelezionato = modello.getValue();
+        Image image = img.getImage();
+        String imgPath = image.getUrl();
+
+        String pathPosteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "0" + ".png";
+        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "1" + ".png";
+        String pathAnteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
+
+        String nuovoPath = "";
+
+        if(imgPath.equals(pathLaterale)){
+            nuovoPath = pathPosteriore;
+        }else if(imgPath.equals(pathPosteriore)){
+            nuovoPath = pathAnteriore;
+        }else if(imgPath.equals(pathAnteriore)){
+            nuovoPath = pathLaterale;
+        }
+
+        InputStream imageStream = getClass().getResourceAsStream(nuovoPath);
+        if (imageStream != null) {
+            image = new Image(imageStream);
+            img.setImage(image);
+        } else {
+            System.err.println("Immagine non trovata: " + nuovoPath);
+        }
+
+    }
+
 
 }
 
