@@ -28,12 +28,12 @@ public class LoginController {
 
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
-        loadScene("Registration.fxml", event);
+        loadScene("FXML/Registration.fxml", event);
     }
 
     @FXML
     private void goToLogin(ActionEvent event) throws IOException {
-        loadScene("Login.fxml", event);
+        loadScene("FXML/Login.fxml", event);
     }
 
     @FXML
@@ -113,7 +113,7 @@ public class LoginController {
                     // Gestione dell'azione del bottone OK
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
-                            loadScene("Login.fxml", null);
+                            loadScene("FXML/Login.fxml", null);
                         }
                     });
 

@@ -165,7 +165,7 @@ public class InitController {
     }
 
     public void goToUsatoForm(ActionEvent event) {
-        loadScene("Usato.fxml", event);
+        loadScene("FXML/Usato.fxml", event);
     }
 
     public void loadScene(String fxmlFile, ActionEvent event) {
@@ -189,13 +189,54 @@ public class InitController {
 
     public void addOption(ActionEvent actionEvent) {
         Modello modelloSelezionato = modello.getValue();
-        Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
-        if (infot.isSelected()) {
-           prezzo.setText(String.valueOf(Integer.parseInt(prezzo.getText()) + auto.getCosto()/300));
-        }
-        if(!infot.isSelected()) {
-            prezzo.setText(String.valueOf(Integer.parseInt(prezzo.getText()) - auto.getCosto()/300));
-        }
+        Auto auto = map.values().stream()
+                .flatMap(List::stream)
+                .filter(a -> a.getModello().equals(modelloSelezionato))
+                .findFirst()
+                .orElse(null);
 
+        if (auto != null) {
+            int costoAggiuntivo = auto.getCosto() / 300;
+            int costoCheckBox = 0;
+
+            if (infot.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (sensori.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (fari.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (sedili.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (scorta.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (vetri.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (interni.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (ruote.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+            if (cruise.isSelected()) {
+                costoCheckBox += costoAggiuntivo;
+            }
+
+            costo = auto.getCosto() + costoCheckBox;
+            prezzo.setText(String.valueOf(costo));
+        }
     }
+
 }
+
+
+
+
+
+
+
