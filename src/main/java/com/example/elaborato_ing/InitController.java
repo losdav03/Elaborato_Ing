@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.*;
 
@@ -58,6 +59,7 @@ public class InitController {
         marca.getItems().addAll(map.keySet());
         marca.setOnAction(e -> aggiornaModello());
         modello.setOnAction(e -> aggiornaConfiguratore());
+
         colori.getItems().setAll("BIANCO", "NERO", "ROSSO");
         colori.setDisable(true);
         infot.setDisable(true);
@@ -142,7 +144,8 @@ public class InitController {
             // aggiorno le informazioni della macchina (peso larghezza lunghezza ...)
             Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
-            colori.setDisable(false);
+            colori.setDisable(modelloSelezionato.toString().equals("CYBERTRUCK"));
+
             infot.setDisable(false);
             sensori.setDisable(false);
             fari.setDisable(false);
