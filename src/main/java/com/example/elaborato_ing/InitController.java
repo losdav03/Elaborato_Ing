@@ -239,7 +239,7 @@ public class InitController {
         String imgPath = image.getUrl();
 
         String pathPosteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "0" + ".png";
-        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "2" + ".png";
+        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "1" + ".png";
         String pathAnteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
 
         String nuovoPath = "";
@@ -268,7 +268,7 @@ public class InitController {
         String imgPath = image.getUrl();
 
         String pathPosteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "0" + ".png";
-        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "2" + ".png";
+        String pathLaterale = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + "1" + ".png";
         String pathAnteriore = "/com/example/elaborato_ing/images/" + marcaSelezionata + modelloSelezionato + ".png";
 
         String nuovoPath = "";
