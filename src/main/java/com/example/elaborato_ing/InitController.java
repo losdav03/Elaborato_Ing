@@ -60,7 +60,6 @@ public class InitController {
         marca.setOnAction(e -> aggiornaModello());
         modello.setOnAction(e -> aggiornaConfiguratore());
 
-        colori.getItems().setAll("BIANCO", "NERO", "ROSSO");
         colori.setDisable(true);
         infot.setDisable(true);
         sensori.setDisable(true);
@@ -79,7 +78,7 @@ public class InitController {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 14) {
+                if (parts.length >= 14) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     Modello modello = Modello.valueOf(parts[1].trim());
                     double lunghezza = Double.parseDouble(parts[2]);
@@ -95,7 +94,9 @@ public class InitController {
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
                     costo = Integer.parseInt(parts[12]);
                     String sconto = parts[13];
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, costo, sconto);
+                    String[] colorOptions = parts[14].trim().split(";");
+                    List<String> colori = Arrays.asList(colorOptions);
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, costo, sconto,colori);
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -165,6 +166,9 @@ public class InitController {
                 alimentazione.setText(String.valueOf(auto.getAlimentazione()));
                 motore.setText(String.valueOf(auto.getMotore()));
                 prezzo.setText(String.valueOf(auto.getCosto()));
+                colori.getItems().clear();
+                colori.getItems().addAll(auto.getColori());
+                colori.setDisable(false);
             }
         }
     }

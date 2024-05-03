@@ -14,8 +14,9 @@ public class Auto {
     private Optionals optionals;
     private int costo;
     private String sconto;
+    private List<String> colori;
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int costo, String sconto) {
+    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int costo, String sconto, List<String> colori) {
         this.marca = marca;
         this.modello = modello;
         this.lunghezza = lunghezza;
@@ -26,6 +27,7 @@ public class Auto {
         this.motore = motore;
         this.costo=costo;
         this.sconto=sconto;
+        this.colori=colori;
     }
 
     public Marca getMarca() {
@@ -108,7 +110,9 @@ public class Auto {
         this.alimentazione = alimentazione;
     }
 
-
+    public List<String> getColori() {
+        return colori;
+    }
 
     public String getSconto() {
         return sconto;
