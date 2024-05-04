@@ -48,8 +48,6 @@ public class InitController {
 
     @FXML
     private ImageView img;
-
-
     private Map<Marca, List<Auto>> map;
     private Catalogo catalogo = new Catalogo();
 

@@ -2,7 +2,9 @@ package com.example.elaborato_ing;
 
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Auto {
     private Marca marca;
@@ -28,12 +30,28 @@ public class Auto {
         this.costo=costo;
         this.sconto=sconto;
         this.colori=colori;
+        this.immagine = new ArrayList<>();
+
+        for(String colore : colori){
+            caricaImmaginiPerColore(marca,modello,colore);
+        }
     }
 
+    private void caricaImmaginiPerColore(Marca marca, Modello modello, String colore) {
+        List<String> viste = List.of("1","2","3");
+        for(String vista : viste){
+            String percorso = "C:\\Users\\rockg\\IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\images\\"+marca.toString().toLowerCase()+modello.toString().toLowerCase()+colore.toLowerCase()+vista+".png";
+            try {
+                Image img = new Image(getClass().getResourceAsStream(percorso));
+                immagine.add(img);
+            } catch (Exception e) {
+                System.err.println("Immagine non trovata: " + percorso);
+            }
+        }
+    }
     public Marca getMarca() {
         return marca;
     }
-
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
@@ -113,7 +131,9 @@ public class Auto {
     public List<String> getColori() {
         return colori;
     }
+    private void addImg(Marca marca,Modello modello){
 
+    }
     public String getSconto() {
         return sconto;
     }
