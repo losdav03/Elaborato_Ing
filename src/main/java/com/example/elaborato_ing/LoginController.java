@@ -44,6 +44,7 @@ public class LoginController {
         try {
             if (autenticato(username, password)) {
                 System.out.println("Login successful!");
+                loadScene("FXML/Configuratore.fxml",event);
             } else {
                 System.out.println("Credenziali non valide.");
             }
@@ -60,17 +61,24 @@ public class LoginController {
             stage.setScene(new Scene(root));
 
             if (event != null && event.getSource() instanceof Node) {
-                // Se l'evento non è null e proviene da un Node
+                // Se l'evento è presente e proviene da un nodo, allora è stata richiesta una finestra modale
                 Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                primaryStage.close(); // Chiudi la finestra precedente se necessario
                 stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+                stage.initOwner(primaryStage);
+                primaryStage.hide(); // Nasconde la finestra principale invece di chiuderla
+                // Aggiungi un listener per gestire l'evento di chiusura della finestra del login
+                stage.setOnCloseRequest(e -> primaryStage.show()); // Mostra di nuovo la finestra principale quando la finestra del login viene chiusa
+            } else {
+                // Altrimenti, se l'evento è nullo o non proviene da un nodo, apri la finestra in modo modale
+                stage.initModality(Modality.APPLICATION_MODAL);
             }
-            stage.show();
+
+            stage.showAndWait(); // Mostra la finestra e attendi che venga chiusa
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Errore nel caricamento della scena: " + e.getMessage());
         }
     }
+
 
     private boolean autenticato(String username, String password) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\LoginFile.txt"))) {
