@@ -67,9 +67,9 @@ public class UsatoController {
         fileChooser.setTitle("Seleziona un'immagine");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png"));
 
-        File selectedFile = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
-        if (selectedFile != null) {
-            Image image = new Image(selectedFile.toURI().toString());
+        File Immagine = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
+        if (Immagine != null) {
+            Image image = new Image(Immagine.toURI().toString());
             if (imageView1.getImage() == null) {
                 imageView1.setImage(image);
             } else if (imageView2.getImage() == null) {
@@ -83,12 +83,12 @@ public class UsatoController {
     @FXML
     public void RimuoviImgs() {
         // Trova il primo ImageView con un'immagine e rimuovila
-        if (imageView1.getImage() != null) {
-            imageView1.setImage(null);
+        if (imageView3.getImage() != null) {
+            imageView3.setImage(null);
         } else if (imageView2.getImage() != null) {
             imageView2.setImage(null);
-        } else if (imageView3.getImage() != null) {
-            imageView3.setImage(null);
+        } else if (imageView1.getImage() != null) {
+            imageView1.setImage(null);
         } else {
             System.out.println("Tutte le ImageView sono già vuote.");
         }

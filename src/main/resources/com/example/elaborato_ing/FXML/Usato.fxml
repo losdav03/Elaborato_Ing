@@ -48,10 +48,10 @@
     <CheckBox fx:id="ruote" layoutX="477.0" layoutY="521.0" mnemonicParsing="false" onAction="#addRuote" />
     <CheckBox fx:id="cruise" layoutX="477.0" layoutY="346.0" mnemonicParsing="false" onAction="#addCruiseControl" />
     <Button layoutX="17.0" layoutY="438.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="183.0" text="Vendi auto" />
-    <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="40.0" onMouseClicked="#caricaImmagine1" style="-fx-border-color: black; -fx-border-width: 2;" />
-    <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="40.0" onMouseClicked="#caricaImmagine2" style="-fx-border-color: black; -fx-border-width: 2;" />
-    <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="40.0" onMouseClicked="#caricaImmagine3" style="-fx-border-color: black; -fx-border-width: 2;" />
+    <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="40.0" />
+    <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="40.0" />
+    <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="40.0" />
     <Button fx:id="caricaImg" layoutX="232.0" layoutY="210.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
-    <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="210.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
+    <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="210.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
 
 </AnchorPane>
