@@ -48,4 +48,7 @@
    <CheckBox fx:id="cruise" layoutX="446.0" layoutY="195.0" mnemonicParsing="false" onAction="#addCruiseControl" />
    <Button layoutX="266.0" layoutY="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Carica immagini macchina" />
    <Button layoutX="276.0" layoutY="406.0" mnemonicParsing="false" text="Vendi auto" />
+   <HBox fx:id="carosello" layoutX="257.0" layoutY="21.0" prefHeight="81.0" prefWidth="248.0" spacing="10">
+
+   </HBox>
 </AnchorPane>

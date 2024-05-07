@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -55,7 +56,10 @@ public class UsatoController {
 
     @FXML
     private Button caricaImmaginiBtn; // Bottone per caricare immagini
-
+    @FXML
+    private HBox imageCarousel;
+    @FXML
+    private Button loadImagesButton;
     @FXML
     private Button vendiAutoBtn; // Bottone per vendere auto
 
@@ -64,36 +68,16 @@ public class UsatoController {
     @FXML
     public void caricaImmagini() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleziona le immagini");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png", "*.jpg", "*.jpeg"));
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(loadImagesButton.getScene().getWindow());
 
-        List<File> files = fileChooser.showOpenMultipleDialog(caricaImmaginiBtn.getScene().getWindow());
-        if (files != null && !files.isEmpty()) {
-            for (File file : files) {
-                String marcaVal = marca.getText().trim();
-                String modelloVal = modello.getText().trim();
-                String coloreVal = colori.getText().trim();
-
-                if (marcaVal.isEmpty() || modelloVal.isEmpty() || coloreVal.isEmpty()) {
-                    System.err.println("Marca, Modello, o Colore non possono essere vuoti.");
-                    continue;
-                }
-
-                // Costruire il nome del file: marcamodellocolorevista.png
-                int vista = immaginiCaricate.getOrDefault(marcaVal + modelloVal + coloreVal, new ArrayList<>()).size() + 1;
-                String fileName = marcaVal + modelloVal + coloreVal + vista + ".png";
-
-                Path targetPath = Path.of("src/main/resources/com/example/elaborato_ing/images/" + fileName);
-                try {
-                    Files.copy(file.toPath(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-                    System.out.println("Immagine caricata: " + fileName);
-
-                    // Aggiungi alla lista delle immagini caricate
-                    immaginiCaricate.computeIfAbsent(marcaVal + modelloVal + coloreVal, k -> new ArrayList<>()).add(targetPath);
-
-                } catch (Exception e) {
-                    System.err.println("Errore nel copiare l'immagine: " + e.getMessage());
-                }
+        if (selectedFiles != null) {
+            for (File file : selectedFiles) {
+                Image image = new Image(file.toURI().toString());
+                ImageView imageView = new ImageView(image);
+                imageView.setFitHeight(80); // Imposta altezza della miniatura
+                imageView.setPreserveRatio(true); // Mantieni proporzioni
+                imageCarousel.getChildren().add(imageView);
             }
         }
     }
