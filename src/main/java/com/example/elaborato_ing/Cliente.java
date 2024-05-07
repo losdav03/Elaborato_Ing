@@ -7,12 +7,4 @@ public class Cliente extends Persona{
         super(email, nome, cognome, password);
         this.idCliente = idCliente;
     }
-
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
 }
