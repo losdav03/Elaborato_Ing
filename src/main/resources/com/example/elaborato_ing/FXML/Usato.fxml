@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="602.0" prefWidth="680.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.UsatoController">
+<AnchorPane prefHeight="550.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.UsatoController">
     <Label layoutX="14.0" layoutY="41.0" prefWidth="76.0" text="Marca" />
     <Label layoutX="14.0" layoutY="82.0" prefWidth="76.0" text="Modello" />
     <Label layoutX="14.0" layoutY="121.0" prefWidth="76.0" text="Altezza" />
@@ -14,7 +14,7 @@
     <Label layoutX="14.0" layoutY="275.0" prefHeight="17.0" prefWidth="76.0" text="Volume" />
     <Label layoutX="14.0" layoutY="286.0" prefWidth="76.0" text="Bagagliaio" />
     <Label layoutX="14.0" layoutY="321.0" prefWidth="76.0" text="Alimentazione" />
-    <Label layoutX="14.0" layoutY="410.0" text="Colori" />
+    <Label layoutX="14.0" layoutY="396.0" text="Colori" />
     <Label layoutX="14.0" layoutY="361.0" text="Motore" />
     <TextField fx:id="marca" layoutX="95.0" layoutY="37.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="modello" layoutX="95.0" layoutY="77.0" prefHeight="25.0" prefWidth="104.0" />
@@ -24,35 +24,34 @@
     <TextField fx:id="peso" layoutX="95.0" layoutY="237.0" prefWidth="104.0" />
     <TextField fx:id="volume" layoutX="95.0" layoutY="277.0" prefWidth="104.0" />
     <TextField fx:id="alimentazione" layoutX="95.0" layoutY="317.0" prefWidth="104.0" />
-    <TextField fx:id="colori" layoutX="95.0" layoutY="392.0" prefHeight="52.0" prefWidth="130.0" />
+    <TextField fx:id="colori" layoutX="95.0" layoutY="392.0" prefWidth="104.0" />
     <Label fx:id="motore" layoutX="113.0" layoutY="349.0" />
     <TextField layoutX="95.0" layoutY="357.0" prefWidth="104.0" />
-    <Label layoutX="392.0" layoutY="269.0" text="OPTIONAL">
+    <Label layoutX="372.0" layoutY="298.0" text="OPTIONAL">
     </Label>
-    <Label layoutX="327.0" layoutY="292.0" text="Infotainment" />
-    <Label layoutX="327.0" layoutY="317.0" text="Cruise Control" />
-    <Label layoutX="327.0" layoutY="342.0" text="Fari Full LED" />
-    <Label layoutX="327.0" layoutY="367.0" text="Sensori Parcheggio" />
-    <Label layoutX="327.0" layoutY="392.0" text="Sedili Riscaldati" />
-    <Label layoutX="327.0" layoutY="417.0" text="Ruota Di Scorta" />
-    <Label layoutX="327.0" layoutY="442.0" text="Vetri Oscurati" />
-    <Label layoutX="327.0" layoutY="467.0" text="Interni In Pelle" />
-    <Label layoutX="327.0" layoutY="492.0" text="Ruote Grandi" />
-    <CheckBox fx:id="infot" layoutX="497.0" layoutY="292.0" mnemonicParsing="false" onAction="#addInfot" />
-    <CheckBox fx:id="sensori" layoutX="497.0" layoutY="367.0" mnemonicParsing="false" onAction="#addSensori" />
-    <CheckBox fx:id="fari" layoutX="497.0" layoutY="342.0" mnemonicParsing="false" onAction="#addFariFullLED" />
-    <CheckBox fx:id="sedili" layoutX="497.0" layoutY="392.0" mnemonicParsing="false" onAction="#addSediliRiscaldati" />
-    <CheckBox fx:id="scorta" layoutX="497.0" layoutY="417.0" mnemonicParsing="false" onAction="#addScorta" />
-    <CheckBox fx:id="vetri" layoutX="497.0" layoutY="442.0" mnemonicParsing="false" onAction="#addVetri" />
-    <CheckBox fx:id="interni" layoutX="497.0" layoutY="467.0" mnemonicParsing="false" onAction="#addInterni" />
-    <CheckBox fx:id="ruote" layoutX="497.0" layoutY="492.0" mnemonicParsing="false" onAction="#addRuote" />
-    <CheckBox fx:id="cruise" layoutX="497.0" layoutY="317.0" mnemonicParsing="false" onAction="#addCruiseControl" />
-    <Button layoutX="327.0" layoutY="528.0" mnemonicParsing="false" text="Vendi auto" />
-
-    <ImageView fx:id="imageView1" onMouseClicked="#caricaImmagine" fitHeight="154.0" fitWidth="100.0" layoutX="302.0" layoutY="27.0" />
-    <ImageView fx:id="imageView2" onMouseClicked="#caricaImmagine" fitHeight="154.0" fitWidth="100.0" layoutX="428.0" layoutY="27.0" />
-    <ImageView fx:id="imageView3" onMouseClicked="#caricaImmagine" fitHeight="154.0" fitWidth="100.0" layoutX="549.0" layoutY="27.0" />
-
-
+    <Label layoutX="307.0" layoutY="321.0" text="Infotainment" />
+    <Label layoutX="307.0" layoutY="346.0" text="Cruise Control" />
+    <Label layoutX="307.0" layoutY="371.0" text="Fari Full LED" />
+    <Label layoutX="307.0" layoutY="396.0" text="Sensori Parcheggio" />
+    <Label layoutX="307.0" layoutY="421.0" text="Sedili Riscaldati" />
+    <Label layoutX="307.0" layoutY="446.0" text="Ruota Di Scorta" />
+    <Label layoutX="307.0" layoutY="471.0" text="Vetri Oscurati" />
+    <Label layoutX="307.0" layoutY="496.0" text="Interni In Pelle" />
+    <Label layoutX="307.0" layoutY="521.0" text="Ruote Grandi" />
+    <CheckBox fx:id="infot" layoutX="477.0" layoutY="321.0" mnemonicParsing="false" onAction="#addInfot" />
+    <CheckBox fx:id="sensori" layoutX="477.0" layoutY="396.0" mnemonicParsing="false" onAction="#addSensori" />
+    <CheckBox fx:id="fari" layoutX="477.0" layoutY="371.0" mnemonicParsing="false" onAction="#addFariFullLED" />
+    <CheckBox fx:id="sedili" layoutX="477.0" layoutY="421.0" mnemonicParsing="false" onAction="#addSediliRiscaldati" />
+    <CheckBox fx:id="scorta" layoutX="477.0" layoutY="446.0" mnemonicParsing="false" onAction="#addScorta" />
+    <CheckBox fx:id="vetri" layoutX="477.0" layoutY="471.0" mnemonicParsing="false" onAction="#addVetri" />
+    <CheckBox fx:id="interni" layoutX="477.0" layoutY="496.0" mnemonicParsing="false" onAction="#addInterni" />
+    <CheckBox fx:id="ruote" layoutX="477.0" layoutY="521.0" mnemonicParsing="false" onAction="#addRuote" />
+    <CheckBox fx:id="cruise" layoutX="477.0" layoutY="346.0" mnemonicParsing="false" onAction="#addCruiseControl" />
+    <Button layoutX="17.0" layoutY="438.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="183.0" text="Vendi auto" />
+    <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="40.0" onMouseClicked="#caricaImmagine1" style="-fx-border-color: black; -fx-border-width: 2;" />
+    <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="40.0" onMouseClicked="#caricaImmagine2" style="-fx-border-color: black; -fx-border-width: 2;" />
+    <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="40.0" onMouseClicked="#caricaImmagine3" style="-fx-border-color: black; -fx-border-width: 2;" />
+    <Button fx:id="caricaImg" layoutX="232.0" layoutY="210.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
+    <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="210.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
 
 </AnchorPane>

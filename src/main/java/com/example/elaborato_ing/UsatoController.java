@@ -25,21 +25,7 @@ import java.util.Map;
 public class UsatoController {
 
     @FXML
-    private Button loadImagesButton;
-
-    @FXML
-    private HBox imageCarousel;
-
-    @FXML
     private ImageView imageView1, imageView2, imageView3;
-
-    @FXML
-    private ScrollPane scrollPane;
-
-
-    private final List<Image> imageList = new ArrayList<>();
-
-
     public void addInfot(ActionEvent actionEvent) {
 
     }
@@ -75,22 +61,38 @@ public class UsatoController {
     public void addCruiseControl(ActionEvent actionEvent) {
 
     }
-
-    public void caricaImmagine() throws FileNotFoundException {
-
+    @FXML
+    public void caricaImgs() {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleziona un'immagine");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png"));
 
-        File file = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
-
-        if (file != null) {
-            InputStream imageStream = new FileInputStream(file); // Usiamo FileInputStream per caricare l'immagine correttamente
-            Image image = new Image(imageStream);
-            imageView1.setImage(image);
+        File selectedFile = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            if (imageView1.getImage() == null) {
+                imageView1.setImage(image);
+            } else if (imageView2.getImage() == null) {
+                imageView2.setImage(image);
+            } else {
+                imageView3.setImage(image);
+            }
         }
     }
 
-
+    @FXML
+    public void RimuoviImgs() {
+        // Trova il primo ImageView con un'immagine e rimuovila
+        if (imageView1.getImage() != null) {
+            imageView1.setImage(null);
+        } else if (imageView2.getImage() != null) {
+            imageView2.setImage(null);
+        } else if (imageView3.getImage() != null) {
+            imageView3.setImage(null);
+        } else {
+            System.out.println("Tutte le ImageView sono già vuote.");
+        }
+    }
 }
     /*
     public void caricaImmagini(ActionEvent actionEvent) {
