@@ -16,8 +16,6 @@ public class InitController {
     @FXML
     private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, motore, prezzo;
 
-    private int costo = 0;
-
     @FXML
     private ComboBox<Marca> marca;
 
@@ -31,17 +29,17 @@ public class InitController {
     private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
 
     @FXML
-    private Button acquistabtn, vendibtn, btnPDF,btnSx,btnDx;
+    private Button acquistabtn, btnPDF,btnSx,btnDx;
 
     @FXML
     private ImageView img;
     private Map<Marca, List<Auto>> map;
-    private Catalogo catalogo = new Catalogo();
-    private Model model = new Model();
+    private final Catalogo catalogo = new Catalogo();
+    private final Model model = new Model();
     private int vista = 1;
 
     public void initialize() {
-        String filePath = "src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\Catalogo.txt";
+        String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt";
         File file = new File(filePath);
 
         if (!file.exists()) {
@@ -51,10 +49,10 @@ public class InitController {
 
         map = model.caricaDaFile(filePath, catalogo);
         marca.getItems().addAll(map.keySet());
-        marca.setOnAction(e -> aggiornaModello());
-        modello.setOnAction(e -> aggiornaColori());
+        marca.setOnAction(_ -> aggiornaModello());
+        modello.setOnAction(_ -> aggiornaColori());
         vista = 1;
-        colori.setOnAction(e -> aggiornaImg());
+        colori.setOnAction(_ -> aggiornaImg());
 
         modello.setDisable(true);
         colori.setDisable(true);
@@ -64,6 +62,7 @@ public class InitController {
         btnSx.setDisable(true);
         btnDx.setDisable(true);
     }
+
 
     private void aggiornaModello() {
 
@@ -104,7 +103,7 @@ public class InitController {
                 larghezza.setText(String.valueOf(auto.getLarghezza()));
                 peso.setText(String.valueOf(auto.getPeso()));
                 volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
-                alimentazione.setText(String.valueOf(auto.getAlimentazione()));
+                alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
                 motore.setText(String.valueOf(auto.getMotore()));
                 prezzo.setText(String.valueOf(auto.getCosto()));
 
@@ -144,7 +143,7 @@ public class InitController {
     }
 
 
-    public void addOption(ActionEvent actionEvent) {
+    public void addOption() {
         Modello modelloSelezionato = modello.getValue();
         Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
@@ -180,26 +179,26 @@ public class InitController {
                 costoCheckBox += costoAggiuntivo;
             }
 
-            costo = auto.getCosto() + costoCheckBox;
+            int costo = auto.getCosto() + costoCheckBox;
             prezzo.setText(String.valueOf(costo));
         }
     }
 
-    public void btnSx(ActionEvent actionEvent) {
+    public void btnSx() {
         String pathSx = "";
         switch (vista) {
-            case 1:
+            case 1 -> {
                 vista = 3;
                 pathSx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 vista = 1;
                 pathSx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 vista = 2;
                 pathSx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
-                break;
+            }
         }
 
 
@@ -208,21 +207,21 @@ public class InitController {
 
     }
 
-    public void btnDx(ActionEvent actionEvent) {
+    public void btnDx() {
         String pathDx = "";
         switch (vista) {
-            case 1:
+            case 1 -> {
                 vista = 2;
                 pathDx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 vista = 3;
                 pathDx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 vista = 1;
                 pathDx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
-                break;
+            }
         }
 
         Image image = new Image(pathDx);
@@ -246,7 +245,7 @@ public class InitController {
 
     }
 
-    public void generaPDF(ActionEvent actionEvent) {
+    public void generaPDF() {
 
     }
 
