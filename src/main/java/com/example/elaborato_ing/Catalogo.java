@@ -1,7 +1,5 @@
 package com.example.elaborato_ing;
 
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 import java.util.List;
 
