@@ -1,5 +1,6 @@
 package com.example.elaborato_ing;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -27,5 +28,8 @@ public class UsatoController {
             Image image = new Image(file.toURI().toString());
             imgUsato.setImage(image);
         }
+    }
+
+    public void addOption(ActionEvent actionEvent) {
     }
 }

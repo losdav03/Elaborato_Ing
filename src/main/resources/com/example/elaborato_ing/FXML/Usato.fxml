@@ -3,47 +3,47 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.UsatoController">
-   <Label layoutX="14.0" layoutY="47.0" text="Marca" />
-   <Label layoutX="14.0" layoutY="93.0" text="Modello" />
-   <Label layoutX="14.0" layoutY="150.0" text="Altezza" />
-   <Label layoutX="32.0" layoutY="255.0" text="Lunghezza" />
-   <Label layoutX="32.0" layoutY="272.0" text="Larghezza" />
-   <Label layoutX="32.0" layoutY="289.0" text="Peso" />
-   <Label layoutX="31.0" layoutY="306.0" prefHeight="17.0" prefWidth="54.0" text="Volume" />
-   <Label layoutX="32.0" layoutY="318.0" text="Bagagliaio" />
-   <Label layoutX="32.0" layoutY="335.0" text="Alimentazione" />
-   <Label layoutX="403.0" layoutY="46.0" text="Colori" />
-   <Label layoutX="403.0" layoutY="66.0" text="Motore" />
-   <TextField fx:id="marca" layoutX="60.0" layoutY="43.0" prefHeight="25.0" prefWidth="104.0" />
-   <TextField fx:id="modello" layoutX="60.0" layoutY="89.0" prefHeight="25.0" prefWidth="104.0" />
-   <TextField fx:id="altezza" layoutX="113.0" layoutY="238.0" />
-   <TextField fx:id="lunghezza" layoutX="113.0" layoutY="255.0" />
-   <TextField fx:id="larghezza" layoutX="113.0" layoutY="272.0" />
-   <TextField fx:id="peso" layoutX="113.0" layoutY="289.0" />
-   <TextField fx:id="volume" layoutX="113.0" layoutY="315.0" />
-   <TextField fx:id="alimentazione" layoutX="113.0" layoutY="335.0" />
-   <TextArea fx:id="colori" layoutX="449.0" layoutY="46.0" prefHeight="25.0" prefWidth="104.0" />
-   <Label fx:id="motore" layoutX="113.0" layoutY="352.0" />
-   <TextField layoutX="113.0" layoutY="352.0" />
-   <Label layoutX="434.0" layoutY="76.0" text="OPTIONAL">
+<AnchorPane prefHeight="454.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.UsatoController">
+   <Label layoutX="14.0" layoutY="41.0" prefWidth="76.0" text="Marca" />
+   <Label layoutX="14.0" layoutY="82.0" prefWidth="76.0" text="Modello" />
+   <Label layoutX="14.0" layoutY="121.0" prefWidth="76.0" text="Altezza" />
+   <Label layoutX="14.0" layoutY="160.0" prefWidth="76.0" text="Lunghezza" />
+   <Label layoutX="14.0" layoutY="201.0" prefWidth="76.0" text="Larghezza" />
+   <Label layoutX="14.0" layoutY="241.0" prefWidth="76.0" text="Peso" />
+   <Label layoutX="14.0" layoutY="275.0" prefHeight="17.0" prefWidth="76.0" text="Volume" />
+   <Label layoutX="14.0" layoutY="286.0" prefWidth="76.0" text="Bagagliaio" />
+   <Label layoutX="14.0" layoutY="321.0" prefWidth="76.0" text="Alimentazione" />
+   <Label layoutX="14.0" layoutY="410.0" text="Colori" />
+   <Label layoutX="14.0" layoutY="361.0" text="Motore" />
+   <TextField fx:id="marca" layoutX="95.0" layoutY="37.0" prefHeight="25.0" prefWidth="104.0" />
+   <TextField fx:id="modello" layoutX="95.0" layoutY="77.0" prefHeight="25.0" prefWidth="104.0" />
+   <TextField fx:id="altezza" layoutX="95.0" layoutY="117.0" prefWidth="104.0" />
+   <TextField fx:id="lunghezza" layoutX="95.0" layoutY="157.0" prefWidth="104.0" />
+   <TextField fx:id="larghezza" layoutX="95.0" layoutY="197.0" prefWidth="104.0" />
+   <TextField fx:id="peso" layoutX="95.0" layoutY="237.0" prefWidth="104.0" />
+   <TextField fx:id="volume" layoutX="95.0" layoutY="277.0" prefWidth="104.0" />
+   <TextField fx:id="alimentazione" layoutX="95.0" layoutY="317.0" prefWidth="104.0" />
+   <TextField fx:id="colori" layoutX="95.0" layoutY="392.0" prefHeight="52.0" prefWidth="130.0" />
+   <Label fx:id="motore" layoutX="113.0" layoutY="349.0" />
+   <TextField layoutX="95.0" layoutY="357.0" prefWidth="104.0" />
+   <Label layoutX="365.0" layoutY="112.0" text="OPTIONAL">
    </Label>
-   <Label layoutX="403.0" layoutY="102.0" text="Infotainment" />
-   <Label layoutX="403.0" layoutY="119.0" text="Cruise Control" />
-   <Label layoutX="403.0" layoutY="136.0" text="Fari Full LED" />
-   <Label layoutX="403.0" layoutY="153.0" text="Sensori Parcheggio" />
-   <Label layoutX="403.0" layoutY="170.0" text="Sedili Riscaldati" />
-   <Label layoutX="403.0" layoutY="187.0" text="Ruota Di Scorta" />
-   <Label layoutX="403.0" layoutY="204.0" text="Vetri Oscurati" />
-   <Label layoutX="403.0" layoutY="221.0" text="Interni In Pelle" />
-   <Label layoutX="403.0" layoutY="238.0" text="Ruote Grandi" />
-   <CheckBox fx:id="infot" layoutX="527.0" layoutY="102.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="sensori" layoutX="527.0" layoutY="153.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="fari" layoutX="527.0" layoutY="136.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="sedili" layoutX="527.0" layoutY="170.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="scorta" layoutX="527.0" layoutY="187.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="vetri" layoutX="527.0" layoutY="204.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="interni" layoutX="527.0" layoutY="221.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="ruote" layoutX="527.0" layoutY="238.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="cruise" layoutX="527.0" layoutY="119.0" mnemonicParsing="false" onAction="#addOption" />
+   <Label layoutX="300.0" layoutY="135.0" text="Infotainment" />
+   <Label layoutX="300.0" layoutY="160.0" text="Cruise Control" />
+   <Label layoutX="300.0" layoutY="185.0" text="Fari Full LED" />
+   <Label layoutX="300.0" layoutY="210.0" text="Sensori Parcheggio" />
+   <Label layoutX="300.0" layoutY="235.0" text="Sedili Riscaldati" />
+   <Label layoutX="300.0" layoutY="260.0" text="Ruota Di Scorta" />
+   <Label layoutX="300.0" layoutY="285.0" text="Vetri Oscurati" />
+   <Label layoutX="300.0" layoutY="310.0" text="Interni In Pelle" />
+   <Label layoutX="300.0" layoutY="335.0" text="Ruote Grandi" />
+   <CheckBox fx:id="infot" layoutX="470.0" layoutY="135.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="sensori" layoutX="470.0" layoutY="210.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="fari" layoutX="470.0" layoutY="185.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="sedili" layoutX="470.0" layoutY="235.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="scorta" layoutX="470.0" layoutY="260.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="vetri" layoutX="470.0" layoutY="285.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="interni" layoutX="470.0" layoutY="310.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="ruote" layoutX="470.0" layoutY="335.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="cruise" layoutX="470.0" layoutY="160.0" mnemonicParsing="false" onAction="#addOption" />
 </AnchorPane>
