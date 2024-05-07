@@ -16,4 +16,14 @@ public class Catalogo {
         catalogo.add(a);
     }
 
+    public Auto getAuto(Marca marca,Modello modello){
+        for(Auto auto : catalogo){
+            if(auto.getMarca().equals(marca)){
+                if(auto.getModello().equals(modello)){
+                    return auto;
+                }
+            }
+        }
+        return null;
+    }
 }

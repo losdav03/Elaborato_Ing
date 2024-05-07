@@ -33,7 +33,7 @@ public class Model {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 14) {
+                if (parts.length == 15) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     Modello modello = Modello.valueOf(parts[1].trim());
                     double lunghezza = Double.parseDouble(parts[2]);
@@ -52,6 +52,7 @@ public class Model {
                     String[] colorOptions = parts[14].trim().split(";");
                     List<String> colori = Arrays.asList(colorOptions);
                     Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, prezzo, sconto, colori);
+                    auto.caricaImmagini();
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -66,15 +67,6 @@ public class Model {
         return dati;
     }
 
-    public String getImgColori(Marca marca, Modello modello, String colore, int vista) {
-        if (marca == null || modello == null || colore == null) {
-            System.err.println("Errore: Parametri nulli forniti a getImgColori.");
-            return null;
-        }
-
-        String path = "/com/example/elaborato_ing/images/" +marca.toString().toLowerCase() + modello.toString().toLowerCase() + colore.toLowerCase() + vista + ".png";
-        return path;
-    }
 
     public void loadScene(String fxmlFile, ActionEvent event) {
         try {
@@ -101,6 +93,7 @@ public class Model {
             System.err.println("Errore nel caricamento della scena: " + e.getMessage());
         }
     }
+
 
     public void PDF(){
         try {

@@ -2,6 +2,7 @@ package com.example.elaborato_ing;
 
 import javafx.scene.image.Image;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,31 +28,17 @@ public class Auto {
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
-        this.costo=costo;
-        this.sconto=sconto;
-        this.colori=colori;
+        this.costo = costo;
+        this.sconto = sconto;
+        this.colori = colori;
         this.immagine = new ArrayList<>();
-
-        for(String colore : colori){
-            caricaImmaginiPerColore(marca,modello,colore);
-        }
+        caricaImmagini();
     }
 
-    private void caricaImmaginiPerColore(Marca marca, Modello modello, String colore) {
-        List<String> viste = List.of("1","2","3");
-        for(String vista : viste){
-            String percorso = "C:\\Users\\rockg\\IdeaProjects\\Elaborato_Ing\\src\\main\\resources\\com\\example\\elaborato_ing\\images\\"+marca.toString().toLowerCase()+modello.toString().toLowerCase()+colore.toLowerCase()+vista+".png";
-            try {
-                Image img = new Image(getClass().getResourceAsStream(percorso));
-                immagine.add(img);
-            } catch (Exception e) {
-                System.err.println("Immagine non trovata: " + percorso);
-            }
-        }
-    }
     public Marca getMarca() {
         return marca;
     }
+
     public void setMarca(Marca marca) {
         this.marca = marca;
     }
@@ -104,8 +91,9 @@ public class Auto {
         this.volumeBagagliaio = volumeBagagliaio;
     }
 
-    public List<Image> getImmagine() {
-        return immagine;
+    public String getImmagine(String colore,int vista) {
+        String path = "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toString().toLowerCase() + colore.toLowerCase() + vista + ".png";
+        return getClass().getResource(path).toExternalForm();
     }
 
     public void setImmagine(List<Image> immagine) {
@@ -131,9 +119,7 @@ public class Auto {
     public List<String> getColori() {
         return colori;
     }
-    private void addImg(Marca marca,Modello modello){
 
-    }
     public String getSconto() {
         return sconto;
     }
@@ -148,5 +134,17 @@ public class Auto {
 
     public void setSconto(String sconto) {
         this.sconto = sconto;
+    }
+    public void caricaImmagini(){
+        for(String c:colori){
+            for(int i = 1;i<=3;i++) {
+                String path = "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toString().toLowerCase() + c.toLowerCase() + i + ".png";
+                InputStream imageStream = getClass().getResourceAsStream(path);
+                if (imageStream != null) {
+                    Image image = new Image(imageStream);
+                    immagine.add(image);
+                }
+            }
+        }
     }
 }
