@@ -37,13 +37,15 @@
    <Label layoutX="276.0" layoutY="320.0" text="Vetri Oscurati" />
    <Label layoutX="276.0" layoutY="345.0" text="Interni In Pelle" />
    <Label layoutX="276.0" layoutY="370.0" text="Ruote Grandi" />
-   <CheckBox fx:id="infot" layoutX="446.0" layoutY="170.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="sensori" layoutX="446.0" layoutY="245.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="fari" layoutX="446.0" layoutY="220.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="sedili" layoutX="446.0" layoutY="270.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="scorta" layoutX="446.0" layoutY="295.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="vetri" layoutX="446.0" layoutY="320.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="interni" layoutX="446.0" layoutY="345.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="ruote" layoutX="446.0" layoutY="370.0" mnemonicParsing="false" onAction="#addOption" />
-   <CheckBox fx:id="cruise" layoutX="446.0" layoutY="195.0" mnemonicParsing="false" onAction="#addOption" />
+   <CheckBox fx:id="infot" layoutX="446.0" layoutY="170.0" mnemonicParsing="false" onAction="#addInfot" />
+   <CheckBox fx:id="sensori" layoutX="446.0" layoutY="245.0" mnemonicParsing="false" onAction="#addSensori" />
+   <CheckBox fx:id="fari" layoutX="446.0" layoutY="220.0" mnemonicParsing="false" onAction="#addFariFullLED" />
+   <CheckBox fx:id="sedili" layoutX="446.0" layoutY="270.0" mnemonicParsing="false" onAction="#addSediliRiscaldati" />
+   <CheckBox fx:id="scorta" layoutX="446.0" layoutY="295.0" mnemonicParsing="false" onAction="#addScorta" />
+   <CheckBox fx:id="vetri" layoutX="446.0" layoutY="320.0" mnemonicParsing="false" onAction="#addVetri" />
+   <CheckBox fx:id="interni" layoutX="446.0" layoutY="345.0" mnemonicParsing="false" onAction="#addInterni" />
+   <CheckBox fx:id="ruote" layoutX="446.0" layoutY="370.0" mnemonicParsing="false" onAction="#addRuote" />
+   <CheckBox fx:id="cruise" layoutX="446.0" layoutY="195.0" mnemonicParsing="false" onAction="#addCruiseControl" />
+   <Button layoutX="266.0" layoutY="109.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="230.0" text="Carica immagini macchina" />
+   <Button layoutX="276.0" layoutY="406.0" mnemonicParsing="false" text="Vendi auto" />
 </AnchorPane>
