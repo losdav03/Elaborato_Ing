@@ -7,9 +7,9 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.LoginController">
 
     <!-- Immagine di sfondo -->
-    <ImageView fitHeight="400.0" fitWidth="608.0" layoutX="-5.0">
+    /*<ImageView fitHeight="400.0" fitWidth="608.0" layoutX="-5.0">
         <Image url="@../images/sfondoLogin.jpeg" />
-    </ImageView>
+    </ImageView>*/
 
     <!-- Titolo -->
     <Label layoutX="223.0" layoutY="98.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;" text="Registrazione" />
