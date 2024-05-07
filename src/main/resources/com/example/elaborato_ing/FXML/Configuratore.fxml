@@ -71,8 +71,8 @@
             </Label>
             <Button fx:id="acquistabtn" layoutX="79.0" layoutY="400.0" mnemonicParsing="false" onAction="#acquistaFunction" prefHeight="43.0" prefWidth="91.0" text="Login" textFill="#227916" />
             <Button fx:id="vendibtn" layoutX="253.0" layoutY="400.0" mnemonicParsing="false" onAction="#goToUsatoForm" prefHeight="43.0" prefWidth="91.0" text="Vendi usato" textFill="RED" />
-            <Button fx:id="btnSx" layoutX="273.0" layoutY="294.0" mnemonicParsing="false" onAction="#vistaAutoPosteriore" text="-&gt;" textAlignment="CENTER" />
-            <Button fx:id="btnDx" layoutX="99.0" layoutY="294.0" mnemonicParsing="false" onAction="#vistaAutoLaterale" text="&lt;-" textAlignment="CENTER" />
+            <Button fx:id="btnSx" layoutX="273.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnDx" text="-&gt;" textAlignment="CENTER" />
+            <Button fx:id="btnDx" layoutX="99.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnSx" text="&lt;-" textAlignment="CENTER" />
             <Label layoutX="181.0" layoutY="340.0" text="€" />
             <Button fx:id="btnPDF" onAction="#generaPDF" layoutX="183.0" layoutY="457.0" mnemonicParsing="false" text="Scarica PDF" />
          </children></AnchorPane>

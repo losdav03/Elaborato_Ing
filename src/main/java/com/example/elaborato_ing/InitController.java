@@ -44,12 +44,14 @@ public class InitController {
     private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
 
     @FXML
-    private Button acquistabtn, vendibtn, btnPDF ;
+    private Button acquistabtn, vendibtn, btnPDF;
 
     @FXML
     private ImageView img;
     private Map<Marca, List<Auto>> map;
     private Catalogo catalogo = new Catalogo();
+    private Model model = new Model();
+    private int vista = 1;
 
     public void initialize() {
         String filePath = "src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\Catalogo.txt";
@@ -60,12 +62,12 @@ public class InitController {
             return;
         }
 
-        map = caricaFile(filePath);
-        System.out.println("Chiavi nella mappa: " + map.keySet());
-        System.out.println("Valori in marca ComboBox: " + marca.getItems());
+        map = model.caricaDaFile(filePath, catalogo);
         marca.getItems().addAll(map.keySet());
         marca.setOnAction(e -> aggiornaModello());
-        modello.setOnAction(e -> aggiornaConfiguratore());
+        modello.setOnAction(e -> aggiornaColori());
+        vista = 1;
+        colori.setOnAction(e -> aggiornaImg());
 
         colori.setDisable(true);
         infot.setDisable(true);
@@ -80,44 +82,17 @@ public class InitController {
         btnPDF.setVisible(false);
     }
 
-    private Map<Marca, List<Auto>> caricaFile(String file) {
-        Map<Marca, List<Auto>> dati = new HashMap<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 14) {
-                    Marca marca = Marca.valueOf(parts[0].trim());
-                    Modello modello = Modello.valueOf(parts[1].trim());
-                    double lunghezza = Double.parseDouble(parts[2]);
-                    double altezza = Double.parseDouble(parts[3]);
-                    double larghezza = Double.parseDouble(parts[4]);
-                    double peso = Double.parseDouble(parts[5]);
-                    double volume = Double.parseDouble(parts[6]);
-                    String nomeMotore = parts[7];
-                    Alimentazione alimentazione = Alimentazione.valueOf(parts[8].trim());
-                    int cilindrata = Integer.parseInt(parts[9].trim());
-                    int potenza = Integer.parseInt(parts[10].trim());
-                    double consumi = Double.parseDouble(parts[11]);
-                    Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
-                    costo = Integer.parseInt(parts[12]);
-                    String sconto = parts[13];
-                    String[] colorOptions = parts[14].trim().split(";");
-                    List<String> colori = Arrays.asList(colorOptions);
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, costo, sconto,colori);
-                    catalogo.add(auto);
-                    dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
-                }
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("File non trovato: " + file);
-        } catch (IOException e) {
-            System.err.println("Errore nella lettura del file: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.err.println("Errore nei dati: " + e.getMessage());
+    private void aggiornaImg() {
+        String path = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
+        InputStream imageStream = getClass().getResourceAsStream(path);
+
+        if (imageStream != null) {
+            Image image = new Image(imageStream);
+            img.setImage(image);
         }
-        return dati;
+
     }
+
 
     private void aggiornaModello() {
         Marca marcaSelezionata = marca.getValue();
@@ -135,22 +110,13 @@ public class InitController {
     }
 
 
-    private void aggiornaConfiguratore() {
+    private void aggiornaColori() {
         Marca marcaSelezionata = marca.getValue();
         Modello modelloSelezionato = modello.getValue();
 
-        if (marcaSelezionata != null && modelloSelezionato != null) {
-            String imagePath = "/com/example/elaborato_ing/images/" + marcaSelezionata.toString().toLowerCase() + modelloSelezionato.toString().toLowerCase() + "bianco1" + ".png";
-            InputStream imageStream = getClass().getResourceAsStream(imagePath);
 
-            if (imageStream != null) {
-                Image image = new Image(imageStream);
-                img.setImage(image);
-                img.setUserData(imagePath);
-            } else {
-                System.err.println("Immagine non trovata: " + imagePath);
-            }
-            // aggiorno le informazioni della macchina (peso larghezza lunghezza ...)
+        if (marcaSelezionata != null && modelloSelezionato != null) {
+
             Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
             colori.setDisable(modelloSelezionato.toString().equals("CYBERTRUCK"));
@@ -256,84 +222,60 @@ public class InitController {
         }
     }
 
-    public void vistaAutoPosteriore(ActionEvent actionEvent) {
-        String marcaSelezionata = String.valueOf(marca.getValue()).toLowerCase();
-        String modelloSelezionato = String.valueOf(modello.getValue()).toLowerCase();
-
-
-        String imgPathCorrente = (String) img.getUserData();
-        String basePath = "/com/example/elaborato_ing/images/";
-
-        String pathPosteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco3.png";
-        String pathLaterale = basePath + marcaSelezionata + modelloSelezionato + "bianco2.png";
-        String pathAnteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco1.png";
-
-        String nuovoPath;
-
-        if (pathPosteriore.equals(imgPathCorrente)) {
-            nuovoPath = pathLaterale;
-        } else if (pathLaterale.equals(imgPathCorrente)) {
-            nuovoPath = pathAnteriore;
-        } else if (pathAnteriore.equals(imgPathCorrente)) {
-            nuovoPath = pathPosteriore;
-        } else {
-            System.err.println("Percorso dell'immagine non riconosciuto: " + imgPathCorrente);
-            return;
+    public void btnSx(ActionEvent actionEvent) {
+        String pathSx = "";
+        switch (vista) {
+            case 1:
+                vista = 3;
+                pathSx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
+                break;
+            case 2:
+                vista = 1;
+                pathSx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
+                break;
+            case 3:
+                vista = 2;
+                pathSx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
+                break;
         }
+        InputStream imageStream = getClass().getResourceAsStream(pathSx);
 
-        InputStream imageStream = getClass().getResourceAsStream(nuovoPath);
         if (imageStream != null) {
-            Image nuovaImmagine = new Image(imageStream);
-            img.setImage(nuovaImmagine);
-            img.setUserData(nuovoPath);
-        } else {
-            System.err.println("Immagine non trovata: " + nuovoPath);
+            Image image = new Image(imageStream);
+            img.setImage(image);
         }
     }
 
-    public void vistaAutoLaterale(ActionEvent actionEvent) {
-        String marcaSelezionata = String.valueOf(marca.getValue()).toLowerCase();
-        String modelloSelezionato = String.valueOf(modello.getValue()).toLowerCase();
-
-
-        String imgPathCorrente = (String) img.getUserData();
-        String basePath = "/com/example/elaborato_ing/images/";
-
-        String pathPosteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco3.png";
-        String pathLaterale = basePath + marcaSelezionata + modelloSelezionato + "bianco2.png";
-        String pathAnteriore = basePath + marcaSelezionata + modelloSelezionato + "bianco1.png";
-
-        // Controlla se il percorso dell'immagine corrente corrisponde a uno dei percorsi noti
-        String nuovoPath;
-
-        if (pathPosteriore.equals(imgPathCorrente)) {
-            nuovoPath = pathAnteriore;
-        } else if (pathLaterale.equals(imgPathCorrente)) {
-            nuovoPath = pathPosteriore;
-        } else if (pathAnteriore.equals(imgPathCorrente)) {
-            nuovoPath = pathLaterale;
-        } else {
-            System.err.println("Percorso dell'immagine non riconosciuto: " + imgPathCorrente);
-            return;
+    public void btnDx(ActionEvent actionEvent) {
+        String pathDx = "";
+        switch (vista) {
+            case 1:
+                vista = 2;
+                pathDx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
+                break;
+            case 2:
+                vista = 3;
+                pathDx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
+                break;
+            case 3:
+                vista = 1;
+                pathDx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
+                break;
         }
+        InputStream imageStream = getClass().getResourceAsStream(pathDx);
 
-        // Carica e imposta la nuova immagine
-        InputStream imageStream = getClass().getResourceAsStream(nuovoPath);
         if (imageStream != null) {
-            Image nuovaImmagine = new Image(imageStream);
-            img.setImage(nuovaImmagine);
-            img.setUserData(nuovoPath);
-        } else {
-            System.err.println("Immagine non trovata: " + nuovoPath);
+            Image image = new Image(imageStream);
+            img.setImage(image);
         }
     }
 
     public void acquistaFunction(ActionEvent actionEvent) {
-        if(acquistabtn.getText().equals("Login") && !prezzo.getText().isEmpty()){
+        if (acquistabtn.getText().equals("Login") && !prezzo.getText().isEmpty()) {
             acquistabtn.setText("Inoltra Preventivo");
-            loadScene("FXML/Login.fxml",actionEvent);
+            loadScene("FXML/Login.fxml", actionEvent);
         }
-        if(acquistabtn.getText().equals("Inoltra Preventivo") && !prezzo.getText().isEmpty()){
+        if (acquistabtn.getText().equals("Inoltra Preventivo") && !prezzo.getText().isEmpty()) {
             // manca codice per esportare e aggiungere il preventivo in un file txt e creare l'oggetto Preventivo
 
             // abilito il  bottone PDF
@@ -382,7 +324,6 @@ public class InitController {
             e.printStackTrace();
         }
     }
-
 
 
 }
