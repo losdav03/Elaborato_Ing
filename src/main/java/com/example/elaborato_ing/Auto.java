@@ -37,6 +37,10 @@ public class Auto {
         caricaImmagini();
     }
 
+    public Auto(Marca marca, Modello modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<String> colori){
+        this.marca=marca;
+    }
+
     public String getImmagine(String colore,int vista) {
         String path = "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toString().toLowerCase() + colore.toLowerCase() + vista + ".png";
         return Objects.requireNonNull(getClass().getResource(path)).toExternalForm();

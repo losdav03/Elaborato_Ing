@@ -47,7 +47,7 @@
     <CheckBox fx:id="interni" layoutX="477.0" layoutY="496.0" mnemonicParsing="false" onAction="#addInterni" />
     <CheckBox fx:id="ruote" layoutX="477.0" layoutY="521.0" mnemonicParsing="false" onAction="#addRuote" />
     <CheckBox fx:id="cruise" layoutX="477.0" layoutY="346.0" mnemonicParsing="false" onAction="#addCruiseControl" />
-    <Button layoutX="17.0" layoutY="438.0" mnemonicParsing="false" prefHeight="99.0" prefWidth="183.0" text="Vendi auto" />
+    <Button fx:id="vendibtn" layoutX="17.0" layoutY="438.0" mnemonicParsing="false" onAction="#vendi" prefHeight="99.0" prefWidth="183.0" text="Vendi auto" />
     <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="40.0" />
     <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="40.0" />
     <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="40.0" />

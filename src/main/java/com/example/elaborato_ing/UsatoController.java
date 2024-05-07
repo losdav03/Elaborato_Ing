@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
@@ -25,7 +26,29 @@ import java.util.Map;
 public class UsatoController {
 
     @FXML
+    private TextField marca, modello, altezza, lunghezza, larghezza, peso, volume, motore, colori,alimentazione;
+
+    @FXML
     private ImageView imageView1, imageView2, imageView3;
+
+    @FXML
+    private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
+
+    public void initialize(){
+        Numeric(altezza);
+        Numeric(lunghezza);
+        Numeric(larghezza);
+        Numeric(peso);
+        Numeric(volume);
+    }
+    private void Numeric(TextField txt){
+        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {String character = event.getCharacter();
+            // Consenti solo numeri (0-9) e impedisci input di altri caratteri
+            if (!character.matches("\\d")) {
+                event.consume(); // Blocca l'evento se non è un numero
+            }
+        });
+    }
     public void addInfot(ActionEvent actionEvent) {
 
     }
@@ -61,7 +84,6 @@ public class UsatoController {
     public void addCruiseControl(ActionEvent actionEvent) {
 
     }
-    @FXML
     public void caricaImgs() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleziona un'immagine");
@@ -80,7 +102,6 @@ public class UsatoController {
         }
     }
 
-    @FXML
     public void RimuoviImgs() {
         // Trova il primo ImageView con un'immagine e rimuovila
         if (imageView3.getImage() != null) {
@@ -92,6 +113,11 @@ public class UsatoController {
         } else {
             System.out.println("Tutte le ImageView sono già vuote.");
         }
+    }
+
+    public void vendi(ActionEvent actionEvent) {
+        if(imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null){
+            Auto auto = new Auto(marca.getText(), modello.getText(),altezza.getText(),lunghezza.getText(), larghezza.getText(), peso.getText(), volume.getText(),motore, colori.getText());
     }
 }
     /*
