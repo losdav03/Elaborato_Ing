@@ -67,8 +67,13 @@ public class Model {
     }
 
     public String getImgColori(Marca marca, Modello modello, String colore, int vista) {
-        String imagePath = "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toString().toLowerCase() + colore.toLowerCase() + vista + ".png";
-        return imagePath;
+        if (marca == null || modello == null || colore == null) {
+            System.err.println("Errore: Parametri nulli forniti a getImgColori.");
+            return null;
+        }
+
+        String path = "/com/example/elaborato_ing/images/" +marca.toString().toLowerCase() + modello.toString().toLowerCase() + colore.toLowerCase() + vista + ".png";
+        return path;
     }
 
     public void loadScene(String fxmlFile, ActionEvent event) {

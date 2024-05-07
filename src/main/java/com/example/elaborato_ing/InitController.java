@@ -83,8 +83,9 @@ public class InitController {
     }
 
     private void aggiornaImg() {
-        if (colori.getValue() == null)
+        if (colori.getItems().isEmpty() == false && colori.getValue() == null) {
             colori.setValue(colori.getItems().getFirst());
+        }
 
         String path = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
         System.out.println("Percorso immagine: " + path); // Stampa il percorso per verificare la correttezza
@@ -101,20 +102,24 @@ public class InitController {
     private void aggiornaModello() {
         Marca marcaSelezionata = marca.getValue();
         img.setImage(null);
-        colori.setDisable(true);
 
-        if (marcaSelezionata != null) {
-            List<Auto> listaAuto = map.getOrDefault(marcaSelezionata, Collections.emptyList());
-            List<Modello> listaModelli = listaAuto.stream().map(Auto::getModello).toList();
-
-            modello.getItems().setAll(listaModelli);
-            modello.setDisable(false);
-        } else {
+        if (marcaSelezionata == null) {
             modello.getItems().clear();
             modello.setDisable(true);
+            return;
+        }
+
+        List<Auto> listaAuto = map.getOrDefault(marcaSelezionata, Collections.emptyList());
+        List<Modello> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
+
+        if (listaModelli.isEmpty()) {
+            modello.getItems().clear();
+            modello.setDisable(true);
+        } else {
+            modello.getItems().setAll(listaModelli);
+            modello.setDisable(false);
         }
     }
-
 
     private void aggiornaColori() {
         Marca marcaSelezionata = marca.getValue();
@@ -221,6 +226,10 @@ public class InitController {
                 pathSx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
                 break;
         }
+        if (marca.getValue() == null || modello.getValue() == null || colori.getValue() == null) {
+            System.err.println("Valori nulli trovati: Marca = " + marca.getValue() + ", Modello = " + modello.getValue() + ", Colore = " + colori.getValue());
+            pathSx = "com/example/elaborato_ing/images/default.png";
+        }
         InputStream imageStream = getClass().getResourceAsStream(pathSx);
 
         if (imageStream != null) {
@@ -244,6 +253,10 @@ public class InitController {
                 vista = 1;
                 pathDx = model.getImgColori(marca.getValue(), modello.getValue(), colori.getValue(), vista);
                 break;
+        }
+        if (marca.getValue() == null || modello.getValue() == null || colori.getValue() == null) {
+            System.err.println("Valori nulli trovati: Marca = " + marca.getValue() + ", Modello = " + modello.getValue() + ", Colore = " + colori.getValue());
+            pathDx = "com/example/elaborato_ing/images/default.png";
         }
         InputStream imageStream = getClass().getResourceAsStream(pathDx);
 
