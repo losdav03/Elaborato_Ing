@@ -22,7 +22,7 @@ public class InitController {
     private ComboBox<Marca> marca;
 
     @FXML
-    private ComboBox<Modello> modello;
+    private ComboBox<String> modello;
 
     @FXML
     private ComboBox<String> colori;
@@ -82,7 +82,7 @@ public class InitController {
 
 
         List<AutoNuova> listaAuto = map.getOrDefault(marca.getValue(), Collections.emptyList());
-        List<Modello> listaModelli = listaAuto.stream().map(AutoNuova::getModello).distinct().toList();
+        List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
         if (listaModelli.isEmpty()) {
             modello.getItems().clear();
@@ -149,7 +149,7 @@ public class InitController {
 
 
     public void addOption() {
-        Modello modelloSelezionato = modello.getValue();
+        String modelloSelezionato = modello.getValue();
         AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
         if (auto != null) {
@@ -234,7 +234,7 @@ public class InitController {
 
     }
 
-    public void acquistaFunction(ActionEvent event) {
+    public void acquistaFunction(ActionEvent event) throws IOException {
         if (acquistabtn.getText().equals("Login")) {
             acquistabtn.setText("Inoltra Preventivo");
             model.loadScene("FXML/Login.fxml", event);
@@ -243,7 +243,7 @@ public class InitController {
             // manca codice per esportare e aggiungere il preventivo in un file txt e creare l'oggetto Preventivo
             AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(),modello.getValue(),map);
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
-            model.inoltraPreventivo(autoConfigurata);
+            model.inoltraPreventivo(autoConfigurata, colori.getValue());
 
             // abilito il  bottone PDF
             btnPDF.setVisible(true);

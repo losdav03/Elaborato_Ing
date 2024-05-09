@@ -8,10 +8,10 @@ public class Preventivo {
     private final Date scadenza;
     private final Cliente cliente;
     private Dipendente dipendente;
-    private final AutoNuova auto;
+    private final Auto auto;
     private Stato stato;
 
-    public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, AutoNuova auto) {
+    public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto) {
         this.id = id;
         this.creazione = creazione;
         this.scadenza = scadenza;
@@ -19,9 +19,9 @@ public class Preventivo {
         this.auto = auto;
     }
 
-    @Override
+
     public String toString() {
-        return  id + "," + creazione.toString() + "," + scadenza.toString() + "," + cliente.toString() + "," + auto.toString();
+        return id + "," + creazione.toString() + "," + scadenza.toString() + "," + cliente.toString() + "," + auto.toString();
 
     }
 }

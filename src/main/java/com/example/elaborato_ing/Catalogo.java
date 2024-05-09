@@ -14,7 +14,7 @@ public class Catalogo {
         catalogo.add(a);
     }
 
-    public AutoNuova getAuto(Marca marca, Modello modello){
+    public AutoNuova getAuto(Marca marca, String modello){
         for(AutoNuova auto : catalogo){
             if(auto.getMarca().equals(marca)){
                 if(auto.getModello().equals(modello)){

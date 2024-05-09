@@ -11,10 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -115,12 +112,12 @@ public class UsatoController {
         }
     }
 
-    public void vendi(ActionEvent actionEvent) {
+    public void vendi(ActionEvent actionEvent) throws IOException {
         if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !marca.getText().isEmpty() && !modello.getText().isEmpty() &&!altezza.getText().isEmpty() &&!lunghezza.getText().isEmpty() &&!larghezza.getText().isEmpty() &&!peso.getText().isEmpty() &&!volume.getText().isEmpty() &&!colori.getText().isEmpty() &&!motore.getText().isEmpty() &&!alimentazione.getText().isEmpty() &&!cilindrata.getText().isEmpty()&&!potenza.getText().isEmpty() &&!consumi.getText().isEmpty()) {
-            auto = new AutoUsata(marca.getText(), modello.getText(),Double.parseDouble(altezza.getText()),Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()),new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText());
+            auto = new AutoUsata(Enum.valueOf(Marca.class, marca.getText()), modello.getText(),Double.parseDouble(altezza.getText()),Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()),new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText());
             auto.addImgs(imageView1,imageView2,imageView3);
             auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
-            model.inoltraPreventivo(auto);
+            model.inoltraPreventivo(auto,colori.getText());
         }
     }
 }

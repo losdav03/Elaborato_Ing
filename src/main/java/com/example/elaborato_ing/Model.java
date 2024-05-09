@@ -21,27 +21,26 @@ import java.util.List;
 
 public class Model {
 
-    private Stage configuratorStage;
 
     public Model() {
 
     }
 
-    public Map<Marca, List<Auto>> caricaDaFile(String file, Catalogo catalogo) {
+    public Map<Marca, List<AutoNuova>> caricaDaFile(String file, Catalogo catalogo) {
 
-        Map<Marca, List<Auto>> dati = new HashMap<>();
+        Map<Marca, List<AutoNuova>> dati = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 15) {
                     Marca marca = Marca.valueOf(parts[0].trim());
-                    Modello modello = Modello.valueOf(parts[1].trim());
+                    String modello = String.valueOf(parts[1].trim());
                     double lunghezza = Double.parseDouble(parts[2]);
                     double altezza = Double.parseDouble(parts[3]);
                     double larghezza = Double.parseDouble(parts[4]);
                     double peso = Double.parseDouble(parts[5]);
-                    double volume = Double.parseDouble(parts[6]);
+                    double volumeBagagliaio = Double.parseDouble(parts[6]);
                     String nomeMotore = parts[7];
                     Alimentazione alimentazione = Alimentazione.valueOf(parts[8].trim());
                     int cilindrata = Integer.parseInt(parts[9].trim());
@@ -52,7 +51,7 @@ public class Model {
                     String sconto = parts[13];
                     String[] colorOptions = parts[14].trim().split(";");
                     List<String> colori = Arrays.asList(colorOptions);
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, prezzo, sconto, colori);
+                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto);
                     auto.caricaImmagini();
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
@@ -134,27 +133,28 @@ public class Model {
         }
     }
 
-    public void inoltraPreventivo(Auto auto) throws IOException {
+    public void inoltraPreventivo(Auto auto, String colore) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         Date DataCreazione = new Date();
-        Cliente cliente = null;
+        Cliente cliente = new Cliente("utente", "utente", "utente", "utente", 123);
+
         Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), DataCreazione, DataCreazione, cliente, auto);
         // esporto il preventivo sul filesrc
-        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", true)) {
-            writer.write(preventivo.toString());
+        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
+            writer.write(preventivo.toString() + "," + colore + "\n");
         }
     }
 
 
-    public Auto getMarcaModello(Marca marca, Modello modello, Map<Marca, List<Auto>> map) {
-        List<Auto> autoList = map.get(marca);
+    public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
+        List<AutoNuova> autoList = map.get(marca);
 
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
             return null;
         }
 
-        for (Auto auto : autoList) {
+        for (AutoNuova auto : autoList) {
             if (auto.getModello().equals(modello)) { // Cerca il modello
                 return auto; // Se il modello corrisponde, restituisce l'auto
             }
