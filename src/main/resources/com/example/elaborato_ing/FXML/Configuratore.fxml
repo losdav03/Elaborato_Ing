@@ -72,7 +72,8 @@
             <Button fx:id="btnSx" layoutX="273.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnDx" text="-&gt;" textAlignment="CENTER" />
             <Button fx:id="btnDx" layoutX="99.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnSx" text="&lt;-" textAlignment="CENTER" />
             <Label layoutX="181.0" layoutY="340.0" text="€" />
-            <Button fx:id="btnPDF" onAction="#generaPDF" layoutX="183.0" layoutY="457.0" mnemonicParsing="false" text="Scarica PDF" />
+            <Button fx:id="btnPDF" layoutX="125.0" layoutY="454.0" mnemonicParsing="false" onAction="#generaPDF" text="Scarica PDF" />
+            <Button layoutX="236.0" layoutY="454.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Vedi Preventivi" />
          </children></AnchorPane>
   </items>
 </SplitPane>

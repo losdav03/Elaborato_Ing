@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
@@ -136,4 +137,27 @@ public class Model {
         }
     }
 
+    public void inoltraPreventivo(Auto auto) {
+        LocalDateTime OrarioCreazione = LocalDateTime.now();
+        Date DataCreazione = new Date();
+        Cliente cliente =
+        new Preventivo(String.valueOf(auto.hashCode()*OrarioCreazione.hashCode()),DataCreazione,DataCreazione,);
+    }
+
+    public Auto getMarcaModello(Marca marca, Modello modello, Map<Marca, List<Auto>> map) {
+        List<Auto> autoList = map.get(marca);
+
+        if (autoList == null) { // Se non esiste una lista per la marca data
+            System.out.println("Marca non trovata: " + marca);
+            return null;
+        }
+
+        for (Auto auto : autoList) {
+            if (auto.getModello().equals(modello)) { // Cerca il modello
+                return auto; // Se il modello corrisponde, restituisce l'auto
+            }
+        }
+        return null;
+    }
 }
+

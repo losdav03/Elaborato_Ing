@@ -34,7 +34,7 @@ public class InitController {
     private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
 
     @FXML
-    private Button acquistabtn, btnPDF,btnSx,btnDx;
+    private Button acquistabtn, btnPDF, btnSx, btnDx;
 
     @FXML
     private ImageView img;
@@ -134,7 +134,7 @@ public class InitController {
         }
     }
 
-    private void abilitaOption(boolean abilita){
+    private void abilitaOption(boolean abilita) {
         infot.setDisable(abilita);
         sensori.setDisable(abilita);
         fari.setDisable(abilita);
@@ -145,10 +145,6 @@ public class InitController {
         ruote.setDisable(abilita);
         cruise.setDisable(abilita);
     }
-
-
-
-
 
     public void goToUsatoForm(ActionEvent event) {
         model.loadScene("FXML/Usato.fxml", event);
@@ -248,7 +244,9 @@ public class InitController {
         }
         if (acquistabtn.getText().equals("Inoltra Preventivo") && !prezzo.getText().isEmpty()) {
             // manca codice per esportare e aggiungere il preventivo in un file txt e creare l'oggetto Preventivo
-
+            Auto autoConfigurata = model.getMarcaModello(marca.getValue(),modello.getValue(),map);
+            autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
+            model.inoltraPreventivo(autoConfigurata);
             // abilito il  bottone PDF
             btnPDF.setVisible(true);
 

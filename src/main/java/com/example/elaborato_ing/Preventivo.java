@@ -10,4 +10,12 @@ public class Preventivo {
     private Dipendente dipendente;
     private Auto auto;
     private Stato stato;
+
+    public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto) {
+        this.id = id;
+        this.creazione = creazione;
+        this.scadenza = scadenza;
+        this.cliente = cliente;
+        this.auto = auto;
+    }
 }
