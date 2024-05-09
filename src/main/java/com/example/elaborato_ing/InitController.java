@@ -230,7 +230,7 @@ public class InitController {
     }
 
     public void acquistaFunction(ActionEvent event) {
-        if (acquistabtn.getText().equals("Login") && !prezzo.getText().isEmpty()) {
+        if (acquistabtn.getText().equals("Login")) {
             acquistabtn.setText("Inoltra Preventivo");
             model.loadScene("FXML/Login.fxml", event);
         }
