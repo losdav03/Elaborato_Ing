@@ -105,7 +105,7 @@ public class InitController {
                 volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
                 alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
                 motore.setText(String.valueOf(auto.getMotore()));
-                prezzo.setText(String.valueOf(auto.getCosto()));
+                prezzo.setText(String.valueOf(auto.getPrezzo()));
 
                 colori.getItems().clear();
                 colori.getItems().addAll(auto.getColori());
@@ -148,7 +148,7 @@ public class InitController {
         Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
         if (auto != null) {
-            int costoAggiuntivo = auto.getCosto() / 300;
+            int costoAggiuntivo = auto.getPrezzo() / 300;
             int costoCheckBox = 0;
 
             if (infot.isSelected()) {
@@ -179,7 +179,7 @@ public class InitController {
                 costoCheckBox += costoAggiuntivo;
             }
 
-            int costo = auto.getCosto() + costoCheckBox;
+            int costo = auto.getPrezzo() + costoCheckBox;
             prezzo.setText(String.valueOf(costo));
         }
     }

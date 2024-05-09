@@ -15,30 +15,25 @@ public class Auto {
     private final double larghezza;
     private final double peso;
     private final double volumeBagagliaio;
-    private final List<Image> immagine;
+    private final List<Image> immagine = new ArrayList<>();
     private final Motore motore;
-    private final int costo;
+    private final int prezzo;
     private String sconto;
     private final List<String> colori;
 
-    public Auto(Marca marca, Modello modello, double lunghezza, double altezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int costo, String sconto, List<String> colori) {
-        this.marca = marca;
+    public Auto(Marca marca, Modello modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo,String sconto,List<String> colori){
+        this.marca=marca;
         this.modello = modello;
-        this.lunghezza = lunghezza;
         this.altezza = altezza;
+        this.lunghezza = lunghezza;
         this.larghezza = larghezza;
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
-        this.costo = costo;
-        this.sconto = sconto;
+        this.prezzo = prezzo;
+        this.sconto=sconto;
         this.colori = colori;
-        this.immagine = new ArrayList<>();
         caricaImmagini();
-    }
-
-    public Auto(Marca marca, Modello modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<String> colori){
-        this.marca=marca;
     }
 
     public String getImmagine(String colore,int vista) {
@@ -91,8 +86,8 @@ public class Auto {
         return motore;
     }
 
-    public int getCosto() {
-        return costo;
+    public int getPrezzo() {
+        return prezzo;
     }
 
     public List<String> getColori() {
