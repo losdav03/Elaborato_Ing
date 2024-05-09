@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AutoNuova {
+public class AutoNuova extends Auto{
     private final Marca marca;
-    private final Modello modello;
+    private final String modello;
     private final double altezza;
     private final double lunghezza;
     private final double larghezza;

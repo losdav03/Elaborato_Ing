@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AutoUsata {
-    private final String marca;
+public class AutoUsata extends Auto{
+    private final Enum marca;
     private final String modello;
     private final double altezza;
     private final double lunghezza;
