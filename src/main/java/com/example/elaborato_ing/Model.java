@@ -22,6 +22,9 @@ import java.util.*;
 import java.util.List;
 
 public class Model {
+
+    private Stage configuratorStage;
+
     public Model() {
 
     }
@@ -75,27 +78,26 @@ public class Model {
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
 
+
             if (event != null && event.getSource() instanceof Node) {
-                // Se l'evento è presente e proviene da un nodo, allora è stata richiesta una finestra modale
-                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                Node sourceNode = (Node) event.getSource();
+                Stage primaryStage = (Stage) sourceNode.getScene().getWindow();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.initOwner(primaryStage);
-                primaryStage.hide(); // Nasconde la finestra principale invece di chiuderla
-                // Aggiungi un listener per gestire l'evento di chiusura della finestra del login
-                stage.setOnCloseRequest(e -> primaryStage.show()); // Mostra di nuovo la finestra principale quando la finestra del login viene chiusa
+                primaryStage.hide();
+                stage.setOnCloseRequest(e -> primaryStage.show());
             } else {
-                // Altrimenti, se l'evento è nullo o non proviene da un nodo, apri la finestra in modo modale
                 stage.initModality(Modality.APPLICATION_MODAL);
             }
 
-            stage.showAndWait(); // Mostra la finestra e attendi che venga chiusa
+            stage.show();
         } catch (IOException e) {
             System.err.println("Errore nel caricamento della scena: " + e.getMessage());
         }
     }
 
 
-    public void PDF(){
+    public void PDF() {
         try {
             PDDocument document = new PDDocument();
             PDPage page = new PDPage();

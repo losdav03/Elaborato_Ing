@@ -10,7 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -26,15 +25,25 @@ public class LoginController {
     @FXML
     private TextField surnameField;
 
+    private final Model model = new Model();
+
+
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
-        loadScene("FXML/Registration.fxml", event);
+        model.loadScene("FXML/Registration.fxml", event);
     }
 
     @FXML
     private void goToLogin(ActionEvent event) throws IOException {
-        loadScene("FXML/Login.fxml", event);
+        model.loadScene("FXML/Login.fxml", event);
     }
+
+    private Stage configuratorStage;
+
+    public void setConfiguratorStage(Stage configuratorStage) {
+        this.configuratorStage = configuratorStage;
+    }
+
 
     @FXML
     public void accedi(ActionEvent event) {
@@ -44,38 +53,12 @@ public class LoginController {
         try {
             if (autenticato(username, password)) {
                 System.out.println("Login successful!");
-                loadScene("FXML/Configuratore.fxml",event);
             } else {
                 System.out.println("Credenziali non valide.");
             }
-        } catch (IOException e) {
+        } catch (
+                IOException e) {
             System.err.println("Errore durante la lettura del file di login: " + e.getMessage());
-        }
-    }
-
-    public void loadScene(String fxmlFile, ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-
-            if (event != null && event.getSource() instanceof Node) {
-                // Se l'evento è presente e proviene da un nodo, allora è stata richiesta una finestra modale
-                Stage primaryStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initOwner(primaryStage);
-                primaryStage.hide(); // Nasconde la finestra principale invece di chiuderla
-                // Aggiungi un listener per gestire l'evento di chiusura della finestra del login
-                stage.setOnCloseRequest(e -> primaryStage.show()); // Mostra di nuovo la finestra principale quando la finestra del login viene chiusa
-            } else {
-                // Altrimenti, se l'evento è nullo o non proviene da un nodo, apri la finestra in modo modale
-                stage.initModality(Modality.APPLICATION_MODAL);
-            }
-
-            stage.showAndWait(); // Mostra la finestra e attendi che venga chiusa
-        } catch (IOException e) {
-            System.err.println("Errore nel caricamento della scena: " + e.getMessage());
         }
     }
 
@@ -121,7 +104,7 @@ public class LoginController {
                     // Gestione dell'azione del bottone OK
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
-                            loadScene("FXML/Login.fxml", null);
+                            model.loadScene("FXML/Login.fxml", null);
                         }
                     });
 
@@ -142,6 +125,7 @@ public class LoginController {
             // Visualizzazione del box di errore
             alert.showAndWait();
         }
+
 
     }
 

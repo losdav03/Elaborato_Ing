@@ -2,11 +2,16 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -37,6 +42,9 @@ public class InitController {
     private final Catalogo catalogo = new Catalogo();
     private final Model model = new Model();
     private int vista = 1;
+
+    private Stage configuratorStage;
+
 
     public void initialize() {
         String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt";
@@ -137,6 +145,10 @@ public class InitController {
         ruote.setDisable(abilita);
         cruise.setDisable(abilita);
     }
+
+
+
+
 
     public void goToUsatoForm(ActionEvent event) {
         model.loadScene("FXML/Usato.fxml", event);
