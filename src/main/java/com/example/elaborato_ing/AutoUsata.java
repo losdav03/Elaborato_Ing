@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class AutoUsata extends Auto {
-
-
     private final String colore;
 
     public AutoUsata(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, String colore) {
