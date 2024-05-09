@@ -6,17 +6,18 @@ public class Motore {
     private final int cilindrata;
     private final int potenza;
     private final double consumi;
-    public Motore(String nome,Alimentazione alimentazione, int cilindrata, int potenza, double consumi){
-        this.nome=nome;
-        this.alimentazione=alimentazione;
-        this.cilindrata=cilindrata;
-        this.potenza=potenza;
-        this.consumi=consumi;
+
+    public Motore(String nome, Alimentazione alimentazione, int cilindrata, int potenza, double consumi) {
+        this.nome = nome;
+        this.alimentazione = alimentazione;
+        this.cilindrata = cilindrata;
+        this.potenza = potenza;
+        this.consumi = consumi;
     }
 
     @Override
     public String toString() {
-        return nome+" alimentazione "+alimentazione+" "+cilindrata+" "+potenza+" "+consumi;
+        return nome + ";" + alimentazione + ";" + cilindrata + ";" + potenza + ";" + consumi;
     }
 
     public String getNome() {

@@ -23,8 +23,8 @@ public class Auto {
     private final List<String> colori;
     private final List<OP> optional;
 
-    public Auto(Marca marca, Modello modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo,String sconto,List<String> colori){
-        this.marca=marca;
+    public Auto(Marca marca, Modello modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, String sconto, List<String> colori) {
+        this.marca = marca;
         this.modello = modello;
         this.altezza = altezza;
         this.lunghezza = lunghezza;
@@ -33,21 +33,21 @@ public class Auto {
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
         this.prezzo = prezzo;
-        this.sconto=sconto;
+        this.sconto = sconto;
         this.colori = colori;
         immagine = new ArrayList<>();
         optional = new ArrayList<>();
         caricaImmagini();
     }
 
-    public String getImmagine(String colore,int vista) {
+    public String getImmagine(String colore, int vista) {
         String path = "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toString().toLowerCase() + colore.toLowerCase() + vista + ".png";
         return Objects.requireNonNull(getClass().getResource(path)).toExternalForm();
     }
 
-    public void caricaImmagini(){
-        for(String c:colori){
-            for(int i = 1;i<=3;i++) {
+    public void caricaImmagini() {
+        for (String c : colori) {
+            for (int i = 1; i <= 3; i++) {
                 String path = "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toString().toLowerCase() + c.toLowerCase() + i + ".png";
                 InputStream imageStream = getClass().getResourceAsStream(path);
                 if (imageStream != null) {
@@ -58,32 +58,32 @@ public class Auto {
         }
     }
 
-    public void setOptional(boolean infot,boolean sensori,boolean fari,boolean sedili,boolean scorta,boolean vetri,boolean interni,boolean ruote, boolean cruise){
-        if(infot){
+    public void setOptional(boolean infot, boolean sensori, boolean fari, boolean sedili, boolean scorta, boolean vetri, boolean interni, boolean ruote, boolean cruise) {
+        if (infot) {
             optional.add(OP.INFOTAINMENT);
         }
-        if(sensori){
+        if (sensori) {
             optional.add(OP.SensoriParcheggio);
         }
-        if(fari){
+        if (fari) {
             optional.add(OP.FariFullLED);
         }
-        if(sedili){
+        if (sedili) {
             optional.add(OP.SediliRiscaldati);
         }
-        if(scorta){
+        if (scorta) {
             optional.add(OP.RuotaDiScorta);
         }
-        if(vetri){
+        if (vetri) {
             optional.add(OP.VetriOscurati);
         }
-        if(interni){
+        if (interni) {
             optional.add(OP.InterniInPelle);
         }
-        if(ruote){
+        if (ruote) {
             optional.add(OP.RuoteGrandi);
         }
-        if(cruise){
+        if (cruise) {
             optional.add(OP.CruiseControl);
         }
 
@@ -101,6 +101,13 @@ public class Auto {
     public int hashCode() {
         return Objects.hash(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, immagine, motore, prezzo, sconto, colori, optional);
     }
+
+    @Override
+    public String toString() {
+        return marca.toString() + "," + modello.toString() + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso +
+                "," + volumeBagagliaio + "," + motore.toString() + "," + prezzo + "," + sconto + "," + colori + "," + optional.toString();
+    }
+
 
     public Marca getMarca() {
         return marca;

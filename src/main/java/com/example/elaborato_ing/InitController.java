@@ -247,6 +247,7 @@ public class InitController {
             Auto autoConfigurata = model.getMarcaModello(marca.getValue(),modello.getValue(),map);
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.inoltraPreventivo(autoConfigurata);
+
             // abilito il  bottone PDF
             btnPDF.setVisible(true);
 

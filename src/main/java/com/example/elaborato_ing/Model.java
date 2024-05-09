@@ -140,8 +140,9 @@ public class Model {
     public void inoltraPreventivo(Auto auto) {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         Date DataCreazione = new Date();
-        Cliente cliente =
-        new Preventivo(String.valueOf(auto.hashCode()*OrarioCreazione.hashCode()),DataCreazione,DataCreazione,);
+        Cliente cliente = null;
+        new Preventivo(String.valueOf(auto.hashCode()*OrarioCreazione.hashCode()),DataCreazione,DataCreazione,cliente,auto);
+
     }
 
     public Auto getMarcaModello(Marca marca, Modello modello, Map<Marca, List<Auto>> map) {

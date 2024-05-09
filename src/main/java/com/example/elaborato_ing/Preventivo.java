@@ -3,12 +3,12 @@ package com.example.elaborato_ing;
 import java.util.Date;
 
 public class Preventivo {
-    private String id;
-    private Date creazione;
-    private Date scadenza;
-    private Cliente cliente;
+    private final String id;
+    private final Date creazione;
+    private final Date scadenza;
+    private final Cliente cliente;
     private Dipendente dipendente;
-    private Auto auto;
+    private final Auto auto;
     private Stato stato;
 
     public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto) {
@@ -17,5 +17,11 @@ public class Preventivo {
         this.scadenza = scadenza;
         this.cliente = cliente;
         this.auto = auto;
+    }
+
+    @Override
+    public String toString() {
+        return  id + "," + creazione.toString() + "," + scadenza.toString() + "," + cliente.toString() + "," + auto.toString();
+
     }
 }
