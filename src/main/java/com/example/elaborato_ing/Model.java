@@ -15,6 +15,7 @@ import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import java.awt.*;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
 import java.util.List;
@@ -135,20 +136,20 @@ public class Model {
 
     public void inoltraPreventivo(Auto auto, String colore) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
-        Instant instant = OrarioCreazione.atZone(ZoneId.systemDefault()).toInstant();
-        Date DataCreazione = Date.from(instant);
-        Cliente cliente = new Cliente("utente", "utente", "utente", "utente", 123);
+        LocalDate inizio= LocalDate.now();
+        Cliente cliente = new Cliente("utente", "utente", "utente", "utente");
         int giorni = 0;
         for(OP o : auto.getOptional()){
             giorni+=10;
         }
-        LocalDateTime OrarioFine = OrarioCreazione.plusDays(20+giorni);
-        Instant instant2 = OrarioCreazione.atZone(ZoneId.systemDefault()).toInstant();
-        Date DataFine = Date.from(instant2);
-        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), DataCreazione, DataFine, cliente, auto);
+        LocalDate fine = inizio.plusDays(giorni+20);
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto);
         // esporto il preventivo sul filesrc
         try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
-            writer.write(preventivo.toString() + "," + colore + "\n");
+            writer.write(preventivo.toString()+ formato.format(dataCreazione)+","+ formato.format(dataCreazione)+ colore + "\n");
         }
     }
 

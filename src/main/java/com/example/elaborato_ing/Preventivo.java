@@ -21,7 +21,7 @@ public class Preventivo {
 
 
     public String toString() {
-        return id + "," + creazione.toString() + "," + scadenza.toString() + "," + cliente.toString() + "," + auto.toString();
+        return id + "," + cliente.toString() + "," + auto.toString();
 
     }
 }
