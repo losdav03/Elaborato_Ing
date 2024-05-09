@@ -38,12 +38,6 @@ public class LoginController {
         model.loadScene("FXML/Login.fxml", event);
     }
 
-    private Stage configuratorStage;
-
-    public void setConfiguratorStage(Stage configuratorStage) {
-        this.configuratorStage = configuratorStage;
-    }
-
 
     @FXML
     public void accedi(ActionEvent event) {

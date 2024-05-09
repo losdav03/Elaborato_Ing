@@ -14,10 +14,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
@@ -30,9 +27,9 @@ public class Model {
 
     }
 
-    public Map<Marca, List<AutoNuova>> caricaDaFile(String file, Catalogo catalogo) {
+    public Map<Marca, List<Auto>> caricaDaFile(String file, Catalogo catalogo) {
 
-        Map<Marca, List<AutoNuova>> dati = new HashMap<>();
+        Map<Marca, List<Auto>> dati = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -55,7 +52,7 @@ public class Model {
                     String sconto = parts[13];
                     String[] colorOptions = parts[14].trim().split(";");
                     List<String> colori = Arrays.asList(colorOptions);
-                    AutoNuova auto = new AutoNuova(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, prezzo, sconto, colori);
+                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, prezzo, sconto, colori);
                     auto.caricaImmagini();
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
@@ -137,23 +134,27 @@ public class Model {
         }
     }
 
-    public void inoltraPreventivo(AutoNuova auto) {
+    public void inoltraPreventivo(Auto auto) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         Date DataCreazione = new Date();
         Cliente cliente = null;
-        new Preventivo(String.valueOf(auto.hashCode()*OrarioCreazione.hashCode()),DataCreazione,DataCreazione,cliente,auto);
-
+        new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), DataCreazione, DataCreazione, cliente, auto);
+        // esporto il preventivo sul filesrc
+        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", true)) {
+            writer.write();
+        }
     }
 
-    public AutoNuova getMarcaModello(Marca marca, Modello modello, Map<Marca, List<AutoNuova>> map) {
-        List<AutoNuova> autoList = map.get(marca);
+
+    public Auto getMarcaModello(Marca marca, Modello modello, Map<Marca, List<Auto>> map) {
+        List<Auto> autoList = map.get(marca);
 
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
             return null;
         }
 
-        for (AutoNuova auto : autoList) {
+        for (Auto auto : autoList) {
             if (auto.getModello().equals(modello)) { // Cerca il modello
                 return auto; // Se il modello corrisponde, restituisce l'auto
             }
