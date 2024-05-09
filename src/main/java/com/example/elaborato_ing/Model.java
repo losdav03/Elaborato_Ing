@@ -137,15 +137,16 @@ public class Model {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         Instant instant = OrarioCreazione.atZone(ZoneId.systemDefault()).toInstant();
         Date DataCreazione = Date.from(instant);
-        Cliente cliente = new Cliente("utente", "utente", "utente", "utente", 123);
         int giorni = 0;
-        for(OP o : auto.getOptional()){
-            giorni+=10;
+        for (OP o : auto.getOptional()) {
+            giorni += 10;
         }
-        LocalDateTime OrarioFine = OrarioCreazione.plusDays(20+giorni);
-        Instant instant2 = OrarioCreazione.atZone(ZoneId.systemDefault()).toInstant();
+        LocalDateTime OrarioFine = OrarioCreazione.plusDays(20 + giorni);
+        Instant instant2 = OrarioFine.atZone(ZoneId.systemDefault()).toInstant();
         Date DataFine = Date.from(instant2);
-        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), DataCreazione, DataFine, cliente, auto);
+
+
+        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), DataCreazione, DataFine, null, auto);
         // esporto il preventivo sul filesrc
         try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
             writer.write(preventivo.toString() + "," + colore + "\n");
