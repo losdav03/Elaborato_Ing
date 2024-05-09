@@ -1,15 +1,13 @@
 package com.example.elaborato_ing;
 
 public class Cliente extends Persona{
-    public int idCliente;
 
-    public Cliente(String email, String nome, String cognome, String password, int idCliente) {
+    public Cliente(String email, String nome, String cognome, String password) {
         super(email, nome, cognome, password);
-        this.idCliente = idCliente;
     }
 
     @Override
     public String toString() {
-        return idCliente + ";" + super.getEmail();
+        return "," + super.getEmail() + ";";
     }
 }

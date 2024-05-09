@@ -2,15 +2,10 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 import java.io.*;
 
@@ -72,12 +67,12 @@ public class LoginController {
 
     public void registrati(ActionEvent actionEvent) {
 
-        Cliente cliente = new Cliente(emailField.getText(), nameField.getText(), surnameField.getText(), passwordField.getText(), 1);
+        Cliente cliente = new Cliente(emailField.getText(), nameField.getText(), surnameField.getText(), passwordField.getText());
 
 
         if (!cliente.getEmail().isEmpty() && !cliente.getNome().isEmpty() && !cliente.getCognome().isEmpty() && !cliente.getPassword().isEmpty()) {
             // Apertura del file in modalità append
-            try (FileWriter writer = new FileWriter("src\\main\\resources\\com\\example\\elaborato_ing\\TXT\\LoginFile.txt", true)) {
+            try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt", true)) {
 
                 // controllo se l'utente è già inserito nel file login, si controlla solo l'email, quella è la chiave e deve essere unica
                 if (utenteEsiste(cliente.getEmail())) {
@@ -135,5 +130,12 @@ public class LoginController {
             }
         }
         return false;
+    }
+
+    public String getEmail() throws IOException {
+        if (autenticato(emailField.getText(), passwordField.getText()))
+            return emailField.getText();
+
+        return null;
     }
 }
