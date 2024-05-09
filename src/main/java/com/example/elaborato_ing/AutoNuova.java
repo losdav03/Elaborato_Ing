@@ -6,9 +6,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
-public class Auto {
+public class AutoNuova {
     private final Marca marca;
     private final Modello modello;
     private final double altezza;
@@ -23,7 +22,7 @@ public class Auto {
     private final List<String> colori;
     private final List<OP> optional;
 
-    public Auto(Marca marca, Modello modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, String sconto, List<String> colori) {
+    public AutoNuova(Marca marca, Modello modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, String sconto, List<String> colori) {
         this.marca = marca;
         this.modello = modello;
         this.altezza = altezza;
@@ -86,14 +85,13 @@ public class Auto {
         if (cruise) {
             optional.add(OP.CruiseControl);
         }
-
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Auto auto = (Auto) o;
+        AutoNuova auto = (AutoNuova) o;
         return Double.compare(altezza, auto.altezza) == 0 && Double.compare(lunghezza, auto.lunghezza) == 0 && Double.compare(larghezza, auto.larghezza) == 0 && Double.compare(peso, auto.peso) == 0 && Double.compare(volumeBagagliaio, auto.volumeBagagliaio) == 0 && prezzo == auto.prezzo && marca == auto.marca && modello == auto.modello && Objects.equals(immagine, auto.immagine) && Objects.equals(motore, auto.motore) && Objects.equals(sconto, auto.sconto) && Objects.equals(colori, auto.colori) && Objects.equals(optional, auto.optional);
     }
 

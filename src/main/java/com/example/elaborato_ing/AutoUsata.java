@@ -20,7 +20,7 @@ public class AutoUsata {
     private final Motore motore;
     private final String colore;
     private int prezzo;
-    private List<Optional> optional;
+    private List<OP> optional;
 
     public AutoUsata(String marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, String colore) {
         this.marca = marca;
@@ -85,33 +85,34 @@ public class AutoUsata {
         prezzo = p;
     }
 
-    public void aggiungiOptional(boolean infot, boolean sensori, boolean infot, boolean sensori,boolean infot, boolean sensori, boolean infot, boolean sensori, boolean  ) {
-        if (infot) {
-            optional.add("Infotainment");
+    public void aggiungiOptional(boolean infot,boolean sensori,boolean fari,boolean sedili,boolean scorta,boolean vetri,boolean interni,boolean ruote, boolean cruise){
+        if(infot){
+            optional.add(OP.INFOTAINMENT);
         }
-        if (sensori.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(sensori){
+            optional.add(OP.SensoriParcheggio);
         }
-        if (fari.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(fari){
+            optional.add(OP.FariFullLED);
         }
-        if (sedili.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(sedili){
+            optional.add(OP.SediliRiscaldati);
         }
-        if (scorta.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(scorta){
+            optional.add(OP.RuotaDiScorta);
         }
-        if (vetri.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(vetri){
+            optional.add(OP.VetriOscurati);
         }
-        if (interni.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(interni){
+            optional.add(OP.InterniInPelle);
         }
-        if (ruote.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(ruote){
+            optional.add(OP.RuoteGrandi);
         }
-        if (cruise.isSelected()) {
-            optionalSelezionati.add("Sensori di parcheggio");
+        if(cruise){
+            optional.add(OP.CruiseControl);
         }
+
     }
 }

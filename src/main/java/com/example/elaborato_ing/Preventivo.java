@@ -8,10 +8,10 @@ public class Preventivo {
     private final Date scadenza;
     private final Cliente cliente;
     private Dipendente dipendente;
-    private final Auto auto;
+    private final AutoNuova auto;
     private Stato stato;
 
-    public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto) {
+    public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, AutoNuova auto) {
         this.id = id;
         this.creazione = creazione;
         this.scadenza = scadenza;

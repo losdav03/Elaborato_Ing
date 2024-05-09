@@ -30,9 +30,9 @@ public class Model {
 
     }
 
-    public Map<Marca, List<Auto>> caricaDaFile(String file, Catalogo catalogo) {
+    public Map<Marca, List<AutoNuova>> caricaDaFile(String file, Catalogo catalogo) {
 
-        Map<Marca, List<Auto>> dati = new HashMap<>();
+        Map<Marca, List<AutoNuova>> dati = new HashMap<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -55,7 +55,7 @@ public class Model {
                     String sconto = parts[13];
                     String[] colorOptions = parts[14].trim().split(";");
                     List<String> colori = Arrays.asList(colorOptions);
-                    Auto auto = new Auto(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, prezzo, sconto, colori);
+                    AutoNuova auto = new AutoNuova(marca, modello, lunghezza, altezza, larghezza, peso, volume, motore, prezzo, sconto, colori);
                     auto.caricaImmagini();
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
@@ -137,7 +137,7 @@ public class Model {
         }
     }
 
-    public void inoltraPreventivo(Auto auto) {
+    public void inoltraPreventivo(AutoNuova auto) {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         Date DataCreazione = new Date();
         Cliente cliente = null;
@@ -145,15 +145,15 @@ public class Model {
 
     }
 
-    public Auto getMarcaModello(Marca marca, Modello modello, Map<Marca, List<Auto>> map) {
-        List<Auto> autoList = map.get(marca);
+    public AutoNuova getMarcaModello(Marca marca, Modello modello, Map<Marca, List<AutoNuova>> map) {
+        List<AutoNuova> autoList = map.get(marca);
 
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
             return null;
         }
 
-        for (Auto auto : autoList) {
+        for (AutoNuova auto : autoList) {
             if (auto.getModello().equals(modello)) { // Cerca il modello
                 return auto; // Se il modello corrisponde, restituisce l'auto
             }

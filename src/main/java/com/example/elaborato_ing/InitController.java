@@ -2,9 +2,6 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -38,7 +35,7 @@ public class InitController {
 
     @FXML
     private ImageView img;
-    private Map<Marca, List<Auto>> map;
+    private Map<Marca, List<AutoNuova>> map;
     private final Catalogo catalogo = new Catalogo();
     private final Model model = new Model();
     private int vista = 1;
@@ -84,8 +81,8 @@ public class InitController {
         btnDx.setDisable(true);
 
 
-        List<Auto> listaAuto = map.getOrDefault(marca.getValue(), Collections.emptyList());
-        List<Modello> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
+        List<AutoNuova> listaAuto = map.getOrDefault(marca.getValue(), Collections.emptyList());
+        List<Modello> listaModelli = listaAuto.stream().map(AutoNuova::getModello).distinct().toList();
 
         if (listaModelli.isEmpty()) {
             modello.getItems().clear();
@@ -100,7 +97,7 @@ public class InitController {
 
     private void aggiornaColori() {
         if (marca.getValue() != null && modello.getValue() != null) {
-            Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
+            AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
 
             colori.setDisable(false);
             abilitaOption(false);
@@ -153,7 +150,7 @@ public class InitController {
 
     public void addOption() {
         Modello modelloSelezionato = modello.getValue();
-        Auto auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
+        AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
         if (auto != null) {
             int costoAggiuntivo = auto.getPrezzo() / 300;
@@ -244,7 +241,7 @@ public class InitController {
         }
         if (acquistabtn.getText().equals("Inoltra Preventivo") && !prezzo.getText().isEmpty()) {
             // manca codice per esportare e aggiungere il preventivo in un file txt e creare l'oggetto Preventivo
-            Auto autoConfigurata = model.getMarcaModello(marca.getValue(),modello.getValue(),map);
+            AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(),modello.getValue(),map);
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.inoltraPreventivo(autoConfigurata);
 
