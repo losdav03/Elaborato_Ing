@@ -15,7 +15,7 @@ public class Auto {
     private final double larghezza;
     private final double peso;
     private final double volumeBagagliaio;
-    private final List<Image> immagine = new ArrayList<>();
+    private List<Image> immagine;
     private final Motore motore;
     private final int prezzo;
     private String sconto;
@@ -33,6 +33,7 @@ public class Auto {
         this.prezzo = prezzo;
         this.sconto=sconto;
         this.colori = colori;
+        immagine = new ArrayList<>();
         caricaImmagini();
     }
 
