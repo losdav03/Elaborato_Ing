@@ -138,10 +138,10 @@ public class Model {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         Date DataCreazione = new Date();
         Cliente cliente = null;
-        new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), DataCreazione, DataCreazione, cliente, auto);
+        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), DataCreazione, DataCreazione, cliente, auto);
         // esporto il preventivo sul filesrc
         try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", true)) {
-            writer.write();
+            writer.write(preventivo.toString());
         }
     }
 
