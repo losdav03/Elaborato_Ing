@@ -20,6 +20,7 @@ public class AutoUsata {
     private final Motore motore;
     private final String colore;
     private int prezzo;
+    private List<Optional> optional;
 
     public AutoUsata(String marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, String colore) {
         this.marca = marca;
@@ -32,6 +33,7 @@ public class AutoUsata {
         this.motore = motore;
         this.colore = colore;
         immagini = new ArrayList<>();
+        optional = new ArrayList<>();
     }
 
     public String getMarca() {
@@ -81,5 +83,35 @@ public class AutoUsata {
     }
     public void setPrezzo(int p){
         prezzo = p;
+    }
+
+    public void aggiungiOptional(boolean infot, boolean sensori, boolean infot, boolean sensori,boolean infot, boolean sensori, boolean infot, boolean sensori, boolean  ) {
+        if (infot) {
+            optional.add("Infotainment");
+        }
+        if (sensori.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
+        if (fari.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
+        if (sedili.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
+        if (scorta.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
+        if (vetri.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
+        if (interni.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
+        if (ruote.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
+        if (cruise.isSelected()) {
+            optionalSelezionati.add("Sensori di parcheggio");
+        }
     }
 }

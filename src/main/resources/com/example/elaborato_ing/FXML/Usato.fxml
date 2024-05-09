@@ -42,15 +42,15 @@
     <Label layoutX="307.0" layoutY="471.0" text="Vetri Oscurati" />
     <Label layoutX="307.0" layoutY="496.0" text="Interni In Pelle" />
     <Label layoutX="307.0" layoutY="521.0" text="Ruote Grandi" />
-    <CheckBox fx:id="infot" layoutX="477.0" layoutY="321.0" mnemonicParsing="false" onAction="#addInfot" />
-    <CheckBox fx:id="sensori" layoutX="477.0" layoutY="396.0" mnemonicParsing="false" onAction="#addSensori" />
-    <CheckBox fx:id="fari" layoutX="477.0" layoutY="371.0" mnemonicParsing="false" onAction="#addFariFullLED" />
-    <CheckBox fx:id="sedili" layoutX="477.0" layoutY="421.0" mnemonicParsing="false" onAction="#addSediliRiscaldati" />
-    <CheckBox fx:id="scorta" layoutX="477.0" layoutY="446.0" mnemonicParsing="false" onAction="#addScorta" />
-    <CheckBox fx:id="vetri" layoutX="477.0" layoutY="471.0" mnemonicParsing="false" onAction="#addVetri" />
-    <CheckBox fx:id="interni" layoutX="477.0" layoutY="496.0" mnemonicParsing="false" onAction="#addInterni" />
-    <CheckBox fx:id="ruote" layoutX="477.0" layoutY="521.0" mnemonicParsing="false" onAction="#addRuote" />
-    <CheckBox fx:id="cruise" layoutX="477.0" layoutY="346.0" mnemonicParsing="false" onAction="#addCruiseControl" />
+    <CheckBox fx:id="infot" layoutX="477.0" layoutY="321.0" mnemonicParsing="false" />
+    <CheckBox fx:id="sensori" layoutX="477.0" layoutY="396.0" mnemonicParsing="false" />
+    <CheckBox fx:id="fari" layoutX="477.0" layoutY="371.0" mnemonicParsing="false" />
+    <CheckBox fx:id="sedili" layoutX="477.0" layoutY="421.0" mnemonicParsing="false" />
+    <CheckBox fx:id="scorta" layoutX="477.0" layoutY="446.0" mnemonicParsing="false" />
+    <CheckBox fx:id="vetri" layoutX="477.0" layoutY="471.0" mnemonicParsing="false" />
+    <CheckBox fx:id="interni" layoutX="477.0" layoutY="496.0" mnemonicParsing="false" />
+    <CheckBox fx:id="ruote" layoutX="477.0" layoutY="521.0" mnemonicParsing="false" />
+    <CheckBox fx:id="cruise" layoutX="477.0" layoutY="346.0" mnemonicParsing="false" />
     <Button fx:id="vendibtn" layoutX="17.0" layoutY="594.0" mnemonicParsing="false" onAction="#vendi" prefHeight="50.0" prefWidth="183.0" text="Vendi auto" />
     <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="40.0" />
     <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="40.0" />

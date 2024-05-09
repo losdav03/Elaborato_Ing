@@ -141,4 +141,7 @@ public class Auto {
     public List<String> getColori() {
         return colori;
     }
+
+    public void aggiungiOptional(List<String> optionalSelezionati) {
+    }
 }
