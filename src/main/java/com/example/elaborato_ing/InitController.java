@@ -239,9 +239,10 @@ public class InitController {
             acquistabtn.setText("Inoltra Preventivo");
             model.loadScene("FXML/Login.fxml", event);
         }
-        if (acquistabtn.getText().equals("Inoltra Preventivo") && !prezzo.getText().isEmpty()) {
+
+        if (acquistabtn.getText().equals("Inoltra Preventivo")) {
             // manca codice per esportare e aggiungere il preventivo in un file txt e creare l'oggetto Preventivo
-            AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(),modello.getValue(),map);
+            AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), map);
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.inoltraPreventivo(autoConfigurata, colori.getValue());
 
