@@ -2,10 +2,11 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.*;
 
@@ -19,20 +20,29 @@ public class LoginController {
     private TextField nameField;
     @FXML
     private TextField surnameField;
+    @FXML
+    private Hyperlink registerHL;
+    @FXML
+    private Hyperlink loginHL;
 
-    private final Model model = new Model();
+
+    private Model model;
+
+    public void initialize() {
+         model = new Model();
+
+    }
 
 
     @FXML
-    private void goToRegistration(ActionEvent event) {
-        model.loadScene("FXML/Registration.fxml", event);
+    private void goToRegistration() {
+        model.OpenCloseFXML("FXML/Registration.fxml",registerHL);
     }
 
     @FXML
-    private void goToLogin(ActionEvent event) {
-        model.loadScene("FXML/Login.fxml", event);
+    private void goToLogin() {
+        model.OpenCloseFXML("FXML/Login.fxml",loginHL);
     }
-
 
     @FXML
     public void accedi() throws IOException {
@@ -51,6 +61,7 @@ public class LoginController {
 
 
     public void registrati() {
+
         model.Registrazione(emailField.getText(), passwordField.getText(), nameField.getText(), surnameField.getText());
     }
 

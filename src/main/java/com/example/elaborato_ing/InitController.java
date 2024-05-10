@@ -2,6 +2,8 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,13 +39,14 @@ public class InitController {
     private ImageView img;
     private Map<Marca, List<AutoNuova>> map;
     private final Catalogo catalogo = new Catalogo();
-    private final Model model = new Model();
+    private Model model;
     private int vista = 1;
-
-    private Stage configuratorStage;
 
 
     public void initialize() {
+
+        model = new Model();
+
         String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt";
         File file = new File(filePath);
 
@@ -143,8 +146,8 @@ public class InitController {
         cruise.setDisable(abilita);
     }
 
-    public void goToUsatoForm(ActionEvent event) {
-        model.loadScene("FXML/Usato.fxml", event);
+    public void goToUsatoForm() {
+        model.openFXML("FXML/Usato.fxml");
     }
 
 
@@ -237,7 +240,7 @@ public class InitController {
     public void acquistaFunction(ActionEvent event) throws IOException {
         if (acquistabtn.getText().equals("Login")) {
             acquistabtn.setText("Inoltra Preventivo");
-            model.loadScene("FXML/Login.fxml", event);
+            model.openFXML("FXML/Login.fxml");
         }
 
         if (acquistabtn.getText().equals("Inoltra Preventivo")) {
