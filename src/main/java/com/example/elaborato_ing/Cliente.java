@@ -8,6 +8,6 @@ public class Cliente extends Persona{
 
     @Override
     public String toString() {
-        return "," + super.getEmail() + ";";
+        return super.getEmail();
     }
 }

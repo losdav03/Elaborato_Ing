@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
@@ -165,7 +166,7 @@ public class Model {
         Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto);
         // esporto il preventivo sul filesrc
         try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
-            writer.write(preventivo.toString() + formato.format(dataCreazione) + "," + formato.format(dataCreazione) + colore + "\n");
+            writer.write(preventivo.toString()+", "+colore + formato.format(dataCreazione) + "," + formato.format(dataCreazione) + "\n");
         }
     }
 
@@ -266,6 +267,22 @@ public class Model {
             }
         }
         return false;
+    }
+
+    public void inizializzaPreventivo(ListView listView) {
+        List<String> filteredLines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("Preventivi.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 2 && parts[1].trim().equals(cliente.getEmail())) {
+                    filteredLines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        listView.getItems().addAll(filteredLines);
     }
 }
 

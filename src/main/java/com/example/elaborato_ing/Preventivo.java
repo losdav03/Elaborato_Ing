@@ -22,6 +22,5 @@ public class Preventivo {
 
     public String toString() {
         return id + "," + cliente.toString() + "," + auto.toString();
-
     }
 }
