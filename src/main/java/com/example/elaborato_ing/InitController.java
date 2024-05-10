@@ -40,8 +40,6 @@ public class InitController {
     private final Model model = new Model();
     private int vista = 1;
 
-    private Stage configuratorStage;
-
 
     public void initialize() {
         String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt";
@@ -143,8 +141,8 @@ public class InitController {
         cruise.setDisable(abilita);
     }
 
-    public void goToUsatoForm(ActionEvent event) {
-        model.loadScene("FXML/Usato.fxml", event);
+    public void goToUsatoForm() {
+        model.openFXML("FXML/Usato.fxml");
     }
 
 
@@ -237,7 +235,7 @@ public class InitController {
     public void acquistaFunction(ActionEvent event) throws IOException {
         if (acquistabtn.getText().equals("Login")) {
             acquistabtn.setText("Inoltra Preventivo");
-            model.loadScene("FXML/Login.fxml", event);
+            model.openFXML("FXML/Login.fxml");
         }
 
         if (acquistabtn.getText().equals("Inoltra Preventivo")) {

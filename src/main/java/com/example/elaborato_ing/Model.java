@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -70,29 +71,24 @@ public class Model {
         return dati;
     }
 
-
-    public void loadScene(String fxmlFile, ActionEvent event) {
+    public void openFXML(String fxmlPath){
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            // Carica il file FXML specificato
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
 
+            // Crea una nuova finestra per la nuova form
+            Stage newStage = new Stage();
+            newStage.initModality(Modality.APPLICATION_MODAL); // Imposta la finestra come modale (blocca l'interazione con altre finestre)
 
-            if (event != null && event.getSource() instanceof Node) {
-                Node sourceNode = (Node) event.getSource();
-                Stage primaryStage = (Stage) sourceNode.getScene().getWindow();
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.initOwner(primaryStage);
-                primaryStage.hide();
-                stage.setOnCloseRequest(e -> primaryStage.show());
-            } else {
-                stage.initModality(Modality.APPLICATION_MODAL);
-            }
+            // Imposta il contenuto della nuova form
+            Scene scene = new Scene(root);
+            newStage.setScene(scene);
 
-            stage.showAndWait();
+            // Mostra la nuova finestra
+            newStage.showAndWait(); // Attendere che la finestra venga chiusa prima di tornare al chiamante
         } catch (IOException e) {
-            System.err.println("Errore nel caricamento della scena: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -216,7 +212,7 @@ public class Model {
                     // Gestione dell'azione del bottone OK
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
-                            loadScene("FXML/Login.fxml", null);
+                            openFXML("FXML/Login.fxml");
                         }
                     });
 
