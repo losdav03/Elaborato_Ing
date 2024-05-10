@@ -2,11 +2,13 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.*;
@@ -34,6 +36,7 @@ public class InitController {
 
     @FXML
     private ImageView img;
+
     private Map<Marca, List<AutoNuova>> map;
     private final Catalogo catalogo = new Catalogo();
     private Model model;
@@ -258,9 +261,13 @@ public class InitController {
     public void vediPreventivi(ActionEvent actionEvent) {
         model.openFXML("FXML/Riepilogo.fxml");
     }
-
+    private Stage stage;
+    public void setStage(Stage stage){
+        this.stage=stage;
+    }
     public void logOut() {
-        //  model.OpenCloseFXML("FXML/Configuratore.fxml", null);
+        stage.close();
+        model.openFXML("FXML/Configuratore.fxml");
     }
 }
 

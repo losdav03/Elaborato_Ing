@@ -6,17 +6,27 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 
 
 public class Main extends Application {
 
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        // Carica il file FXML
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Configuratore.fxml"));
+        Parent root = loader.load();
 
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("FXML/Configuratore.fxml")));
+        // Ottieni il controller
+        InitController controller = loader.getController();
+
+        // Passa lo stage al controller
+        controller.setStage(primaryStage);
+
+        // Imposta il titolo e la scena e mostra lo stage
         primaryStage.setTitle("JavaFX App with FXML and CSS");
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 

@@ -101,12 +101,14 @@ public class Model {
             loginStage.initModality(Modality.APPLICATION_MODAL);
             loginStage.setScene(loginScene);
             loginStage.show();
+
             ((Stage) oggetto.getScene().getWindow()).close(); // Chiude la scena iniziale
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     //LOGIN
 
@@ -254,7 +256,6 @@ public class Model {
         }
     }
 
-
     public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
         List<AutoNuova> autoList = map.get(marca);
 
@@ -270,7 +271,6 @@ public class Model {
         }
         return null;
     }
-
 
     public List<String> inizializzaPreventivo() {
         List<String> filteredLines = new ArrayList<>();
@@ -335,6 +335,7 @@ public class Model {
     }
 
     public void avvisa() {
+
     }
 
     public void aggiornaImmagine(String nuovo) {
