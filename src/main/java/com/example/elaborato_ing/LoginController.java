@@ -24,6 +24,9 @@ public class LoginController {
     private Hyperlink registerHL;
     @FXML
     private Hyperlink loginHL;
+    @FXML
+    private Button accedi;
+
 
 
     private Model model;
@@ -52,6 +55,7 @@ public class LoginController {
 
         if (model.autenticato(username, password)) {
             System.out.println("Login successful!");
+            ((Stage) accedi.getScene().getWindow()).close(); // Chiude la scena iniziale
 
         } else {
             System.out.println("Credenziali non valide.");
@@ -61,7 +65,6 @@ public class LoginController {
 
 
     public void registrati() {
-
         model.Registrazione(emailField.getText(), passwordField.getText(), nameField.getText(), surnameField.getText());
     }
 

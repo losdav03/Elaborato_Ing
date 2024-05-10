@@ -2,14 +2,13 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
+
 
 import java.io.*;
 import java.util.*;
@@ -251,7 +250,6 @@ public class InitController {
 
             // abilito il  bottone PDF
             btnPDF.setVisible(true);
-
         }
 
 
@@ -262,6 +260,13 @@ public class InitController {
     }
 
 
+    public void vediPreventivi(ActionEvent actionEvent) {
+
+    }
+
+    public void logOut() {
+        model.OpenCloseFXML("FXML/Configuratore.fxml", null);
+    }
 }
 
 
