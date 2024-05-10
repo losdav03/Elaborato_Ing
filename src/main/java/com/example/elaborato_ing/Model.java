@@ -159,7 +159,8 @@ public class Model {
         for (OP o : auto.getOptional()) {
             giorni += 10;
         }
-        LocalDate fine = inizio.plusDays(giorni + 20);
+        LocalDate fine = inizio.plusMonths(1);
+        fine = fine.plusDays(giorni);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
