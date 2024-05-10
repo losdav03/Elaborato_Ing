@@ -32,8 +32,17 @@ public class Auto {
 
     @Override
     public String toString() {
-        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + optional;
+        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + stampa();
     }
+
+    public String stampa(){
+        String res = "";
+        for(OP op : optional){
+            res += op.toString() + ";";
+        }
+        return res;
+    }
+
 
     public Marca getMarca() {
         return marca;

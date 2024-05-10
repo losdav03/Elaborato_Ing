@@ -1,7 +1,7 @@
 package com.example.elaborato_ing;
 
 public enum OP {
-    INFOTAINMENT,
+    infotainment,
     CruiseControl,
     FariFullLED,
     SensoriParcheggio,

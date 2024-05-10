@@ -279,8 +279,23 @@ public class Model {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length > 0 && parts[1].equals(cliente.getEmail())) {
-                    String linea = "Marca : " + parts[0] +
-                                    "\nModello : " + parts[1];
+                    String linea = "Marca : " + parts[2] +
+                            "\nModello : " + parts[3] +
+                            "\nAltezza : " + parts[4] + " cm" +
+                            "\nLunghezza : " + parts[5] + " cm" +
+                            "\nLarghezza : " + parts[6] + " cm" +
+                            "\nPeso : " + parts[7] + " kg" +
+                            "\nVolume Bagagliaio : " + parts[8] + " L" +
+                            "\nNome motore : " + parts[9].split(";")[0] +
+                            "\nAlimentazione : " + parts[9].split(";")[1] +
+                            "\nCilindrata : " + parts[9].split(";")[2] + "m³" +
+                            "\nPotenza : " + parts[9].split(";")[3] + "kW" +
+                            "\nConsumi : " + parts[9].split(";")[4] + "km/L" +
+                            "\nOptional : " + parts[10] +
+                            "\nColore : " + parts[11] +
+                            "\nData Inizio Preventivo : " + parts[12] +
+                            "\nData Fine Preventivo : " + parts[13] +
+                            "\nPrezzo : " + parts[14];
                     filteredLines.add(linea);
                 }
             }
@@ -320,6 +335,10 @@ public class Model {
     }
 
     public void avvisa() {
+    }
+
+    public void aggiornaImmagine(String nuovo) {
+
     }
 }
 

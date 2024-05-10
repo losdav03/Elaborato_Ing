@@ -24,7 +24,7 @@ public class AutoUsata extends Auto {
 
     public void aggiungiOptional(boolean infot, boolean sensori, boolean fari, boolean sedili, boolean scorta, boolean vetri, boolean interni, boolean ruote, boolean cruise) {
         if (infot) {
-            super.setOptional(OP.INFOTAINMENT);
+            super.setOptional(OP.infotainment);
         }
         if (sensori) {
             super.setOptional(OP.SensoriParcheggio);

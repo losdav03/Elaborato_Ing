@@ -40,7 +40,7 @@ public class AutoNuova extends Auto {
 
     public void setOptional(boolean infot, boolean sensori, boolean fari, boolean sedili, boolean scorta, boolean vetri, boolean interni, boolean ruote, boolean cruise) {
         if (infot) {
-            setOptional(OP.INFOTAINMENT);
+            setOptional(OP.infotainment);
         }
         if (sensori) {
             setOptional(OP.SensoriParcheggio);
