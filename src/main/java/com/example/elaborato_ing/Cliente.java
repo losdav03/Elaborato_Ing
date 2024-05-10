@@ -6,6 +6,10 @@ public class Cliente extends Persona{
         super(email, nome, cognome, password);
     }
 
+    public Cliente() {
+        super();
+    }
+
     @Override
     public String toString() {
         return super.getEmail();

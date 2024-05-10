@@ -9,20 +9,22 @@ import java.io.*;
 
 public class RiepilogoController {
     @FXML
-    private ListView<String> listView;
-    private Model model = new Model();
+    private ListView listaPreventivi;
+    private final Model model = new Model();
 
-    public void InizializzaPreventivi() {
-        model.inizializzaPreventivo(listView);
+    public void initialize() {
+       listaPreventivi.getItems().addAll(model.inizializzaPreventivo());
     }
 
     public void paga(ActionEvent actionEvent) {
-        String preventivoSelezionato = listView.getSelectionModel().getSelectedItem();
+       /* String preventivoSelezionato = listaPreventivi.getSelectionModel().getSelectedItem();
         if (preventivoSelezionato != null) {
             // Aggiungi "pagato" alla fine della riga selezionata
             model.aggiungiPagamento(preventivoSelezionato);
             // Aggiorna la ListView
-            model.inizializzaPreventivo(listView);
+            model.inizializzaPreventivo();
+            */
+
         }
     }
-}
+

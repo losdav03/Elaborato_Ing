@@ -3,6 +3,10 @@ package com.example.elaborato_ing;
 public class Persona {
     private String email, nome, cognome, password;
 
+    public Persona() {
+
+    }
+
     public Persona(String email, String nome, String cognome, String password) {
         this.email = email;
         this.nome = nome;

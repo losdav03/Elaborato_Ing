@@ -1,15 +1,11 @@
 package com.example.elaborato_ing;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -27,7 +23,7 @@ import java.util.List;
 
 public class Model {
 
-    private Cliente cliente;
+    private static Cliente cliente = new Cliente();
 
     public Model() {
 
@@ -112,83 +108,6 @@ public class Model {
         }
     }
 
-    public void PDF() {
-        try {
-            PDDocument document = new PDDocument();
-            PDPage page = new PDPage();
-            document.addPage(page);
-
-            PDPageContentStream contentStream = new PDPageContentStream(document, page);
-
-            // Imposta il font e il colore del testo
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 20);
-            contentStream.setNonStrokingColor(Color.BLUE);
-
-            // Scrivi il titolo
-            contentStream.beginText();
-            contentStream.newLineAtOffset(100, 700);
-            contentStream.showText("Preventivo per l'auto:");
-            contentStream.endText();
-
-            // Imposta il font e il colore del testo per le informazioni
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 14);
-            contentStream.setNonStrokingColor(Color.BLACK);
-
-            // Disegna una linea
-            contentStream.moveTo(100, 680);
-            contentStream.lineTo(500, 680);
-            contentStream.stroke();
-
-            contentStream.close();
-
-            // Salva il documento
-            document.save("src/main/resources/com/example/elaborato_ing/Preventivo.pdf");
-            document.close();
-
-            System.out.println("PDF generato con successo.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void inoltraPreventivo(Auto auto, String colore, int Prezzo) throws IOException {
-        LocalDateTime OrarioCreazione = LocalDateTime.now();
-        LocalDate inizio = LocalDate.now();
-        Cliente cliente = new Cliente("utente", "utente", "utente", "utente");
-        int giorni = 0;
-        for (OP o : auto.getOptional()) {
-            giorni += 10;
-        }
-        LocalDate fine = inizio.plusMonths(1);
-        fine = fine.plusDays(giorni);
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto);
-        // esporto il preventivo sul filesrc
-        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
-            writer.write(preventivo.toString() + "," + colore + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + "\n");
-        }
-    }
-
-
-    public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
-        List<AutoNuova> autoList = map.get(marca);
-
-        if (autoList == null) { // Se non esiste una lista per la marca data
-            System.out.println("Marca non trovata: " + marca);
-            return null;
-        }
-
-        for (AutoNuova auto : autoList) {
-            if (auto.getModello().equals(modello)) { // Cerca il modello
-                return auto; // Se il modello corrisponde, restituisce l'auto
-            }
-        }
-        return null;
-    }
-
-
     //LOGIN
 
     public boolean autenticato(String username, String password) throws IOException {
@@ -197,7 +116,11 @@ public class Model {
             while ((line = br.readLine()) != null) {
                 String[] parti = line.split(",");
                 if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
-                    cliente = new Cliente(parti[0], parti[1], parti[2], parti[3]);
+                    cliente.setEmail(parti[0]);
+                    cliente.setNome(parti[1]);
+                    cliente.setCognome(parti[2]);
+                    cliente.setPassword(parti[3]);
+                    System.out.println(cliente.toString());
                     return true;
                 }
             }
@@ -270,21 +193,101 @@ public class Model {
         return false;
     }
 
-    public void inizializzaPreventivo(ListView listView) {
+    public void PDF() {
+        try {
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage();
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+
+            // Imposta il font e il colore del testo
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 20);
+            contentStream.setNonStrokingColor(Color.BLUE);
+
+            // Scrivi il titolo
+            contentStream.beginText();
+            contentStream.newLineAtOffset(100, 700);
+            contentStream.showText("Preventivo per l'auto:");
+            contentStream.endText();
+
+            // Imposta il font e il colore del testo per le informazioni
+            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 14);
+            contentStream.setNonStrokingColor(Color.BLACK);
+
+            // Disegna una linea
+            contentStream.moveTo(100, 680);
+            contentStream.lineTo(500, 680);
+            contentStream.stroke();
+
+            contentStream.close();
+
+            // Salva il documento
+            document.save("src/main/resources/com/example/elaborato_ing/Preventivo.pdf");
+            document.close();
+
+            System.out.println("PDF generato con successo.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+
+        }
+    }
+
+    public void inoltraPreventivo(Auto auto, String colore, int Prezzo) throws IOException {
+        LocalDateTime OrarioCreazione = LocalDateTime.now();
+        LocalDate inizio = LocalDate.now();
+        int giorni = 0;
+        for (OP _ : auto.getOptional()) {
+            giorni += 10;
+        }
+
+        LocalDate fine = inizio.plusMonths(1);
+        fine = fine.plusDays(giorni);
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto);
+
+        // esporto il preventivo sul filesrc
+        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
+            writer.write(preventivo + "," + colore + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + "\n");
+        }
+    }
+
+
+    public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
+        List<AutoNuova> autoList = map.get(marca);
+
+        if (autoList == null) { // Se non esiste una lista per la marca data
+            System.out.println("Marca non trovata: " + marca);
+            return null;
+        }
+
+        for (AutoNuova auto : autoList) {
+            if (auto.getModello().equals(modello)) { // Cerca il modello
+                return auto; // Se il modello corrisponde, restituisce l'auto
+            }
+        }
+        return null;
+    }
+
+
+    public List<String> inizializzaPreventivo() {
         List<String> filteredLines = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("Preventivi.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 2 && parts[1].trim().equals(cliente.getEmail())) {
-                    filteredLines.add(line);
+                if (parts.length > 0 && parts[1].equals(cliente.getEmail())) {
+                    String linea = "Marca : " + parts[0] +
+                                    "\nModello : " + parts[1];
+                    filteredLines.add(linea);
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        listView.getItems().addAll(filteredLines);
+        return filteredLines;
     }
 
     public void aggiungiPagamento(String preventivoSelezionato) {
@@ -313,7 +316,7 @@ public class Model {
     }
 
     public void valuta(String text) {
-        
+
     }
 
     public void avvisa() {

@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
 import java.io.*;
 import java.util.*;
 import java.util.List;
@@ -235,16 +236,13 @@ public class InitController {
 
     public void acquistaFunction(ActionEvent event) throws IOException {
         if (acquistabtn.getText().equals("Login")) {
-            acquistabtn.setText("Inoltra Preventivo");
             model.openFXML("FXML/Login.fxml");
-        }
-
-        if (acquistabtn.getText().equals("Inoltra Preventivo")) {
+            acquistabtn.setText("Inoltra Preventivo");
+        } else {
             // manca codice per esportare e aggiungere il preventivo in un file txt e creare l'oggetto Preventivo
             AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), map);
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()));
-
             // abilito il  bottone PDF
             btnPDF.setVisible(true);
         }
@@ -262,7 +260,7 @@ public class InitController {
     }
 
     public void logOut() {
-      //  model.OpenCloseFXML("FXML/Configuratore.fxml", null);
+        //  model.OpenCloseFXML("FXML/Configuratore.fxml", null);
     }
 }
 
