@@ -311,5 +311,12 @@ public class Model {
             throw new RuntimeException(e);
         }
     }
+
+    public void valuta(String text) {
+        
+    }
+
+    public void avvisa() {
+    }
 }
 
