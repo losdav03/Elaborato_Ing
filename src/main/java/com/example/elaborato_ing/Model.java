@@ -71,7 +71,8 @@ public class Model {
         return dati;
     }
 
-    public void openFXML(String fxmlPath){
+    public void openFXML(String fxmlPath) {
+
         try {
             // Carica il file FXML specificato
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
@@ -87,8 +88,24 @@ public class Model {
 
             // Mostra la nuova finestra
             newStage.showAndWait(); // Attendere che la finestra venga chiusa prima di tornare al chiamante
+
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void OpenCloseFXML(String fxmlPath, Node oggetto) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Scene loginScene = new Scene(loader.load());
+            Stage loginStage = new Stage();
+            loginStage.initModality(Modality.APPLICATION_MODAL);
+            loginStage.setScene(loginScene);
+            loginStage.show();
+
+            ((Stage) oggetto.getScene().getWindow()).close(); // Chiude la scena iniziale
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

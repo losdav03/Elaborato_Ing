@@ -40,7 +40,8 @@
             style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Registrati"/>
 
     <!-- Link per tornare al login -->
-    <Hyperlink layoutX="226.0" layoutY="363.0" onAction="#goToLogin" style="-fx-font-size: 12px; -fx-text-fill: white;"
+    <Hyperlink fx:id="loginHL" layoutX="226.0" layoutY="363.0" onAction="#goToLogin"
+               style="-fx-font-size: 12px; -fx-text-fill: white;"
                text="Hai già un account? Login"/>
 
 </Pane>
