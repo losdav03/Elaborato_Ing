@@ -14,12 +14,10 @@ import java.io.*;
 
 public class RiepilogoController {
     @FXML
+    public ImageView macchinaPreventivo;
+    @FXML
     private ListView listaPreventivi;
     private final Model model = new Model();
-
-    @FXML
-    private ImageView img;
-
     private Marca marca;
     private String modello;
 
@@ -30,25 +28,29 @@ public class RiepilogoController {
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Qui puoi fare qualcosa con il valore selezionato, ad esempio stamparlo
-            String[] utili = observable.getValue().toString().split(System.lineSeparator());
-            String path = "src/main/resources/com/example/elaborato_ing/images/";
+            System.out.println(observable.getValue().toString());
+            String[] utili = observable.getValue().toString().split("\n");
+            String path = "/com/example/elaborato_ing/images/";
             for (String riga : utili) {
                 if (riga.startsWith("Marca")) {
                     String marca = riga.split(":")[1].trim().toLowerCase();
                     path += marca;
+                    System.out.println(marca);
                 }
-                else if (riga.startsWith("Modello")) {
-                    String modello = riga.split(":")[1].trim().toLowerCase();
-                    path += modello;
+                if (riga.startsWith("Modello")) {
+                    String ollare = riga.split(":")[1].trim().toLowerCase();
+                    path += ollare;
+                    System.out.println(ollare);
                 }
-                else if (riga.startsWith("Colore")) {
+                if (riga.startsWith("Colore")) {
                     String colore = riga.split(":")[1].trim().toLowerCase();
                     path += colore;
+                    System.out.println(colore);
                 }
             }
             path += "1.png";
-            Image image = new Image(path);
-            img.setImage(image);
+            Image image = new Image(getClass().getResourceAsStream(path));
+            macchinaPreventivo.setImage(image);
         });
     }
 
