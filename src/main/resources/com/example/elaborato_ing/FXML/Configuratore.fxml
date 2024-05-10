@@ -5,75 +5,92 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.InitController">
-  <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="194.0">
-         <children>
-            <Label layoutX="14.0" layoutY="47.0" text="Marca" />
-            <Label layoutX="14.0" layoutY="93.0" text="Modello" />
-            <Label layoutX="14.0" layoutY="150.0" text="Altezza" />
-            <Label layoutX="14.0" layoutY="167.0" text="Lunghezza" />
-            <Label layoutX="14.0" layoutY="184.0" text="Larghezza" />
-            <Label layoutX="14.0" layoutY="201.0" text="Peso" />
-            <Label layoutX="13.0" layoutY="218.0" prefHeight="17.0" prefWidth="54.0" text="Volume" />
-            <Label layoutX="14.0" layoutY="230.0" text="Bagagliaio" />
-            <Label layoutX="14.0" layoutY="247.0" text="Alimentazione" />
-            <Label layoutX="14.0" layoutY="295.0" text="Colori" />
-            <ComboBox fx:id="marca" layoutX="60.0" layoutY="43.0" prefHeight="25.0" prefWidth="104.0" />
-            <ComboBox fx:id="modello" layoutX="60.0" layoutY="89.0" prefHeight="25.0" prefWidth="104.0" />
-            <Label fx:id="altezza" layoutX="95.0" layoutY="150.0" />
-            <Label fx:id="lunghezza" layoutX="95.0" layoutY="167.0" />
-            <Label fx:id="larghezza" layoutX="95.0" layoutY="184.0" />
-            <Label fx:id="peso" layoutX="95.0" layoutY="201.0" />
-            <Label fx:id="volume" layoutX="95.0" layoutY="227.0" />
-            <Label fx:id="alimentazione" layoutX="95.0" layoutY="247.0" />
-            <ComboBox fx:id="colori" layoutX="60.0" layoutY="295.0" prefHeight="25.0" prefWidth="104.0" />
-            <Label fx:id="motore" layoutX="95.0" layoutY="264.0" />
-            <Label layoutX="14.0" layoutY="264.0" text="Motore" />
-            <Label layoutX="45.0" layoutY="325.0" text="OPTIONAL">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <Label layoutX="14.0" layoutY="351.0" text="Infotainment" />
-            <Label layoutX="14.0" layoutY="368.0" text="Cruise Control" />
-            <Label layoutX="14.0" layoutY="385.0" text="Fari Full LED" />
-            <Label layoutX="14.0" layoutY="402.0" text="Sensori Parcheggio" />
-            <Label layoutX="14.0" layoutY="419.0" text="Sedili Riscaldati" />
-            <Label layoutX="14.0" layoutY="436.0" text="Ruota Di Scorta" />
-            <Label layoutX="14.0" layoutY="453.0" text="Vetri Oscurati" />
-            <Label layoutX="14.0" layoutY="470.0" text="Interni In Pelle" />
-            <Label layoutX="14.0" layoutY="487.0" text="Ruote Grandi" />
-            <CheckBox fx:id="infot" layoutX="138.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="sensori" layoutX="138.0" layoutY="402.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="fari" layoutX="138.0" layoutY="385.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="sedili" layoutX="138.0" layoutY="419.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="scorta" layoutX="138.0" layoutY="436.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="vetri" layoutX="138.0" layoutY="453.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="interni" layoutX="138.0" layoutY="470.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="ruote" layoutX="138.0" layoutY="487.0" mnemonicParsing="false" onAction="#addOption" />
-            <CheckBox fx:id="cruise" layoutX="138.0" layoutY="368.0" mnemonicParsing="false" onAction="#addOption" />
-         </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="400.0">
-         <children>
-            <ImageView fx:id="img" fitHeight="250.0" fitWidth="350.0" layoutX="34.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-            <Label layoutX="14.0" layoutY="331.0" text="PREZZO">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="prezzo" layoutX="106.0" layoutY="340.0" prefHeight="17.0" prefWidth="65.0">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
-            <Button fx:id="acquistabtn" layoutX="79.0" layoutY="400.0" mnemonicParsing="false" onAction="#acquistaFunction" prefHeight="43.0" prefWidth="91.0" text="Login" textFill="#227916" />
-            <Button fx:id="vendibtn" layoutX="253.0" layoutY="400.0" mnemonicParsing="false" onAction="#goToUsatoForm" prefHeight="43.0" prefWidth="91.0" text="Vendi usato" textFill="RED" />
-            <Button fx:id="btnSx" layoutX="273.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnDx" text="-&gt;" textAlignment="CENTER" />
-            <Button fx:id="btnDx" layoutX="99.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnSx" text="&lt;-" textAlignment="CENTER" />
-            <Label layoutX="181.0" layoutY="340.0" text="€" />
-            <Button fx:id="btnPDF" layoutX="125.0" layoutY="454.0" mnemonicParsing="false" onAction="#generaPDF" text="Scarica PDF" />
-            <Button layoutX="236.0" layoutY="454.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Vedi Preventivi" />
-         </children></AnchorPane>
-  </items>
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity" prefHeight="513.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.InitController">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="194.0">
+            <children>
+                <Label layoutX="14.0" layoutY="47.0" text="Marca"/>
+                <Label layoutX="14.0" layoutY="93.0" text="Modello"/>
+                <Label layoutX="14.0" layoutY="150.0" text="Altezza"/>
+                <Label layoutX="14.0" layoutY="167.0" text="Lunghezza"/>
+                <Label layoutX="14.0" layoutY="184.0" text="Larghezza"/>
+                <Label layoutX="14.0" layoutY="201.0" text="Peso"/>
+                <Label layoutX="13.0" layoutY="218.0" prefHeight="17.0" prefWidth="54.0" text="Volume"/>
+                <Label layoutX="14.0" layoutY="230.0" text="Bagagliaio"/>
+                <Label layoutX="14.0" layoutY="247.0" text="Alimentazione"/>
+                <Label layoutX="14.0" layoutY="295.0" text="Colori"/>
+                <ComboBox fx:id="marca" layoutX="60.0" layoutY="43.0" prefHeight="25.0" prefWidth="104.0"/>
+                <ComboBox fx:id="modello" layoutX="60.0" layoutY="89.0" prefHeight="25.0" prefWidth="104.0"/>
+                <Label fx:id="altezza" layoutX="95.0" layoutY="150.0"/>
+                <Label fx:id="lunghezza" layoutX="95.0" layoutY="167.0"/>
+                <Label fx:id="larghezza" layoutX="95.0" layoutY="184.0"/>
+                <Label fx:id="peso" layoutX="95.0" layoutY="201.0"/>
+                <Label fx:id="volume" layoutX="95.0" layoutY="227.0"/>
+                <Label fx:id="alimentazione" layoutX="95.0" layoutY="247.0"/>
+                <ComboBox fx:id="colori" layoutX="60.0" layoutY="295.0" prefHeight="25.0" prefWidth="104.0"/>
+                <Label fx:id="motore" layoutX="95.0" layoutY="264.0"/>
+                <Label layoutX="14.0" layoutY="264.0" text="Motore"/>
+                <Label layoutX="45.0" layoutY="325.0" text="OPTIONAL">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="14.0" layoutY="351.0" text="Infotainment"/>
+                <Label layoutX="14.0" layoutY="368.0" text="Cruise Control"/>
+                <Label layoutX="14.0" layoutY="385.0" text="Fari Full LED"/>
+                <Label layoutX="14.0" layoutY="402.0" text="Sensori Parcheggio"/>
+                <Label layoutX="14.0" layoutY="419.0" text="Sedili Riscaldati"/>
+                <Label layoutX="14.0" layoutY="436.0" text="Ruota Di Scorta"/>
+                <Label layoutX="14.0" layoutY="453.0" text="Vetri Oscurati"/>
+                <Label layoutX="14.0" layoutY="470.0" text="Interni In Pelle"/>
+                <Label layoutX="14.0" layoutY="487.0" text="Ruote Grandi"/>
+                <CheckBox fx:id="infot" layoutX="138.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOption"/>
+                <CheckBox fx:id="sensori" layoutX="138.0" layoutY="402.0" mnemonicParsing="false"
+                          onAction="#addOption"/>
+                <CheckBox fx:id="fari" layoutX="138.0" layoutY="385.0" mnemonicParsing="false" onAction="#addOption"/>
+                <CheckBox fx:id="sedili" layoutX="138.0" layoutY="419.0" mnemonicParsing="false" onAction="#addOption"/>
+                <CheckBox fx:id="scorta" layoutX="138.0" layoutY="436.0" mnemonicParsing="false" onAction="#addOption"/>
+                <CheckBox fx:id="vetri" layoutX="138.0" layoutY="453.0" mnemonicParsing="false" onAction="#addOption"/>
+                <CheckBox fx:id="interni" layoutX="138.0" layoutY="470.0" mnemonicParsing="false"
+                          onAction="#addOption"/>
+                <CheckBox fx:id="ruote" layoutX="138.0" layoutY="487.0" mnemonicParsing="false" onAction="#addOption"/>
+                <CheckBox fx:id="cruise" layoutX="138.0" layoutY="368.0" mnemonicParsing="false" onAction="#addOption"/>
+            </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="477.0">
+            <children>
+                <MenuButton layoutX="403.0" layoutY="14.0" mnemonicParsing="false" text="Profilo">
+                    <items>
+
+                    </items>
+                </MenuButton>
+                <ImageView fx:id="img" fitHeight="250.0" fitWidth="350.0" layoutX="34.0" layoutY="36.0"
+                           pickOnBounds="true" preserveRatio="true"/>
+                <Label layoutX="14.0" layoutY="331.0" text="PREZZO">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+                <Label fx:id="prezzo" layoutX="106.0" layoutY="340.0" prefHeight="17.0" prefWidth="65.0">
+                    <font>
+                        <Font name="System Bold" size="12.0"/>
+                    </font>
+                </Label>
+                <Button fx:id="acquistabtn" layoutX="79.0" layoutY="400.0" mnemonicParsing="false"
+                        onAction="#acquistaFunction" prefHeight="43.0" prefWidth="91.0" text="Login"
+                        textFill="#227916"/>
+                <Button fx:id="vendibtn" layoutX="253.0" layoutY="400.0" mnemonicParsing="false"
+                        onAction="#goToUsatoForm" prefHeight="43.0" prefWidth="91.0" text="Vendi usato" textFill="RED"/>
+                <Button fx:id="btnSx" layoutX="273.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnDx"
+                        text="-&gt;" textAlignment="CENTER"/>
+                <Button fx:id="btnDx" layoutX="99.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnSx"
+                        text="&lt;-" textAlignment="CENTER"/>
+                <Label layoutX="181.0" layoutY="340.0" text="€"/>
+                <Button fx:id="btnPDF" layoutX="170.0" layoutY="455.0" mnemonicParsing="false" onAction="#generaPDF"
+                        text="Scarica PDF"/>
+            </children>
+        </AnchorPane>
+    </items>
 </SplitPane>

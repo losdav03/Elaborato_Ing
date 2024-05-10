@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class Model {
 
+    private Cliente cliente;
 
     public Model() {
 
@@ -102,13 +104,12 @@ public class Model {
             loginStage.initModality(Modality.APPLICATION_MODAL);
             loginStage.setScene(loginScene);
             loginStage.show();
-
             ((Stage) oggetto.getScene().getWindow()).close(); // Chiude la scena iniziale
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 
     public void PDF() {
         try {
@@ -194,6 +195,7 @@ public class Model {
             while ((line = br.readLine()) != null) {
                 String[] parti = line.split(",");
                 if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
+                    cliente = new Cliente(parti[0], parti[1], parti[2], parti[3]);
                     return true;
                 }
             }
