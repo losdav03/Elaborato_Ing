@@ -32,7 +32,7 @@ public class Auto {
 
     @Override
     public String toString() {
-        return marca + "," + modello + "," + optional.toString();
+        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + optional;
     }
 
     public Marca getMarca() {

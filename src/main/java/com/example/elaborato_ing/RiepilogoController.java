@@ -12,9 +12,10 @@ public class RiepilogoController {
     private ListView<String> listView;
     private Model model = new Model();
 
-    public void InizializzaPreventivi(){
+    public void InizializzaPreventivi() {
         model.inizializzaPreventivo(listView);
     }
+
     public void paga(ActionEvent actionEvent) {
         String preventivoSelezionato = listView.getSelectionModel().getSelectedItem();
         if (preventivoSelezionato != null) {

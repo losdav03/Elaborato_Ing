@@ -117,7 +117,7 @@ public class UsatoController {
             auto = new AutoUsata(Enum.valueOf(Marca.class, marca.getText()), modello.getText(),Double.parseDouble(altezza.getText()),Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()),new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText());
             auto.addImgs(imageView1,imageView2,imageView3);
             auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
-            model.inoltraPreventivo(auto,colori.getText());
+            model.inoltraPreventivo(auto,colori.getText(), 0);
         }
     }
 }

@@ -151,7 +151,7 @@ public class Model {
         }
     }
 
-    public void inoltraPreventivo(Auto auto, String colore) throws IOException {
+    public void inoltraPreventivo(Auto auto, String colore, int Prezzo) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
         Cliente cliente = new Cliente("utente", "utente", "utente", "utente");
@@ -167,7 +167,7 @@ public class Model {
         Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto);
         // esporto il preventivo sul filesrc
         try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
-            writer.write(preventivo.toString()+", "+colore + formato.format(dataCreazione) + "," + formato.format(dataCreazione) + "\n");
+            writer.write(preventivo.toString() + "," + colore + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + "\n");
         }
     }
 
@@ -281,8 +281,9 @@ public class Model {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
+
         listView.getItems().addAll(filteredLines);
     }
 
@@ -307,7 +308,7 @@ public class Model {
             writer.write(content);
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }
