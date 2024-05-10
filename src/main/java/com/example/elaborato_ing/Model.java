@@ -310,5 +310,12 @@ public class Model {
             e.printStackTrace();
         }
     }
+
+    public void valuta(String text) {
+        
+    }
+
+    public void avvisa() {
+    }
 }
 

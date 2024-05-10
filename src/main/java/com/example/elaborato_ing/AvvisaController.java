@@ -6,6 +6,6 @@ public class AvvisaController {
 
     Model model = new Model();
     public void Avvisa(ActionEvent actionEvent) {
-
+        model.avvisa();
     }
 }
