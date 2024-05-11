@@ -29,37 +29,38 @@ public class RiepilogoController {
     public void initialize() {
         listaPreventivi.getItems().addAll(model.inizializzaPreventivo());
 
-
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            // Qui puoi fare qualcosa con il valore selezionato, ad esempio stamparlo
-            String[] utili = observable.getValue().toString().split("\n");
-            String path = "/com/example/elaborato_ing/images/";
-            for (String riga : utili) {
-                if (riga.startsWith("Marca")) {
-                    String marca = riga.split(":")[1].trim().toLowerCase();
-                    path += marca;
-                    System.out.println(marca);
+            if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
+                // Qui puoi fare qualcosa con il valore selezionato, ad esempio stamparlo
+                String[] utili = newValue.toString().split("\n");
+                String path = "/com/example/elaborato_ing/images/";
+                for (String riga : utili) {
+                    if (riga.startsWith("Marca")) {
+                        String marca = riga.split(":")[1].trim().toLowerCase();
+                        path += marca;
+                        System.out.println(marca);
+                    }
+                    if (riga.startsWith("Modello")) {
+                        String modello = riga.split(":")[1].trim().toLowerCase();
+                        path += modello;
+                        System.out.println(modello);
+                    }
+                    if (riga.startsWith("Colore")) {
+                        String colore = riga.split(":")[1].trim().toLowerCase();
+                        path += colore;
+                        System.out.println(colore);
+                    }
+                    if (riga.startsWith("Stato Preventivo")) {
+                        statoPreventivo = riga.split(":")[1].trim().toLowerCase();
+                    }
+                    if (riga.startsWith("Id Preventivo")) {
+                        idPreventivo = riga.split(":")[1].trim();
+                    }
                 }
-                if (riga.startsWith("Modello")) {
-                    String modello = riga.split(":")[1].trim().toLowerCase();
-                    path += modello;
-                    System.out.println(modello);
-                }
-                if (riga.startsWith("Colore")) {
-                    String colore = riga.split(":")[1].trim().toLowerCase();
-                    path += colore;
-                    System.out.println(colore);
-                }
-                if (riga.startsWith("Stato Preventivo")) {
-                    statoPreventivo = riga.split(":")[1].trim().toLowerCase();
-                }
-                if (riga.startsWith("Id Preventivo")) {
-                    idPreventivo = riga.split(":")[1].trim();
-                }
+                path += "1.png";
+                Image image = new Image(getClass().getResourceAsStream(path));
+                macchinaPreventivo.setImage(image);
             }
-            path += "1.png";
-            Image image = new Image(getClass().getResourceAsStream(path));
-            macchinaPreventivo.setImage(image);
         });
     }
 
