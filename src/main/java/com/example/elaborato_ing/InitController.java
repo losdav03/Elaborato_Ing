@@ -2,7 +2,10 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -40,10 +43,15 @@ public class InitController {
     @FXML
     private MenuButton menuProfilo;
 
+    @FXML
+    private SplitPane sP;
+
     private Map<Marca, List<AutoNuova>> map;
     private final Catalogo catalogo = new Catalogo();
     private Model model;
     private int vista = 1;
+    private Stage stage;
+
 
 
     public void initialize() {
@@ -270,13 +278,12 @@ public class InitController {
         model.openFXML("FXML/Riepilogo.fxml");
     }
 
-    private Stage stage;
 
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    public void logOut() {
+    public void logOut()  {
         model.eliminaCliente();
         stage.close();
         model.openFXML("FXML/Configuratore.fxml");
