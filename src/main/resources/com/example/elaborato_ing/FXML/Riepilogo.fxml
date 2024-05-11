@@ -4,8 +4,8 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.RiepilogoController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="759.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.RiepilogoController">
     <ListView fx:id="listaPreventivi" layoutX="12.0" layoutY="14.0" prefHeight="369.0" prefWidth="392.0" />
-    <ImageView fx:id="macchinaPreventivo" fitHeight="155.0" fitWidth="175.0" layoutX="414.0" layoutY="22.0" />
-    <Button fx:id="Pagabtn" layoutX="430.0" layoutY="319.0" onAction="#paga" prefHeight="61.0" prefWidth="163.0" text="Paga Preventivo Selezionato" />
+    <ImageView fx:id="macchinaPreventivo" fitHeight="200.0" fitWidth="302.0" layoutX="414.0" layoutY="22.0" />
+    <Button fx:id="pagaBtn" onAction="#paga" layoutX="430.0" layoutY="319.0" prefHeight="61.0" prefWidth="196.0" text="Paga Preventivo Selezionato" />
 </Pane>

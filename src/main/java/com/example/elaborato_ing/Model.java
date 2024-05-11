@@ -252,7 +252,7 @@ public class Model {
 
         // esporto il preventivo sul filesrc
         try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
-            writer.write(preventivo + "," + colore + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + "\n");
+            writer.write(preventivo + "," + colore + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + ",DA PAGARE" + "\n");
         }
     }
 
@@ -279,7 +279,8 @@ public class Model {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length > 0 && parts[1].equals(cliente.getEmail())) {
-                    String linea = "Marca : " + parts[2] +
+                    String linea = "Id Preventivo : " + parts[0] +
+                            "\nMarca : " + parts[2] +
                             "\nModello : " + parts[3] +
                             "\nAltezza : " + parts[4] + " cm" +
                             "\nLunghezza : " + parts[5] + " cm" +
@@ -288,14 +289,15 @@ public class Model {
                             "\nVolume Bagagliaio : " + parts[8] + " L" +
                             "\nNome motore : " + parts[9].split(";")[0] +
                             "\nAlimentazione : " + parts[9].split(";")[1] +
-                            "\nCilindrata : " + parts[9].split(";")[2] + "m³" +
-                            "\nPotenza : " + parts[9].split(";")[3] + "kW" +
-                            "\nConsumi : " + parts[9].split(";")[4] + "km/L" +
+                            "\nCilindrata : " + parts[9].split(";")[2] + " m³" +
+                            "\nPotenza : " + parts[9].split(";")[3] + " kW" +
+                            "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
                             "\nOptional : " + parts[10] +
                             "\nColore : " + parts[11] +
                             "\nData Inizio Preventivo : " + parts[12] +
                             "\nData Fine Preventivo : " + parts[13] +
-                            "\nPrezzo : " + parts[14];
+                            "\nPrezzo : " + parts[14] + " €" +
+                            "\nStato Preventivo : " + parts[15];
                     filteredLines.add(linea);
                 }
             }
@@ -305,30 +307,68 @@ public class Model {
         return filteredLines;
     }
 
-    public void aggiungiPagamento(String preventivoSelezionato) {
-        try {
-            // Leggi il file
-            File file = new File("Preventivi.txt");
-            BufferedReader reader = new BufferedReader(new FileReader(file));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append(System.lineSeparator());
+    public static void aggiungiPagamento(String idPreventivo, String statoPreventivo) throws IOException {
+
+        if (statoPreventivo.equals("da pagare")) {
+            // Percorso del file CSV
+            String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt";
+            String tempFilePath = "src/main/resources/com/example/elaborato_ing/TXT/Preventivi_temp.txt";
+
+            // Apre il file CSV originale in modalità di lettura
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+
+            // Crea un writer per il file temporaneo
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFilePath));
+
+            String riga;
+
+            // Legge ogni riga del file originale
+            while ((riga = reader.readLine()) != null) {
+                // Dividi la riga in campi utilizzando il separatore appropriato
+                String[] campi = riga.split(",");
+
+
+                // Se l'id nella posizione 0 corrisponde all'idPreventivo passato come parametro
+                if (campi[0].equals(idPreventivo)) {
+                    System.out.println("Qua");
+
+                    // Sostituisci il valore nella posizione 15 con "PAGATO"
+                    campi[15] = "PAGATO";
+                    // Ricostruisci la riga con i campi aggiornati
+                    riga = String.join(",", campi);
+                }
+
+                // Scrivi la riga nel file temporaneo
+                writer.write(riga);
+                writer.newLine();
             }
+
+            // Chiude il lettore e lo scrittore
             reader.close();
-
-            // Modifica la riga selezionata
-            String content = sb.toString();
-            content = content.replaceAll(preventivoSelezionato, preventivoSelezionato + ",pagato");
-
-            // Scrivi il file aggiornato
-            FileWriter writer = new FileWriter(file);
-            writer.write(content);
             writer.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
+            //CLONO IL CONTENUTO
+
+            BufferedReader lettore = new BufferedReader(new FileReader(tempFilePath));
+            BufferedWriter scrittore = new BufferedWriter(new FileWriter(filePath));
+            riga = "";
+            while ((riga = lettore.readLine()) != null) {
+                scrittore.write(riga);
+                scrittore.newLine();
+            }
+
+            // Chiudi i lettori e gli scrittori
+            lettore.close();
+            scrittore.close();
+
+
+
+            System.out.println("Pagamento aggiunto con successo per l'id " + idPreventivo);
+        } else
+            System.out.println("Stato preventivo stato " + statoPreventivo);
+
     }
+
 
     public void valuta(String text) {
 

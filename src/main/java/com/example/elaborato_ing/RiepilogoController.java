@@ -17,9 +17,13 @@ public class RiepilogoController {
     public ImageView macchinaPreventivo;
     @FXML
     private ListView listaPreventivi;
+    @FXML
+    private Button pagaBtn;
     private final Model model = new Model();
     private Marca marca;
     private String modello;
+    private static String statoPreventivo = "";
+    private static String idPreventivo = "";
 
 
     public void initialize() {
@@ -28,7 +32,6 @@ public class RiepilogoController {
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // Qui puoi fare qualcosa con il valore selezionato, ad esempio stamparlo
-            System.out.println(observable.getValue().toString());
             String[] utili = observable.getValue().toString().split("\n");
             String path = "/com/example/elaborato_ing/images/";
             for (String riga : utili) {
@@ -47,6 +50,12 @@ public class RiepilogoController {
                     path += colore;
                     System.out.println(colore);
                 }
+                if (riga.startsWith("Stato Preventivo")) {
+                    statoPreventivo = riga.split(":")[1].trim().toLowerCase();
+                }
+                if (riga.startsWith("Id Preventivo")) {
+                    idPreventivo = riga.split(":")[1].trim();
+                }
             }
             path += "1.png";
             Image image = new Image(getClass().getResourceAsStream(path));
@@ -55,14 +64,12 @@ public class RiepilogoController {
     }
 
     public void paga(ActionEvent actionEvent) {
-       /* String preventivoSelezionato = listaPreventivi.getSelectionModel().getSelectedItem();
-        if (preventivoSelezionato != null) {
-            // Aggiungi "pagato" alla fine della riga selezionata
-            model.aggiungiPagamento(preventivoSelezionato);
-            // Aggiorna la ListView
-            model.inizializzaPreventivo();
-            */
-
+        try {
+            model.aggiungiPagamento(idPreventivo, statoPreventivo);
+            listaPreventivi.getItems().clear();
+            listaPreventivi.getItems().addAll(model.inizializzaPreventivo());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
-
