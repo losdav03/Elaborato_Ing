@@ -37,6 +37,9 @@ public class InitController {
     @FXML
     private ImageView img;
 
+    @FXML
+    private MenuButton menuProfilo;
+
     private Map<Marca, List<AutoNuova>> map;
     private final Catalogo catalogo = new Catalogo();
     private Model model;
@@ -69,6 +72,7 @@ public class InitController {
         btnPDF.setVisible(false);
         btnSx.setDisable(true);
         btnDx.setDisable(true);
+        menuProfilo.setDisable(true);
     }
 
 
@@ -240,7 +244,11 @@ public class InitController {
     public void acquistaFunction(ActionEvent event) throws IOException {
         if (acquistabtn.getText().equals("Login")) {
             model.openFXML("FXML/Login.fxml");
-            acquistabtn.setText("Inoltra Preventivo");
+            if(model.getClienteLoggato() != null) {
+                menuProfilo.setDisable(false);
+                acquistabtn.setText("Inoltra Preventivo");
+            }
+
         } else {
             // manca codice per esportare e aggiungere il preventivo in un file txt e creare l'oggetto Preventivo
             AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), map);
@@ -261,11 +269,15 @@ public class InitController {
     public void vediPreventivi(ActionEvent actionEvent) {
         model.openFXML("FXML/Riepilogo.fxml");
     }
+
     private Stage stage;
-    public void setStage(Stage stage){
-        this.stage=stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
     }
+
     public void logOut() {
+        model.eliminaCliente();
         stage.close();
         model.openFXML("FXML/Configuratore.fxml");
     }
