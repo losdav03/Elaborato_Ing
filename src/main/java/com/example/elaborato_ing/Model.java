@@ -316,64 +316,33 @@ public class Model {
     }
 
     public static void aggiungiPagamento(String idPreventivo, String statoPreventivo) throws IOException {
+        BufferedReader reader;
+        BufferedWriter writer;
 
-        if (statoPreventivo.equals("da pagare")) {
-            // Percorso del file CSV
-            String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt";
-            String tempFilePath = "src/main/resources/com/example/elaborato_ing/TXT/Preventivi_temp.txt";
-
-            // Apre il file CSV originale in modalità di lettura
-            BufferedReader reader = new BufferedReader(new FileReader(filePath));
-
-            // Crea un writer per il file temporaneo
-            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFilePath));
-
+        try {
+            reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            StringBuilder fileContent = new StringBuilder();
             String riga;
 
-            // Legge ogni riga del file originale
             while ((riga = reader.readLine()) != null) {
-                // Dividi la riga in campi utilizzando il separatore appropriato
                 String[] campi = riga.split(",");
 
-
-                // Se l'id nella posizione 0 corrisponde all'idPreventivo passato come parametro
                 if (campi[0].equals(idPreventivo)) {
-                    System.out.println("Qua");
-
-                    // Sostituisci il valore nella posizione 15 con "PAGATO"
-                    campi[15] = "PAGATO";
-                    // Ricostruisci la riga con i campi aggiornati
-                    riga = String.join(",", campi);
+                    if (campi.length >= 16 && campi[15].equals("DA PAGARE")) {
+                        campi[15] = "PAGATO";
+                    }
                 }
-
-                // Scrivi la riga nel file temporaneo
-                writer.write(riga);
-                writer.newLine();
+                fileContent.append(String.join(",", campi)).append("\n");
             }
-
-            // Chiude il lettore e lo scrittore
             reader.close();
+
+            writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            writer.write(fileContent.toString());
             writer.close();
-
-            //CLONO IL CONTENUTO
-
-            BufferedReader lettore = new BufferedReader(new FileReader(tempFilePath));
-            BufferedWriter scrittore = new BufferedWriter(new FileWriter(filePath));
-            riga = "";
-            while ((riga = lettore.readLine()) != null) {
-                scrittore.write(riga);
-                scrittore.newLine();
-            }
-
-            // Chiudi i lettori e gli scrittori
-            lettore.close();
-            scrittore.close();
-
-
-            System.out.println("Pagamento aggiunto con successo per l'id " + idPreventivo);
-        } else
-            System.out.println("Stato preventivo stato " + statoPreventivo);
-
+            System.out.println("Sostituzione completata.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

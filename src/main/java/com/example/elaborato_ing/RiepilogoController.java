@@ -41,9 +41,9 @@ public class RiepilogoController {
                     System.out.println(marca);
                 }
                 if (riga.startsWith("Modello")) {
-                    String ollare = riga.split(":")[1].trim().toLowerCase();
-                    path += ollare;
-                    System.out.println(ollare);
+                    String modello = riga.split(":")[1].trim().toLowerCase();
+                    path += modello;
+                    System.out.println(modello);
                 }
                 if (riga.startsWith("Colore")) {
                     String colore = riga.split(":")[1].trim().toLowerCase();
