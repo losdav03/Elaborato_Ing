@@ -122,13 +122,21 @@ public class Model {
                     cliente.setNome(parti[1]);
                     cliente.setCognome(parti[2]);
                     cliente.setPassword(parti[3]);
-                    System.out.println(cliente.toString());
                     return true;
                 }
             }
         }
         return false;
     }
+
+    public String getClienteLoggato() {
+        return cliente.getEmail();
+    }
+
+    public void eliminaCliente() {
+        cliente = new Cliente();
+    }
+
 
     //REGISTRAZIONE
 
@@ -362,7 +370,6 @@ public class Model {
             scrittore.close();
 
 
-
             System.out.println("Pagamento aggiunto con successo per l'id " + idPreventivo);
         } else
             System.out.println("Stato preventivo stato " + statoPreventivo);
@@ -382,4 +389,6 @@ public class Model {
 
     }
 }
+
+
 

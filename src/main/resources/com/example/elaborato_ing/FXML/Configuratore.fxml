@@ -57,10 +57,10 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="477.0">
             <children>
-                <MenuButton layoutX="403.0" layoutY="14.0" mnemonicParsing="false" text="Profilo">
+                <MenuButton fx:id="menuProfilo" layoutX="403.0" layoutY="14.0" mnemonicParsing="false" text="Profilo">
                <items>
                   <MenuItem fx:id="preventivi" onAction="#vediPreventivi" mnemonicParsing="false" text="Preventivi" />
-                  <MenuItem fx:id="loggout" onAction="#logOut" mnemonicParsing="false" text="Log out" />
+                  <MenuItem fx:id="logout" onAction="#logOut" mnemonicParsing="false" text="Log out" />
                </items>
                 </MenuButton>
                 <ImageView fx:id="img" fitHeight="250.0" fitWidth="350.0" layoutX="34.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
