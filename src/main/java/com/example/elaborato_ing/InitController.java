@@ -48,8 +48,6 @@ public class InitController {
 
     @FXML
     private SplitPane sP;
-
-    private Map<Marca, List<AutoNuova>> map;
     private final Catalogo catalogo = new Catalogo();
     private Model model;
     private int vista = 1;

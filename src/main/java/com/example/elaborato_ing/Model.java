@@ -26,13 +26,21 @@ public class Model {
     private static Cliente cliente = new Cliente();
     private static Dipendente dipendente = new Dipendente();
 
-    public Model() {
+    private static Map<Marca, List<AutoNuova>> map;
 
+    public static Cliente getCliente() {
+        return cliente;
     }
 
-    public Map<Marca, List<AutoNuova>> caricaDaFile(String file, Catalogo catalogo) {
+    public static Dipendente getDipendente() {
+        return dipendente;
+    }
 
-        Map<Marca, List<AutoNuova>> dati = new HashMap<>();
+    public static Map<Marca, List<AutoNuova>> getMap() {
+        return map;
+    }
+
+    public Model() {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -68,6 +76,12 @@ public class Model {
         } catch (IllegalArgumentException e) {
             System.err.println("Errore nei dati: " + e.getMessage());
         }
+    }
+
+    public Map<Marca, List<AutoNuova>> caricaDaFile(String file, Catalogo catalogo) {
+
+        Map<Marca, List<AutoNuova>> dati = new HashMap<>();
+
         return dati;
     }
 
@@ -250,7 +264,6 @@ public class Model {
 
         }
     }
-
     public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();

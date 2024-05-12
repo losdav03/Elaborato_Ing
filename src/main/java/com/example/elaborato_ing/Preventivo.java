@@ -22,7 +22,20 @@ public class Preventivo {
         this.sede=sede;
     }
 
+
     public String toString() {
         return id + "," + cliente.toString() + "," + auto.toString();
+    }
+
+    public Sede getSede() {
+        return sede;
+    }
+
+    public Auto getAuto(){
+        return auto;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
     }
 }
