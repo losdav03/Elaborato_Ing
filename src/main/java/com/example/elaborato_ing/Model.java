@@ -28,20 +28,37 @@ public class Model {
     private static Dipendente dipendente = new Dipendente();
 
     private static Map<Marca, List<AutoNuova>> map;
+    private static Catalogo catalogo = new Catalogo();
 
-    public  Cliente getCliente() {
+    public Cliente getCliente() {
         return cliente;
     }
 
-    public  Dipendente getDipendente() {
+    public Dipendente getDipendente() {
         return dipendente;
     }
 
-    public  Map<Marca, List<AutoNuova>> getMap() {
+    public Map<Marca, List<AutoNuova>> getMap() {
         return map;
     }
 
+    public Catalogo getCatalogo() {
+        return catalogo;
+    }
+
     public Model() {
+    }
+
+    public void aggiornaFileCatalogo() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt"))) {
+            for (Auto auto : catalogo.getListaAuto()) {
+                writer.write(auto.toString()); // Supponendo che Auto abbia un metodo toString appropriato
+                writer.newLine();
+            }
+            System.out.println("Catalogo aggiornato e salvato su " + "Catalogo.txt");
+        } catch (IOException e) {
+            System.err.println("Errore durante la scrittura del file: " + e.getMessage());
+        }
     }
 
     public void caricaDaFile(String file, Catalogo catalogo) {

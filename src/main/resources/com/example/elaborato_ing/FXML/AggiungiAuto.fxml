@@ -4,7 +4,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="681.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AggiungiAutoController">
+<AnchorPane prefHeight="748.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AggiungiAutoController">
     <Label layoutX="17.0" layoutY="41.0" prefWidth="76.0" text="Marca" />
     <Label layoutX="17.0" layoutY="81.0" prefWidth="76.0" text="Modello" />
     <Label layoutX="14.0" layoutY="121.0" prefWidth="76.0" text="Altezza" />
@@ -30,7 +30,7 @@
     <TextField fx:id="alimentazione" layoutX="95.0" layoutY="357.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="potenza" layoutX="95.0" layoutY="437.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="consumi" layoutX="95.0" layoutY="477.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="colori" layoutX="95.0" layoutY="517.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="colore" layoutX="95.0" layoutY="517.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="cilindrata" layoutX="95.0" layoutY="397.0" prefHeight="25.0" prefWidth="104.0" />
     <Label layoutX="372.0" layoutY="298.0" text="OPTIONAL" />
     <Label layoutX="307.0" layoutY="321.0" text="Infotainment" />
@@ -51,14 +51,18 @@
     <CheckBox fx:id="interni" layoutX="477.0" layoutY="496.0" mnemonicParsing="false" />
     <CheckBox fx:id="ruote" layoutX="477.0" layoutY="521.0" mnemonicParsing="false" />
     <CheckBox fx:id="cruise" layoutX="477.0" layoutY="346.0" mnemonicParsing="false" />
-    <Button fx:id="vendibtn" layoutX="17.0" layoutY="594.0" mnemonicParsing="false" onAction="#aggiungi" prefHeight="50.0" prefWidth="183.0" text="Aggiungi Auto" />
+    <Button fx:id="vendibtn" layoutX="17.0" layoutY="674.0" mnemonicParsing="false" onAction="#aggiungi" prefHeight="50.0" prefWidth="183.0" text="Aggiungi Auto" />
     <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="40.0" />
     <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="40.0" />
     <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="40.0" />
     <Button fx:id="caricaImg" layoutX="232.0" layoutY="210.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
     <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="210.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
-   <Button fx:id="vendibtn1" layoutX="488.0" layoutY="594.0" mnemonicParsing="false" onAction="#elimina" prefHeight="50.0" prefWidth="82.0" text="Elimina" />
-   <ComboBox fx:id="marca1" layoutX="370.0" layoutY="610.0" prefHeight="25.0" prefWidth="104.0" />
-   <ComboBox fx:id="marca11" layoutX="254.0" layoutY="613.0" prefHeight="25.0" prefWidth="104.0" />
+   <Button fx:id="vendibtn1" layoutX="488.0" layoutY="677.0" mnemonicParsing="false" onAction="#elimina" prefHeight="50.0" prefWidth="82.0" text="Elimina" />
+   <ComboBox fx:id="marcaCB" layoutX="370.0" layoutY="684.0" prefHeight="25.0" prefWidth="104.0" />
+   <ComboBox fx:id="modelloCB" layoutX="254.0" layoutY="682.0" prefHeight="25.0" prefWidth="104.0" />
+   <Label layoutX="14.0" layoutY="559.0" prefWidth="76.0" text="Sconto" />
+   <Label layoutX="15.0" layoutY="597.0" prefWidth="76.0" text="Prezzo" />
+   <TextField fx:id="prezzo" layoutX="96.0" layoutY="593.0" prefHeight="25.0" prefWidth="104.0" />
+   <TextField fx:id="sconto" layoutX="96.0" layoutY="554.0" prefHeight="25.0" prefWidth="104.0" />
 
 </AnchorPane>

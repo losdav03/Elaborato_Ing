@@ -48,7 +48,6 @@ public class InitController {
 
     @FXML
     private SplitPane sP;
-    private final Catalogo catalogo = new Catalogo();
     private Model model;
     private int vista = 1;
     private Stage stage;
@@ -66,7 +65,7 @@ public class InitController {
             return;
         }
         sede.getItems().setAll(Sede.values());
-        model.caricaDaFile(filePath, catalogo);
+        model.caricaDaFile(filePath, model.getCatalogo());
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
@@ -139,7 +138,7 @@ public class InitController {
             btnSx.setDisable(false);
             btnDx.setDisable(false);
 
-            String path = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+            String path = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
             Image image = new Image(path);
             img.setImage(image);
         }
@@ -214,15 +213,15 @@ public class InitController {
         switch (vista) {
             case 1 -> {
                 vista = 3;
-                pathSx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathSx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
             }
             case 2 -> {
                 vista = 1;
-                pathSx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathSx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
             }
             case 3 -> {
                 vista = 2;
-                pathSx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathSx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
             }
         }
 
@@ -237,15 +236,15 @@ public class InitController {
         switch (vista) {
             case 1 -> {
                 vista = 2;
-                pathDx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathDx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
             }
             case 2 -> {
                 vista = 3;
-                pathDx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathDx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
             }
             case 3 -> {
                 vista = 1;
-                pathDx = catalogo.getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathDx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
             }
         }
 

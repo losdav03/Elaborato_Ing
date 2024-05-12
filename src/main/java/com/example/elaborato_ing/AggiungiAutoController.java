@@ -9,6 +9,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AggiungiAutoController {
 
@@ -16,7 +18,7 @@ public class AggiungiAutoController {
     private ComboBox marca;
 
     @FXML
-    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colori, alimentazione, cilindrata, potenza, consumi;
+    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, alimentazione, cilindrata, potenza, consumi, prezzo, sconto;
 
     @FXML
     private ImageView imageView1, imageView2, imageView3;
@@ -24,7 +26,9 @@ public class AggiungiAutoController {
     @FXML
     private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
     private final Model model = new Model();
-    AutoUsata auto;
+    Auto auto;
+    private List<String> listaOp;
+
 
     public void initialize() {
         marca.getItems().setAll(Marca.values());
@@ -37,6 +41,7 @@ public class AggiungiAutoController {
         Numeric(potenza);
         IsDouble(consumi);
     }
+
     private void IsDouble(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
@@ -63,6 +68,7 @@ public class AggiungiAutoController {
             }
         });
     }
+
     private void Numeric(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
@@ -72,7 +78,6 @@ public class AggiungiAutoController {
             }
         });
     }
-
 
 
     public void caricaImgs() {
@@ -107,12 +112,18 @@ public class AggiungiAutoController {
     }
 
     public void aggiungi(ActionEvent actionEvent) throws IOException {
-        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() &&!altezza.getText().isEmpty() &&!lunghezza.getText().isEmpty() &&!larghezza.getText().isEmpty() &&!peso.getText().isEmpty() &&!volume.getText().isEmpty() &&!colori.getText().isEmpty() &&!motore.getText().isEmpty() &&!alimentazione.getText().isEmpty() &&!cilindrata.getText().isEmpty()&&!potenza.getText().isEmpty() &&!consumi.getText().isEmpty()) {
-            auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(),Double.parseDouble(altezza.getText()),Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()),new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText(),);
-            auto.addImgs(imageView1,imageView2,imageView3);
+        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !alimentazione.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
+            List<String> colori = new ArrayList<>();
+            colori.add(colore.getText());
+
+            auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), Integer.parseInt(prezzo.getText()), colori, sconto.getText(), listaOp);
+            auto.addImgs(imageView1, imageView2, imageView3);
             auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
-            model.inoltraPreventivo(auto,colori.getText(), 0, null);
+            model.getCatalogo().add(auto);
         }
+    }
+
+    public void elimina(ActionEvent actionEvent) {
     }
 }
     /*
