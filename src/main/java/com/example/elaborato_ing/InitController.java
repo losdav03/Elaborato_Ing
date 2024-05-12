@@ -66,8 +66,8 @@ public class InitController {
             return;
         }
         sede.getItems().setAll(Sede.values());
-        map = model.caricaDaFile(filePath, catalogo);
-        marca.getItems().addAll(map.keySet());
+        model.caricaDaFile(filePath, catalogo);
+        marca.getItems().addAll(model.getMap().keySet());
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
         vista = 1;
@@ -95,7 +95,7 @@ public class InitController {
         btnDx.setDisable(true);
 
 
-        List<AutoNuova> listaAuto = map.getOrDefault(marca.getValue(), Collections.emptyList());
+        List<AutoNuova> listaAuto = model.getMap().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
         if (listaModelli.isEmpty()) {
@@ -111,7 +111,7 @@ public class InitController {
 
     private void aggiornaColori() {
         if (marca.getValue() != null && modello.getValue() != null) {
-            AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
+            AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
 
             colori.setDisable(false);
             abilitaOption();
@@ -147,7 +147,7 @@ public class InitController {
 
     private void abilitaOption() {
         String modelloSelezionato = modello.getValue();
-        AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
+        AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
         if (auto != null) {
 
@@ -170,7 +170,7 @@ public class InitController {
 
     public void addOption() {
         String modelloSelezionato = modello.getValue();
-        AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
+        AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
 
         if (auto != null) {
             int costoAggiuntivo = auto.getPrezzo() / 300;
@@ -263,7 +263,7 @@ public class InitController {
             }
 
         } else {
-            AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), map);
+            AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
             // abilito il  bottone PDF

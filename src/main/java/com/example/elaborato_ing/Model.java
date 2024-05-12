@@ -28,19 +28,22 @@ public class Model {
 
     private static Map<Marca, List<AutoNuova>> map;
 
-    public static Cliente getCliente() {
+    public  Cliente getCliente() {
         return cliente;
     }
 
-    public static Dipendente getDipendente() {
+    public  Dipendente getDipendente() {
         return dipendente;
     }
 
-    public static Map<Marca, List<AutoNuova>> getMap() {
+    public  Map<Marca, List<AutoNuova>> getMap() {
         return map;
     }
 
     public Model() {
+    }
+
+    public void caricaDaFile(String file, Catalogo catalogo) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -63,10 +66,10 @@ public class Model {
                     String sconto = parts[13];
                     List<String> colori = List.of(parts[14].trim().split(";"));
                     List<String> listaOp = List.of(parts[15].trim().split(";"));
-                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto,listaOp);
+                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, listaOp);
                     auto.caricaImmagini();
                     catalogo.add(auto);
-                    dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
+                    map.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -76,13 +79,6 @@ public class Model {
         } catch (IllegalArgumentException e) {
             System.err.println("Errore nei dati: " + e.getMessage());
         }
-    }
-
-    public Map<Marca, List<AutoNuova>> caricaDaFile(String file, Catalogo catalogo) {
-
-        Map<Marca, List<AutoNuova>> dati = new HashMap<>();
-
-        return dati;
     }
 
     public void openFXML(String fxmlPath) {
@@ -138,7 +134,7 @@ public class Model {
                     cliente.setCognome(parti[2]);
                     cliente.setPassword(parti[3]);
                     return 0;
-                }else if(parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
+                } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
                     dipendente.setEmail(parti[0]);
                     dipendente.setNome(parti[1]);
                     dipendente.setCognome(parti[2]);
@@ -264,6 +260,7 @@ public class Model {
 
         }
     }
+
     public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
