@@ -1,5 +1,8 @@
 dlosco03@gmail.com,Davide,Losco,ciao123
 roccocantaro@gmail.com,Rocco,Cantaro,ciao2003
 utente,utente,utente,utente
+dip1,dip,dip,dip,12345
+dip2,dip,dip,dip,67890
+dip3,dip,dip,dip,23423
+dip4,dip,dip,dip,34244
 
-cr7,FIGA7,Cristiano,Ronaldo

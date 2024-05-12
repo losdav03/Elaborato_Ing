@@ -1,18 +1,22 @@
 package com.example.elaborato_ing;
 
-public class Dipendente extends Persona{
-    public int idDipendente;
+public class Dipendente extends Persona {
+    public int IdDipendente;
 
-    public Dipendente(String email, String nome, String cognome, String password, int idDipendente) {
+    public Dipendente() {
+
+    }
+
+    public Dipendente(String email, String nome, String cognome, String password, int dipendente) {
         super(email, nome, cognome, password);
-        this.idDipendente = idDipendente;
+        this.IdDipendente = dipendente;
     }
 
     public int getIdDipendente() {
-        return idDipendente;
+        return IdDipendente;
     }
 
-    public void setIdDipendente(int idDipendente) {
-        this.idDipendente = idDipendente;
+    public void setIdDipendente(int dipendente) {
+        this.IdDipendente = dipendente;
     }
 }

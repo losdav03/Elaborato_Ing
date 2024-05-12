@@ -28,23 +28,22 @@ public class LoginController {
     private Button accedi;
 
 
-
     private Model model;
 
     public void initialize() {
-         model = new Model();
-         
+        model = new Model();
+
     }
 
 
     @FXML
     private void goToRegistration() {
-        model.OpenCloseFXML("FXML/Registration.fxml",registerHL);
+        model.OpenCloseFXML("FXML/Registration.fxml", registerHL);
     }
 
     @FXML
     private void goToLogin() {
-        model.OpenCloseFXML("FXML/Login.fxml",loginHL);
+        model.OpenCloseFXML("FXML/Login.fxml", loginHL);
     }
 
     @FXML
@@ -52,11 +51,13 @@ public class LoginController {
         String username = emailField.getText();
         String password = passwordField.getText();
 
-
-        if (model.autenticato(username, password)) {
-            System.out.println("Login successful!");
+        if (model.autenticato(username, password) == 0) {
+            System.out.println("Cliente Loggato!");
             ((Stage) accedi.getScene().getWindow()).close(); // Chiude la scena iniziale
 
+        } else if (model.autenticato(username, password) == 1) {
+            System.out.println("Dipendente Loggato!");
+            model.OpenCloseFXML("FXML/Dipendente.fxml", accedi);
         } else {
             System.out.println("Credenziali non valide.");
         }
