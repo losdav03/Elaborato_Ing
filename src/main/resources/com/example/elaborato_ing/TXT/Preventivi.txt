@@ -1,1 +1,1 @@
--1374940653,utente,LAMBORGHINI,REVUELTO,114.0,494.0,204.0,1775.0,80.0,V12 Ibrido;BENZINA;6498;814;14.0,infotainment;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl;,BIANCO,12/05/2024,10/09/2024,618000,DA PAGARE
+-1374940653,utente,LAMBORGHINI,REVUELTO,114.0,494.0,204.0,1775.0,80.0,V12 Ibrido;BENZINA;6498;814;14.0,infotainment;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl;,MARANELLO,BIANCO,12/05/2024,10/09/2024,618000,DA PAGARE

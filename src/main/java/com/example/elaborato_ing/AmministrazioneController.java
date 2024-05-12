@@ -29,7 +29,7 @@ public class AmministrazioneController {
 
     private void caricaPreventivi() {
         try {
-            File file = new File("com/example/elaborato_ing/TXT/Preventivi.txt");
+            File file = new File("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt");
             Scanner scanner = new Scanner(file);
 
             preventivi.clear(); // Pulisce la lista preventivi prima di caricare i nuovi dati
@@ -41,38 +41,42 @@ public class AmministrazioneController {
                 // Estrai i singoli elementi
                 String id = elements[0];
                 String clienteEmail = elements[1];
-                Marca marca =  Marca.valueOf(elements[2].trim());
+                Marca marca = Marca.valueOf(elements[2].trim());
                 String modelloAuto = elements[3];
                 double altezzaAuto = Double.parseDouble(elements[4]);
                 double lunghezzaAuto = Double.parseDouble(elements[5]);
                 double larghezzaAuto = Double.parseDouble(elements[6]);
                 double pesoAuto = Double.parseDouble(elements[7]);
                 double volumeBagagliaioAuto = Double.parseDouble(elements[8]);
-                String motoreAuto = elements[9];
-                Alimentazione alimentazione = Alimentazione.valueOf(elements[8].trim());
-                int cilindrata = Integer.parseInt(elements[11]);
-                int potenza = Integer.parseInt(elements[12]);
-                int consumi = Integer.parseInt(elements[13]);
-                String optionals = elements[14];
-                Sede sede =  Sede.valueOf(elements[15].trim());
-                String colore = elements[16];
-                String creazione = elements[17];
-                String fine = elements[18];
-                int prezzo = Integer.parseInt(elements[19]);
-                String daPagare = elements[20];
+                String[] motoreElements = elements[9].split(";"); // Suddividi il campo motore
+                String tipoMotore = motoreElements[0];
+                Alimentazione alimentazione = Alimentazione.valueOf(motoreElements[1]);
+                int cilindrata = Integer.parseInt(motoreElements[2]);
+                int potenza = Integer.parseInt(motoreElements[3]);
+                Double consumi = Double.parseDouble(motoreElements[4]);
+                String optionals = elements[10];
+                Sede sede = Sede.valueOf(elements[11]);
+                String colore = elements[12];
+                String creazione = elements[13];
+                String fine = elements[14];
+                int prezzo = Integer.parseInt(elements[15]);
+                String daPagare = elements[16];
+
                 // Creare oggetto Cliente
                 Cliente cliente = new Cliente(clienteEmail);
+
                 // Creare oggetto Auto
-                Motore motore = new Motore(motoreAuto,alimentazione,cilindrata, potenza, consumi); // Assumendo che il motore sia una classe
+                Motore motore = new Motore(tipoMotore, alimentazione, cilindrata, potenza, consumi);
                 Auto auto = new Auto(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motore);
 
                 // Parsing delle date
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date dataCreazione = sdf.parse(elements[16]);
-                Date dataScadenza = sdf.parse(elements[17]);
+                Date dataCreazione = sdf.parse(elements[13]);
+                Date dataScadenza = sdf.parse(elements[14]);
 
                 // Creare e restituire l'oggetto Preventivo
                 Preventivo preventivo = new Preventivo(id, dataCreazione, dataScadenza, cliente, auto, sede);
+
                 // Aggiungi il preventivo alla lista preventivi
                 preventivi.add(preventivo);
             }
