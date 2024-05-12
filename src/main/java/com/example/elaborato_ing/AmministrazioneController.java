@@ -103,7 +103,7 @@ public class AmministrazioneController {
     }
 
     public void xcliente(ActionEvent actionEvent) {
-        Collections.sort(preventivi, (p1, p2) -> p1.getCliente().getNome().compareTo(p2.getCliente().getNome()));
+        Collections.sort(preventivi, (p1, p2) -> p1.getCliente().getEmail().compareTo(p2.getCliente().getEmail()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
