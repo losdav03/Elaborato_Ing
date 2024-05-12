@@ -1,6 +1,7 @@
 package com.example.elaborato_ing;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Catalogo {
@@ -13,6 +14,7 @@ public class Catalogo {
     public void add(Auto a) {
         catalogo.add((AutoNuova) a);
     }
+
     public List<AutoNuova> getListaAuto() {
         return catalogo;
     }
@@ -27,4 +29,15 @@ public class Catalogo {
         }
         return null;
     }
+
+    public void remove(Marca marca, String s) {
+        Iterator<AutoNuova> iterator = catalogo.iterator();
+        while (iterator.hasNext()) {
+            AutoNuova auto = iterator.next();
+            if (auto.getMarca().equals(marca) && auto.getModello().equals(s)) {
+                iterator.remove(); // Rimuovi l'elemento corrente usando l'iteratore
+            }
+        }
+    }
+
 }

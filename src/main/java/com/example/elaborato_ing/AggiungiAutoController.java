@@ -10,12 +10,13 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AggiungiAutoController {
 
     @FXML
-    private ComboBox marca;
+    private ComboBox marca, marcaCB, modelloCB;
 
     @FXML
     private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, alimentazione, cilindrata, potenza, consumi, prezzo, sconto;
@@ -25,13 +26,19 @@ public class AggiungiAutoController {
 
     @FXML
     private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
+
+
     private final Model model = new Model();
     Auto auto;
     private List<String> listaOp;
 
 
     public void initialize() {
-        marca.getItems().setAll(Marca.values());
+        model.setMarca(marca);
+        model.setMarca(marcaCB);
+        marcaCB.setOnAction(_ -> aggiornaModello());
+
+
         IsDouble(altezza);
         IsDouble(lunghezza);
         IsDouble(larghezza);
@@ -40,6 +47,20 @@ public class AggiungiAutoController {
         Numeric(cilindrata);
         Numeric(potenza);
         IsDouble(consumi);
+    }
+
+    private void aggiornaModello() {
+        modelloCB.getItems().clear();
+        List<AutoNuova> listaAuto = model.getMap().getOrDefault(marcaCB.getValue(), Collections.emptyList());
+        List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
+
+        if (listaModelli.isEmpty()) {
+            modelloCB.getItems().clear();
+            modelloCB.setDisable(true);
+        } else {
+            modelloCB.getItems().setAll(listaModelli);
+            modelloCB.setDisable(false);
+        }
     }
 
     private void IsDouble(TextField txt) {
@@ -125,6 +146,8 @@ public class AggiungiAutoController {
     }
 
     public void elimina(ActionEvent actionEvent) {
+        model.getCatalogo().remove((Marca) marcaCB.getValue(),String.valueOf(modelloCB.getValue()));
+        model.aggiornaFileCatalogo();
     }
 }
     /*

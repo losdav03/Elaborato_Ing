@@ -1,18 +1,18 @@
-DODGE, CHARGER, 501, 147, 190, 2000, 467,HEMI V8, BENZINA, 6166, 485, 8.6,31000, N, BIANCO;NERO;ROSSO,infotainment;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
-DODGE, CHALLENGER, 502, 145, 192, 1850, 455,HEMI V8, BENZINA, 6166, 485, 9.0,35000, BEG, BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;FariFullLED;RuotaDiScorta;VetriOscurati;RuoteGrandi
-DODGE, DURANGO, 510, 180, 193, 2450, 487,Pentastar V6, BENZINA, 3604, 293, 12.3,45000, IJ, BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;SediliRiscaldati;RuotaDiScorta;VetriOscurati;RuoteGrandi;CruiseControl
-FERRARI, SF90, 471, 118, 197, 1570, 200,Twin-Turbo V8, IBRIDO, 3990, 780, 15.0,430000, N, ROSSO;VERDE;GIALLO,;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;CruiseControl
-FERRARI, PORTOFINO, 458, 132, 193, 1664, 292,V8, BENZINA, 3855, 600, 10.5,215000, L, ROSSO;BIANCO;GIALLO,infotainment;SensoriParcheggio;FariFullLED;VetriOscurati;InterniInPelle;RuoteGrandi
-FERRARI, GTS296, 457, 119, 195, 1470, 296,Twin-Turbo V6, BENZINA, 2992, 663, 11.00,320000, N, ROSSO;BLU;GIALLO,;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;CruiseControl
-LAMBORGHINI, URUS, 511, 165, 201, 2200, 616,Twin-Turbo V8, BENZINA, 3996, 650, 12.7,250000, DEFI, BIANCO;GIALLO;NERO;VIOLA,infotainment;SensoriParcheggio;RuotaDiScorta;InterniInPelle;RuoteGrandi;CruiseControl
-LAMBORGHINI, REVUELTO, 494, 114, 204, 1775, 80,V12 Ibrido, BENZINA, 6498, 814, 14.0,600000, N, BIANCO;GIALLO;VERDE;VIOLA,infotainment;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;RuoteGrandi
-LAMBORGHINI, HURACAN, 452, 116, 192, 1422, 100,V10, BENZINA, 5204, 610, 13.2,240000, JK, BIANCO;GIALLO;VERDE;VIOLA,infotainment;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;RuoteGrandi;CruiseControl
-TESLA, MODELX, 503, 168, 207, 2440, 498,Motore Elettrico, ELETTRICO, 0, 1020, 0,100000, ABCDEFGHIJKL, BIANCO;NERO;ROSSO,SensoriParcheggio;SediliRiscaldati;RuotaDiScorta;RuoteGrandi;CruiseControl
-TESLA, MODELY, 475, 162, 192, 2000, 566,Motore Elettrico, ELETTRICO, 0, 534, 0,40000, ABF, BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;FariFullLED;SediliRiscaldati;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
-TESLA, CYBERTRUCK, 588, 190, 210, 3000, 2832,Motore Elettrico, ELETTRICO, 0, 800,0,80000, C, GRIGIO,SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;RuoteGrandi;CruiseControl
-AUDI, Q8etron, 492, 163, 196, 2500, 569,Motore Elettrico, ELETTRICO, 0, 408, 0,81000, FGIK, BIANCO;NERO;ROSSO,infotainment;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
-AUDI, A8, 518, 147, 194, 2000, 505,V6, BENZINA, 2995, 340, 8.0,105000, N, BIANCO;NERO;VERDE,infotainment;SensoriParcheggio;RuotaDiScorta;VetriOscurati;RuoteGrandi;CruiseControl
-AUDI, RS3, 438, 141, 180, 1575, 280,Inline-5, BENZINA, 2480, 400, 9.1,65000, N, BIANCO;NERO;VERDE,infotainment;SensoriParcheggio;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
-JEEP, RENEGADE, 423, 172, 180, 1525, 330,Inline-4, BENZINA, 1368, 140, 7.5,30000, ABC, BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
-JEEP, COMPASS, 440, 165, 183, 1640, 476,Inline-4, BENZINA, 2360, 177, 8.0,35000, DEF, BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;FariFullLED;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
-JEEP, GLADIETOR, 554, 183, 187, 2180, 206,Pentastar V6, BENZINA, 3604, 285, 11.0,40000, IJKL, BIANCO;NERO;GIALLO,infotainment;SensoriParcheggio;SediliRiscaldati;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
+DODGE,CHARGER,501,147,190,2000,467,HEMI V8,BENZINA,6166,485,8.6,31000,N,BIANCO;NERO;ROSSO,infotainment;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
+DODGE,CHALLENGER,502,145,192,1850,455,HEMI V8,BENZINA,6166,485,9.0,35000,BEG,BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;FariFullLED;RuotaDiScorta;VetriOscurati;RuoteGrandi
+DODGE,DURANGO,510,180,193,2450,487,Pentastar V6,BENZINA,3604,293,12.3,45000,IJ,BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;SediliRiscaldati;RuotaDiScorta;VetriOscurati;RuoteGrandi;CruiseControl
+FERRARI,SF90,471,118,197,1570,200,Twin-Turbo V8,IBRIDO,3990,780,15.0,430000,N,ROSSO;VERDE;GIALLO,;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;CruiseControl
+FERRARI,PORTOFINO,458,132,193,1664,292,V8,BENZINA,3855,600,10.5,215000,L,ROSSO;BIANCO;GIALLO,infotainment;SensoriParcheggio;FariFullLED;VetriOscurati;InterniInPelle;RuoteGrandi
+FERRARI,GTS296,457,119,195,1470,296,Twin-Turbo V6,BENZINA,2992,663,11.00,320000,N,ROSSO;BLU;GIALLO,;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;CruiseControl
+LAMBORGHINI,URUS,511,165,201,2200,616,Twin-Turbo V8,BENZINA,3996,650,12.7,250000,DEFI,BIANCO;GIALLO;NERO;VIOLA,infotainment;SensoriParcheggio;RuotaDiScorta;InterniInPelle;RuoteGrandi;CruiseControl
+LAMBORGHINI,REVUELTO,494,114,204,1775,80,V12 Ibrido,BENZINA,6498,814,14.0,600000,N,BIANCO;GIALLO;VERDE;VIOLA,infotainment;SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;RuoteGrandi
+LAMBORGHINI,HURACAN,452,116,192,1422,100,V10,BENZINA,5204,610,13.2,240000,JK,BIANCO;GIALLO;VERDE;VIOLA,infotainment;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;RuoteGrandi;CruiseControl
+TESLA,MODELX,503,168,207,2440,498,MotoreElettrico,ELETTRICO,0,1020,0,100000,ABCDEFGHIJKL,BIANCO;NERO;ROSSO,SensoriParcheggio;SediliRiscaldati;RuotaDiScorta;RuoteGrandi;CruiseControl
+TESLA,MODELY,475,162,192,2000,566,MotoreElettrico,ELETTRICO,0,534,0,40000,ABF,BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;FariFullLED;SediliRiscaldati;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
+TESLA,CYBERTRUCK,588,190,210,3000,2832,MotoreElettrico,ELETTRICO,0,800,0,80000,C,GRIGIO,SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;RuoteGrandi;CruiseControl
+AUDI,Q8etron,492,163,196,2500,569,MotoreElettrico,ELETTRICO,0,408,0,81000,FGIK,BIANCO;NERO;ROSSO,infotainment;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
+AUDI,A8,518,147,194,2000,505,V6,BENZINA,2995,340,8.0,105000,N,BIANCO;NERO;VERDE,infotainment;SensoriParcheggio;RuotaDiScorta;VetriOscurati;RuoteGrandi;CruiseControl
+AUDI,RS3,438,141,180,1575,280,Inline-5,BENZINA,2480,400,9.1,65000,N,BIANCO;NERO;VERDE,infotainment;SensoriParcheggio;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
+JEEP,RENEGADE,423,172,180,1525,330,Inline-4,BENZINA,1368,140,7.5,30000,ABC,BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
+JEEP,COMPASS,440,165,183,1640,476,Inline-4,BENZINA,2360,177,8.0,35000,DEF,BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;FariFullLED;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
+JEEP,GLADIETOR,554,183,187,2180,206,Pentastar V6,BENZINA,3604,285,11.0,40000,IJKL,BIANCO;NERO;GIALLO,infotainment;SensoriParcheggio;SediliRiscaldati;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl

@@ -49,6 +49,8 @@ public class Model {
     public Model() {
     }
 
+
+
     public void aggiornaFileCatalogo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt"))) {
             for (Auto auto : catalogo.getListaAuto()) {
