@@ -120,6 +120,7 @@ public class AggiungiAutoController {
             auto.addImgs(imageView1, imageView2, imageView3);
             auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.getCatalogo().add(auto);
+            model.aggiornaFileCatalogo();
         }
     }
 

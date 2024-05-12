@@ -4,22 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class SegreteriaController {
+public class AmministrazioneController {
 
     @FXML private ComboBox<Marca> marca;
     @FXML private ComboBox<String> modello;
     @FXML private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
-    @FXML private Button modificaOption,visualizzaPreventivi,visualizzaMarca,visualizzaSede;
+    @FXML private Button modificaOption,visualizzaPreventivi,visualizzaMarca,visualizzaSede,aggiungi;
     @FXML private ListView preventiviListView;
     Model model = new Model();
     private List<Preventivo> preventivi;
@@ -67,4 +61,7 @@ public class SegreteriaController {
         Marca marcaSelezionata = marca.getValue();
     }
 
+    public void aggiungiAuto(ActionEvent actionEvent) {
+        model.OpenCloseFXML("FXML/AggiungiAuto.fxml",aggiungi);
+    }
 }

@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.SegreteriaController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AmministrazioneController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="464.0" prefWidth="214.0">
             <children>
@@ -26,15 +26,16 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="modificaOption" onAction="#modificaOptionals" layoutX="10.0" layoutY="331.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="199.0" text="Modifica Optional" />
+            <Button fx:id="modificaOption" layoutX="10.0" layoutY="331.0" mnemonicParsing="false" onAction="#modificaOptionals" prefHeight="25.0" prefWidth="199.0" text="Modifica Optional" />
             </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="477.0">
             <children>
-                <Button fx:id="visualizzaPreventivi" onAction="#xcliente" layoutX="194.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per cliente" />
-                <Button fx:id="visualizzaMarca" onAction="#xmarca" layoutX="374.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10;per marca" />
-                <Button fx:id="visualizzaSede" onAction="#xsede" layoutX="14.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per sede" />
-            <ListView fx:id="preventiviListView" layoutX="14.0" layoutY="87.0" prefHeight="270.0" prefWidth="490.0" />
+                <Button fx:id="visualizzaPreventivi" layoutX="303.0" layoutY="29.0" onAction="#xcliente" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per cliente" />
+                <Button fx:id="visualizzaMarca" layoutX="450.0" layoutY="29.0" onAction="#xmarca" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10;per marca" />
+                <Button fx:id="visualizzaSede" layoutX="156.0" layoutY="29.0" onAction="#xsede" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per sede" />
+            <ListView fx:id="preventiviListView" layoutX="100.0" layoutY="87.0" prefHeight="270.0" prefWidth="490.0" />
+            <Button fx:id="aggiungi" layoutX="13.0" layoutY="29.0" onAction="#aggiungiAuto" prefHeight="50.0" prefWidth="130.0" text="Aggiungi Auto" />
             </children>
         </AnchorPane>
     </items>

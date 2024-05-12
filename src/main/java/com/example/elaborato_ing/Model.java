@@ -27,7 +27,7 @@ public class Model {
     private static Cliente cliente = new Cliente();
     private static Dipendente dipendente = new Dipendente();
 
-    private static Map<Marca, List<AutoNuova>> map;
+    private static Map<Marca, List<AutoNuova>> map = new HashMap<>();
     private static Catalogo catalogo = new Catalogo();
 
     public Cliente getCliente() {
@@ -142,27 +142,31 @@ public class Model {
     //LOGIN
 
     public int autenticato(String username, String password) throws IOException {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parti = line.split(",");
-                if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
-                    cliente.setEmail(parti[0]);
-                    cliente.setNome(parti[1]);
-                    cliente.setCognome(parti[2]);
-                    cliente.setPassword(parti[3]);
-                    return 0;
-                } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
-                    dipendente.setEmail(parti[0]);
-                    dipendente.setNome(parti[1]);
-                    dipendente.setCognome(parti[2]);
-                    dipendente.setPassword(parti[3]);
-                    dipendente.setIdDipendente(Integer.parseInt(String.valueOf(parti[4])));
-                    return 1;
+        if (username.equals("amm") && password.equals("amm")) {
+            return 2;
+        } else {
+            try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parti = line.split(",");
+                    if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
+                        cliente.setEmail(parti[0]);
+                        cliente.setNome(parti[1]);
+                        cliente.setCognome(parti[2]);
+                        cliente.setPassword(parti[3]);
+                        return 0;
+                    } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
+                        dipendente.setEmail(parti[0]);
+                        dipendente.setNome(parti[1]);
+                        dipendente.setCognome(parti[2]);
+                        dipendente.setPassword(parti[3]);
+                        dipendente.setIdDipendente(Integer.parseInt(String.valueOf(parti[4])));
+                        return 1;
+                    }
                 }
             }
+            return -1;
         }
-        return -1;
     }
 
     public String getClienteLoggato() {
