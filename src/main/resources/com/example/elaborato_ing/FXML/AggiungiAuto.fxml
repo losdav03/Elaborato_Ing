@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
@@ -57,12 +58,15 @@
     <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="40.0" />
     <Button fx:id="caricaImg" layoutX="232.0" layoutY="210.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
     <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="210.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
-   <Button fx:id="vendibtn1" layoutX="488.0" layoutY="677.0" mnemonicParsing="false" onAction="#elimina" prefHeight="50.0" prefWidth="82.0" text="Elimina" />
+   <Button fx:id="eliminaBtn" layoutX="488.0" layoutY="677.0" mnemonicParsing="false" onAction="#elimina" prefHeight="50.0" prefWidth="82.0" text="Elimina" />
    <ComboBox fx:id="marcaCB" layoutX="370.0" layoutY="684.0" prefHeight="25.0" prefWidth="104.0" />
-   <ComboBox fx:id="modelloCB" layoutX="254.0" layoutY="682.0" prefHeight="25.0" prefWidth="104.0" />
+   <ComboBox fx:id="modelloCB" layoutX="254.0" layoutY="684.0" prefHeight="25.0" prefWidth="104.0" />
    <Label layoutX="14.0" layoutY="559.0" prefWidth="76.0" text="Sconto" />
    <Label layoutX="15.0" layoutY="597.0" prefWidth="76.0" text="Prezzo" />
    <TextField fx:id="prezzo" layoutX="96.0" layoutY="593.0" prefHeight="25.0" prefWidth="104.0" />
    <TextField fx:id="sconto" layoutX="96.0" layoutY="554.0" prefHeight="25.0" prefWidth="104.0" />
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 
 </AnchorPane>
