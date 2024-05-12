@@ -7,6 +7,10 @@ public class Cliente extends Persona{
         super(email, nome, cognome, password);
     }
 
+    public Cliente(String email) {
+
+    }
+
     public Cliente() {
         super();
     }

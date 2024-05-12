@@ -21,10 +21,8 @@ public class Preventivo {
         this.auto = auto;
         this.sede=sede;
     }
-
-
     public String toString() {
-        return id + "," + cliente.toString() + "," + auto.toString();
+        return id + "," + cliente.toString() + "," + auto.toString() + ", "+sede;
     }
 
     public Sede getSede() {
