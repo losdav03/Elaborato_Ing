@@ -67,7 +67,7 @@ public class InitController {
         }
         sede.getItems().setAll(Sede.values());
         model.caricaDaFile(filePath, catalogo);
-        marca.getItems().addAll(model.getMap().keySet());
+        model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
         vista = 1;

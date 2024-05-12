@@ -24,6 +24,25 @@ public class SegreteriaController {
     Model model = new Model();
     private List<Preventivo> preventivi;
 
+    public void initialize() {
+        model.setMarca(marca);
+        marca.setOnAction(_ -> aggiornaModello());
+    }
+
+    private void aggiornaModello() {
+        modello.getItems().clear();
+        List<AutoNuova> listaAuto = model.getMap().getOrDefault(marca.getValue(), Collections.emptyList());
+        List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
+
+        if (listaModelli.isEmpty()) {
+            modello.getItems().clear();
+            modello.setDisable(true);
+        } else {
+            modello.getItems().setAll(listaModelli);
+            modello.setDisable(false);
+        }
+    }
+
     public void xcliente(ActionEvent actionEvent) {
         Collections.sort(preventivi, (p1, p2) -> p1.getCliente().getNome().compareTo(p2.getCliente().getNome()));
 
@@ -45,7 +64,7 @@ public class SegreteriaController {
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
     public void  modificaOptionals(ActionEvent actionEvent) {
-
+        Marca marcaSelezionata = marca.getValue();
     }
 
 }
