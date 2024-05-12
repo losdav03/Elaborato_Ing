@@ -53,7 +53,6 @@ public class InitController {
     private Stage stage;
 
 
-
     public void initialize() {
 
         model = new Model();
@@ -76,7 +75,7 @@ public class InitController {
         modello.setDisable(true);
         colori.setDisable(true);
         colori.getItems().clear();
-        abilitaOption(true);
+        abilitaOption();
         btnPDF.setVisible(false);
         btnSx.setDisable(true);
         btnDx.setDisable(true);
@@ -91,7 +90,7 @@ public class InitController {
         colori.getItems().clear();
         colori.setDisable(true);
         modello.setDisable(true);
-        abilitaOption(true);
+        abilitaOption();
         btnSx.setDisable(true);
         btnDx.setDisable(true);
 
@@ -115,7 +114,7 @@ public class InitController {
             AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
 
             colori.setDisable(false);
-            abilitaOption(false);
+            abilitaOption();
 
             if (auto != null) {
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
@@ -146,16 +145,22 @@ public class InitController {
         }
     }
 
-    private void abilitaOption(boolean abilita) {
-        infot.setDisable(abilita);
-        sensori.setDisable(abilita);
-        fari.setDisable(abilita);
-        sedili.setDisable(abilita);
-        scorta.setDisable(abilita);
-        vetri.setDisable(abilita);
-        interni.setDisable(abilita);
-        ruote.setDisable(abilita);
-        cruise.setDisable(abilita);
+    private void abilitaOption() {
+        String modelloSelezionato = modello.getValue();
+        AutoNuova auto = map.values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
+
+        if (auto != null) {
+
+            infot.setDisable(auto.getListaOp(OP.infotainment));
+            sensori.setDisable(auto.getListaOp(OP.SensoriParcheggio));
+            fari.setDisable(auto.getListaOp(OP.FariFullLED));
+            sedili.setDisable(auto.getListaOp(OP.SediliRiscaldati));
+            scorta.setDisable(auto.getListaOp(OP.RuotaDiScorta));
+            vetri.setDisable(auto.getListaOp(OP.VetriOscurati));
+            interni.setDisable(auto.getListaOp(OP.InterniInPelle));
+            ruote.setDisable(auto.getListaOp(OP.RuoteGrandi));
+            cruise.setDisable(auto.getListaOp(OP.CruiseControl));
+        }
     }
 
     public void goToUsatoForm() {
@@ -252,7 +257,7 @@ public class InitController {
     public void acquistaFunction(ActionEvent event) throws IOException {
         if (acquistabtn.getText().equals("Login")) {
             model.openFXML("FXML/Login.fxml");
-            if(model.getClienteLoggato() != null) {
+            if (model.getClienteLoggato() != null) {
                 menuProfilo.setDisable(false);
                 acquistabtn.setText("Inoltra Preventivo");
             }
@@ -282,7 +287,7 @@ public class InitController {
         this.stage = stage;
     }
 
-    public void logOut()  {
+    public void logOut() {
         model.eliminaCliente();
         stage.close();
         model.openFXML("FXML/Configuratore.fxml");

@@ -3,20 +3,21 @@ package com.example.elaborato_ing;
 import javafx.scene.image.Image;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class AutoNuova extends Auto {
     private final int prezzo;
     private final String sconto;
-    private  List<String> colori;
+    private List<String> colori;
+    private List<String> listaOp;
 
-    public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto) {
+    public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto, List<String> listaOp) {
         super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore);
         this.colori = colori;
         this.sconto = sconto;
         this.prezzo = prezzo;
+        this.listaOp = listaOp;
         caricaImmagini();
     }
 
@@ -36,6 +37,13 @@ public class AutoNuova extends Auto {
                 }
             }
         }
+    }
+
+    public boolean getListaOp(OP optional) {
+        if (listaOp.contains(optional.toString().trim())) {
+            return false;
+        }
+        return true;
     }
 
     public void setOptional(boolean infot, boolean sensori, boolean fari, boolean sedili, boolean scorta, boolean vetri, boolean interni, boolean ruote, boolean cruise) {

@@ -37,9 +37,9 @@ public class Model {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 15) {
+                if (parts.length == 16) {
                     Marca marca = Marca.valueOf(parts[0].trim());
-                    String modello = String.valueOf(parts[1].trim());
+                    String modello = parts[1].trim();
                     double lunghezza = Double.parseDouble(parts[2]);
                     double altezza = Double.parseDouble(parts[3]);
                     double larghezza = Double.parseDouble(parts[4]);
@@ -53,9 +53,9 @@ public class Model {
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
                     int prezzo = Integer.parseInt(parts[12]);
                     String sconto = parts[13];
-                    String[] colorOptions = parts[14].trim().split(";");
-                    List<String> colori = Arrays.asList(colorOptions);
-                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto);
+                    List<String> colori = List.of(parts[14].trim().split(";"));
+                    List<String> listaOp = List.of(parts[15].trim().split(";"));
+                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto,listaOp);
                     auto.caricaImmagini();
                     catalogo.add(auto);
                     dati.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
