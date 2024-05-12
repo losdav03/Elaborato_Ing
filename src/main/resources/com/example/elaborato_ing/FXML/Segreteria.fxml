@@ -26,15 +26,15 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button layoutX="10.0" layoutY="331.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="199.0" text="Modifica Optional" />
+            <Button fx:id="modificaOption" onAction="#modificaOptionals" layoutX="10.0" layoutY="331.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="199.0" text="Modifica Optional" />
             </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="477.0">
             <children>
-                <Button layoutX="194.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per cliente" />
-                <Button layoutX="374.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10;per marca" />
-                <Button layoutX="14.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per sede" />
-            <ListView layoutX="14.0" layoutY="87.0" prefHeight="270.0" prefWidth="490.0" />
+                <Button fx:id="visualizzaPreventivi" onAction="#xcliente" layoutX="194.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per cliente" />
+                <Button fx:id="visualizzaMarca" onAction="#xmarca" layoutX="374.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10;per marca" />
+                <Button fx:id="visualizzaSede" onAction="#xsede" layoutX="14.0" layoutY="29.0" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per sede" />
+            <ListView fx:id="preventiviListView" layoutX="14.0" layoutY="87.0" prefHeight="270.0" prefWidth="490.0" />
             </children>
         </AnchorPane>
     </items>

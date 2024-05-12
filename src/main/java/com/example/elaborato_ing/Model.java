@@ -251,20 +251,19 @@ public class Model {
         }
     }
 
-    public void inoltraPreventivo(Auto auto, String colore, int Prezzo) throws IOException {
+    public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
         int giorni = 0;
         for (OP _ : auto.getOptional()) {
             giorni += 10;
         }
-
         LocalDate fine = inizio.plusMonths(1);
         fine = fine.plusDays(giorni);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto);
+        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto, sede);
 
         // esporto il preventivo sul filesrc
         try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {

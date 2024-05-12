@@ -26,6 +26,9 @@ public class InitController {
     private ComboBox<Marca> marca;
 
     @FXML
+    private ComboBox<Sede> sede;
+
+    @FXML
     private ComboBox<String> modello;
 
     @FXML
@@ -64,14 +67,13 @@ public class InitController {
             System.err.println("File non trovato: " + filePath);
             return;
         }
-
+        sede.getItems().setAll(Sede.values());
         map = model.caricaDaFile(filePath, catalogo);
         marca.getItems().addAll(map.keySet());
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
         vista = 1;
         colori.setOnAction(_ -> aggiornaImg());
-
         modello.setDisable(true);
         colori.setDisable(true);
         colori.getItems().clear();
@@ -265,7 +267,7 @@ public class InitController {
         } else {
             AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), map);
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
-            model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()));
+            model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
             // abilito il  bottone PDF
             btnPDF.setVisible(true);
         }

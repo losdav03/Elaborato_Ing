@@ -11,14 +11,16 @@ public class Preventivo {
     private final Auto auto;
     private Stato stato;
 
-    public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto) {
+    private final Sede sede;
+
+    public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto, Sede sede) {
         this.id = id;
         this.creazione = creazione;
         this.scadenza = scadenza;
         this.cliente = cliente;
         this.auto = auto;
+        this.sede=sede;
     }
-
 
     public String toString() {
         return id + "," + cliente.toString() + "," + auto.toString();
