@@ -16,7 +16,10 @@ import java.io.*;
 public class UsatoController {
 
     @FXML
-    private TextField marca, modello, altezza, lunghezza, larghezza, peso, volume, motore, colori, alimentazione, cilindrata, potenza, consumi;
+    private ComboBox marca;
+
+    @FXML
+    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colori, alimentazione, cilindrata, potenza, consumi;
 
     @FXML
     private ImageView imageView1, imageView2, imageView3;
@@ -27,6 +30,7 @@ public class UsatoController {
     AutoUsata auto;
 
     public void initialize() {
+        marca.getItems().setAll(Marca.values());
         Doouble(altezza);
         Doouble(lunghezza);
         Doouble(larghezza);
