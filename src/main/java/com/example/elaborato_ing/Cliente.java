@@ -8,7 +8,7 @@ public class Cliente extends Persona{
     }
 
     public Cliente(String email) {
-
+        super(email);
     }
 
     public Cliente() {

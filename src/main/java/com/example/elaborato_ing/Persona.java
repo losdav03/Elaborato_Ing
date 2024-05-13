@@ -14,6 +14,10 @@ public class Persona {
         this.password = password;
     }
 
+    public Persona(String email) {
+        this.email = email;
+    }
+
     public String getEmail() {
         return email;
     }

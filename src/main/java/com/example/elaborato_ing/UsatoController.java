@@ -12,6 +12,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class UsatoController {
 
@@ -40,6 +43,7 @@ public class UsatoController {
         Numeric(potenza);
         Doouble(consumi);
     }
+
     private void Doouble(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
@@ -66,6 +70,7 @@ public class UsatoController {
             }
         });
     }
+
     private void Numeric(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
@@ -75,7 +80,6 @@ public class UsatoController {
             }
         });
     }
-
 
 
     public void caricaImgs() {
@@ -94,7 +98,16 @@ public class UsatoController {
                 imageView3.setImage(image);
             }
         }
+
+        String destinationFolder = "src/main/resources/com/example/elaborato_ing/images/";
+        try {
+            Files.copy(Immagine.toPath(), new File(destinationFolder + Immagine.getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Immagine salvata con successo in: " + destinationFolder + Immagine.getName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
 
     public void RimuoviImgs() {
         // Trova il primo ImageView con un'immagine e rimuovila
@@ -110,16 +123,18 @@ public class UsatoController {
     }
 
     public void vendi(ActionEvent actionEvent) throws IOException {
-        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() &&!altezza.getText().isEmpty() &&!lunghezza.getText().isEmpty() &&!larghezza.getText().isEmpty() &&!peso.getText().isEmpty() &&!volume.getText().isEmpty() &&!colori.getText().isEmpty() &&!motore.getText().isEmpty() &&!alimentazione.getText().isEmpty() &&!cilindrata.getText().isEmpty()&&!potenza.getText().isEmpty() &&!consumi.getText().isEmpty()) {
+        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colori.getText().isEmpty() && !motore.getText().isEmpty() && !alimentazione.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
             String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colori.getText();
 
-            auto = new AutoUsata(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(),Double.parseDouble(altezza.getText()),Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()),new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText());
-            auto.addImgs(path + "1.png" , path + "2.png", path + "3.png");
+            auto = new AutoUsata(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText().toLowerCase());
+            auto.addImgs(path + "1.png", path + "2.png", path + "3.png");
+
             auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
-            model.inoltraPreventivo(auto,colori.getText(), 0, null);
+            model.inoltraPreventivo(auto, colori.getText().toLowerCase(), 0, null);
         }
     }
 }
+
     /*
     public void caricaImmagini(ActionEvent actionEvent) {
         FileChooser fileChooser = new FileChooser();

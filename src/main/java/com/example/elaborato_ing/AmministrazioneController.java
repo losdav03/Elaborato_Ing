@@ -13,11 +13,16 @@ import java.util.*;
 
 public class AmministrazioneController {
 
-    @FXML private ComboBox<Marca> marca;
-    @FXML private ComboBox<String> modello;
-    @FXML private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
-    @FXML private Button modificaOption,visualizzaPreventivi,visualizzaMarca,visualizzaSede,aggiungi;
-    @FXML private ListView preventiviListView;
+    @FXML
+    private ComboBox<Marca> marca;
+    @FXML
+    private ComboBox<String> modello;
+    @FXML
+    private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
+    @FXML
+    private Button modificaOption, visualizzaPreventivi, visualizzaMarca, visualizzaSede, aggiungi;
+    @FXML
+    private ListView preventiviListView;
     Model model = new Model();
     private List<Preventivo> preventivi = new ArrayList<>();
 
@@ -103,30 +108,31 @@ public class AmministrazioneController {
     }
 
     public void xcliente(ActionEvent actionEvent) {
-        Collections.sort(preventivi, (p1, p2) -> p1.getCliente().getEmail().compareTo(p2.getCliente().getEmail()));
+        preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
     public void xmarca(ActionEvent actionEvent) {
-        Collections.sort(preventivi, (p1, p2) -> p1.getAuto().getMarca().compareTo(p2.getAuto().getMarca()));
+        preventivi.sort(Comparator.comparing(p -> p.getAuto().getMarca()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
     public void xsede(ActionEvent actionEvent) {
-        Collections.sort(preventivi, (p1, p2) -> p1.getSede().compareTo(p2.getSede()));
+        preventivi.sort(Comparator.comparing(p -> p.getSede().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
-    public void  modificaOptionals(ActionEvent actionEvent) {
+
+    public void modificaOptionals(ActionEvent actionEvent) {
         Marca marcaSelezionata = marca.getValue();
     }
 
     public void aggiungiAuto(ActionEvent actionEvent) {
-        model.OpenCloseFXML("FXML/AggiungiAuto.fxml",aggiungi);
+        model.OpenCloseFXML("FXML/AggiungiAuto.fxml", aggiungi);
     }
 }

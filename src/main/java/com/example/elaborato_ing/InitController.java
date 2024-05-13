@@ -138,7 +138,6 @@ public class InitController {
             btnSx.setDisable(false);
             btnDx.setDisable(false);
 
-            System.out.println("oooooooooooooooooo" + model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1));
             InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1));
             if (imageStream != null) {
                 Image image = new Image(imageStream);
@@ -216,22 +215,24 @@ public class InitController {
         switch (vista) {
             case 1 -> {
                 vista = 3;
-                pathSx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
             }
             case 2 -> {
                 vista = 1;
-                pathSx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
             }
             case 3 -> {
                 vista = 2;
-                pathSx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
             }
         }
 
 
-        Image image = new Image(pathSx);
-        img.setImage(image);
-
+        InputStream imageStream = getClass().getResourceAsStream(pathSx);
+        if (imageStream != null) {
+            Image image = new Image(imageStream);
+            img.setImage(image);
+        }
     }
 
     public void btnDx() {
@@ -239,21 +240,24 @@ public class InitController {
         switch (vista) {
             case 1 -> {
                 vista = 2;
-                pathDx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
             }
             case 2 -> {
                 vista = 3;
-                pathDx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
             }
             case 3 -> {
                 vista = 1;
-                pathDx = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
             }
         }
 
-        Image image = new Image(pathDx);
-        img.setImage(image);
+        InputStream imageStream = getClass().getResourceAsStream(pathDx);
+        if (imageStream != null) {
+            Image image = new Image(imageStream);
+            img.setImage(image);
 
+        }
     }
 
     public void acquistaFunction(ActionEvent event) throws IOException {

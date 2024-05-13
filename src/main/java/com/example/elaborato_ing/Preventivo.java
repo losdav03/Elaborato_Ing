@@ -19,17 +19,18 @@ public class Preventivo {
         this.scadenza = scadenza;
         this.cliente = cliente;
         this.auto = auto;
-        this.sede=sede;
+        this.sede = sede;
     }
+
     public String toString() {
-        return id + "," + cliente.toString() + "," + auto.toString() + ", "+sede;
+        return id + "," + cliente.toString() + "," + auto.toString() + "," + sede;
     }
 
     public Sede getSede() {
         return sede;
     }
 
-    public Auto getAuto(){
+    public Auto getAuto() {
         return auto;
     }
 
