@@ -30,6 +30,7 @@ public class Model {
     private static Map<Marca, List<AutoNuova>> map = new HashMap<>();
     private static Catalogo catalogo = new Catalogo();
 
+
     public Cliente getCliente() {
         return cliente;
     }
@@ -87,7 +88,7 @@ public class Model {
                     List<String> colori = List.of(parts[14].trim().split(";"));
                     List<String> listaOp = List.of(parts[15].trim().split(";"));
                     AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, listaOp);
-                    auto.caricaImmagini();
+                   // auto.caricaImmagini();
                     catalogo.add(auto);
                     map.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -100,6 +101,11 @@ public class Model {
             System.err.println("Errore nei dati: " + e.getMessage());
         }
     }
+
+    public String getImmagineAuto(Marca marca,String modello, String colore, int vista) {
+        return getMarcaModello(marca,modello,map).getImmagine(colore.toLowerCase(),vista);
+    }
+
 
     public void openFXML(String fxmlPath) {
 
@@ -402,6 +408,8 @@ public class Model {
     public void setMarca(ComboBox<Marca> marca) {
         marca.getItems().addAll(getMap().keySet());
     }
+
+
 }
 
 

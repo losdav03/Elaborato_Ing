@@ -137,8 +137,10 @@ public class AggiungiAutoController {
             List<String> colori = new ArrayList<>();
             colori.add(colore.getText());
 
+            String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colore.getText();
+
             auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, alimentazione.getText()), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), Integer.parseInt(prezzo.getText()), colori, sconto.getText(), listaOp);
-            auto.addImgs(imageView1, imageView2, imageView3);
+            auto.addImgs(path + "1.png" , path + "2.png", path + "3.png");
             auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.getCatalogo().add(auto);
             model.aggiornaFileCatalogo();
@@ -146,7 +148,7 @@ public class AggiungiAutoController {
     }
 
     public void elimina(ActionEvent actionEvent) {
-        model.getCatalogo().remove((Marca) marcaCB.getValue(),String.valueOf(modelloCB.getValue()));
+        model.getCatalogo().remove((Marca) marcaCB.getValue(), String.valueOf(modelloCB.getValue()));
         model.aggiornaFileCatalogo();
     }
 }

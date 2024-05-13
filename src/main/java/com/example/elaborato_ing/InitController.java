@@ -138,9 +138,12 @@ public class InitController {
             btnSx.setDisable(false);
             btnDx.setDisable(false);
 
-            String path = model.getCatalogo().getAuto(marca.getValue(), modello.getValue()).getImmagine(colori.getValue(), vista);
-            Image image = new Image(path);
-            img.setImage(image);
+            System.out.println("oooooooooooooooooo" + model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1));
+            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1));
+            if (imageStream != null) {
+                Image image = new Image(imageStream);
+                img.setImage(image);
+            }
         }
     }
 
@@ -262,7 +265,7 @@ public class InitController {
             }
 
         } else {
-            AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
+            AutoNuova autoConfigurata = (AutoNuova) model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
             autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
             model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
             // abilito il  bottone PDF

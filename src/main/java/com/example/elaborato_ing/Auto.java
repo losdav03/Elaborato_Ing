@@ -1,8 +1,5 @@
 package com.example.elaborato_ing;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +11,7 @@ public class Auto {
     private final double larghezza;
     private final double peso;
     private final double volumeBagagliaio;
-    private List<Image> immagine;
+    private List<String> immagini = new ArrayList<>();
     private final Motore motore;
     private final List<OP> optional;
 
@@ -27,26 +24,29 @@ public class Auto {
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
-        immagine = new ArrayList<>();
         optional = new ArrayList<>();
     }
+
+
+
 
     @Override
     public String toString() {
         return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + stampa();
     }
 
-    public String stampa(){
+    public String stampa() {
         String res = "";
-        for(OP op : optional){
+        for (OP op : optional) {
             res += op.toString() + ";";
         }
         return res;
     }
-    public void addImgs(ImageView img1, ImageView img2, ImageView img3) {
-        immagine.add(img1.getImage());
-        immagine.add(img2.getImage());
-        immagine.add(img3.getImage());
+
+    public void addImgs(String img1, String img2, String img3) {
+        immagini.add(img1);
+        immagini.add(img2);
+        immagini.add(img3);
     }
 
 
@@ -78,8 +78,8 @@ public class Auto {
         return volumeBagagliaio;
     }
 
-    public List<Image> getImmagine() {
-        return immagine;
+    public List<String> getImmagini() {
+        return immagini;
     }
 
     public Motore getMotore() {
@@ -94,6 +94,7 @@ public class Auto {
     public void setOptional(OP optional) {
         this.optional.add(optional);
     }
+
     public void aggiungiOptional(boolean infot, boolean sensori, boolean fari, boolean sedili, boolean scorta, boolean vetri, boolean interni, boolean ruote, boolean cruise) {
         if (infot) {
             optional.add(OP.infotainment);

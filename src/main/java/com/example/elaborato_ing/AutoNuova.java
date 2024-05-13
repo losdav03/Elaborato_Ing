@@ -1,8 +1,5 @@
 package com.example.elaborato_ing;
 
-import javafx.scene.image.Image;
-
-import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
@@ -22,22 +19,23 @@ public class AutoNuova extends Auto {
     }
 
     public String getImmagine(String colore, int vista) {
-        String path = "/com/example/elaborato_ing/images/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + colore.toLowerCase() + vista + ".png";
-        return Objects.requireNonNull(getClass().getResource(path)).toExternalForm();
+        for(String imgPath : super.getImmagini()){
+            if(imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista)))
+                return imgPath;
+        }
+        return null;
     }
 
     public void caricaImmagini() {
         for (String c : colori) {
             for (int i = 1; i <= 3; i++) {
                 String path = "/com/example/elaborato_ing/images/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + c.toLowerCase() + i + ".png";
-                InputStream imageStream = getClass().getResourceAsStream(path);
-                if (imageStream != null) {
-                    Image image = new Image(imageStream);
-                    super.getImmagine().add(image);
-                }
+                super.getImmagini().add(path);
             }
+
         }
     }
+
 
     public boolean getListaOp(OP optional) {
         if (listaOp.contains(optional.toString().trim())) {
