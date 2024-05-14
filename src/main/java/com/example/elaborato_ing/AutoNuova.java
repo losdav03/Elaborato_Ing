@@ -8,9 +8,9 @@ public class AutoNuova extends Auto {
     private final int prezzo;
     private final String sconto;
     private List<String> colori;
-    private List<String> optionalScelti;
+    private List<Optionals> optionalScelti;
 
-    public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto, List<String> optionalSelezionabili) {
+    public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto, List<Optionals> optionalSelezionabili) {
         super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, optionalSelezionabili);
         this.colori = colori;
         this.sconto = sconto;
@@ -37,12 +37,8 @@ public class AutoNuova extends Auto {
         }
     }
 
-    public List<String> getOptionalScelti() {
+    public List<Optionals> getOptionalScelti() {
         return optionalScelti;
-    }
-
-    public void addOptionalScelti(List<String> optionalScelti) {
-        this.optionalScelti = optionalScelti;
     }
 
     public String getSconto() {
@@ -68,5 +64,17 @@ public class AutoNuova extends Auto {
     @Override
     public int hashCode() {
         return Objects.hash(sconto, colori);
+    }
+
+    @Override
+    public String toString() {
+        return super.getMarca() + "," +  super.getModello() + "," +  super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + super.getMotore() + "," + stampaScelti();
+    }
+    public String stampaScelti() {
+        String res = "";
+        for (Optionals op : optionalScelti) {
+            res += op.getNome() + ";";
+        }
+        return res;
     }
 }

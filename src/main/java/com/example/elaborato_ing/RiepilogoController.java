@@ -31,24 +31,19 @@ public class RiepilogoController {
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
-                // Qui puoi fare qualcosa con il valore selezionato, ad esempio stamparlo
                 String[] utili = newValue.toString().split("\n");
-                String path = "/com/example/elaborato_ing/images/";
+                String marca = "";
+                String modello = "";
+                String colore = "";
                 for (String riga : utili) {
                     if (riga.startsWith("Marca")) {
-                        String marca = riga.split(":")[1].trim().toLowerCase();
-                        path += marca;
-                        System.out.println(marca);
+                         marca = riga.split(":")[1].trim();
                     }
                     if (riga.startsWith("Modello")) {
-                        String modello = riga.split(":")[1].trim().toLowerCase();
-                        path += modello;
-                        System.out.println(modello);
+                         modello = riga.split(":")[1].trim();
                     }
                     if (riga.startsWith("Colore")) {
-                        String colore = riga.split(":")[1].trim().toLowerCase();
-                        path += colore;
-                        System.out.println(colore);
+                         colore = riga.split(":")[1].trim().toLowerCase();
                     }
                     if (riga.startsWith("Stato Preventivo")) {
                         statoPreventivo = riga.split(":")[1].trim().toLowerCase();
@@ -57,9 +52,13 @@ public class RiepilogoController {
                         idPreventivo = riga.split(":")[1].trim();
                     }
                 }
-                path += "1.png";
-                Image image = new Image(getClass().getResourceAsStream(path));
-                macchinaPreventivo.setImage(image);
+                String path = model.getImmagineAuto(Marca.valueOf(marca),modello,colore,1);
+                InputStream imageStream = getClass().getResourceAsStream(path);
+                if (imageStream != null) {
+                    Image image = new Image(imageStream);
+                    macchinaPreventivo.setImage(image);
+                }
+
             }
         });
     }

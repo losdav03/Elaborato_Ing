@@ -17,7 +17,21 @@ import java.util.List;
 
 public class InitController {
     @FXML
-    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, motore, prezzo;
+    private Label altezza;
+    @FXML
+    private Label lunghezza;
+    @FXML
+    private Label larghezza;
+    @FXML
+    private Label peso;
+    @FXML
+    private Label volume;
+    @FXML
+    private Label alimentazione;
+    @FXML
+    private Label motore;
+    @FXML
+    private Label prezzo;
 
     @FXML
     private ComboBox<Marca> marca;
@@ -116,7 +130,7 @@ public class InitController {
 
 
             if (auto != null) {
-                model.generaCheckBoxOptional(auto, scrollPane, vBox);
+                model.generaCheckBoxOptional(auto, scrollPane, vBox,auto.getOptionalScelti(), prezzo);
 
 
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
