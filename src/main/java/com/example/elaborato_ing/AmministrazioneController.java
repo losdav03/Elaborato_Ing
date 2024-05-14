@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,6 +27,8 @@ public class AmministrazioneController {
     private VBox vBox;
     @FXML
     private ListView preventiviListView;
+
+
     Model model = new Model();
     private List<Preventivo> preventivi = new ArrayList<>();
 
@@ -33,7 +36,12 @@ public class AmministrazioneController {
         caricaPreventivi();
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
+        modello.setOnAction(_ -> aggiornaCheckbox());
+
+
     }
+
+
 
     private void caricaPreventivi() {
         try {
@@ -101,18 +109,19 @@ public class AmministrazioneController {
     }
 
     private void aggiornaModello() {
-        modello.getItems().clear();
         List<AutoNuova> listaAuto = model.getMap().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
-        if (listaModelli.isEmpty()) {
-            modello.getItems().clear();
-            modello.setDisable(true);
-        } else {
-            modello.getItems().setAll(listaModelli);
-            modello.setDisable(false);
-        }
+        modello.getItems().clear();
+        modello.getItems().setAll(listaModelli);
+        modello.setDisable(false);
     }
+
+    private void aggiornaCheckbox() {
+        AutoNuova auto = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
+        model.generaCheckBoxOptional(auto, scrollPane, vBox, auto.getOptionalSelezionabili(),null);
+    }
+
 
     public void xcliente(ActionEvent actionEvent) {
         preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));

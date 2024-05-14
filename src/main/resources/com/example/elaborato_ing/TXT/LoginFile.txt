@@ -5,5 +5,5 @@ dip1,dip,dip,dip,12345
 dip2,dip,dip,dip,67890
 dip3,dip,dip,dip,23423
 dip4,dip,dip,dip,34244
-amm,amm,amm,amm,00000
+amm,amm,amm,amm
 
