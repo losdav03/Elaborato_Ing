@@ -2,15 +2,12 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -45,6 +42,10 @@ public class InitController {
 
     @FXML
     private MenuButton menuProfilo;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private VBox vBox;
 
     @FXML
     private SplitPane sP;
@@ -74,11 +75,11 @@ public class InitController {
         modello.setDisable(true);
         colori.setDisable(true);
         colori.getItems().clear();
-        abilitaOption();
         btnPDF.setVisible(false);
         btnSx.setDisable(true);
         btnDx.setDisable(true);
         menuProfilo.setDisable(true);
+
     }
 
 
@@ -89,7 +90,6 @@ public class InitController {
         colori.getItems().clear();
         colori.setDisable(true);
         modello.setDisable(true);
-        abilitaOption();
         btnSx.setDisable(true);
         btnDx.setDisable(true);
 
@@ -113,9 +113,12 @@ public class InitController {
             AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
 
             colori.setDisable(false);
-            abilitaOption();
+
 
             if (auto != null) {
+                model.generaCheckBoxOptional(auto, scrollPane, vBox);
+
+
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
                 altezza.setText(String.valueOf(auto.getAltezza()));
                 larghezza.setText(String.valueOf(auto.getLarghezza()));
@@ -129,6 +132,7 @@ public class InitController {
                 colori.getItems().addAll(auto.getColori());
                 colori.setValue(colori.getItems().getFirst());
             }
+
         }
     }
 
@@ -146,69 +150,11 @@ public class InitController {
         }
     }
 
-    private void abilitaOption() {
-        String modelloSelezionato = modello.getValue();
-        AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
-
-        if (auto != null) {
-
-            infot.setDisable(auto.getListaOp(OP.infotainment));
-            sensori.setDisable(auto.getListaOp(OP.SensoriParcheggio));
-            fari.setDisable(auto.getListaOp(OP.FariFullLED));
-            sedili.setDisable(auto.getListaOp(OP.SediliRiscaldati));
-            scorta.setDisable(auto.getListaOp(OP.RuotaDiScorta));
-            vetri.setDisable(auto.getListaOp(OP.VetriOscurati));
-            interni.setDisable(auto.getListaOp(OP.InterniInPelle));
-            ruote.setDisable(auto.getListaOp(OP.RuoteGrandi));
-            cruise.setDisable(auto.getListaOp(OP.CruiseControl));
-        }
-    }
 
     public void goToUsatoForm() {
         model.openFXML("FXML/Usato.fxml");
     }
 
-
-    public void addOption() {
-        String modelloSelezionato = modello.getValue();
-        AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modelloSelezionato)).findFirst().orElse(null);
-
-        if (auto != null) {
-            int costoAggiuntivo = auto.getPrezzo() / 300;
-            int costoCheckBox = 0;
-
-            if (infot.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (sensori.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (fari.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (sedili.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (scorta.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (vetri.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (interni.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (ruote.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-            if (cruise.isSelected()) {
-                costoCheckBox += costoAggiuntivo;
-            }
-
-            int costo = auto.getPrezzo() + costoCheckBox;
-            prezzo.setText(String.valueOf(costo));
-        }
-    }
 
     public void btnSx() {
         String pathSx = "";
@@ -270,7 +216,7 @@ public class InitController {
 
         } else {
             AutoNuova autoConfigurata = (AutoNuova) model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
-            autoConfigurata.setOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
+
             model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
             // abilito il  bottone PDF
             btnPDF.setVisible(true);

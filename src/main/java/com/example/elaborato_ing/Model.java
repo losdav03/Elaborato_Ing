@@ -6,7 +6,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -51,7 +54,6 @@ public class Model {
     }
 
 
-
     public void aggiornaFileCatalogo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt"))) {
             for (Auto auto : catalogo.getListaAuto()) {
@@ -86,9 +88,9 @@ public class Model {
                     int prezzo = Integer.parseInt(parts[12]);
                     String sconto = parts[13];
                     List<String> colori = List.of(parts[14].trim().split(";"));
-                    List<String> listaOp = List.of(parts[15].trim().split(";"));
-                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, listaOp);
-                   // auto.caricaImmagini();
+                    List<String> optionalSelezionabili = List.of(parts[15].trim().split(";"));
+                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
+                    // auto.caricaImmagini();
                     catalogo.add(auto);
                     map.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -102,8 +104,20 @@ public class Model {
         }
     }
 
-    public String getImmagineAuto(Marca marca,String modello, String colore, int vista) {
-        return getMarcaModello(marca,modello,map).getImmagine(colore.toLowerCase(),vista);
+    public void generaCheckBoxOptional(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer) {
+        scrollPane.setContent(checkBoxContainer);
+        checkBoxContainer.getChildren().clear();
+
+        for (String item : auto.getOptionalSelezionabili()) {
+            System.out.println(item);
+            CheckBox checkBox = new CheckBox(item);
+            checkBox.setText(item);
+            checkBoxContainer.getChildren().add(checkBox);
+        }
+    }
+
+    public String getImmagineAuto(Marca marca, String modello, String colore, int vista) {
+        return getMarcaModello(marca, modello, map).getImmagine(colore.toLowerCase(), vista);
     }
 
 
@@ -295,7 +309,7 @@ public class Model {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
         int giorni = 0;
-        for (OP _ : auto.getOptional()) {
+        for (String _ : auto.getOptionalSelezionabili()) {
             giorni += 10;
         }
         LocalDate fine = inizio.plusMonths(1);

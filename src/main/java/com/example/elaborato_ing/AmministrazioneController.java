@@ -72,7 +72,7 @@ public class AmministrazioneController {
 
                 // Creare oggetto Auto
                 Motore motore = new Motore(tipoMotore, alimentazione, cilindrata, potenza, consumi);
-                Auto auto = new Auto(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motore);
+                Auto auto = new Auto(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motore, null);
 
                 // Parsing delle date
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

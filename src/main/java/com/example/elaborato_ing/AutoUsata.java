@@ -12,7 +12,7 @@ public class AutoUsata extends Auto {
     private final String colore;
 
     public AutoUsata(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, String colore) {
-        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore);
+        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, null);
         this.colore = colore;
     }
 

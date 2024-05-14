@@ -35,26 +35,12 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label layoutX="14.0" layoutY="351.0" text="Infotainment" />
-                <Label layoutX="14.0" layoutY="368.0" text="Cruise Control" />
-                <Label layoutX="14.0" layoutY="385.0" text="Fari Full LED" />
-                <Label layoutX="14.0" layoutY="402.0" text="Sensori Parcheggio" />
-                <Label layoutX="14.0" layoutY="419.0" text="Sedili Riscaldati" />
-                <Label layoutX="14.0" layoutY="436.0" text="Ruota Di Scorta" />
-                <Label layoutX="14.0" layoutY="453.0" text="Vetri Oscurati" />
-                <Label layoutX="14.0" layoutY="470.0" text="Interni In Pelle" />
-                <Label layoutX="14.0" layoutY="487.0" text="Ruote Grandi" />
-                <CheckBox fx:id="infot" layoutX="138.0" layoutY="351.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="sensori" layoutX="138.0" layoutY="402.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="fari" layoutX="138.0" layoutY="385.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="sedili" layoutX="138.0" layoutY="419.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="scorta" layoutX="138.0" layoutY="436.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="vetri" layoutX="138.0" layoutY="453.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="interni" layoutX="138.0" layoutY="470.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="ruote" layoutX="138.0" layoutY="487.0" mnemonicParsing="false" onAction="#addOption" />
-                <CheckBox fx:id="cruise" layoutX="138.0" layoutY="368.0" mnemonicParsing="false" onAction="#addOption" />
             <Label layoutX="20.0" layoutY="283.0" text="Sede" />
             <ComboBox fx:id="sede" layoutX="60.0" layoutY="279.0" prefHeight="25.0" prefWidth="104.0" />
+            <ScrollPane fx:id="scrollPane" layoutX="7.0" layoutY="356.0" prefHeight="145.0" prefWidth="194.0">
+               <content>
+                  <VBox fx:id="vBox" prefHeight="146.0" prefWidth="178.0" />
+               </content></ScrollPane>
             </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="477.0">

@@ -13,9 +13,9 @@ public class Auto {
     private final double volumeBagagliaio;
     private List<String> immagini = new ArrayList<>();
     private final Motore motore;
-    private final List<OP> optional;
+    private final List<String> optionalSelezionabili;
 
-    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore) {
+    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<String> optionalSelezionabili) {
         this.marca = marca;
         this.modello = modello;
         this.altezza = altezza;
@@ -24,10 +24,8 @@ public class Auto {
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
         this.motore = motore;
-        optional = new ArrayList<>();
+        this.optionalSelezionabili = optionalSelezionabili;
     }
-
-
 
 
     @Override
@@ -37,8 +35,8 @@ public class Auto {
 
     public String stampa() {
         String res = "";
-        for (OP op : optional) {
-            res += op.toString() + ";";
+        for (String op : optionalSelezionabili) {
+            res += op + ";";
         }
         return res;
     }
@@ -86,43 +84,9 @@ public class Auto {
         return motore;
     }
 
-
-    public List<OP> getOptional() {
-        return optional;
+    public List<String> getOptionalSelezionabili() {
+        return optionalSelezionabili;
     }
 
-    public void setOptional(OP optional) {
-        this.optional.add(optional);
-    }
-
-    public void aggiungiOptional(boolean infot, boolean sensori, boolean fari, boolean sedili, boolean scorta, boolean vetri, boolean interni, boolean ruote, boolean cruise) {
-        if (infot) {
-            optional.add(OP.infotainment);
-        }
-        if (sensori) {
-            optional.add(OP.SensoriParcheggio);
-        }
-        if (fari) {
-            optional.add(OP.FariFullLED);
-        }
-        if (sedili) {
-            optional.add(OP.SediliRiscaldati);
-        }
-        if (scorta) {
-            optional.add(OP.RuotaDiScorta);
-        }
-        if (vetri) {
-            optional.add(OP.VetriOscurati);
-        }
-        if (interni) {
-            optional.add(OP.InterniInPelle);
-        }
-        if (ruote) {
-            optional.add(OP.RuoteGrandi);
-        }
-        if (cruise) {
-            optional.add(OP.CruiseControl);
-        }
-    }
 
 }

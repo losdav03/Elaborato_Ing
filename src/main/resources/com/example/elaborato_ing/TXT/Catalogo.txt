@@ -12,7 +12,7 @@ TESLA,MODELY,475,162,192,2000,566,MotoreElettrico,ELETTRICO,0,534,0,40000,ABF,BI
 TESLA,CYBERTRUCK,588,190,210,3000,2832,MotoreElettrico,ELETTRICO,0,800,0,80000,C,GRIGIO,SensoriParcheggio;FariFullLED;SediliRiscaldati;RuotaDiScorta;InterniInPelle;RuoteGrandi;CruiseControl
 AUDI,Q8etron,492,163,196,2500,569,MotoreElettrico,ELETTRICO,0,408,0,81000,FGIK,BIANCO;NERO;ROSSO,infotainment;FariFullLED;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
 AUDI,A8,518,147,194,2000,505,V6,BENZINA,2995,340,8.0,105000,N,BIANCO;NERO;VERDE,infotainment;SensoriParcheggio;RuotaDiScorta;VetriOscurati;RuoteGrandi;CruiseControl
-AUDI,RS3,438,141,180,1575,280,Inline-5,BENZINA,2480,400,9.1,65000,N,BIANCO;NERO;VERDE,infotainment;SensoriParcheggio;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl
+AUDI,RS3,438,141,180,1575,280,Inline-5,BENZINA,2480,400,9.1,65000,N,BIANCO;NERO;VERDE,infotainment
 JEEP,RENEGADE,423,172,180,1525,330,Inline-4,BENZINA,1368,140,7.5,30000,ABC,BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;SediliRiscaldati;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
 JEEP,COMPASS,440,165,183,1640,476,Inline-4,BENZINA,2360,177,8.0,35000,DEF,BIANCO;NERO;ROSSO,infotainment;SensoriParcheggio;FariFullLED;RuotaDiScorta;VetriOscurati;InterniInPelle;RuoteGrandi
 JEEP,GLADIETOR,554,183,187,2180,206,Pentastar V6,BENZINA,3604,285,11.0,40000,IJKL,BIANCO;NERO;GIALLO,infotainment;SensoriParcheggio;SediliRiscaldati;VetriOscurati;InterniInPelle;RuoteGrandi;CruiseControl

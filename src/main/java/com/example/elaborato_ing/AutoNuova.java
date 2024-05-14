@@ -1,5 +1,6 @@
 package com.example.elaborato_ing;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -7,20 +8,20 @@ public class AutoNuova extends Auto {
     private final int prezzo;
     private final String sconto;
     private List<String> colori;
-    private List<String> listaOp;
+    private List<String> optionalScelti;
 
-    public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto, List<String> listaOp) {
-        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore);
+    public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto, List<String> optionalSelezionabili) {
+        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, optionalSelezionabili);
         this.colori = colori;
         this.sconto = sconto;
         this.prezzo = prezzo;
-        this.listaOp = listaOp;
+        this.optionalScelti = new ArrayList<>();
         caricaImmagini();
     }
 
     public String getImmagine(String colore, int vista) {
-        for(String imgPath : super.getImmagini()){
-            if(imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista)))
+        for (String imgPath : super.getImmagini()) {
+            if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista)))
                 return imgPath;
         }
         return null;
@@ -36,42 +37,12 @@ public class AutoNuova extends Auto {
         }
     }
 
-
-    public boolean getListaOp(OP optional) {
-        if (listaOp.contains(optional.toString().trim())) {
-            return false;
-        }
-        return true;
+    public List<String> getOptionalScelti() {
+        return optionalScelti;
     }
 
-    public void setOptional(boolean infot, boolean sensori, boolean fari, boolean sedili, boolean scorta, boolean vetri, boolean interni, boolean ruote, boolean cruise) {
-        if (infot) {
-            setOptional(OP.infotainment);
-        }
-        if (sensori) {
-            setOptional(OP.SensoriParcheggio);
-        }
-        if (fari) {
-            setOptional(OP.FariFullLED);
-        }
-        if (sedili) {
-            setOptional(OP.SediliRiscaldati);
-        }
-        if (scorta) {
-            setOptional(OP.RuotaDiScorta);
-        }
-        if (vetri) {
-            setOptional(OP.VetriOscurati);
-        }
-        if (interni) {
-            setOptional(OP.InterniInPelle);
-        }
-        if (ruote) {
-            setOptional(OP.RuoteGrandi);
-        }
-        if (cruise) {
-            setOptional(OP.CruiseControl);
-        }
+    public void addOptionalScelti(List<String> optionalScelti) {
+        this.optionalScelti = optionalScelti;
     }
 
     public String getSconto() {
