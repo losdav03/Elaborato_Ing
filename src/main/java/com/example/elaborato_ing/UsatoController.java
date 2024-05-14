@@ -130,7 +130,7 @@ public class UsatoController {
             auto.addImgs(path + "1.png", path + "2.png", path + "3.png");
 
           //  auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
-            model.inoltraPreventivo(auto, colori.getText().toLowerCase(), 0, null);
+          //  model.inoltraPreventivo(auto, colori.getText().toLowerCase(), 0, null);
         }
     }
 }

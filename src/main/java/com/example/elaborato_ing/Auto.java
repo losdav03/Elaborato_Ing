@@ -13,9 +13,9 @@ public class Auto {
     private final double volumeBagagliaio;
     private List<String> immagini = new ArrayList<>();
     private final Motore motore;
-    private final List<String> optionalSelezionabili;
+    private final List<Optionals> optionalSelezionabili;
 
-    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<String> optionalSelezionabili) {
+    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<Optionals> optionalSelezionabili) {
         this.marca = marca;
         this.modello = modello;
         this.altezza = altezza;
@@ -35,8 +35,8 @@ public class Auto {
 
     public String stampa() {
         String res = "";
-        for (String op : optionalSelezionabili) {
-            res += op + ";";
+        for (Optionals op : optionalSelezionabili) {
+            res += op.getNome() + ";";
         }
         return res;
     }
@@ -84,9 +84,7 @@ public class Auto {
         return motore;
     }
 
-    public List<String> getOptionalSelezionabili() {
+    public List<Optionals> getOptionalSelezionabili() {
         return optionalSelezionabili;
     }
-
-
 }

@@ -30,7 +30,7 @@ public class AggiungiAutoController {
 
     private final Model model = new Model();
     Auto auto;
-    private List<String> listaOp;
+    private List<Optionals> listaOp;
 
 
     public void initialize() {

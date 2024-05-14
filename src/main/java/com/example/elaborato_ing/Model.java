@@ -9,6 +9,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -88,7 +89,15 @@ public class Model {
                     int prezzo = Integer.parseInt(parts[12]);
                     String sconto = parts[13];
                     List<String> colori = List.of(parts[14].trim().split(";"));
-                    List<String> optionalSelezionabili = List.of(parts[15].trim().split(";"));
+
+                    List<Optionals> optionalSelezionabili = new ArrayList<>();
+                    List<String> op = List.of(parts[15].trim().split(":"));
+                    for (String o : op) {
+                        Optionals nuovoOp = new Optionals(o.split(";")[0], Integer.parseInt(o.split(";")[1]));
+                        optionalSelezionabili.add(nuovoOp);
+                    }
+
+
                     AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
                     // auto.caricaImmagini();
                     catalogo.add(auto);
@@ -104,15 +113,29 @@ public class Model {
         }
     }
 
-    public void generaCheckBoxOptional(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer) {
+    public void generaCheckBoxOptional(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
         scrollPane.setContent(checkBoxContainer);
         checkBoxContainer.getChildren().clear();
 
-        for (String item : auto.getOptionalSelezionabili()) {
+        for (Optionals item : auto.getOptionalSelezionabili()) {
             System.out.println(item);
-            CheckBox checkBox = new CheckBox(item);
-            checkBox.setText(item);
+            CheckBox checkBox = new CheckBox(item.getNome());
+            checkBox.setText(item.getNome() + " : +" + item.getCosto() + " €");
             checkBoxContainer.getChildren().add(checkBox);
+            checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                Optionals op = new Optionals(item.getNome(), item.getCosto());
+                if (newValue) {
+                    optionalScelti.add(op);
+                    int prezzoAggiornato = Integer.parseInt(costo.getText()) + item.getCosto();
+                    costo.setText(String.valueOf(prezzoAggiornato));
+
+                } else {
+                    optionalScelti.remove(op);
+                    int prezzoAggiornato = Integer.parseInt(costo.getText()) - item.getCosto();
+                    costo.setText(String.valueOf(prezzoAggiornato));
+
+                }
+            });
         }
     }
 
@@ -305,13 +328,14 @@ public class Model {
         }
     }
 
-    public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
+    public void inoltraPreventivo(AutoNuova auto, String colore, int Prezzo, Sede sede) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
         int giorni = 0;
-        for (String _ : auto.getOptionalSelezionabili()) {
-            giorni += 10;
-        }
+            for (Optionals _ : auto.getOptionalScelti()) {
+                giorni += 10;
+            }
+
         LocalDate fine = inizio.plusMonths(1);
         fine = fine.plusDays(giorni);
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
@@ -362,11 +386,12 @@ public class Model {
                             "\nPotenza : " + parts[9].split(";")[3] + " kW" +
                             "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
                             "\nOptional : " + parts[10] +
-                            "\nColore : " + parts[11] +
-                            "\nData Inizio Preventivo : " + parts[12] +
-                            "\nData Fine Preventivo : " + parts[13] +
-                            "\nPrezzo : " + parts[14] + " €" +
-                            "\nStato Preventivo : " + parts[15];
+                            "\nSede : " + parts[11] +
+                            "\nColore : " + parts[12] +
+                            "\nData Inizio Preventivo : " + parts[13] +
+                            "\nData Fine Preventivo : " + parts[14] +
+                            "\nPrezzo : " + parts[15] + " €" +
+                            "\nStato Preventivo : " + parts[16];
                     filteredLines.add(linea);
                 }
             }
@@ -389,8 +414,8 @@ public class Model {
                 String[] campi = riga.split(",");
 
                 if (campi[0].equals(idPreventivo)) {
-                    if (campi.length >= 16 && campi[15].equals("DA PAGARE")) {
-                        campi[15] = "PAGATO";
+                    if (campi.length >= 17 && campi[16].equals("DA PAGARE")) {
+                        campi[16] = "PAGATO";
                     }
                 }
                 fileContent.append(String.join(",", campi)).append("\n");
