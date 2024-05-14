@@ -188,6 +188,8 @@ public class Model {
     }
 
 
+
+
     public String getImmagineAuto(Marca marca, String modello, String colore, int vista) {
         return getMarcaModello(marca, modello, map).getImmagine(colore.toLowerCase(), vista);
     }
@@ -500,6 +502,10 @@ public class Model {
 
     public void setMarca(ComboBox<Marca> marca) {
         marca.getItems().addAll(getMap().keySet());
+    }
+
+    public void rimuoviAmm() {
+        amministrazione = new Amministrazione();
     }
 }
 

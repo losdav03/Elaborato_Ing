@@ -119,7 +119,7 @@ public class AmministrazioneController {
 
     private void aggiornaCheckbox() {
         AutoNuova auto = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
-        model.generaCheckBoxOptional(auto, scrollPane, vBox, auto.getOptionalSelezionabili(),null);
+        model.generaCheckBoxOptional(auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
     }
 
 
