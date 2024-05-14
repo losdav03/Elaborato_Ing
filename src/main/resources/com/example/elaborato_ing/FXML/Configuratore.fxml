@@ -40,7 +40,8 @@
             <ScrollPane fx:id="scrollPane" layoutX="7.0" layoutY="356.0" prefHeight="145.0" prefWidth="194.0">
                <content>
                   <VBox fx:id="vBox" prefHeight="146.0" prefWidth="178.0" />
-               </content></ScrollPane>
+               </content>
+            </ScrollPane>
             </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="477.0">

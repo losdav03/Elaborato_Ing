@@ -32,37 +32,24 @@ public class InitController {
     private Label motore;
     @FXML
     private Label prezzo;
-
     @FXML
     private ComboBox<Marca> marca;
-
     @FXML
     private ComboBox<Sede> sede;
-
     @FXML
     private ComboBox<String> modello;
-
     @FXML
     private ComboBox<String> colori;
-
-    @FXML
-    private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
-
     @FXML
     private Button acquistabtn, btnPDF, btnSx, btnDx;
-
     @FXML
     private ImageView img;
-
     @FXML
     private MenuButton menuProfilo;
     @FXML
     private ScrollPane scrollPane;
     @FXML
     private VBox vBox;
-
-    @FXML
-    private SplitPane sP;
     private Model model;
     private int vista = 1;
     private Stage stage;

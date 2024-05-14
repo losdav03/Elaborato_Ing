@@ -4,39 +4,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="372.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AmministrazioneController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="444.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AmministrazioneController">
     <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="464.0" prefWidth="214.0">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="281.0">
             <children>
-                <Label layoutX="14.0" layoutY="84.0" text="Marca" />
-                <Label layoutX="14.0" layoutY="130.0" text="Modello" />
-                <ComboBox fx:id="marca" layoutX="60.0" layoutY="80.0" prefHeight="25.0" prefWidth="104.0" />
-                <ComboBox fx:id="modello" layoutX="60.0" layoutY="126.0" prefHeight="25.0" prefWidth="104.0" />
-                <CheckBox fx:id="infot" layoutX="39.0" layoutY="170.0" mnemonicParsing="false" text="Infotainment" />
-                <CheckBox fx:id="sensori" layoutX="39.0" layoutY="221.0" mnemonicParsing="false" text="Cruise Control" />
-                <CheckBox fx:id="fari" layoutX="39.0" layoutY="204.0" mnemonicParsing="false" text="Fari Full LED" />
-                <CheckBox fx:id="sedili" layoutX="39.0" layoutY="238.0" mnemonicParsing="false" text="Sensori Parcheggio" />
-                <CheckBox fx:id="scorta" layoutX="39.0" layoutY="255.0" mnemonicParsing="false" text="Sedili Riscaldati" />
-                <CheckBox fx:id="vetri" layoutX="39.0" layoutY="272.0" mnemonicParsing="false" text="Ruota Di Scorta" />
-                <CheckBox fx:id="interni" layoutX="39.0" layoutY="289.0" mnemonicParsing="false" text="Vetri Oscurati" />
-                <CheckBox fx:id="ruote" layoutX="39.0" layoutY="306.0" mnemonicParsing="false" text="Interni In Pelle" />
-                <CheckBox fx:id="cruise" layoutX="39.0" layoutY="187.0" mnemonicParsing="false" text="Ruote Grandi" />
-            <Label layoutX="2.0" layoutY="45.0" text="GESTIONE OPTIONAL">
+                <Label layoutX="41.0" layoutY="121.0" text="Marca" />
+                <Label layoutX="41.0" layoutY="167.0" text="Modello" />
+                <ComboBox fx:id="marca" layoutX="87.0" layoutY="117.0" prefHeight="25.0" prefWidth="104.0" />
+                <ComboBox fx:id="modello" layoutX="87.0" layoutY="163.0" prefHeight="25.0" prefWidth="104.0" />
+            <Label layoutX="34.0" layoutY="14.0" text="GESTIONE OPTIONAL">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button fx:id="modificaOption" layoutX="10.0" layoutY="331.0" mnemonicParsing="false" onAction="#modificaOptionals" prefHeight="25.0" prefWidth="199.0" text="Modifica Optional" />
+            <Button fx:id="modificaOption" layoutX="26.0" layoutY="368.0" mnemonicParsing="false" onAction="#modificaOptionals" prefHeight="25.0" prefWidth="199.0" text="Modifica Optional" />
+            <Button fx:id="aggiungiOptionals" onAction="#aggiungiOptionals" prefHeight="50.0" prefWidth="130.0" text="Aggiungi Optionals" />
+            <Button fx:id="aggiungiAuto" onAction="#aggiungiAuto" prefHeight="50.0" prefWidth="130.0" text="Aggiungi Auto" />
             </children>
         </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="477.0">
-            <children>
-                <Button fx:id="visualizzaPreventivi" layoutX="303.0" layoutY="29.0" onAction="#xcliente" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per cliente" />
-                <Button fx:id="visualizzaMarca" layoutX="450.0" layoutY="29.0" onAction="#xmarca" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10;per marca" />
-                <Button fx:id="visualizzaSede" layoutX="156.0" layoutY="29.0" onAction="#xsede" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per sede" />
-            <ListView fx:id="preventiviListView" layoutX="100.0" layoutY="87.0" prefHeight="270.0" prefWidth="490.0" />
-            <Button fx:id="aggiungi" layoutX="13.0" layoutY="29.0" onAction="#aggiungiAuto" prefHeight="50.0" prefWidth="130.0" text="Aggiungi Auto" />
-            </children>
-        </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="480.0">
+         <children>
+            <Button fx:id="visualizzaPreventivi" layoutX="175.0" layoutY="79.0" onAction="#xcliente" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per cliente" />
+            <Button fx:id="visualizzaMarca" layoutX="340.0" layoutY="79.0" onAction="#xmarca" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10;per marca" />
+            <Button fx:id="visualizzaSede" layoutX="10.0" layoutY="79.0" onAction="#xsede" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per sede" />
+            <ListView fx:id="preventiviListView" layoutX="10.0" layoutY="136.0" prefHeight="270.0" prefWidth="460.0" />
+            <Label layoutX="125.0" layoutY="14.0" text="Visualizza Preventivi">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
     </items>
 </SplitPane>

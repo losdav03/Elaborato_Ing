@@ -19,6 +19,10 @@ public class AutoNuova extends Auto {
         caricaImmagini();
     }
 
+    public void setOptionalScelti(List<Optionals> optionalScelti) {
+        this.optionalScelti = optionalScelti;
+    }
+
     public String getImmagine(String colore, int vista) {
         for (String imgPath : super.getImmagini()) {
             if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista)))

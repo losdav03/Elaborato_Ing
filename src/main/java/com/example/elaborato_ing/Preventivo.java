@@ -10,7 +10,6 @@ public class Preventivo {
     private Dipendente dipendente;
     private final Auto auto;
     private Stato stato;
-
     private final Sede sede;
 
     public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto, Sede sede) {
@@ -20,6 +19,26 @@ public class Preventivo {
         this.cliente = cliente;
         this.auto = auto;
         this.sede = sede;
+        if(auto instanceof AutoNuova){
+            stato = Stato.DA_PAGARE;
+        }
+        stato = Stato.DA_VALUTARE;
+    }
+
+    public Date getCreazione() {
+        return creazione;
+    }
+
+    public Date getScadenza() {
+        return scadenza;
+    }
+
+    public Stato getStato() {
+        return stato;
+    }
+
+    public void setStato(Stato stato) {
+        this.stato = stato;
     }
 
     public String toString() {
