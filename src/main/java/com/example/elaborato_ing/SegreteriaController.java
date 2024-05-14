@@ -6,6 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.Stage;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,14 +17,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class AmministrazioneController {
+public class SegreteriaController {
 
     @FXML
     private ComboBox<Marca> marca;
     @FXML
     private ComboBox<String> modello;
     @FXML
-    private Button modificaOption, visualizzaPreventivi, visualizzaMarca, visualizzaSede, aggiungiAuto, aggiungiOptionals;
+    private Button chiudi, modificaOption, visualizzaPreventivi, visualizzaMarca, visualizzaSede, aggiungiAuto, aggiungiOptionals;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -38,10 +42,22 @@ public class AmministrazioneController {
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
 
-
     }
 
+    @FXML
+    public void handleCloseRequest(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Conferma chiusura");
+        alert.setHeaderText("Sei sicuro di voler chiudere la finestra?");
+        alert.setContentText("La finestra verrà chiusa e tutte le modifiche non salvate potrebbero essere perse.");
 
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            // Se l'utente conferma la chiusura, chiudi la finestra
+            Stage stage = (Stage) chiudi.getScene().getWindow();
+            stage.close();
+        }
+    }
 
     private void caricaPreventivi() {
         try {
@@ -153,5 +169,10 @@ public class AmministrazioneController {
     }
 
     public void aggiungiOptionals(ActionEvent actionEvent) {
+    }
+
+    public void chiudiSegreteria(ActionEvent event) {
+        handleCloseRequest(event);
+        model.OpenCloseFXML("FXML/Configuratore.fxml", chiudi);
     }
 }

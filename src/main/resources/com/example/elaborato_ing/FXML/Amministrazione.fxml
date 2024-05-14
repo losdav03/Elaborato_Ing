@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AmministrazioneController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="767.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.SegreteriaController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="442.0" prefWidth="281.0">
             <children>
@@ -40,6 +40,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
+            <Button fx:id="chiudi" onAction="#chiudiSegreteria" layoutX="395.0" layoutY="444.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="117.0" text="Chiudi Segreteria" />
          </children>
       </AnchorPane>
     </items>
