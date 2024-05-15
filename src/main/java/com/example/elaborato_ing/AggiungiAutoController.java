@@ -16,16 +16,13 @@ import java.util.List;
 public class AggiungiAutoController {
 
     @FXML
-    private ComboBox marca, marcaCB, modelloCB;
+    private ComboBox marca, marcaCB, modelloCB, alimentazione, sede;
 
     @FXML
-    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, alimentazione, cilindrata, potenza, consumi, prezzo, sconto;
+    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, cilindrata, potenza, consumi, prezzo, sconto;
 
     @FXML
     private ImageView imageView1, imageView2, imageView3;
-
-    @FXML
-    private CheckBox infot, sensori, fari, sedili, scorta, vetri, interni, ruote, cruise;
 
 
     private final Model model = new Model();
@@ -37,8 +34,6 @@ public class AggiungiAutoController {
         model.setMarca(marca);
         model.setMarca(marcaCB);
         marcaCB.setOnAction(_ -> aggiornaModello());
-
-
         IsDouble(altezza);
         IsDouble(lunghezza);
         IsDouble(larghezza);
@@ -47,6 +42,8 @@ public class AggiungiAutoController {
         Numeric(cilindrata);
         Numeric(potenza);
         IsDouble(consumi);
+        alimentazione.getItems().setAll(Alimentazione.values());
+        sede.getItems().setAll(Sede.values());
     }
 
     private void aggiornaModello() {
