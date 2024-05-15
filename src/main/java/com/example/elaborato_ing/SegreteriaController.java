@@ -22,9 +22,9 @@ public class SegreteriaController {
     @FXML
     private ComboBox<Marca> marca;
     @FXML
-    private ComboBox<String> modello, allOptionals;
+    private ComboBox<String> modello;
     @FXML
-    private Button chiudi, modificaOption, visualizzaPreventivi, visualizzaMarca, visualizzaSede, aggiungiAuto, aggiungiOptionals;
+    private Button aggiungiAuto,aggiungiOption,rimuoviOptional,modificaAuto,eliminaAuto;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -42,22 +42,6 @@ public class SegreteriaController {
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
         //allOptionals.setOnAction(_ -> aggiornaAllOptionals());
-    }
-
-
-    @FXML
-    public void handleCloseRequest(ActionEvent event) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Conferma chiusura");
-        alert.setHeaderText("Sei sicuro di voler chiudere la finestra?");
-        alert.setContentText("La finestra verrà chiusa e tutte le modifiche non salvate potrebbero essere perse.");
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Se l'utente conferma la chiusura, chiudi la finestra
-            Stage stage = (Stage) chiudi.getScene().getWindow();
-            stage.close();
-        }
     }
 
     private void caricaPreventivi() {
@@ -138,12 +122,6 @@ public class SegreteriaController {
         AutoNuova auto = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
         model.generaCheckBoxOptionalAmministrazione(auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
     }
-
-    private void aggiornaAllOptionals() {
-        allOptionals.getItems().setAll("CIao");
-    }
-
-
     public void xcliente(ActionEvent actionEvent) {
         preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));
 
@@ -176,14 +154,19 @@ public class SegreteriaController {
     public void aggiungiOptionals(ActionEvent actionEvent) {
     }
 
-    public void chiudiSegreteria(ActionEvent event) {
-        handleCloseRequest(event);
-        model.OpenCloseFXML("FXML/Configuratore.fxml", chiudi);
-    }
-
     public void aggiungiOption(ActionEvent event) {
+
     }
 
     public void rimuoviOptional(ActionEvent event) {
+
+    }
+
+    public void modificaAuto(ActionEvent event) {
+
+    }
+
+    public void eliminaAuto(ActionEvent event) {
+
     }
 }
