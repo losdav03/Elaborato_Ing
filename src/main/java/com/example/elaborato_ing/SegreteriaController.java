@@ -22,7 +22,7 @@ public class SegreteriaController {
     @FXML
     private ComboBox<Marca> marca;
     @FXML
-    private ComboBox<String> modello;
+    private ComboBox<String> modello, allOptionals;
     @FXML
     private Button chiudi, modificaOption, visualizzaPreventivi, visualizzaMarca, visualizzaSede, aggiungiAuto, aggiungiOptionals;
     @FXML
@@ -41,8 +41,9 @@ public class SegreteriaController {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
-
+        allOptionals.setOnAction(_ -> aggiornaAllOptionals());
     }
+
 
     @FXML
     public void handleCloseRequest(ActionEvent event) {
@@ -136,6 +137,10 @@ public class SegreteriaController {
     private void aggiornaCheckbox() {
         AutoNuova auto = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
         model.generaCheckBoxOptionalAmministrazione(auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
+    }
+
+    private void aggiornaAllOptionals() {
+        allOptionals.getItems().setAll("CIao");
     }
 
 

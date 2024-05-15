@@ -5,7 +5,7 @@ CruiseControl
 InterniInPelle
 RuoteGrandi
 TettoPanoramico
-CerchiInLegLeg
+CerchiInLega
 AssistenzaParcheggio
 RiscaldamentoSedili
 VetriOscurati
