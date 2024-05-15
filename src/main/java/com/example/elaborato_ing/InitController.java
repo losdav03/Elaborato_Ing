@@ -56,9 +56,6 @@ public class InitController {
 
 
     public void initialize() {
-
-
-
         String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt";
         File file = new File(filePath);
 
@@ -80,6 +77,8 @@ public class InitController {
         btnSx.setDisable(true);
         btnDx.setDisable(true);
         menuProfilo.setDisable(true);
+
+
 
     }
 

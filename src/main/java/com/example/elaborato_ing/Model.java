@@ -32,7 +32,10 @@ public class Model {
 
     private static Map<Marca, List<AutoNuova>> map = new HashMap<>();
     private static Catalogo catalogo = new Catalogo();
+    private static List<String> allOptionals = new ArrayList<>();
 
+    public Model() {
+    }
 
     public Map<Marca, List<AutoNuova>> getMap() {
         return map;
@@ -42,8 +45,6 @@ public class Model {
         return catalogo;
     }
 
-    public Model() {
-    }
 
 
     public void aggiornaFileCatalogo() {
@@ -101,6 +102,18 @@ public class Model {
             System.err.println("Errore nella lettura del file: " + e.getMessage());
         } catch (IllegalArgumentException e) {
             System.err.println("Errore nei dati: " + e.getMessage());
+        }
+    }
+
+    public void caricaOptionalDaFile() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                allOptionals.add(line);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -464,8 +477,8 @@ public class Model {
                 String[] campi = riga.split(",");
 
                 if (campi[0].equals(idPreventivo)) {
-                    if (campi.length >= 17 && campi[16].equals("DA PAGARE")) {
-                        campi[16] = "PAGATO";
+                    if (campi.length >= 17 && campi[16].equals(Stato.DA_PAGARE.toString())) {
+                        campi[16] = Stato.PAGATA.toString();
                     }
                 }
                 fileContent.append(String.join(",", campi)).append("\n");
