@@ -5,51 +5,51 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="748.0" prefWidth="586.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AggiungiAutoController">
-    <Label layoutX="17.0" layoutY="41.0" prefWidth="76.0" text="Marca" />
-    <Label layoutX="17.0" layoutY="81.0" prefWidth="76.0" text="Modello" />
-    <Label layoutX="14.0" layoutY="121.0" prefWidth="76.0" text="Altezza" />
-    <Label layoutX="14.0" layoutY="161.0" prefWidth="76.0" text="Lunghezza" />
-    <Label layoutX="14.0" layoutY="201.0" prefWidth="76.0" text="Larghezza" />
-    <Label layoutX="14.0" layoutY="241.0" prefWidth="76.0" text="Peso" />
-    <Label layoutX="14.0" layoutY="277.0" prefHeight="17.0" prefWidth="76.0" text="Volume" />
-    <Label layoutX="14.0" layoutY="287.0" prefWidth="76.0" text="Bagagliaio" />
-    <Label layoutX="17.0" layoutY="327.0" prefWidth="76.0" text="Motore" />
-    <Label layoutX="14.0" layoutY="367.0" prefWidth="76.0" text="AlimentaZione" />
-    <Label layoutX="14.0" layoutY="407.0" prefWidth="76.0" text="Cilindrata" />
-    <Label layoutX="14.0" layoutY="447.0" prefWidth="76.0" text="Potenza" />
-    <Label layoutX="14.0" layoutY="487.0" prefWidth="76.0" text="Consumi" />
-    <Label layoutX="14.0" layoutY="527.0" prefWidth="76.0" text="Colore" />
-    <Label layoutX="14.0" layoutY="567.0" prefWidth="76.0" text="Sconto" />
-    <Label layoutX="15.0" layoutY="607.0" prefWidth="76.0" text="Prezzo" />
-    <Label layoutX="14.0" layoutY="647.0" prefWidth="76.0" text="Sede" />
-    <ComboBox fx:id="marca" layoutX="95.0" layoutY="37.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="modello" layoutX="95.0" layoutY="77.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="altezza" layoutX="95.0" layoutY="117.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="lunghezza" layoutX="95.0" layoutY="157.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="larghezza" layoutX="95.0" layoutY="197.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="peso" layoutX="95.0" layoutY="237.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="volume" layoutX="95.0" layoutY="277.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="motore" layoutX="95.0" layoutY="323.0" prefHeight="25.0" prefWidth="104.0" />
-    <ComboBox fx:id="alimentazione" layoutX="95.0" layoutY="363.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="cilindrata" layoutX="95.0" layoutY="403.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="potenza" layoutX="95.0" layoutY="443.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="consumi" layoutX="95.0" layoutY="483.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="colore" layoutX="95.0" layoutY="523.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="sconto" layoutX="96.0" layoutY="563.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="prezzo" layoutX="96.0" layoutY="603.0" prefHeight="25.0" prefWidth="104.0" />
-    <ComboBox fx:id="sede" layoutX="95.0" layoutY="643" prefHeight="25.0" prefWidth="104.0" />
-    <Button fx:id="vendibtn" layoutX="17.0" layoutY="674.0" mnemonicParsing="false" onAction="#aggiungi" prefHeight="50.0" prefWidth="183.0" text="Aggiungi Auto" />
+    <Label layoutX="17.0" layoutY="12.0" prefWidth="76.0" text="Marca" />
+    <Label layoutX="17.0" layoutY="52.0" prefWidth="76.0" text="Modello" />
+    <Label layoutX="14.0" layoutY="92.0" prefWidth="76.0" text="Altezza" />
+    <Label layoutX="14.0" layoutY="132.0" prefWidth="76.0" text="Lunghezza" />
+    <Label layoutX="14.0" layoutY="172.0" prefWidth="76.0" text="Larghezza" />
+    <Label layoutX="14.0" layoutY="212.0" prefWidth="76.0" text="Peso" />
+    <Label layoutX="14.0" layoutY="248.0" prefHeight="17.0" prefWidth="76.0" text="Volume" />
+    <Label layoutX="14.0" layoutY="258.0" prefWidth="76.0" text="Bagagliaio" />
+    <Label layoutX="17.0" layoutY="298.0" prefWidth="76.0" text="Motore" />
+    <Label layoutX="14.0" layoutY="338.0" prefWidth="76.0" text="AlimentaZione" />
+    <Label layoutX="14.0" layoutY="378.0" prefWidth="76.0" text="Cilindrata" />
+    <Label layoutX="14.0" layoutY="418.0" prefWidth="76.0" text="Potenza" />
+    <Label layoutX="14.0" layoutY="458.0" prefWidth="76.0" text="Consumi" />
+    <Label layoutX="14.0" layoutY="498.0" prefWidth="76.0" text="Colore" />
+    <Label layoutX="14.0" layoutY="538.0" prefWidth="76.0" text="Sconto" />
+    <Label layoutX="15.0" layoutY="684.0" prefWidth="76.0" text="Prezzo" />
+    <Label layoutX="14.0" layoutY="724.0" prefWidth="76.0" text="Sede" />
+    <ComboBox fx:id="marca" layoutX="95.0" layoutY="8.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="modello" layoutX="95.0" layoutY="48.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="altezza" layoutX="95.0" layoutY="88.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="lunghezza" layoutX="95.0" layoutY="128.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="larghezza" layoutX="95.0" layoutY="168.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="peso" layoutX="95.0" layoutY="208.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="volume" layoutX="95.0" layoutY="248.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="motore" layoutX="95.0" layoutY="294.0" prefHeight="25.0" prefWidth="104.0" />
+    <ComboBox fx:id="alimentazione" layoutX="95.0" layoutY="334.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="cilindrata" layoutX="95.0" layoutY="374.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="potenza" layoutX="95.0" layoutY="414.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="consumi" layoutX="95.0" layoutY="454.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="colore" layoutX="95.0" layoutY="494.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="sconto" layoutX="96.0" layoutY="534.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="prezzo" layoutX="96.0" layoutY="680.0" prefHeight="25.0" prefWidth="104.0" />
+    <ComboBox fx:id="sede" layoutX="95.0" layoutY="720.0" prefHeight="25.0" prefWidth="104.0" />
+    <Button fx:id="vendibtn" layoutX="488.0" layoutY="587.0" mnemonicParsing="false" onAction="#aggiungi" prefHeight="50.0" prefWidth="82.0" text="Aggiungi&#10;  Auto" />
     <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="40.0" />
     <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="40.0" />
     <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="40.0" />
     <Button fx:id="caricaImg" layoutX="232.0" layoutY="210.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
     <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="210.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
    <Button fx:id="eliminaBtn" layoutX="488.0" layoutY="677.0" mnemonicParsing="false" onAction="#elimina" prefHeight="50.0" prefWidth="82.0" text="Elimina" />
-   <ComboBox fx:id="marcaCB" layoutX="370.0" layoutY="684.0" prefHeight="25.0" prefWidth="104.0" />
-   <ComboBox fx:id="modelloCB" layoutX="254.0" layoutY="684.0" prefHeight="25.0" prefWidth="104.0" />
-    <ScrollPane fx:id="scrollPane" layoutX="230.0" layoutY="263.0" prefHeight="314.0" prefWidth="325.0">
+   <ComboBox fx:id="marcaCB" layoutX="370.0" layoutY="701.0" prefHeight="25.0" prefWidth="104.0" />
+   <ComboBox fx:id="modelloCB" layoutX="370.0" layoutY="662.0" prefHeight="25.0" prefWidth="104.0" />
+    <ScrollPane fx:id="scrollPane" layoutX="230.0" layoutY="263.0" prefHeight="158.0" prefWidth="325.0">
       <content>
-            <VBox fx:id="checkBoxContainer" prefHeight="312.0" prefWidth="306.0" />
+            <VBox fx:id="checkBoxContainer" prefHeight="152.0" prefWidth="306.0" />
       </content>
    </ScrollPane>
 </AnchorPane>
