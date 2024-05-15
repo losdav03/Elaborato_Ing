@@ -47,5 +47,9 @@
    <Button fx:id="eliminaBtn" layoutX="488.0" layoutY="677.0" mnemonicParsing="false" onAction="#elimina" prefHeight="50.0" prefWidth="82.0" text="Elimina" />
    <ComboBox fx:id="marcaCB" layoutX="370.0" layoutY="684.0" prefHeight="25.0" prefWidth="104.0" />
    <ComboBox fx:id="modelloCB" layoutX="254.0" layoutY="684.0" prefHeight="25.0" prefWidth="104.0" />
-
+    <ScrollPane fx:id="scrollPane" layoutX="230.0" layoutY="263.0" prefHeight="314.0" prefWidth="325.0">
+      <content>
+            <VBox fx:id="checkBoxContainer" prefHeight="312.0" prefWidth="306.0" />
+      </content>
+   </ScrollPane>
 </AnchorPane>

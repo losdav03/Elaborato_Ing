@@ -494,6 +494,44 @@ public class Model {
         }
     }
 
+    public void caricaOpzionaliDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            CheckBox checkBox = new CheckBox(line);
+            String finalLine = line;
+            checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    // Show TextInputDialog to get the value
+                    TextInputDialog dialog = new TextInputDialog("0");
+                    dialog.setTitle("Input Value");
+                    dialog.setHeaderText("Enter the value for " + finalLine);
+                    dialog.setContentText("Value:");
+
+                    Optional<String> result = dialog.showAndWait();
+                    result.ifPresent(value -> {
+                        try {
+                            int doubleValue = Integer.parseInt(value);
+                            // Create new Optional object and add to list
+                            Optionals optional = new Optionals(finalLine, doubleValue);
+                            listaOp.add(optional);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                } else {
+                    // Remove Optional from list and reset price
+                    listaOp.removeIf(optional -> optional.getNome().equals(finalLine));
+                    // Reset price to 0 if no optional selected
+                    // In this example, "prezzo" refers to the TextField where price is entered
+
+                }
+            });
+            checkBoxContainer.getChildren().add(checkBox);
+        }
+        reader.close();
+    }
+
 
     public void valuta(String text) {
 
