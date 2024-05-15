@@ -41,7 +41,7 @@ public class SegreteriaController {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
-        allOptionals.setOnAction(_ -> aggiornaAllOptionals());
+        //allOptionals.setOnAction(_ -> aggiornaAllOptionals());
     }
 
 
