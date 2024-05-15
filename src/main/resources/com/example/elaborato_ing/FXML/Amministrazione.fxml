@@ -35,7 +35,7 @@
             <Button fx:id="visualizzaMarca" layoutX="340.0" layoutY="79.0" onAction="#xmarca" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10;per marca" />
             <Button fx:id="visualizzaSede" layoutX="10.0" layoutY="79.0" onAction="#xsede" prefHeight="50.0" prefWidth="130.0" text="Visualizza preventivi &#10; per sede" />
             <ListView fx:id="preventiviListView" layoutX="10.0" layoutY="136.0" prefHeight="270.0" prefWidth="460.0" />
-            <Label layoutX="125.0" layoutY="14.0" text="Visualizza Preventivi">
+            <Label fx:id="Labelpreventivi" layoutX="125.0" layoutY="14.0" text="Visualizza Preventivi">
                <font>
                   <Font size="22.0" />
                </font>

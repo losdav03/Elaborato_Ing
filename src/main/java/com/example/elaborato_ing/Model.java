@@ -34,14 +34,6 @@ public class Model {
     private static Catalogo catalogo = new Catalogo();
 
 
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public Dipendente getDipendente() {
-        return dipendente;
-    }
-
     public Map<Marca, List<AutoNuova>> getMap() {
         return map;
     }
@@ -112,83 +104,84 @@ public class Model {
         }
     }
 
-    public void generaCheckBoxOptional(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
+    public void generaCheckBoxOptionalConfiguratore(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
         {
             scrollPane.setContent(checkBoxContainer);
             checkBoxContainer.getChildren().clear();
-            if (amministrazione.getEmail() != null) {
-                try {
-                    BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"));
-                    String line;
-                    while ((line = reader.readLine()) != null) {
-                        String nomeOptional = line;
-                        int costoOptional = auto.getOptionalSelezionabili().stream().filter(op -> op.getNome().equals(nomeOptional)).findFirst().map(Optionals::getCosto).orElse(0);
 
-                        // Controllo se l'auto ha l'optional e in tal caso prendo il costo dall'auto
+            for (Optionals item : auto.getOptionalSelezionabili()) {
+                CheckBox checkBox = new CheckBox(item.getNome());
+                checkBox.setText(item.getNome() + " : +" + item.getCosto() + " €");
+                checkBoxContainer.getChildren().add(checkBox);
+                checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    Optionals op = new Optionals(item.getNome(), item.getCosto());
+                    if (newValue) {
+                        optionalScelti.add(op);
+                        int prezzoAggiornato = Integer.parseInt(costo.getText()) + item.getCosto();
+                        costo.setText(String.valueOf(prezzoAggiornato));
 
-                        CheckBox checkBox = new CheckBox(nomeOptional);
-                        checkBox.setText(nomeOptional + " : +" + costoOptional + " €");
-                        checkBoxContainer.getChildren().add(checkBox);
-                        if (costoOptional != 0) {
-                            checkBox.setSelected(true);
-                        }
+                    } else {
+                        optionalScelti.remove(op);
+                        int prezzoAggiornato = Integer.parseInt(costo.getText()) - item.getCosto();
+                        costo.setText(String.valueOf(prezzoAggiornato));
 
-                        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                            Optionals op = new Optionals(nomeOptional, costoOptional);
-                            if (newValue) {
-                                TextInputDialog dialog = new TextInputDialog();
-                                dialog.setHeaderText("Inserisci il prezzo per " + nomeOptional);
-                                Optional<String> result = dialog.showAndWait();
-                                result.ifPresent(prezzo -> {
-                                    // Aggiungo l'optional alla lista degli optional dell'auto con il prezzo inserito
-                                    int prezzoOptional = Integer.parseInt(prezzo);
-                                    auto.getOptionalSelezionabili().add(new Optionals(nomeOptional, prezzoOptional));
-                                    checkBox.setText(nomeOptional + " : +" + prezzoOptional + " €");
-                                    System.out.println(auto.stampa());
-                                });
-                            } else {
-                                // Rimuovo l'optional dalla lista degli optional dell'auto se deselezionato
-                                auto.getOptionalSelezionabili().removeIf(optionals -> optionals.getNome().equals(nomeOptional));
-                                checkBox.setText(nomeOptional + " : +" + 0 + " €");
-                                System.out.println("Rimosso");
-                                System.out.println(auto.stampa());
-
-                            }
-                        });
                     }
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            } else {
-                for (Optionals item : auto.getOptionalSelezionabili()) {
-                    CheckBox checkBox = new CheckBox(item.getNome());
-                    checkBox.setText(item.getNome() + " : +" + item.getCosto() + " €");
-                    checkBoxContainer.getChildren().add(checkBox);
-                    checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                        Optionals op = new Optionals(item.getNome(), item.getCosto());
-                        if (newValue) {
-                            optionalScelti.add(op);
-                            int prezzoAggiornato = Integer.parseInt(costo.getText()) + item.getCosto();
-                            costo.setText(String.valueOf(prezzoAggiornato));
-
-                        } else {
-                            optionalScelti.remove(op);
-                            int prezzoAggiornato = Integer.parseInt(costo.getText()) - item.getCosto();
-                            costo.setText(String.valueOf(prezzoAggiornato));
-
-                        }
-                    });
-                }
+                });
             }
-
         }
 
     }
 
 
+    public void generaCheckBoxOptionalAmministrazione(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
+        scrollPane.setContent(checkBoxContainer);
+        checkBoxContainer.getChildren().clear();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String nomeOptional = line;
+                int costoOptional = auto.getOptionalSelezionabili().stream().filter(op -> op.getNome().equals(nomeOptional)).findFirst().map(Optionals::getCosto).orElse(0);
 
+                // Controllo se l'auto ha l'optional e in tal caso prendo il costo dall'auto
+
+                CheckBox checkBox = new CheckBox(nomeOptional);
+                checkBox.setText(nomeOptional + " : +" + costoOptional + " €");
+                checkBoxContainer.getChildren().add(checkBox);
+                if (costoOptional != 0) {
+                    checkBox.setSelected(true);
+                }
+
+                checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                    Optionals op = new Optionals(nomeOptional, costoOptional);
+                    if (newValue) {
+                        TextInputDialog dialog = new TextInputDialog();
+                        dialog.setHeaderText("Inserisci il prezzo per " + nomeOptional);
+                        Optional<String> result = dialog.showAndWait();
+                        result.ifPresent(prezzo -> {
+                            // Aggiungo l'optional alla lista degli optional dell'auto con il prezzo inserito
+                            int prezzoOptional = Integer.parseInt(prezzo);
+                            auto.getOptionalSelezionabili().add(new Optionals(nomeOptional, prezzoOptional));
+                            checkBox.setText(nomeOptional + " : +" + prezzoOptional + " €");
+                            System.out.println(auto.stampa());
+                        });
+                    } else {
+                        // Rimuovo l'optional dalla lista degli optional dell'auto se deselezionato
+                        auto.getOptionalSelezionabili().removeIf(optionals -> optionals.getNome().equals(nomeOptional));
+                        checkBox.setText(nomeOptional + " : +" + 0 + " €");
+                        System.out.println("Rimosso");
+                        System.out.println(auto.stampa());
+
+                    }
+                });
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
 
     public String getImmagineAuto(Marca marca, String modello, String colore, int vista) {
         return getMarcaModello(marca, modello, map).getImmagine(colore.toLowerCase(), vista);
@@ -202,7 +195,8 @@ public class Model {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
             Parent root = loader.load();
 
-            // Crea una nuova finestra per la nuova form
+
+            // Crea una nuova finestra per lanuova form
             Stage newStage = new Stage();
             newStage.initModality(Modality.APPLICATION_MODAL); // Imposta la finestra come modale (blocca l'interazione con altre finestre)
 
@@ -427,7 +421,7 @@ public class Model {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length > 0 && parts[1].equals(cliente.getEmail())) {
+                if (parts.length > 16 && parts[1].equals(cliente.getEmail())) {
                     String linea = "Id Preventivo : " + parts[0] +
                             "\nMarca : " + parts[2] +
                             "\nModello : " + parts[3] +
@@ -441,7 +435,7 @@ public class Model {
                             "\nCilindrata : " + parts[9].split(";")[2] + " m³" +
                             "\nPotenza : " + parts[9].split(";")[3] + " kW" +
                             "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
-                            "\nOptional : " + parts[10] +
+                            "\nOptional : " + (parts[10].isEmpty() ? " nessun optional" : parts[10]) +
                             "\nSede : " + parts[11] +
                             "\nColore : " + parts[12] +
                             "\nData Inizio Preventivo : " + parts[13] +
@@ -504,9 +498,7 @@ public class Model {
         marca.getItems().addAll(getMap().keySet());
     }
 
-    public void rimuoviAmm() {
-        amministrazione = new Amministrazione();
-    }
+
 }
 
 

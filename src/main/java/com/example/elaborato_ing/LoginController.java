@@ -53,6 +53,7 @@ public class LoginController {
 
         if (model.autenticato(username, password) == 0) {
             System.out.println("Cliente Loggato!");
+            System.out.println(model.getClienteLoggato());
             ((Stage) accedi.getScene().getWindow()).close(); // Chiude la scena iniziale
 
         } else if (model.autenticato(username, password) == 1) {

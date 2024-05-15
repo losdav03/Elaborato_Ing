@@ -24,6 +24,7 @@ public class Main extends Application {
         // Passa lo stage al controller
         controller.setStage(primaryStage);
 
+
         // Imposta il titolo e la scena e mostra lo stage
         primaryStage.setTitle("JavaFX App with FXML and CSS");
         primaryStage.setScene(new Scene(root));

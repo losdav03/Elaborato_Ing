@@ -50,14 +50,14 @@ public class InitController {
     private ScrollPane scrollPane;
     @FXML
     private VBox vBox;
-    private Model model;
+    private final Model model = new Model();
     private int vista = 1;
     private Stage stage;
 
 
     public void initialize() {
 
-        model = new Model();
+
 
         String filePath = "src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt";
         File file = new File(filePath);
@@ -117,7 +117,7 @@ public class InitController {
 
 
             if (auto != null) {
-                model.generaCheckBoxOptional(auto, scrollPane, vBox,auto.getOptionalScelti(), prezzo);
+                model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox,auto.getOptionalScelti(), prezzo);
 
 
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
