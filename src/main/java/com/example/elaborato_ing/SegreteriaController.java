@@ -180,4 +180,10 @@ public class SegreteriaController {
         handleCloseRequest(event);
         model.OpenCloseFXML("FXML/Configuratore.fxml", chiudi);
     }
+
+    public void aggiungiOption(ActionEvent event) {
+    }
+
+    public void rimuoviOptional(ActionEvent event) {
+    }
 }

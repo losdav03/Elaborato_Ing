@@ -17,7 +17,7 @@ import java.util.List;
 public class AggiungiAutoController {
 
     @FXML
-    private ComboBox marca, marcaCB, modelloCB, alimentazione, sede;
+    private ComboBox marca, alimentazione, sede;
 
     @FXML
     private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, cilindrata, potenza, consumi, prezzo, sconto;
@@ -32,14 +32,15 @@ public class AggiungiAutoController {
     private List<Optionals> listaOp = new ArrayList<>();
 
     public void initialize() throws IOException {
-
-        marcaCB.setOnAction(_ -> aggiornaModello());
+        marca.getItems().setAll(Marca.values());
+        //marcaCB.setOnAction(_ -> aggiornaModello());
         IsDouble(altezza);
         IsDouble(lunghezza);
         IsDouble(larghezza);
         IsDouble(peso);
         IsDouble(volume);
         Numeric(cilindrata);
+        Numeric(prezzo);
         Numeric(potenza);
         IsDouble(consumi);
         alimentazione.getItems().setAll(Alimentazione.values());
@@ -47,7 +48,7 @@ public class AggiungiAutoController {
         model.caricaOpzionaliDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
     }
 
-    private void aggiornaModello() {
+    /*private void aggiornaModello() {
         modelloCB.getItems().clear();
         List<AutoNuova> listaAuto = model.getMap().getOrDefault(marcaCB.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
@@ -59,7 +60,7 @@ public class AggiungiAutoController {
             modelloCB.getItems().setAll(listaModelli);
             modelloCB.setDisable(false);
         }
-    }
+    }*/
 
     private void IsDouble(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
@@ -131,24 +132,24 @@ public class AggiungiAutoController {
     }
 
     public void aggiungi(ActionEvent actionEvent) throws IOException {
-        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !String.valueOf(marca.getValue()).isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
+        if (/*imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && */!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
             List<String> colori = new ArrayList<>();
             colori.add(colore.getText());
 
             String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colore.getText();
 
             auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(),Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), Integer.parseInt(prezzo.getText()), colori, sconto.getText(), listaOp);
-            auto.addImgs(path + "1.png" , path + "2.png", path + "3.png");
-          //  auto.aggiungiOptional(infot.isSelected(), sensori.isSelected(), fari.isSelected(), sedili.isSelected(), scorta.isSelected(), vetri.isSelected(), interni.isSelected(), ruote.isSelected(), cruise.isSelected());
+            //auto.addImgs(path + "1.png" , path + "2.png", path + "3.png");
+            auto.setOptionalSelezionabili(listaOp);
             model.getCatalogo().add(auto);
             model.aggiornaFileCatalogo();
         }
     }
 
-    public void elimina(ActionEvent actionEvent) {
+    /*public void elimina(ActionEvent actionEvent) {
         model.getCatalogo().remove((Marca) marcaCB.getValue(), String.valueOf(modelloCB.getValue()));
         model.aggiornaFileCatalogo();
-    }
+    }*/
 
 
 

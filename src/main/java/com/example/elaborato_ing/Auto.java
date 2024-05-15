@@ -13,8 +13,7 @@ public class Auto {
     private final double volumeBagagliaio;
     private List<String> immagini = new ArrayList<>();
     private final Motore motore;
-    private final List<Optionals> optionalSelezionabili;
-
+    private List<Optionals> optionalSelezionabili;
     public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<Optionals> optionalSelezionabili) {
         this.marca = marca;
         this.modello = modello;
@@ -46,6 +45,7 @@ public class Auto {
         immagini.add(img2);
         immagini.add(img3);
     }
+
 
 
     public Marca getMarca() {
@@ -84,6 +84,9 @@ public class Auto {
         return motore;
     }
 
+    public void setOptionalSelezionabili(List<Optionals> optionalSelezionabili) {
+        this.optionalSelezionabili=optionalSelezionabili;
+    }
     public List<Optionals> getOptionalSelezionabili() {
         return optionalSelezionabili;
     }
