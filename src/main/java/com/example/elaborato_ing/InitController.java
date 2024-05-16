@@ -78,7 +78,8 @@ public class InitController {
         btnDx.setDisable(true);
         menuProfilo.setDisable(true);
 
-
+        // mi serve per riaggiornare il catalogo dopo eliminazione optional nell'amministrazione
+        model.caricaOptionalDaFile();
 
     }
 

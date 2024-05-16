@@ -104,7 +104,7 @@ public class AggiungiAutoController {
     }
 
 
-    public void caricaImgs() {
+    public void caricaImgs(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleziona un'immagine");
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png"));
