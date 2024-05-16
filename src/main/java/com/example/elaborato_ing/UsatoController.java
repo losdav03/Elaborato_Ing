@@ -109,6 +109,8 @@ public class UsatoController {
     }
 
 
+
+
     public void RimuoviImgs() {
         // Trova il primo ImageView con un'immagine e rimuovila
         if (imageView3.getImage() != null) {

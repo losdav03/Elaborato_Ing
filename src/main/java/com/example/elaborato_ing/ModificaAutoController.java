@@ -100,6 +100,7 @@ public class ModificaAutoController {
     }
 
     public void caricaImgs(ActionEvent event) {
+
     }
 
     public void rimuoviImgs(ActionEvent event) {
