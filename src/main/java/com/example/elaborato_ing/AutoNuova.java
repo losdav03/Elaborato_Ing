@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class AutoNuova extends Auto {
     private final int prezzo;
-    private final String sconto;
+    private String sconto;
     private List<String> colori;
     private List<Optionals> optionalScelti;
 
@@ -88,6 +88,10 @@ public class AutoNuova extends Auto {
             res += c + ";";
         }
         return res;
+    }
+
+    public void setSconto(String sconto) {
+        this.sconto = sconto;
     }
 
     public String stampaScelti() {

@@ -111,10 +111,7 @@ public class InitController {
     private void aggiornaColori() {
         if (marca.getValue() != null && modello.getValue() != null) {
             AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
-
             colori.setDisable(false);
-
-
             if (auto != null) {
                 model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox,auto.getOptionalScelti(), prezzo);
 

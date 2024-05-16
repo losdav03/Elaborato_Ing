@@ -7,9 +7,9 @@
 <AnchorPane prefHeight="360.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.ModificaAutoController">
    <children>
       <Label layoutX="26.0" layoutY="14.0" text="Seleziona Marca della &#10;macchina da Modificare" />
-      <ComboBox layoutX="14.0" layoutY="48.0" prefWidth="150.0" />
+      <ComboBox fx:id="marca" layoutX="14.0" layoutY="48.0" prefWidth="150.0" />
       <Label layoutX="26.0" layoutY="80.0" text="Seleziona Modello della &#10;macchina da Modificare" />
-      <ComboBox layoutX="14.0" layoutY="114.0" prefWidth="150.0" />
+      <ComboBox fx:id="modello" layoutX="14.0" layoutY="114.0" prefWidth="150.0" />
       <Label layoutX="12.0" layoutY="145.0" text="Imposta nuovo prezzo&#10;nella macchina da Modificare" />
       <TextField fx:id="prezzo" layoutX="15.0" layoutY="179.0" />
       <Label layoutX="14.0" layoutY="210.0" text="Segna i mesi in cui scontare l'auto" />
@@ -31,10 +31,10 @@
       <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="368.0" layoutY="137.0" />
       <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="478.0" layoutY="137.0" />
       <Button fx:id="caricaImg" layoutX="258.0" layoutY="79.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="46.0" prefWidth="155.0" text="carica immagini relative&#10;al nuovo colore" />
-      <Button fx:id="rimuoviImg" layoutX="423.0" layoutY="79.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="46.0" prefWidth="155.0" text="rimuovi immagini relative&#10;al nuovo colore" />
+      <Button fx:id="rimuoviImg" layoutX="423.0" layoutY="79.0" mnemonicParsing="false" onAction="#rimuoviImgs" prefHeight="46.0" prefWidth="155.0" text="rimuovi immagini relative&#10;al nuovo colore" />
 
-      <Button fx:id="modifica" layoutX="377.0" layoutY="305.0" mnemonicParsing="false" onAction="modificaAuto" prefHeight="34.0" prefWidth="130.0" text="Modifica Auto" />
+      <Button fx:id="modifica" layoutX="377.0" layoutY="305.0" mnemonicParsing="false" onAction="#modificaAuto" prefHeight="34.0" prefWidth="130.0" text="Modifica Auto" />
       <Label layoutX="258.0" layoutY="52.0" text="Inserisci nuova colorazione" />
-      <TextField fx:id="prezzo1" layoutX="413.0" layoutY="48.0" />
+      <TextField fx:id="coloreNuovo" layoutX="413.0" layoutY="48.0" />
    </children>
 </AnchorPane>

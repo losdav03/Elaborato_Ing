@@ -26,7 +26,6 @@ public class Auto {
         this.optionalSelezionabili = optionalSelezionabili;
     }
 
-
     @Override
     public String toString() {
         return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + stampaSelezionabili();
@@ -45,8 +44,6 @@ public class Auto {
         immagini.add(img2);
         immagini.add(img3);
     }
-
-
 
     public Marca getMarca() {
         return marca;
@@ -84,10 +81,8 @@ public class Auto {
         return motore;
     }
 
-    public void setOptionalSelezionabili(List<Optionals> optionalSelezionabili) {
-        this.optionalSelezionabili=optionalSelezionabili;
-    }
     public List<Optionals> getOptionalSelezionabili() {
         return optionalSelezionabili;
     }
+
 }
