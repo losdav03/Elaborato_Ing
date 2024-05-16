@@ -30,6 +30,7 @@ public class AggiungiAutoController {
     private final Model model = new Model();
     Auto auto;
     private List<Optionals> listaOp = new ArrayList<>();
+    private static String nomeNuovaImg1, nomeNuovaImg2, nomeNuovaImg3;
 
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
@@ -45,7 +46,7 @@ public class AggiungiAutoController {
         IsDouble(consumi);
         alimentazione.getItems().setAll(Alimentazione.values());
         sede.getItems().setAll(Sede.values());
-        model.caricaOpzionaliDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
+        model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
     }
 
     /*private void aggiornaModello() {
@@ -108,13 +109,16 @@ public class AggiungiAutoController {
         File Immagine = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
         if (Immagine != null) {
             Image image = new Image(Immagine.toURI().toString());
+            String nomeImmagine = Immagine.getName();
             if (imageView1.getImage() == null) {
                 imageView1.setImage(image);
+                //  nomeNuovaImg1 = marca.getValue().toString().trim().toLowerCase() + modello.getText().trim().toLowerCase() + colore.getText().trim().toLowerCase()
             } else if (imageView2.getImage() == null) {
                 imageView2.setImage(image);
             } else {
                 imageView3.setImage(image);
             }
+
         }
     }
 
@@ -134,66 +138,19 @@ public class AggiungiAutoController {
     public void aggiungi(ActionEvent actionEvent) throws IOException {
         if (/*imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && */!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
             List<String> colori = new ArrayList<>();
-            colori.add(colore.getText());
+            colori.add(colore.getText().toUpperCase());
 
-            String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colore.getText();
-
-            auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(),Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), Integer.parseInt(prezzo.getText()), colori, sconto.getText(), listaOp);
-            //auto.addImgs(path + "1.png" , path + "2.png", path + "3.png");
-            auto.setOptionalSelezionabili(listaOp);
+            // String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colore.getText().toLowerCase();
+            auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), Integer.parseInt(prezzo.getText()), colori, sconto.getText(), listaOp);
             model.getCatalogo().add(auto);
             model.aggiornaFileCatalogo();
         }
     }
-
 }
-    /*
-    public void caricaImmagini(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png"));
-        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
-        if (selectedFiles != null) {
-            for (File file : selectedFiles) {
-                try {
-                    InputStream imageStream = new FileInputStream(file);
-                    if (imageStream != null) {
-                        Image image = new Image(imageStream);
-                        imageList.add(image);
-                    }
-                } catch (Exception e) {
-                    System.err.println("Errore durante il caricamento dell'immagine: " + file.getName() + ", motivo: " + e.getMessage());
-                }
-            }
-        } else {
-            System.out.println("Nessun file selezionato.");
-        }
-    }
 
-    @FXML
-    public void mostraPrimaImmagine(ActionEvent actionEvent) {
-        if (!imageList.isEmpty()) {
-            imageView.setImage(imageList.get(0));
-        }
-    }
 
-    @FXML
-    public void mostraImmagineSuccessiva(ActionEvent actionEvent) {
-        if (!imageList.isEmpty()) {
-            int currentIndex = imageList.indexOf(imageView.getImage());
-            int nextIndex = (currentIndex + 1) % imageList.size();
-            imageView.setImage(imageList.get(nextIndex));
-        }
-    }
 
-    @FXML
-    public void mostraImmaginePrecedente(ActionEvent actionEvent) {
-        if (!imageList.isEmpty()) {
-            int currentIndex = imageList.indexOf(imageView.getImage());
-            int prevIndex = (currentIndex - 1 + imageList.size()) % imageList.size();
-            imageView.setImage(imageList.get(prevIndex));
-        }
-    }
 
-     */
+
 

@@ -25,6 +25,10 @@ public class Optionals {
         this.costo = costo;
     }
 
+    @Override
+    public String toString() {
+        return nome + ";" + costo;
+    }
 }
 
 

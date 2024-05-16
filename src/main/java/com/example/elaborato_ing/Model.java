@@ -46,11 +46,10 @@ public class Model {
     }
 
 
-
     public void aggiornaFileCatalogo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt"))) {
-            for (Auto auto : catalogo.getListaAuto()) {
-                writer.write(auto.toString()); // Supponendo che Auto abbia un metodo toString appropriato
+            for (AutoNuova auto : catalogo.getListaAuto()) {
+                writer.write(auto.stampaAutoCatalogo()); // Supponendo che Auto abbia un metodo toString appropriato
                 writer.newLine();
             }
             System.out.println("Catalogo aggiornato e salvato su " + "Catalogo.txt");
@@ -64,7 +63,7 @@ public class Model {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 16) {
+                if (parts.length == 12) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     String modello = parts[1].trim();
                     double lunghezza = Double.parseDouble(parts[2]);
@@ -72,18 +71,18 @@ public class Model {
                     double larghezza = Double.parseDouble(parts[4]);
                     double peso = Double.parseDouble(parts[5]);
                     double volumeBagagliaio = Double.parseDouble(parts[6]);
-                    String nomeMotore = parts[7];
-                    Alimentazione alimentazione = Alimentazione.valueOf(parts[8].trim());
-                    int cilindrata = Integer.parseInt(parts[9].trim());
-                    int potenza = Integer.parseInt(parts[10].trim());
-                    double consumi = Double.parseDouble(parts[11]);
+                    String nomeMotore = parts[7].split(";")[0];
+                    Alimentazione alimentazione = Alimentazione.valueOf(parts[7].split(";")[1].trim());
+                    int cilindrata = Integer.parseInt(parts[7].split(";")[2].trim());
+                    int potenza = Integer.parseInt(parts[7].split(";")[3].trim());
+                    double consumi = Double.parseDouble(parts[7].split(";")[4]);
                     Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
-                    int prezzo = Integer.parseInt(parts[12]);
-                    String sconto = parts[13];
-                    List<String> colori = List.of(parts[14].trim().split(";"));
+                    int prezzo = Integer.parseInt(parts[8]);
+                    String sconto = parts[9];
+                    List<String> colori = List.of(parts[10].trim().split(";"));
 
                     List<Optionals> optionalSelezionabili = new ArrayList<>();
-                    List<String> op = List.of(parts[15].trim().split(":"));
+                    List<String> op = List.of(parts[11].trim().split(":"));
                     for (String o : op) {
                         Optionals nuovoOp = new Optionals(o.split(";")[0], Integer.parseInt(o.split(";")[1]));
                         optionalSelezionabili.add(nuovoOp);
@@ -176,14 +175,14 @@ public class Model {
                             int prezzoOptional = Integer.parseInt(prezzo);
                             auto.getOptionalSelezionabili().add(new Optionals(nomeOptional, prezzoOptional));
                             checkBox.setText(nomeOptional + " : +" + prezzoOptional + " €");
-                            System.out.println(auto.stampa());
+                            System.out.println(auto.stampaSelezionabili());
                         });
                     } else {
                         // Rimuovo l'optional dalla lista degli optional dell'auto se deselezionato
                         auto.getOptionalSelezionabili().removeIf(optionals -> optionals.getNome().equals(nomeOptional));
                         checkBox.setText(nomeOptional + " : +" + 0 + " €");
                         System.out.println("Rimosso");
-                        System.out.println(auto.stampa());
+                        System.out.println(auto.stampaSelezionabili());
 
                     }
                 });
@@ -494,7 +493,7 @@ public class Model {
         }
     }
 
-    public void caricaOpzionaliDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws IOException {
+    public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
         while ((line = reader.readLine()) != null) {

@@ -29,13 +29,13 @@ public class Auto {
 
     @Override
     public String toString() {
-        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + stampa();
+        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + stampaSelezionabili();
     }
 
-    public String stampa() {
+    public String stampaSelezionabili() {
         String res = "";
         for (Optionals op : optionalSelezionabili) {
-            res += op.getNome() + ";";
+            res += op.getNome() + ";" + op.getCosto() + ":";
         }
         return res;
     }

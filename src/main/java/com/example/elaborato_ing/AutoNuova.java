@@ -25,8 +25,11 @@ public class AutoNuova extends Auto {
 
     public String getImmagine(String colore, int vista) {
         for (String imgPath : super.getImmagini()) {
-            if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista)))
+            if (imgPath.contains("audirs3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
+                return "/com/example/elaborato_ing/images/audirs3" + colore.toLowerCase() + "3.png";
+            else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                 return imgPath;
+            }
         }
         return null;
     }
@@ -72,8 +75,21 @@ public class AutoNuova extends Auto {
 
     @Override
     public String toString() {
-        return super.getMarca() + "," +  super.getModello() + "," +  super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + super.getMotore() + "," + stampaScelti();
+        return super.getMarca() + "," + super.getModello() + "," + super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + super.getMotore() + "," + stampaScelti();
     }
+
+    public String stampaAutoCatalogo() {
+        return super.getMarca() + "," + super.getModello().toUpperCase() + "," + super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + super.getMotore() + "," + prezzo + "," + sconto + "," + stampaColori() + "," + super.stampaSelezionabili();
+    }
+
+    public String stampaColori() {
+        String res = "";
+        for (String c : colori) {
+            res += c + ";";
+        }
+        return res;
+    }
+
     public String stampaScelti() {
         String res = "";
         for (Optionals op : optionalScelti) {
