@@ -148,7 +148,7 @@ public class SegreteriaController {
     }
 
     public void aggiungiAuto(ActionEvent actionEvent) {
-        model.OpenCloseFXML("FXML/AggiungiAuto.fxml", aggiungiAuto);
+        model.openFXML("FXML/AggiungiAuto.fxml");
     }
 
     public void aggiungiOptionals(ActionEvent actionEvent) {
@@ -164,10 +164,10 @@ public class SegreteriaController {
     }
 
     public void modificaAuto(ActionEvent event) {
-        model.OpenCloseFXML("FXML/ModificaAuto.fxml", modificaAuto);
+        model.openFXML("FXML/ModificaAuto.fxml");
     }
 
     public void eliminaAuto(ActionEvent event) {
-        model.OpenCloseFXML("FXML/EliminaAuto.fxml", eliminaAuto);
+        model.openFXML("FXML/EliminaAuto.fxml");
     }
 }
