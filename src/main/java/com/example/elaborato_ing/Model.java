@@ -549,6 +549,9 @@ public class Model {
     }
 
 
+    public void inoltraPreventivoUsato(AutoUsata auto, String lowerCase, int i, Object o) {
+
+    }
 }
 
 

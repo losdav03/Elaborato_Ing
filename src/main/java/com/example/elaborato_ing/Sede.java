@@ -1,16 +1,30 @@
 package com.example.elaborato_ing;
 
 public enum Sede {
-    MONACO,
-    MARANELLO,
-    NYC,
-    LONDRA,
-    GINEVRA,
-    PARIGI,
+    MILANO,
+    ROMA,
+    TORINO,
+    NAPOLI,
     BOLOGNA,
-    DUBAI,
-    LA,
-    TOKYO,
-    MIAMI,
-    AQUILA;
+    FIRENZE,
+    BARI,
+    GENOVA,
+    PALERMO,
+    CATANIA,
+    VENEZIA,
+    VERONA,
+    MESSINA,
+    PADOVA,
+    TRIESTE,
+    BRESCIA,
+    TARANTO,
+    PRATO,
+    CATANZARO,
+    MODENA,
+    PARMA,
+    LIVORNO,
+    CAGLIARI,
+    FOGGIA,
+    SALERNO;
+
 }

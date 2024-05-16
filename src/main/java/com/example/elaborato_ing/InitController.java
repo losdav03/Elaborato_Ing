@@ -41,7 +41,7 @@ public class InitController {
     @FXML
     private ComboBox<String> colori;
     @FXML
-    private Button acquistabtn, btnPDF, btnSx, btnDx;
+    private Button acquistabtn, btnPDF, btnSx, btnDx,vendibtn;
     @FXML
     private ImageView img;
     @FXML
@@ -122,7 +122,7 @@ public class InitController {
                 peso.setText(String.valueOf(auto.getPeso()));
                 volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
                 alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
-                motore.setText(String.valueOf(auto.getMotore()));
+                motore.setText(String.valueOf(auto.getMotore().getNome()));
                 prezzo.setText(String.valueOf(auto.getPrezzo()));
 
                 colori.getItems().clear();
@@ -208,6 +208,7 @@ public class InitController {
             model.openFXML("FXML/Login.fxml");
             if (model.getClienteLoggato() != null) {
                 menuProfilo.setDisable(false);
+                vendibtn.setDisable(false);
                 acquistabtn.setText("Inoltra Preventivo");
             }
 
