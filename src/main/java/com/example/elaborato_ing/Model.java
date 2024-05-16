@@ -32,7 +32,7 @@ public class Model {
 
     private static Map<Marca, List<AutoNuova>> map = new HashMap<>();
     private static Catalogo catalogo = new Catalogo();
-    private static List<String> allOptionals = new ArrayList<>();
+    private List<String> allOptionals = new ArrayList<>();
 
     public Model() {
     }
@@ -84,13 +84,13 @@ public class Model {
                     List<Optionals> optionalSelezionabili = new ArrayList<>();
                     List<String> op = List.of(parts[11].trim().split(":"));
                     for (String o : op) {
+                        // controllo se dentro al catalogo ci sono optional che sono stati rimossi precedentemente dall'amministrazione
                         Optionals nuovoOp = new Optionals(o.split(";")[0], Integer.parseInt(o.split(";")[1]));
                         optionalSelezionabili.add(nuovoOp);
                     }
 
 
                     AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
-                    // auto.caricaImmagini();
                     catalogo.add(auto);
                     map.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
@@ -104,7 +104,7 @@ public class Model {
         }
     }
 
-    public void caricaOptionalDaFile() {
+    public List<String> caricaOptionalDaFile() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"));
             String line;
@@ -113,6 +113,20 @@ public class Model {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        return allOptionals;
+    }
+
+    public void rimuoviOptionalDaFile(String optional) {
+        allOptionals.remove(optional);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"))) {
+            for (String op : allOptionals) {
+                writer.write(op); // Supponendo che Auto abbia un metodo toString appropriato
+                writer.newLine();
+            }
+            System.out.println("Optionals aggiornati e salvati su " + "Optionals.txt");
+        } catch (IOException e) {
+            System.err.println("Errore durante la scrittura del file: " + e.getMessage());
         }
     }
 

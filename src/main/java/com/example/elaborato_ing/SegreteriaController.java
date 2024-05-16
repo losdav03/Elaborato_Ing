@@ -22,9 +22,9 @@ public class SegreteriaController {
     @FXML
     private ComboBox<Marca> marca;
     @FXML
-    private ComboBox<String> modello;
+    private ComboBox<String> modello, allOptionals;
     @FXML
-    private Button aggiungiAuto,aggiungiOption,rimuoviOptional,modificaAuto,eliminaAuto;
+    private Button aggiungiAuto, aggiungiOption, rimuoviOptional, modificaAuto, eliminaAuto;
     @FXML
     private ScrollPane scrollPane;
     @FXML
@@ -41,7 +41,7 @@ public class SegreteriaController {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
-        //allOptionals.setOnAction(_ -> aggiornaAllOptionals());
+        allOptionals.getItems().setAll(model.caricaOptionalDaFile());
     }
 
     private void caricaPreventivi() {
@@ -122,6 +122,7 @@ public class SegreteriaController {
         AutoNuova auto = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
         model.generaCheckBoxOptionalAmministrazione(auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
     }
+
     public void xcliente(ActionEvent actionEvent) {
         preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));
 
@@ -160,6 +161,13 @@ public class SegreteriaController {
     }
 
     public void rimuoviOptional(ActionEvent event) {
+        if (allOptionals.getValue() != null) {
+            model.rimuoviOptionalDaFile(allOptionals.getValue());
+            allOptionals.getItems().setAll(model.caricaOptionalDaFile());
+            if (marca.getValue() != null)
+                aggiornaCheckbox();
+
+        }
 
     }
 

@@ -58,7 +58,6 @@ public class RiepilogoController {
                     Image image = new Image(imageStream);
                     macchinaPreventivo.setImage(image);
                 }
-
             }
         });
     }
