@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class AutoNuova extends Auto {
-    private final int prezzo;
+    private int prezzo;
     private String sconto;
     private List<String> colori;
     private List<Optionals> optionalScelti;
@@ -100,5 +100,9 @@ public class AutoNuova extends Auto {
             res += op.getNome() + ";";
         }
         return res;
+    }
+
+    public void setPrezzo(int prezzo) {
+        this.prezzo = prezzo;
     }
 }
