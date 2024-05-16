@@ -1,17 +1,18 @@
 package com.example.elaborato_ing;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -41,7 +42,7 @@ public class InitController {
     @FXML
     private ComboBox<String> colori;
     @FXML
-    private Button acquistabtn, btnPDF, btnSx, btnDx,vendibtn;
+    private Button btnPDF, btnSx, btnDx, acquistaBtn, vendiBtn;
     @FXML
     private ImageView img;
     @FXML
@@ -52,7 +53,6 @@ public class InitController {
     private VBox vBox;
     private final Model model = new Model();
     private int vista = 1;
-    private Stage stage;
 
 
     public void initialize() {
@@ -72,15 +72,28 @@ public class InitController {
         colori.setOnAction(_ -> aggiornaImg());
         modello.setDisable(true);
         colori.setDisable(true);
+        sede.setDisable(true);
         colori.getItems().clear();
+        vendiBtn.setDisable(true);
+        menuProfilo.setDisable(true);
         btnPDF.setVisible(false);
         btnSx.setDisable(true);
         btnDx.setDisable(true);
-        menuProfilo.setDisable(true);
 
         // mi serve per riaggiornare il catalogo dopo eliminazione optional nell'amministrazione
         model.caricaOptionalDaFile();
-
+        model.getCliente().emailProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                System.out.println("QUA " + model.getCliente().getEmail());
+                boolean clienteLoggato = newValue == null;
+                acquistaBtn.setDisable(!clienteLoggato);
+                vendiBtn.setDisable(!clienteLoggato);
+                menuProfilo.setDisable(!clienteLoggato);
+                if (!clienteLoggato)
+                    acquistaBtn.setText("Inoltra Preventivo");
+            }
+        });
     }
 
 
@@ -90,6 +103,7 @@ public class InitController {
         modello.getItems().clear();
         colori.getItems().clear();
         colori.setDisable(true);
+        sede.setDisable(true);
         modello.setDisable(true);
         btnSx.setDisable(true);
         btnDx.setDisable(true);
@@ -102,6 +116,7 @@ public class InitController {
             modello.getItems().clear();
             colori.getItems().clear();
             colori.setDisable(true);
+            sede.setDisable(true);
             modello.setDisable(true);
         } else {
             modello.getItems().setAll(listaModelli);
@@ -113,8 +128,9 @@ public class InitController {
         if (marca.getValue() != null && modello.getValue() != null) {
             AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
             colori.setDisable(false);
+            sede.setDisable(false);
             if (auto != null) {
-                model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox,auto.getOptionalScelti(), prezzo);
+                model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox, auto.getOptionalScelti(), prezzo);
 
 
                 lunghezza.setText(String.valueOf(auto.getLunghezza()));
@@ -147,12 +163,6 @@ public class InitController {
             }
         }
     }
-
-
-    public void goToUsatoForm() {
-        model.openFXML("FXML/Usato.fxml");
-    }
-
 
     public void btnSx() {
         String pathSx = "";
@@ -204,44 +214,40 @@ public class InitController {
         }
     }
 
+    @FXML
     public void acquistaFunction(ActionEvent event) throws IOException {
-        if (acquistabtn.getText().equals("Login")) {
-            model.openFXML("FXML/Login.fxml");
-            if (model.getClienteLoggato() != null) {
-                menuProfilo.setDisable(false);
-                vendibtn.setDisable(false);
-                acquistabtn.setText("Inoltra Preventivo");
+        if (acquistaBtn.getText().equals("Log in"))
+            model.AccediPersonaFXML("FXML/Login.fxml", event);
+        else {
+            // controlli per vedere se il preventivo è fattibile
+            if (colori.getValue() != null && sede.getValue() != null) {
+                AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
+                model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
+                // abilito il  bottone PDF
+                btnPDF.setVisible(true);
             }
-
-        } else {
-            AutoNuova autoConfigurata = (AutoNuova) model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
-
-            model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
-            // abilito il  bottone PDF
-            btnPDF.setVisible(true);
         }
-
-
     }
 
+    @FXML
+    public void goToUsatoForm(ActionEvent event) {
+        model.openFXML("FXML/Usato.fxml", event);
+    }
+
+    @FXML
     public void generaPDF() {
 
     }
 
-
-    public void vediPreventivi(ActionEvent actionEvent) {
-        model.openFXML("FXML/Riepilogo.fxml");
+    @FXML
+    public void vediPreventivi(ActionEvent event) {
+        model.openFXML("FXML/Riepilogo.fxml", event);
     }
 
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void logOut() {
+    @FXML
+    public void logOut(ActionEvent event) {
         model.eliminaCliente();
-        stage.close();
-        model.openFXML("FXML/Configuratore.fxml");
+        model.openFXML("FXML/Configuratore.fxml", event);
     }
 }
 

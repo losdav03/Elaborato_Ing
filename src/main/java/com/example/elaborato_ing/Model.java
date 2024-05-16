@@ -1,27 +1,21 @@
 package com.example.elaborato_ing;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.font.Standard14Fonts;
 
-import java.awt.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
-import java.util.List;
 
 public class Model {
 
@@ -34,6 +28,11 @@ public class Model {
     private static Catalogo catalogo = new Catalogo();
     private List<String> allOptionals = new ArrayList<>();
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+
+
     public Model() {
     }
 
@@ -45,6 +44,17 @@ public class Model {
         return catalogo;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public Dipendente getDipendente() {
+        return dipendente;
+    }
+
+    public Amministrazione getAmministrazione() {
+        return amministrazione;
+    }
 
     public void aggiornaFileCatalogo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt"))) {
@@ -179,7 +189,6 @@ public class Model {
                 }
 
                 checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                    Optionals op = new Optionals(nomeOptional, costoOptional);
                     if (newValue) {
                         TextInputDialog dialog = new TextInputDialog();
                         dialog.setHeaderText("Inserisci il prezzo per " + nomeOptional);
@@ -214,56 +223,48 @@ public class Model {
     }
 
 
-    public void openFXML(String fxmlPath) {
-
+    public void openFXML(String fxmlPath, ActionEvent event) {
         try {
-            // Carica il file FXML specificato
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Parent root = loader.load();
-
-
-            // Crea una nuova finestra per lanuova form
-            Stage newStage = new Stage();
-            newStage.initModality(Modality.APPLICATION_MODAL); // Imposta la finestra come modale (blocca l'interazione con altre finestre)
-
-            // Imposta il contenuto della nuova form
-            Scene scene = new Scene(root);
-            newStage.setScene(scene);
-
-            // Mostra la nuova finestra
-            newStage.showAndWait(); // Attendere che la finestra venga chiusa prima di tornare al chiamante
-
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+            stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void OpenCloseFXML(String fxmlPath, Node oggetto) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
-            Scene loginScene = new Scene(loader.load());
-            Stage loginStage = new Stage();
-            loginStage.initModality(Modality.APPLICATION_MODAL);
-            loginStage.setScene(loginScene);
-            loginStage.show();
+    public void OpenCloseFXML(String fxmlPath, ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
 
-            ((Stage) oggetto.getScene().getWindow()).close(); // Chiude la scena iniziale
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void AccediPersonaFXML(String fxmlPath, ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+        root = loader.load();
+        LoginController loginController = loader.getController();
+        loginController.setMainWindow((Stage) ((Node) event.getSource()).getScene().getWindow());
+        Stage loginStage = new Stage();
+        loginStage.initModality(Modality.APPLICATION_MODAL);
+        loginStage.setScene(new Scene(root));
+        loginStage.show();
     }
 
 
 //LOGIN
 
-    public int autenticato(String username, String password) throws IOException {
+    public void autenticato(String username, String password) throws IOException {
         if (username.equals("amm") && password.equals("amm")) {
             amministrazione.setEmail("amm");
             amministrazione.setNome("amm");
             amministrazione.setCognome("amm");
             amministrazione.setPassword("amm");
-            return 2;
+            System.out.println(amministrazione.getEmail());
         } else {
             try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
                 String line;
@@ -274,24 +275,20 @@ public class Model {
                         cliente.setNome(parti[1]);
                         cliente.setCognome(parti[2]);
                         cliente.setPassword(parti[3]);
-                        return 0;
+                        System.out.println(cliente.getEmail());
                     } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
                         dipendente.setEmail(parti[0]);
                         dipendente.setNome(parti[1]);
                         dipendente.setCognome(parti[2]);
                         dipendente.setPassword(parti[3]);
                         dipendente.setIdDipendente(Integer.parseInt(String.valueOf(parti[4])));
-                        return 1;
+                        System.out.println(dipendente.getEmail());
                     }
                 }
             }
-            return -1;
         }
     }
 
-    public String getClienteLoggato() {
-        return cliente.getEmail();
-    }
 
     public void eliminaCliente() {
         cliente = new Cliente();
@@ -300,7 +297,7 @@ public class Model {
 
 //REGISTRAZIONE
 
-    public void Registrazione(String email, String nome, String cognome, String password) {
+    public void Registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
 
 
         if (!email.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && !password.isEmpty()) {
@@ -326,7 +323,11 @@ public class Model {
                     // Gestione dell'azione del bottone OK
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
-                            openFXML("FXML/Login.fxml");
+                            try {
+                                OpenCloseFXML("FXML/Login.fxml", event);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     });
 
@@ -364,43 +365,6 @@ public class Model {
     }
 
     public void PDF() {
-        try {
-            PDDocument document = new PDDocument();
-            PDPage page = new PDPage();
-            document.addPage(page);
-
-            PDPageContentStream contentStream = new PDPageContentStream(document, page);
-
-            // Imposta il font e il colore del testo
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA_BOLD), 20);
-            contentStream.setNonStrokingColor(Color.BLUE);
-
-            // Scrivi il titolo
-            contentStream.beginText();
-            contentStream.newLineAtOffset(100, 700);
-            contentStream.showText("Preventivo per l'auto:");
-            contentStream.endText();
-
-            // Imposta il font e il colore del testo per le informazioni
-            contentStream.setFont(new PDType1Font(Standard14Fonts.FontName.HELVETICA), 14);
-            contentStream.setNonStrokingColor(Color.BLACK);
-
-            // Disegna una linea
-            contentStream.moveTo(100, 680);
-            contentStream.lineTo(500, 680);
-            contentStream.stroke();
-
-            contentStream.close();
-
-            // Salva il documento
-            document.save("src/main/resources/com/example/elaborato_ing/Preventivo.pdf");
-            document.close();
-
-            System.out.println("PDF generato con successo.");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-
-        }
     }
 
     public void inoltraPreventivo(AutoNuova auto, String colore, int Prezzo, Sede sede) throws IOException {

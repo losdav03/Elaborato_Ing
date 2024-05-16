@@ -3,13 +3,11 @@ package com.example.elaborato_ing;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.Stage;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,6 +40,7 @@ public class SegreteriaController {
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
         allOptionals.getItems().setAll(model.caricaOptionalDaFile());
+        System.out.println(model.getAmministrazione().getEmail());
     }
 
     private void caricaPreventivi() {
@@ -148,8 +147,8 @@ public class SegreteriaController {
         Marca marcaSelezionata = marca.getValue();
     }
 
-    public void aggiungiAuto(ActionEvent actionEvent) {
-        model.openFXML("FXML/AggiungiAuto.fxml");
+    public void aggiungiAuto(ActionEvent event) {
+        model.openFXML("FXML/AggiungiAuto.fxml",event);
     }
 
     public void aggiungiOptionals(ActionEvent actionEvent) {
@@ -172,10 +171,10 @@ public class SegreteriaController {
     }
 
     public void modificaAuto(ActionEvent event) {
-        model.openFXML("FXML/ModificaAuto.fxml");
+        model.openFXML("FXML/ModificaAuto.fxml",event);
     }
 
     public void eliminaAuto(ActionEvent event) {
-        model.openFXML("FXML/EliminaAuto.fxml");
+        model.openFXML("FXML/EliminaAuto.fxml",event);
     }
 }

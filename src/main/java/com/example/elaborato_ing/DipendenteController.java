@@ -3,7 +3,8 @@ package com.example.elaborato_ing;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+
+import java.io.IOException;
 
 public class DipendenteController {
 
@@ -12,11 +13,11 @@ public class DipendenteController {
     @FXML
     private Button valutaBtn,avvisaBtn;
 
-    public void avvisaCliente(ActionEvent actionEvent) {
-        model.OpenCloseFXML("FXML/Avvisa.fxml",avvisaBtn);
+    public void avvisaCliente(ActionEvent event) throws IOException {
+        model.OpenCloseFXML("FXML/Avvisa.fxml",event);
     }
 
-    public void valutaUsato(ActionEvent actionEvent) {
-        model.OpenCloseFXML("FXML/ValutaUsato.fxml",valutaBtn);
+    public void valutaUsato(ActionEvent event) throws IOException {
+        model.OpenCloseFXML("FXML/ValutaUsato.fxml",event);
         }
 }
