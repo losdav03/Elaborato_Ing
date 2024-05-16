@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="191.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.EliminaAutoController">
+   <children>
+      <ComboBox fx:id="marca" layoutX="4.0" layoutY="40.0" prefWidth="150.0" />
+      <ComboBox fx:id="modello" layoutX="5.0" layoutY="106.0" prefWidth="150.0" />
+      <Button fx:id="elimina" onAction="#elimina" layoutX="5.0" layoutY="148.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Elimina Auto" />
+      <Label layoutX="15.0" layoutY="6.0" text="Seleziona Marca della &#10;macchina da eliminare" />
+      <Label layoutX="15.0" layoutY="70.0" text="Seleziona Modello della &#10;macchina da eliminare" />
+      <ImageView fx:id="autoImg" fitHeight="150.0" fitWidth="200.0" layoutX="165.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>

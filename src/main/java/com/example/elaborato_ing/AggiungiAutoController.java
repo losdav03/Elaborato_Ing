@@ -146,13 +146,6 @@ public class AggiungiAutoController {
         }
     }
 
-    /*public void elimina(ActionEvent actionEvent) {
-        model.getCatalogo().remove((Marca) marcaCB.getValue(), String.valueOf(modelloCB.getValue()));
-        model.aggiornaFileCatalogo();
-    }*/
-
-
-
 }
     /*
     public void caricaImmagini(ActionEvent actionEvent) {
