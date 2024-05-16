@@ -9,9 +9,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 
+import javax.imageio.ImageIO;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AggiungiAutoController {
@@ -28,9 +30,10 @@ public class AggiungiAutoController {
     @FXML
     private VBox checkBoxContainer;
     private final Model model = new Model();
+    private File image1, image2, image3;
+
     Auto auto;
     private List<Optionals> listaOp = new ArrayList<>();
-    private static String nomeNuovaImg1, nomeNuovaImg2, nomeNuovaImg3;
 
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
@@ -109,18 +112,34 @@ public class AggiungiAutoController {
         File Immagine = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
         if (Immagine != null) {
             Image image = new Image(Immagine.toURI().toString());
-            String nomeImmagine = Immagine.getName();
             if (imageView1.getImage() == null) {
+                image1 = Immagine;
                 imageView1.setImage(image);
-                //  nomeNuovaImg1 = marca.getValue().toString().trim().toLowerCase() + modello.getText().trim().toLowerCase() + colore.getText().trim().toLowerCase()
             } else if (imageView2.getImage() == null) {
+                image2 = Immagine;
                 imageView2.setImage(image);
             } else {
+                image3 = Immagine;
                 imageView3.setImage(image);
             }
 
         }
     }
+
+    private void caricaImgCartella(File immagine, int vista) throws IOException {
+        String newFileName = marca.getValue().toString().toLowerCase().trim() + modello.getText().trim().toLowerCase() + colore.getText().trim().toLowerCase() + vista + ".png";
+
+        if (immagine != null) {
+            // Percorso relativo della cartella delle immagini
+            File outputDir = new File("src/main/resources/com/example/elaborato_ing/images");
+            if (!outputDir.exists()) {
+                outputDir.mkdirs();
+            }
+            File outputFile = new File(outputDir, newFileName);
+            Files.copy(immagine.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+    }
+
 
     public void RimuoviImgs() {
         // Trova il primo ImageView con un'immagine e rimuovila
@@ -139,8 +158,9 @@ public class AggiungiAutoController {
         if (/*imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && */!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
             List<String> colori = new ArrayList<>();
             colori.add(colore.getText().toUpperCase());
-
-            // String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colore.getText().toLowerCase();
+            caricaImgCartella(image1, 1);
+            caricaImgCartella(image2, 2);
+            caricaImgCartella(image3, 3);
             auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), Integer.parseInt(prezzo.getText()), colori, sconto.getText(), listaOp);
             model.getCatalogo().add(auto);
             model.aggiornaFileCatalogo();

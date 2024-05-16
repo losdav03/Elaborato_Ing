@@ -66,8 +66,8 @@ public class Model {
                 if (parts.length == 12) {
                     Marca marca = Marca.valueOf(parts[0].trim());
                     String modello = parts[1].trim();
-                    double lunghezza = Double.parseDouble(parts[2]);
-                    double altezza = Double.parseDouble(parts[3]);
+                    double altezza = Double.parseDouble(parts[2]);
+                    double lunghezza = Double.parseDouble(parts[3]);
                     double larghezza = Double.parseDouble(parts[4]);
                     double peso = Double.parseDouble(parts[5]);
                     double volumeBagagliaio = Double.parseDouble(parts[6]);
