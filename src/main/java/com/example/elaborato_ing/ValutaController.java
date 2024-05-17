@@ -5,11 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class ValutaController {
     @FXML
@@ -21,10 +19,9 @@ public class ValutaController {
     @FXML
     private ImageView vista1,vista2,vista3;
     Model model = new Model();
-    private static String statoPreventivo = "";
     private static String idPreventivo = "";
     public void initialize() {
-        listaPreventivi.getItems().addAll(model.PreventiviDaValutare());
+        listaPreventivi.getItems().addAll(model.vediPreventivi());
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
@@ -42,22 +39,24 @@ public class ValutaController {
                     if (riga.startsWith("Colore")) {
                         colore = riga.split(":")[1].trim().toLowerCase();
                     }
+                    if (riga.startsWith("Id Preventivo")) {
+                        idPreventivo = riga.split(":")[1].trim();
+                    }
                 }
-                model.riempiVista(Marca.valueOf(marca),modello,colore,vista1,1);
-                model.riempiVista(Marca.valueOf(marca),modello,colore,vista2,2);
-                model.riempiVista(Marca.valueOf(marca),modello,colore,vista3,3);
+             //   model.riempiVista(Marca.valueOf(marca),modello,colore,vista1,1);
+              //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista2,2);
+              //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista3,3);
             }
         });
     }
 
     public void Valuta(ActionEvent actionEvent) {
         try {
-            model.aggiungiValutazione(idPreventivo, statoPreventivo, Integer.parseInt(prezzo.getText()));
+            model.aggiungiValutazione(idPreventivo, Integer.parseInt(prezzo.getText()));
             listaPreventivi.getItems().clear();
-            listaPreventivi.getItems().addAll(model.PreventiviDaValutare());
+            listaPreventivi.getItems().addAll(model.vediPreventivi());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        model.valuta(prezzo.getText());
     }
 }

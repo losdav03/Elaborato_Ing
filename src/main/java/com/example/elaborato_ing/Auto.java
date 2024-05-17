@@ -33,8 +33,8 @@ public class Auto {
     }
 
     public String stampaSelezionabili() {
-        String res ="";
-        if(optionalSelezionabili!=null) {
+        String res = "";
+        if (optionalSelezionabili != null) {
 
             if (optionalSelezionabili.isEmpty()) {
                 res = ":";
@@ -46,6 +46,17 @@ public class Auto {
             }
         }
         return res;
+    }
+
+    public String getImmagine(String colore, int vista) {
+        for (String imgPath : getImmagini()) {
+            if (imgPath.contains("audirs3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
+                return "/com/example/elaborato_ing/images/audirs3" + colore.toLowerCase() + "3.png";
+            else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
+                return imgPath;
+            }
+        }
+        return null;
     }
 
     public void addImgs(String img1, String img2, String img3) {

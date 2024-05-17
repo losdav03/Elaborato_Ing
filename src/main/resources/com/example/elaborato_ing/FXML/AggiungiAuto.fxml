@@ -37,14 +37,18 @@
     <TextField fx:id="sconto" layoutX="95.0" layoutY="534.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="prezzo" layoutX="319.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" />
     <Button fx:id="vendibtn" layoutX="230.0" layoutY="509.0" mnemonicParsing="false" onAction="#aggiungi" prefHeight="50.0" prefWidth="325.0" text="Aggiungi&#10;  Auto" />
-    <ImageView fx:id="imageView1" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="130.0" />
-    <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="130.0" />
-    <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="130.0" />
-    <Button fx:id="caricaImg" onAction="#caricaImgs" layoutX="232.0" layoutY="300.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
+    <Button fx:id="caricaImg" layoutX="232.0" layoutY="300.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
     <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="300.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
     <ScrollPane fx:id="scrollPane" layoutX="230.0" layoutY="336.0" prefHeight="158.0" prefWidth="325.0">
       <content>
             <VBox fx:id="checkBoxContainer" prefHeight="152.0" prefWidth="306.0" />
       </content>
    </ScrollPane>
+    <ImageView fx:id="imageView1" fitHeight="150.0" fitWidth="100.0" layoutX="423.0" layoutY="93.0" pickOnBounds="true" />
+    <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="214.0" layoutY="88.0" pickOnBounds="true" />
+    <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="214.0" layoutY="88.0" pickOnBounds="true" />
+    <StackPane fx:id="stackPane" layoutX="286.0" layoutY="88.0" prefHeight="150.0" prefWidth="153.0">
+      <children>
+
+      </children></StackPane>
 </AnchorPane>

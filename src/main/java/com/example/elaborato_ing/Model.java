@@ -13,8 +13,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -161,9 +159,10 @@ public class Model {
         }
     }
 
-    public void riempiVista(Marca marca, String modello, String colore, ImageView vista1, int vista){
-        String path = getImmagineAuto(Marca.valueOf(String.valueOf(marca)),modello,colore,vista);
+    public void riempiVista(Marca marca, String modello, String colore, ImageView vista1, int vista) {
+        String path = getImmagineAuto(Marca.valueOf(String.valueOf(marca)), modello, colore, vista);
         InputStream imageStream = getClass().getResourceAsStream(path);
+        System.out.println(path);
         if (imageStream != null) {
             Image image = new Image(imageStream);
             vista1.setImage(image);
@@ -313,255 +312,200 @@ public class Model {
     }
 
 
-public void openFXML(String fxmlPath, ActionEvent event) {
-    try {
+    public void openFXML(String fxmlPath, ActionEvent event) {
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
+            stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void OpenCloseFXML(String fxmlPath, ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
-        stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-    } catch (IOException e) {
-        throw new RuntimeException(e);
     }
-}
 
-public void OpenCloseFXML(String fxmlPath, ActionEvent event) throws IOException {
-    root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
-    stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    scene = new Scene(root);
-    stage.setScene(scene);
-    stage.show();
-}
-
-public void AccediPersonaFXML(String fxmlPath, ActionEvent event) throws IOException {
-}
+    public void AccediPersonaFXML(String fxmlPath, ActionEvent event) throws IOException {
+    }
 
 
 //LOGIN
 
-public int autenticato(String username, String password) throws IOException {
-    if (username.equals("amm") && password.equals("amm")) {
-        amministrazione.setEmail("amm");
-        amministrazione.setNome("amm");
-        amministrazione.setCognome("amm");
-        amministrazione.setPassword("amm");
-        System.out.println(amministrazione.getEmail());
-        return 1;
-    } else {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parti = line.split(",");
-                if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
-                    cliente.setEmail(parti[0]);
-                    cliente.setNome(parti[1]);
-                    cliente.setCognome(parti[2]);
-                    cliente.setPassword(parti[3]);
-                    System.out.println(cliente.getEmail());
-                    return 2;
-                } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
-                    dipendente.setEmail(parti[0]);
-                    dipendente.setNome(parti[1]);
-                    dipendente.setCognome(parti[2]);
-                    dipendente.setPassword(parti[3]);
-                    dipendente.setIdDipendente(Integer.parseInt(String.valueOf(parti[4])));
-                    System.out.println(dipendente.getEmail());
-                    return 3;
+    public int autenticato(String username, String password) throws IOException {
+        if (username.equals("amm") && password.equals("amm")) {
+            amministrazione.setEmail("amm");
+            amministrazione.setNome("amm");
+            amministrazione.setCognome("amm");
+            amministrazione.setPassword("amm");
+            System.out.println(amministrazione.getEmail());
+            return 1;
+        } else {
+            try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    String[] parti = line.split(",");
+                    if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
+                        cliente.setEmail(parti[0]);
+                        cliente.setNome(parti[1]);
+                        cliente.setCognome(parti[2]);
+                        cliente.setPassword(parti[3]);
+                        System.out.println(cliente.getEmail());
+                        return 2;
+                    } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
+                        dipendente.setEmail(parti[0]);
+                        dipendente.setNome(parti[1]);
+                        dipendente.setCognome(parti[2]);
+                        dipendente.setPassword(parti[3]);
+                        dipendente.setIdDipendente(Integer.parseInt(String.valueOf(parti[4])));
+                        System.out.println(dipendente.getEmail());
+                        return 3;
+                    }
                 }
             }
         }
+        return -1;
     }
-    return -1;
-}
 
 
-public void eliminaCliente() {
-    cliente = new Cliente();
-}
+    public void eliminaCliente() {
+        cliente = new Cliente();
+    }
 
 
 //REGISTRAZIONE
 
-public void Registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
+    public void Registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
 
 
-    if (!email.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && !password.isEmpty()) {
-        // Apertura del file in modalità append
-        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt", true)) {
+        if (!email.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && !password.isEmpty()) {
+            // Apertura del file in modalità append
+            try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt", true)) {
 
-            // controllo se l'utente è già inserito nel file login, si controlla solo l'email, quella è la chiave e deve essere unica
-            if (utenteEsiste(email)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Attenzione");
-                alert.setHeaderText("L'utente sembra già essere registrato");
-                alert.setContentText("Questa email esiste già");
-                alert.showAndWait();
-            } else {
-                // Scrivi i dati dell'utente nel file, separati da virgole
-                writer.write(email + "," + nome + "," + cognome + "," + password + "\n");
+                // controllo se l'utente è già inserito nel file login, si controlla solo l'email, quella è la chiave e deve essere unica
+                if (utenteEsiste(email)) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Attenzione");
+                    alert.setHeaderText("L'utente sembra già essere registrato");
+                    alert.setContentText("Questa email esiste già");
+                    alert.showAndWait();
+                } else {
+                    // Scrivi i dati dell'utente nel file, separati da virgole
+                    writer.write(email + "," + nome + "," + cognome + "," + password + "\n");
 
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Successo");
-                alert.setHeaderText("Registrazione avvenuta con successo");
-                alert.setContentText("Messaggio dettagliato sull'errore.");
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Successo");
+                    alert.setHeaderText("Registrazione avvenuta con successo");
+                    alert.setContentText("Messaggio dettagliato sull'errore.");
 
-                // Gestione dell'azione del bottone OK
-                alert.showAndWait().ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        try {
-                            OpenCloseFXML("FXML/Login.fxml", event);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                    // Gestione dell'azione del bottone OK
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.OK) {
+                            try {
+                                OpenCloseFXML("FXML/Login.fxml", event);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                    }
-                });
+                    });
 
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Errore");
+            alert.setHeaderText("Devi completare tutti i campi prima di registrarti");
+            alert.setContentText("Messaggio dettagliato sull'errore.");
+
+            // Aggiunta di un pulsante "OK" al box di errore
+            alert.getButtonTypes().setAll(ButtonType.OK);
+
+            // Visualizzazione del box di errore
+            alert.showAndWait();
         }
-
-    } else {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Errore");
-        alert.setHeaderText("Devi completare tutti i campi prima di registrarti");
-        alert.setContentText("Messaggio dettagliato sull'errore.");
-
-        // Aggiunta di un pulsante "OK" al box di errore
-        alert.getButtonTypes().setAll(ButtonType.OK);
-
-        // Visualizzazione del box di errore
-        alert.showAndWait();
     }
-}
 
-// se trovo l'email allora return TRUE se no FALSE
-private boolean utenteEsiste(String email) throws IOException {
-    try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parti = line.split(",");
-            if (parti[0].equals(email)) {
-                return true;
+    // se trovo l'email allora return TRUE se no FALSE
+    private boolean utenteEsiste(String email) throws IOException {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parti = line.split(",");
+                if (parti[0].equals(email)) {
+                    return true;
+                }
             }
         }
+        return false;
     }
-    return false;
-}
 
-public void PDF() {
-}
+    public void PDF() {
+    }
 
-public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
-    LocalDateTime OrarioCreazione = LocalDateTime.now();
-    LocalDate inizio = LocalDate.now();
-    LocalDate fine;
-    if (auto instanceof AutoNuova) {
-        int giorni = 0;
-        for (Optionals _ : ((AutoNuova) auto).getOptionalScelti()) {
-            giorni += 10;
+    public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
+        LocalDateTime OrarioCreazione = LocalDateTime.now();
+        LocalDate inizio = LocalDate.now();
+        LocalDate fine;
+        if (auto instanceof AutoNuova) {
+            int giorni = 0;
+            for (Optionals _ : ((AutoNuova) auto).getOptionalScelti()) {
+                giorni += 10;
+            }
+
+            fine = inizio.plusMonths(1);
+            fine = fine.plusDays(giorni);
+        } else {
+            fine = inizio.plusYears(1);
+        }
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto, sede);
+        String stato =  (auto instanceof AutoNuova) ? String.valueOf(Stato.DA_PAGARE) : String.valueOf(Stato.DA_VALUTARE);
+        // esporto il preventivo sul filesrc
+        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
+            writer.write(preventivo + "," + colore.toUpperCase() + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + "," + stato + "\n");
+        }
+    }
+
+    public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
+        List<AutoNuova> autoList = map.get(marca);
+
+
+        if (autoList == null) { // Se non esiste una lista per la marca data
+            System.out.println("Marca non trovata: " + marca);
+            return null;
         }
 
-        fine = inizio.plusMonths(1);
-        fine = fine.plusDays(giorni);
-    }
-    else{
-        fine = inizio.plusYears(1);
-    }
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
-    Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
-
-    Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto, sede);
-
-    // esporto il preventivo sul filesrc
-    try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
-        writer.write(preventivo + "," + colore + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + ",DA PAGARE" + "\n");
-    }
-}
-
-public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
-    List<AutoNuova> autoList = map.get(marca);
-
-
-    if (autoList == null) { // Se non esiste una lista per la marca data
-        System.out.println("Marca non trovata: " + marca);
+        for (AutoNuova auto : autoList) {
+            if (auto.getModello().equals(modello)) { // Cerca il modello
+                return auto; // Se il modello corrisponde, restituisce l'auto
+            }
+        }
         return null;
     }
 
-    for (AutoNuova auto : autoList) {
-        if (auto.getModello().equals(modello)) { // Cerca il modello
-            return auto; // Se il modello corrisponde, restituisce l'auto
-        }
-    }
-    return null;
-}
-
-public List<String> inizializzaPreventivo() {
-    List<String> filteredLines = new ArrayList<>();
-    try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
-        String line;
-        while ((line = br.readLine()) != null) {
-            String[] parts = line.split(",");
-            if (parts.length > 16 && parts[1].equals(cliente.getEmail())) {
-                String linea = "Id Preventivo : " + parts[0] +
-                        "\nMarca : " + parts[2] +
-                        "\nModello : " + parts[3] +
-                        "\nAltezza : " + parts[4] + " cm" +
-                        "\nLunghezza : " + parts[5] + " cm" +
-                        "\nLarghezza : " + parts[6] + " cm" +
-                        "\nPeso : " + parts[7] + " kg" +
-                        "\nVolume Bagagliaio : " + parts[8] + " L" +
-                        "\nNome motore : " + parts[9].split(";")[0] +
-                        "\nAlimentazione : " + parts[9].split(";")[1] +
-                        "\nCilindrata : " + parts[9].split(";")[2] + " m³" +
-                        "\nPotenza : " + parts[9].split(";")[3] + " kW" +
-                        "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
-                        "\nOptional : " + (parts[10].isEmpty() ? " nessun optional" : parts[10]) +
-                        "\nSede : " + parts[11] +
-                        "\nColore : " + parts[12] +
-                        "\nData Inizio Preventivo : " + parts[13] +
-                        "\nData Fine Preventivo : " + parts[14] +
-                        "\nPrezzo : " + parts[15] + " €" +
-                        "\nStato Preventivo : " + parts[16];
-                filteredLines.add(linea);
-            }
-        }
-    } catch (IOException e) {
-        throw new RuntimeException(e);
-    }
-    return filteredLines;
-}
-
-    public List<String> PreventiviDaValutare() {
+    public List<String> vediPreventivi() {
         List<String> filteredLines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length > 16 /*ce da mettere che d*/) {
-                    String linea = "Id Preventivo : " + parts[0] +
-                            "\nMarca : " + parts[2] +
-                            "\nModello : " + parts[3] +
-                            "\nAltezza : " + parts[4] + " cm" +
-                            "\nLunghezza : " + parts[5] + " cm" +
-                            "\nLarghezza : " + parts[6] + " cm" +
-                            "\nPeso : " + parts[7] + " kg" +
-                            "\nVolume Bagagliaio : " + parts[8] + " L" +
-                            "\nNome motore : " + parts[9].split(";")[0] +
-                            "\nAlimentazione : " + parts[9].split(";")[1] +
-                            "\nCilindrata : " + parts[9].split(";")[2] + " m³" +
-                            "\nPotenza : " + parts[9].split(";")[3] + " kW" +
-                            "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
-                            "\nOptional : " + (parts[10].isEmpty() ? " nessun optional" : parts[10]) +
-                            "\nSede : " + parts[11] +
-                            "\nColore : " + parts[12] +
-                            "\nData Inizio Preventivo : " + parts[13] +
-                            "\nData Fine Preventivo : " + parts[14] +
-                            "\nPrezzo : " + parts[15] + " €" +
-                            "\nStato Preventivo : " + parts[16];
-                    filteredLines.add(linea);
+                if (parts.length > 16 && parts[16].equals(String.valueOf(Stato.DA_VALUTARE))) {
+                    filteredLines.add(creaStringaPreventivo(parts));
+                } else if (parts.length > 16 && parts[1].equals(cliente.getEmail())) {
+                    filteredLines.add(creaStringaPreventivo(parts));
                 }
             }
         } catch (IOException e) {
@@ -570,37 +514,61 @@ public List<String> inizializzaPreventivo() {
         return filteredLines;
     }
 
-public static void aggiungiValutazione(String idPreventivo, String statoPreventivo, int prezzo) throws IOException {
-    BufferedReader reader;
-    BufferedWriter writer;
-
-    try {
-        reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
-        StringBuilder fileContent = new StringBuilder();
-        String riga;
-
-        while ((riga = reader.readLine()) != null) {
-            String[] campi = riga.split(",");
-
-            if (campi[0].equals(idPreventivo)) {
-                if (campi.length >= 17 && campi[16].equals(Stato.DA_VALUTARE.toString())) {
-                    campi[15] = ""+prezzo;
-                }
-            }
-            fileContent.append(String.join(",", campi)).append("\n");
-        }
-        reader.close();
-
-        writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
-        writer.write(fileContent.toString());
-        writer.close();
-        System.out.println("Auto valutata");
-    } catch (IOException e) {
-        e.printStackTrace();
+    private String creaStringaPreventivo(String[] parts) {
+        return "Id Preventivo : " + parts[0] +
+                "\nMarca : " + parts[2] +
+                "\nModello : " + parts[3] +
+                "\nAltezza : " + parts[4] + " cm" +
+                "\nLunghezza : " + parts[5] + " cm" +
+                "\nLarghezza : " + parts[6] + " cm" +
+                "\nPeso : " + parts[7] + " kg" +
+                "\nVolume Bagagliaio : " + parts[8] + " L" +
+                "\nNome motore : " + parts[9].split(";")[0] +
+                "\nAlimentazione : " + parts[9].split(";")[1] +
+                "\nCilindrata : " + parts[9].split(";")[2] + " m³" +
+                "\nPotenza : " + parts[9].split(";")[3] + " kW" +
+                "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
+                "\nOptional : " + (parts[10].isEmpty() ? " nessun optional" : parts[10]) +
+                "\nSede : " + parts[11] +
+                "\nColore : " + parts[12] +
+                "\nData Inizio Preventivo : " + parts[13] +
+                "\nData Fine Preventivo : " + parts[14] +
+                "\nPrezzo : " + parts[15] + " €" +
+                "\nStato Preventivo : " + parts[16];
     }
-}
 
-    public static void aggiungiPagamento(String idPreventivo, String statoPreventivo) throws IOException {
+    public static void aggiungiValutazione(String idPreventivo,int prezzo) throws IOException {
+        BufferedReader reader;
+        BufferedWriter writer;
+
+        try {
+            reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            StringBuilder fileContent = new StringBuilder();
+            String riga;
+
+            while ((riga = reader.readLine()) != null) {
+                String[] campi = riga.split(",");
+
+                if (campi[0].equals(idPreventivo)) {
+                    if (campi.length >= 17 && campi[16].equals(String.valueOf(Stato.DA_VALUTARE))) {
+                        campi[15] = String.valueOf(prezzo);
+                        campi[16] = String.valueOf(Stato.VALUTATA);
+                    }
+                }
+                fileContent.append(String.join(",", campi)).append("\n");
+            }
+            reader.close();
+
+            writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            writer.write(fileContent.toString());
+            writer.close();
+            System.out.println("Auto valutata");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void aggiungiPagamento(String idPreventivo) throws IOException {
         BufferedReader reader;
         BufferedWriter writer;
 
@@ -630,57 +598,57 @@ public static void aggiungiValutazione(String idPreventivo, String statoPreventi
         }
     }
 
-public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws
-        IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(filePath));
-    String line;
-    while ((line = reader.readLine()) != null) {
-        CheckBox checkBox = new CheckBox(line);
-        String finalLine = line;
-        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
-                // Show TextInputDialog to get the value
-                TextInputDialog dialog = new TextInputDialog("0");
-                dialog.setTitle("Input Value");
-                dialog.setHeaderText("Enter the value for " + finalLine);
-                dialog.setContentText("Value:");
+    public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws
+            IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(filePath));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            CheckBox checkBox = new CheckBox(line);
+            String finalLine = line;
+            checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                if (newValue) {
+                    // Show TextInputDialog to get the value
+                    TextInputDialog dialog = new TextInputDialog("0");
+                    dialog.setTitle("Input Value");
+                    dialog.setHeaderText("Enter the value for " + finalLine);
+                    dialog.setContentText("Value:");
 
-                Optional<String> result = dialog.showAndWait();
-                result.ifPresent(value -> {
-                    try {
-                        int doubleValue = Integer.parseInt(value);
-                        // Create new Optional object and add to list
-                        Optionals optional = new Optionals(finalLine, doubleValue);
-                        listaOp.add(optional);
-                    } catch (NumberFormatException e) {
-                        e.printStackTrace();
-                    }
-                });
-            } else {
-                // Remove Optional from list and reset price
-                listaOp.removeIf(optional -> optional.getNome().equals(finalLine));
-                // Reset price to 0 if no optional selected
-                // In this example, "prezzo" refers to the TextField where price is entered
+                    Optional<String> result = dialog.showAndWait();
+                    result.ifPresent(value -> {
+                        try {
+                            int doubleValue = Integer.parseInt(value);
+                            // Create new Optional object and add to list
+                            Optionals optional = new Optionals(finalLine, doubleValue);
+                            listaOp.add(optional);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                        }
+                    });
+                } else {
+                    // Remove Optional from list and reset price
+                    listaOp.removeIf(optional -> optional.getNome().equals(finalLine));
+                    // Reset price to 0 if no optional selected
+                    // In this example, "prezzo" refers to the TextField where price is entered
 
-            }
-        });
-        checkBoxContainer.getChildren().add(checkBox);
+                }
+            });
+            checkBoxContainer.getChildren().add(checkBox);
+        }
+        reader.close();
     }
-    reader.close();
-}
 
 
-public void valuta(String text) {
+    public void valuta(String text) {
 
-}
+    }
 
-public void avvisa() {
+    public void avvisa() {
 
-}
+    }
 
-public void setMarca(ComboBox<Marca> marca) {
-    marca.getItems().addAll(getMap().keySet());
-}
+    public void setMarca(ComboBox<Marca> marca) {
+        marca.getItems().addAll(getMap().keySet());
+    }
 }
 
 

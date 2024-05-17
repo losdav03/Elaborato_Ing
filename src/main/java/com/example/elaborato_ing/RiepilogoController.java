@@ -1,14 +1,10 @@
 package com.example.elaborato_ing;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
 import java.io.*;
 
@@ -20,14 +16,12 @@ public class RiepilogoController {
     @FXML
     private Button pagaBtn;
     private final Model model = new Model();
-    private Marca marca;
-    private String modello;
     private static String statoPreventivo = "";
     private static String idPreventivo = "";
 
 
     public void initialize() {
-        listaPreventivi.getItems().addAll(model.inizializzaPreventivo());
+        listaPreventivi.getItems().addAll(model.vediPreventivi());
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
@@ -64,9 +58,9 @@ public class RiepilogoController {
 
     public void paga(ActionEvent actionEvent) {
         try {
-            model.aggiungiPagamento(idPreventivo, statoPreventivo);
+            model.aggiungiPagamento(idPreventivo);
             listaPreventivi.getItems().clear();
-            listaPreventivi.getItems().addAll(model.inizializzaPreventivo());
+            listaPreventivi.getItems().addAll(model.vediPreventivi());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

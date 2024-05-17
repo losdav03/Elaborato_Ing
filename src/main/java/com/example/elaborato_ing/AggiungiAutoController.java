@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.*;
@@ -21,6 +22,8 @@ public class AggiungiAutoController {
 
     @FXML
     private ImageView imageView1, imageView2, imageView3;
+    @FXML
+    private StackPane stackPane;
 
     @FXML
     private VBox checkBoxContainer;
@@ -42,6 +45,11 @@ public class AggiungiAutoController {
         IsDouble(consumi);
         alimentazione.getItems().setAll(Alimentazione.values());
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
+/*
+        imageView2.setOnMouseClicked(event -> caricaImgs());
+        stackPane.getChildren().add(imageView2);
+
+ */
     }
 
     private void IsDouble(TextField txt) {

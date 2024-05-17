@@ -23,16 +23,7 @@ public class AutoNuova extends Auto {
         this.optionalScelti = optionalScelti;
     }
 
-    public String getImmagine(String colore, int vista) {
-        for (String imgPath : super.getImmagini()) {
-            if (imgPath.contains("audirs3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
-                return "/com/example/elaborato_ing/images/audirs3" + colore.toLowerCase() + "3.png";
-            else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
-                return imgPath;
-            }
-        }
-        return null;
-    }
+
 
     public void caricaImmagini() {
         for (String c : colori) {
