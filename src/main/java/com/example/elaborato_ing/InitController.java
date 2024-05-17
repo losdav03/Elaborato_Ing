@@ -85,7 +85,7 @@ public class InitController {
         menuProfilo.getItems().addAll("Prevenitivi","Log out");
         menuProfilo.setOnAction(event -> {
             try {
-                aggiornaMenuProfilo((ActionEvent) event);
+                aggiornaMenuProfilo(event);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
