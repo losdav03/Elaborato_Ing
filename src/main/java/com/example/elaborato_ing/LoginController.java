@@ -59,33 +59,20 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (model.autenticato(username, password) == 2) {
+            System.out.println("Cliente Loggato!");
             Stage stage = (Stage) emailField.getScene().getWindow();
             stage.close();
-        } else {
-            System.out.println("Errore durante la autenticazione");
-        }
-
-
-
-        /*
-        String username = emailField.getText();
-        String password = passwordField.getText();
-
-        model.autenticato(username, password);
-        if (model.getCliente().getEmail() != null) {
-            System.out.println("Cliente Loggato!");
-            Stage loginWindow = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            loginWindow.close();
-        } else if (model.getDipendente().getEmail() != null) {
+        } else if (model.autenticato(username, password) == 3) {
             System.out.println("Dipendente Loggato!");
             model.OpenCloseFXML("FXML/Dipendente.fxml", event);
-        } else if (model.getAmministrazione().getEmail() != null) {
+        } else if (model.autenticato(username, password) == 1) {
             System.out.println("Amministrazione Loggata!");
             model.OpenCloseFXML("FXML/Amministrazione.fxml", event);
         } else
             System.out.println("Credenziali non valide.");
-            */
+
     }
+
     public void setInitController(InitController initController) {
         this.initController = initController;
     }
