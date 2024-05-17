@@ -82,18 +82,6 @@ public class InitController {
 
         // mi serve per riaggiornare il catalogo dopo eliminazione optional nell'amministrazione
         model.caricaOptionalDaFile();
-        model.getCliente().emailProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                System.out.println("QUA " + model.getCliente().getEmail());
-                boolean clienteLoggato = newValue == null;
-                acquistaBtn.setDisable(!clienteLoggato);
-                vendiBtn.setDisable(!clienteLoggato);
-                menuProfilo.setDisable(!clienteLoggato);
-                if (!clienteLoggato)
-                    acquistaBtn.setText("Inoltra Preventivo");
-            }
-        });
     }
 
 
@@ -218,6 +206,7 @@ public class InitController {
     public void acquistaFunction(ActionEvent event) throws IOException {
         if (acquistaBtn.getText().equals("Log in"))
             model.AccediPersonaFXML("FXML/Login.fxml", event);
+
         else {
             // controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {

@@ -14,6 +14,7 @@ public class Auto {
     private List<String> immagini = new ArrayList<>();
     private final Motore motore;
     private List<Optionals> optionalSelezionabili;
+
     public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<Optionals> optionalSelezionabili) {
         this.marca = marca;
         this.modello = modello;
@@ -33,8 +34,13 @@ public class Auto {
 
     public String stampaSelezionabili() {
         String res = "";
-        for (Optionals op : optionalSelezionabili) {
-            res += op.getNome() + ";" + op.getCosto() + ":";
+        if (optionalSelezionabili.isEmpty()) {
+            res = ":";
+        } else {
+            for (Optionals op : optionalSelezionabili) {
+                res += op.getNome() + ";" + op.getCosto() + ":";
+            }
+
         }
         return res;
     }

@@ -3,10 +3,7 @@ package com.example.elaborato_ing;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.File;
@@ -22,11 +19,13 @@ public class SegreteriaController {
     @FXML
     private ComboBox<String> modello, allOptionals;
     @FXML
-    private Button aggiungiAuto, aggiungiOption, rimuoviOptional, modificaAuto, eliminaAuto;
+    private Button aggiungiAuto, aggiungiOptional, rimuoviOptional, modificaAuto, eliminaAuto;
     @FXML
     private ScrollPane scrollPane;
     @FXML
     private VBox vBox;
+    @FXML
+    private TextField nomeOptional;
     @FXML
     private ListView preventiviListView;
 
@@ -143,31 +142,30 @@ public class SegreteriaController {
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
-    public void modificaOptionals(ActionEvent actionEvent) {
-        Marca marcaSelezionata = marca.getValue();
-    }
-
     public void aggiungiAuto(ActionEvent event) {
         model.openFXML("FXML/AggiungiAuto.fxml",event);
     }
 
-    public void aggiungiOptionals(ActionEvent actionEvent) {
-
+    public void aggiungiOptional(ActionEvent event) {
+        if(nomeOptional.getText() != null && !nomeOptional.getText().isEmpty()) {
+            model.aggiungiOptionalDaFile(nomeOptional.getText());
+            allOptionals.getItems().setAll(model.caricaOptionalDaFile());
+            aggiornaCheckbox();
+        }
+        nomeOptional.clear();
     }
 
-    public void aggiungiOption(ActionEvent event) {
-
-    }
 
     public void rimuoviOptional(ActionEvent event) {
         if (allOptionals.getValue() != null) {
             model.rimuoviOptionalDaFile(allOptionals.getValue());
             allOptionals.getItems().setAll(model.caricaOptionalDaFile());
+            model.eliminaOptionalTolti();
+            model.aggiornaFileCatalogo();
             if (marca.getValue() != null)
                 aggiornaCheckbox();
-
         }
-
+        allOptionals.setValue(null);
     }
 
     public void modificaAuto(ActionEvent event) {
