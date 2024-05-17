@@ -19,10 +19,11 @@ public class Preventivo {
         this.cliente = cliente;
         this.auto = auto;
         this.sede = sede;
-        if(auto instanceof AutoNuova){
+        if (auto instanceof AutoNuova) {
             stato = Stato.DA_PAGARE;
+        } else {
+            stato = Stato.DA_VALUTARE;
         }
-        stato = Stato.DA_VALUTARE;
     }
 
     public Date getCreazione() {

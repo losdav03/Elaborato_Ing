@@ -130,7 +130,7 @@ public class UsatoController {
 
             auto = new AutoUsata(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText().toLowerCase(), Enum.valueOf(Sede.class, String.valueOf(sede.getValue())));
             auto.addImgs(path + "1.png", path + "2.png", path + "3.png");
-            //model.inoltraPreventivoUsato(auto, colori.getText().toLowerCase(), 0, null);
+            model.inoltraPreventivo(auto, colori.getText().toLowerCase(), 0, null);
         }
     }
 }
