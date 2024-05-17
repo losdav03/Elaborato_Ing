@@ -21,7 +21,6 @@
     <Label layoutX="14.0" layoutY="498.0" prefWidth="76.0" text="Colore" />
     <Label layoutX="14.0" layoutY="538.0" prefWidth="76.0" text="Sconto" />
     <Label layoutX="238.0" layoutY="16.0" prefWidth="76.0" text="Prezzo" />
-    <Label layoutX="238.0" layoutY="56.0" prefWidth="76.0" text="Sede" />
     <ComboBox fx:id="marca" layoutX="95.0" layoutY="8.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="modello" layoutX="95.0" layoutY="48.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="altezza" layoutX="95.0" layoutY="88.0" prefHeight="25.0" prefWidth="104.0" />
@@ -37,7 +36,6 @@
     <TextField fx:id="colore" layoutX="95.0" layoutY="494.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="sconto" layoutX="95.0" layoutY="534.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="prezzo" layoutX="319.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" />
-    <ComboBox fx:id="sede" layoutX="319.0" layoutY="52.0" prefHeight="25.0" prefWidth="104.0" />
     <Button fx:id="vendibtn" layoutX="230.0" layoutY="509.0" mnemonicParsing="false" onAction="#aggiungi" prefHeight="50.0" prefWidth="325.0" text="Aggiungi&#10;  Auto" />
     <ImageView fx:id="imageView1" fitHeight="150.0" fitWidth="100.0" layoutX="232.0" layoutY="130.0" />
     <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="130.0" />

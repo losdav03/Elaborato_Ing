@@ -161,6 +161,15 @@ public class Model {
         }
     }
 
+    public void riempiVista(Marca marca, String modello, String colore, ImageView vista1, int vista){
+        String path = getImmagineAuto(Marca.valueOf(String.valueOf(marca)),modello,colore,vista);
+        InputStream imageStream = getClass().getResourceAsStream(path);
+        if (imageStream != null) {
+            Image image = new Image(imageStream);
+            vista1.setImage(image);
+        }
+    }
+
     public void generaCheckBoxOptionalConfiguratore(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
         {
             scrollPane.setContent(checkBoxContainer);
@@ -518,7 +527,7 @@ public List<String> inizializzaPreventivo() {
     return filteredLines;
 }
 
-public static void aggiungiPagamento(String idPreventivo, String statoPreventivo) throws IOException {
+public static void aggiungiValutazione(String idPreventivo, String statoPreventivo, int prezzo) throws IOException {
     BufferedReader reader;
     BufferedWriter writer;
 
@@ -531,8 +540,8 @@ public static void aggiungiPagamento(String idPreventivo, String statoPreventivo
             String[] campi = riga.split(",");
 
             if (campi[0].equals(idPreventivo)) {
-                if (campi.length >= 17 && campi[16].equals(Stato.DA_PAGARE.toString())) {
-                    campi[16] = Stato.PAGATA.toString();
+                if (campi.length >= 17 && campi[16].equals(Stato.DA_VALUTARE.toString())) {
+                    campi[15] = ""+prezzo;
                 }
             }
             fileContent.append(String.join(",", campi)).append("\n");
@@ -542,11 +551,41 @@ public static void aggiungiPagamento(String idPreventivo, String statoPreventivo
         writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
         writer.write(fileContent.toString());
         writer.close();
-        System.out.println("Sostituzione completata.");
+        System.out.println("Auto valutata");
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
+
+    public static void aggiungiPagamento(String idPreventivo, String statoPreventivo) throws IOException {
+        BufferedReader reader;
+        BufferedWriter writer;
+
+        try {
+            reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            StringBuilder fileContent = new StringBuilder();
+            String riga;
+
+            while ((riga = reader.readLine()) != null) {
+                String[] campi = riga.split(",");
+
+                if (campi[0].equals(idPreventivo)) {
+                    if (campi.length >= 17 && campi[16].equals(Stato.DA_PAGARE.toString())) {
+                        campi[16] = Stato.PAGATA.toString();
+                    }
+                }
+                fileContent.append(String.join(",", campi)).append("\n");
+            }
+            reader.close();
+
+            writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            writer.write(fileContent.toString());
+            writer.close();
+            System.out.println("Sostituzione completata.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws
         IOException {

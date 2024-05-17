@@ -12,7 +12,8 @@ public class Catalogo {
     }
 
     public void add(Auto a) {
-        catalogo.add((AutoNuova) a);
+        if(!catalogo.contains(a))
+            catalogo.add((AutoNuova) a);
     }
 
     public List<AutoNuova> getListaAuto() {

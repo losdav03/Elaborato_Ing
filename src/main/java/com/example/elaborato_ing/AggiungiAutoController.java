@@ -14,7 +14,7 @@ import java.util.List;
 public class AggiungiAutoController {
 
     @FXML
-    private ComboBox marca, alimentazione, sede;
+    private ComboBox marca, alimentazione;
 
     @FXML
     private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, cilindrata, potenza, consumi, prezzo, sconto;
@@ -41,7 +41,6 @@ public class AggiungiAutoController {
         Numeric(potenza);
         IsDouble(consumi);
         alimentazione.getItems().setAll(Alimentazione.values());
-        sede.getItems().setAll(Sede.values());
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
     }
 
@@ -102,7 +101,7 @@ public class AggiungiAutoController {
     }
 
     public void aggiungi(ActionEvent actionEvent) throws IOException {
-        if (!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
+        if (!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
             List<String> colori = new ArrayList<>();
             colori.add(colore.getText().toUpperCase());
             model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText());

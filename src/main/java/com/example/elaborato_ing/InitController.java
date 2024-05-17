@@ -145,13 +145,13 @@ public class InitController {
                 model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox, auto.getOptionalScelti(), prezzo);
 
 
-                lunghezza.setText(String.valueOf(auto.getLunghezza()));
-                altezza.setText(String.valueOf(auto.getAltezza()));
-                larghezza.setText(String.valueOf(auto.getLarghezza()));
-                peso.setText(String.valueOf(auto.getPeso()));
-                volume.setText(String.valueOf(auto.getVolumeBagagliaio()));
+                lunghezza.setText(auto.getLunghezza()+" cm");
+                altezza.setText(auto.getAltezza()+" cm");
+                larghezza.setText(auto.getLarghezza()+" cm");
+                peso.setText(auto.getPeso()+" kg");
+                volume.setText(auto.getVolumeBagagliaio()+" L");
                 alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
-                motore.setText(String.valueOf(auto.getMotore().getNome()));
+                motore.setText(auto.getMotore().getNome());
                 prezzo.setText(String.valueOf(auto.getPrezzo()));
 
                 colori.getItems().clear();
