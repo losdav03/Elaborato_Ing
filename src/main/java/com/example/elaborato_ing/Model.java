@@ -453,19 +453,26 @@ private boolean utenteEsiste(String email) throws IOException {
 public void PDF() {
 }
 
-public void inoltraPreventivo(AutoNuova auto, String colore, int Prezzo, Sede sede) throws IOException {
+public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
     LocalDateTime OrarioCreazione = LocalDateTime.now();
     LocalDate inizio = LocalDate.now();
-    int giorni = 0;
-    for (Optionals _ : auto.getOptionalScelti()) {
-        giorni += 10;
-    }
+    LocalDate fine;
+    if (auto instanceof AutoNuova) {
+        int giorni = 0;
+        for (Optionals _ : ((AutoNuova) auto).getOptionalScelti()) {
+            giorni += 10;
+        }
 
-    LocalDate fine = inizio.plusMonths(1);
-    fine = fine.plusDays(giorni);
+        fine = inizio.plusMonths(1);
+        fine = fine.plusDays(giorni);
+    }
+    else{
+        fine = inizio.plusYears(1);
+    }
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
     Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
     Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto, sede);
 
     // esporto il preventivo sul filesrc
@@ -526,6 +533,42 @@ public List<String> inizializzaPreventivo() {
     }
     return filteredLines;
 }
+
+    public List<String> PreventiviDaValutare() {
+        List<String> filteredLines = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 16 /*ce da mettere che d*/) {
+                    String linea = "Id Preventivo : " + parts[0] +
+                            "\nMarca : " + parts[2] +
+                            "\nModello : " + parts[3] +
+                            "\nAltezza : " + parts[4] + " cm" +
+                            "\nLunghezza : " + parts[5] + " cm" +
+                            "\nLarghezza : " + parts[6] + " cm" +
+                            "\nPeso : " + parts[7] + " kg" +
+                            "\nVolume Bagagliaio : " + parts[8] + " L" +
+                            "\nNome motore : " + parts[9].split(";")[0] +
+                            "\nAlimentazione : " + parts[9].split(";")[1] +
+                            "\nCilindrata : " + parts[9].split(";")[2] + " m³" +
+                            "\nPotenza : " + parts[9].split(";")[3] + " kW" +
+                            "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
+                            "\nOptional : " + (parts[10].isEmpty() ? " nessun optional" : parts[10]) +
+                            "\nSede : " + parts[11] +
+                            "\nColore : " + parts[12] +
+                            "\nData Inizio Preventivo : " + parts[13] +
+                            "\nData Fine Preventivo : " + parts[14] +
+                            "\nPrezzo : " + parts[15] + " €" +
+                            "\nStato Preventivo : " + parts[16];
+                    filteredLines.add(linea);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return filteredLines;
+    }
 
 public static void aggiungiValutazione(String idPreventivo, String statoPreventivo, int prezzo) throws IOException {
     BufferedReader reader;

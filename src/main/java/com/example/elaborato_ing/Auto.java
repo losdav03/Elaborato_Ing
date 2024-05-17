@@ -33,14 +33,17 @@ public class Auto {
     }
 
     public String stampaSelezionabili() {
-        String res = "";
-        if (optionalSelezionabili.isEmpty()) {
-            res = ":";
-        } else {
-            for (Optionals op : optionalSelezionabili) {
-                res += op.getNome() + ";" + op.getCosto() + ":";
-            }
+        String res ="";
+        if(optionalSelezionabili!=null) {
 
+            if (optionalSelezionabili.isEmpty()) {
+                res = ":";
+            } else {
+                for (Optionals op : optionalSelezionabili) {
+                    res += op.getNome() + ";" + op.getCosto() + ":";
+                }
+
+            }
         }
         return res;
     }

@@ -24,7 +24,7 @@ public class ValutaController {
     private static String statoPreventivo = "";
     private static String idPreventivo = "";
     public void initialize() {
-        listaPreventivi.getItems().addAll(model.inizializzaPreventivo());
+        listaPreventivi.getItems().addAll(model.PreventiviDaValutare());
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
@@ -54,7 +54,7 @@ public class ValutaController {
         try {
             model.aggiungiValutazione(idPreventivo, statoPreventivo, Integer.parseInt(prezzo.getText()));
             listaPreventivi.getItems().clear();
-            listaPreventivi.getItems().addAll(model.inizializzaPreventivo());
+            listaPreventivi.getItems().addAll(model.PreventiviDaValutare());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
