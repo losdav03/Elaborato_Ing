@@ -4,10 +4,16 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,6 +59,8 @@ public class InitController {
     private VBox vBox;
     private final Model model = new Model();
     private int vista = 1;
+    private InitController initController;
+    private Stage stage;
 
 
     public void initialize() {
@@ -204,10 +212,23 @@ public class InitController {
 
     @FXML
     public void acquistaFunction(ActionEvent event) throws IOException {
-        if (acquistaBtn.getText().equals("Log in"))
-            model.AccediPersonaFXML("FXML/Login.fxml", event);
+        if (acquistaBtn.getText().equals("Log in")) {
 
-        else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Login.fxml"));
+            Parent root = loader.load();
+
+            LoginController loginController = loader.getController();
+            loginController.setInitController(this);
+
+            Stage loginStage = new Stage();
+            loginStage.initModality(Modality.APPLICATION_MODAL);
+            loginStage.setScene(new Scene(root));
+            loginStage.show();
+            this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                System.out.println("QUA " + model.getCliente().getEmail());
+        }
+        else{
             // controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {
                 AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
@@ -216,7 +237,9 @@ public class InitController {
                 btnPDF.setVisible(true);
             }
         }
+
     }
+
 
     @FXML
     public void goToUsatoForm(ActionEvent event) {

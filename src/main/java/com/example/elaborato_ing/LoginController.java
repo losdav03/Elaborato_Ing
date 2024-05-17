@@ -2,7 +2,9 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
@@ -29,15 +31,17 @@ public class LoginController {
     private Button accedi, registrati;
 
     private Model model;
+    private InitController initController;
 
     public void initialize() {
         model = new Model();
 
+
     }
+
     // SERVE NON ELIMINARE
     public void setMainWindow(Stage mainWindow) {
     }
-
 
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
@@ -54,6 +58,19 @@ public class LoginController {
         String username = emailField.getText();
         String password = passwordField.getText();
 
+        if (model.autenticato(username, password) == 2) {
+            Stage stage = (Stage) emailField.getScene().getWindow();
+            stage.close();
+        } else {
+            System.out.println("Errore durante la autenticazione");
+        }
+
+
+
+        /*
+        String username = emailField.getText();
+        String password = passwordField.getText();
+
         model.autenticato(username, password);
         if (model.getCliente().getEmail() != null) {
             System.out.println("Cliente Loggato!");
@@ -67,8 +84,11 @@ public class LoginController {
             model.OpenCloseFXML("FXML/Amministrazione.fxml", event);
         } else
             System.out.println("Credenziali non valide.");
+            */
     }
-
+    public void setInitController(InitController initController) {
+        this.initController = initController;
+    }
 
     @FXML
     public void registrati(ActionEvent event) {

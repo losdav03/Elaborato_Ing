@@ -326,26 +326,19 @@ public void OpenCloseFXML(String fxmlPath, ActionEvent event) throws IOException
 }
 
 public void AccediPersonaFXML(String fxmlPath, ActionEvent event) throws IOException {
-    FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(getClass().getResource(fxmlPath)));
-    root = loader.load();
-    LoginController loginController = loader.getController();
-    loginController.setMainWindow((Stage) ((Node) event.getSource()).getScene().getWindow());
-    Stage loginStage = new Stage();
-    loginStage.initModality(Modality.APPLICATION_MODAL);
-    loginStage.setScene(new Scene(root));
-    loginStage.show();
 }
 
 
 //LOGIN
 
-public void autenticato(String username, String password) throws IOException {
+public int autenticato(String username, String password) throws IOException {
     if (username.equals("amm") && password.equals("amm")) {
         amministrazione.setEmail("amm");
         amministrazione.setNome("amm");
         amministrazione.setCognome("amm");
         amministrazione.setPassword("amm");
         System.out.println(amministrazione.getEmail());
+        return 1;
     } else {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
             String line;
@@ -357,6 +350,7 @@ public void autenticato(String username, String password) throws IOException {
                     cliente.setCognome(parti[2]);
                     cliente.setPassword(parti[3]);
                     System.out.println(cliente.getEmail());
+                    return 2;
                 } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
                     dipendente.setEmail(parti[0]);
                     dipendente.setNome(parti[1]);
@@ -364,10 +358,12 @@ public void autenticato(String username, String password) throws IOException {
                     dipendente.setPassword(parti[3]);
                     dipendente.setIdDipendente(Integer.parseInt(String.valueOf(parti[4])));
                     System.out.println(dipendente.getEmail());
+                    return 3;
                 }
             }
         }
     }
+    return -1;
 }
 
 
