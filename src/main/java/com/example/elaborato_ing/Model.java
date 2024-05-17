@@ -571,7 +571,7 @@ public static void aggiungiValutazione(String idPreventivo, String statoPreventi
 
                 if (campi[0].equals(idPreventivo)) {
                     if (campi.length >= 17 && campi[16].equals(Stato.DA_PAGARE.toString())) {
-                        campi[16] = Stato.PAGATA.toString();
+                        campi[16] = Stato.PAGATO.toString();
                     }
                 }
                 fileContent.append(String.join(",", campi)).append("\n");
