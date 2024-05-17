@@ -1,11 +1,10 @@
 package com.example.elaborato_ing;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -14,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -52,15 +52,13 @@ public class InitController {
     @FXML
     private ImageView img;
     @FXML
-    private MenuButton menuProfilo;
+    private ComboBox<String> menuProfilo;
     @FXML
     private ScrollPane scrollPane;
     @FXML
     private VBox vBox;
     private final Model model = new Model();
     private int vista = 1;
-    private InitController initController;
-    private Stage stage;
 
 
     public void initialize() {
@@ -83,6 +81,16 @@ public class InitController {
         sede.setDisable(true);
         colori.getItems().clear();
         vendiBtn.setDisable(true);
+
+        menuProfilo.getItems().addAll("Prevenitivi","Log out");
+        menuProfilo.setOnAction(event -> {
+            try {
+                aggiornaMenuProfilo((ActionEvent) event);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
         menuProfilo.setDisable(true);
         btnPDF.setVisible(false);
         btnSx.setDisable(true);
@@ -90,6 +98,14 @@ public class InitController {
 
         // mi serve per riaggiornare il catalogo dopo eliminazione optional nell'amministrazione
         model.caricaOptionalDaFile();
+    }
+
+    private void aggiornaMenuProfilo(ActionEvent event) throws IOException {
+        if(menuProfilo.getValue().equals("Prevenitivi"))
+        model.openFXML("FXML/Riepilogo.fxml", event);
+        else if(menuProfilo.getValue().equals("Log out")){
+            logOut(event);
+        }
     }
 
 
@@ -211,9 +227,8 @@ public class InitController {
     }
 
     @FXML
-    public void acquistaFunction(ActionEvent event) throws IOException {
+    public void acquistaFunction() throws IOException {
         if (acquistaBtn.getText().equals("Log in")) {
-
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Login.fxml"));
             Parent root = loader.load();
 
@@ -222,18 +237,26 @@ public class InitController {
 
             Stage loginStage = new Stage();
             loginStage.initModality(Modality.APPLICATION_MODAL);
+
             loginStage.setScene(new Scene(root));
             loginStage.show();
-            this.stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                System.out.println("QUA " + model.getCliente().getEmail());
-        }
-        else{
-            // controlli per vedere se il preventivo è fattibile
+            // Aggiungi il listener per il cambio del nome del bottone quando lo stage del login viene chiuso
+            loginStage.setOnHiding((WindowEvent _) -> {
+                // Esegui il controllo qui, ad esempio controlla se l'utente è loggato
+                if (model.getCliente() != null && model.getCliente().getEmail() != null) {
+                    acquistaBtn.setText("Inoltra Preventivo");
+                    vendiBtn.setDisable(false);
+                    menuProfilo.setDisable(false);
+                }
+            });
+
+        } else {
+            // Controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {
                 AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
                 model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
-                // abilito il  bottone PDF
+                // Abilita il bottone PDF
                 btnPDF.setVisible(true);
             }
         }
@@ -251,15 +274,12 @@ public class InitController {
 
     }
 
-    @FXML
-    public void vediPreventivi(ActionEvent event) {
-        model.openFXML("FXML/Riepilogo.fxml", event);
-    }
+
 
     @FXML
-    public void logOut(ActionEvent event) {
+    public void logOut(ActionEvent event) throws IOException {
         model.eliminaCliente();
-        model.openFXML("FXML/Configuratore.fxml", event);
+        model.OpenCloseFXML("FXML/Configuratore.fxml",event);
     }
 }
 
