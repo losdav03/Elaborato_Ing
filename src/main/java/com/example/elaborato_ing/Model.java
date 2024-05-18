@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -27,47 +28,37 @@ public class Model {
     private static Cliente cliente = new Cliente();
     private static Dipendente dipendente = new Dipendente();
     private static Amministrazione amministrazione = new Amministrazione();
-
-
     private static Map<Marca, List<AutoNuova>> map = new HashMap<>();
     private static Catalogo catalogo = new Catalogo();
     private List<String> allOptionals = new ArrayList<>();
-
     private Stage stage;
     private Scene scene;
     private Parent root;
-
-
     public Model() {
-    }
 
+    }
     public Map<Marca, List<AutoNuova>> getMap() {
         return map;
     }
-
     public Catalogo getCatalogo() {
         return catalogo;
     }
-
     public Cliente getCliente() {
         return cliente;
     }
-
     public Dipendente getDipendente() {
         return dipendente;
     }
-
     public Amministrazione getAmministrazione() {
         return amministrazione;
     }
-
     public void aggiornaFileCatalogo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt"))) {
             for (AutoNuova auto : catalogo.getListaAuto()) {
-                writer.write(auto.stampaAutoCatalogo()); // Supponendo che Auto abbia un metodo toString appropriato
+                writer.write(auto.stampaAutoCatalogo());
                 writer.newLine();
             }
-            System.out.println("Catalogo aggiornato e salvato su " + "Catalogo.txt");
+            System.out.println("Catalogo aggiornato e salvato su Catalogo.txt");
         } catch (IOException e) {
             System.err.println("Errore durante la scrittura del file: " + e.getMessage());
         }
@@ -95,7 +86,6 @@ public class Model {
                     int prezzo = Integer.parseInt(parts[8]);
                     String sconto = parts[9];
                     List<String> colori = List.of(parts[10].trim().split(";"));
-
                     List<Optionals> optionalSelezionabili = new ArrayList<>();
                     List<String> op = List.of(parts[11].trim().split(":"));
                     for (String o : op) {
@@ -103,8 +93,6 @@ public class Model {
                         Optionals nuovoOp = new Optionals(o.split(";")[0], Integer.parseInt(o.split(";")[1]));
                         optionalSelezionabili.add(nuovoOp);
                     }
-
-
                     AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
                     catalogo.add(auto);
                     map.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
@@ -159,16 +147,6 @@ public class Model {
         }
     }
 
-    public void riempiVista(Marca marca, String modello, String colore, ImageView vista1, int vista) {
-        String path = getImmagineAuto(Marca.valueOf(String.valueOf(marca)), modello, colore, vista);
-        InputStream imageStream = getClass().getResourceAsStream(path);
-        System.out.println(path);
-        if (imageStream != null) {
-            Image image = new Image(imageStream);
-            vista1.setImage(image);
-        }
-    }
-
     public void generaCheckBoxOptionalConfiguratore(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
         {
             scrollPane.setContent(checkBoxContainer);
@@ -196,8 +174,6 @@ public class Model {
         }
 
     }
-
-
     public void generaCheckBoxOptionalAmministrazione(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
 
         scrollPane.setContent(checkBoxContainer);
@@ -266,12 +242,9 @@ public class Model {
             }
         }
     }
-
-
     public String getImmagineAuto(Marca marca, String modello, String colore, int vista) {
         return getMarcaModello(marca, modello, map).getImmagine(colore.toLowerCase(), vista);
     }
-
     public void caricaImmaginiImageView(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleziona un'immagine");
@@ -289,7 +262,6 @@ public class Model {
             }
         }
     }
-
     public void salvaImageViewImage(ImageView imageView, int vista, Marca marca, String modello, String colore) throws IOException {
         if (imageView.getImage() != null) {
             String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
@@ -310,8 +282,6 @@ public class Model {
             }
         }
     }
-
-
     public void openFXML(String fxmlPath, ActionEvent event) {
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
@@ -332,13 +302,7 @@ public class Model {
         stage.setScene(scene);
         stage.show();
     }
-
-    public void AccediPersonaFXML(String fxmlPath, ActionEvent event) throws IOException {
-    }
-
-
 //LOGIN
-
     public int autenticato(String username, String password) throws IOException {
         if (username.equals("amm") && password.equals("amm")) {
             amministrazione.setEmail("amm");
@@ -373,15 +337,10 @@ public class Model {
         }
         return -1;
     }
-
-
     public void eliminaCliente() {
         cliente = new Cliente();
     }
-
-
 //REGISTRAZIONE
-
     public void Registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
 
 
@@ -450,44 +409,117 @@ public class Model {
     }
 
     public void PDF() {
-    }
 
+    }
     public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
         LocalDate fine;
+
         if (auto instanceof AutoNuova) {
             int giorni = 0;
             for (Optionals _ : ((AutoNuova) auto).getOptionalScelti()) {
                 giorni += 10;
             }
-
-            fine = inizio.plusMonths(1);
-            fine = fine.plusDays(giorni);
+            fine = inizio.plusMonths(1).plusDays(giorni);
         } else {
             fine = inizio.plusYears(1);
         }
+
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        String idPreventivo = String.valueOf(creazioneIdPreventivo(auto.getMarca() + auto.getModello() + cliente.getEmail()));
+        Preventivo preventivo = new Preventivo(idPreventivo, dataCreazione, (auto instanceof AutoNuova) ? dataFine : null, cliente, auto, sede);
 
-        Preventivo preventivo = new Preventivo(String.valueOf(auto.hashCode() * OrarioCreazione.hashCode()), dataCreazione, dataFine, cliente, auto, sede);
-        String stato =  (auto instanceof AutoNuova) ? String.valueOf(Stato.DA_PAGARE) : String.valueOf(Stato.DA_VALUTARE);
-        // esporto il preventivo sul filesrc
-        try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
-            writer.write(preventivo + "," + colore.toUpperCase() + "," + formato.format(dataCreazione) + "," + formato.format(dataFine) + "," + Prezzo + "," + stato + "\n");
+        String stato = (auto instanceof AutoNuova) ? String.valueOf(Stato.DA_PAGARE) : String.valueOf(Stato.DA_VALUTARE);
+        String prv = (auto instanceof AutoNuova) ?
+                String.format("%s,%s,%s,%s,%d,%s\n", preventivo, colore.toUpperCase(), formato.format(dataCreazione), formato.format(dataFine), Prezzo, stato) :
+                String.format("%s,%s,%s,%s,%s,%s\n", preventivo, colore.toUpperCase(), formato.format(dataCreazione), "ritiro auto da definire", "da definire", stato);
+
+        if (!rigaUnica(prv)) {
+            try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
+                writer.write(prv);
+            }
+        } else {
+            System.out.println("Auto già presente");
         }
+    }
+
+    public void Doouble(TextField txt) {
+        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            String character = event.getCharacter();
+
+            // Consenti solo numeri, puto decimale, e segno meno
+            if (!character.matches("[\\d\\.-]")) {
+                event.consume(); // Blocca l'evento se non è un numero, punto o segno meno
+                return;
+            }
+
+            // Assicurati che ci sia solo un punto decimale
+            if (character.equals(".") && txt.getText().contains(".")) {
+                event.consume(); // Blocca l'evento se c'è già un punto decimale
+                return;
+            }
+
+            // Assicurati che il segno meno sia solo all'inizio
+            if (character.equals("-")) {
+                if (txt.getText().contains("-")) {
+                    event.consume(); // Blocca se c'è già un segno meno
+                } else if (txt.getCaretPosition() > 0) {
+                    event.consume(); // Blocca se il segno meno non è all'inizio
+                }
+            }
+        });
+    }
+
+    public void Numeric(TextField txt) {
+        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            String character = event.getCharacter();
+            // Consenti solo numeri (0-9) e impedisci input di altri caratteri
+            if (!character.matches("\\d")) {
+                event.consume(); // Blocca l'evento se non è un numero
+            }
+        });
+    }
+
+    private boolean rigaUnica(String lineToCheck) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.equals(lineToCheck.trim())) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public int creazioneIdPreventivo(String input) {
+        int sum = 0;
+        input = input.toUpperCase();
+
+        for (char c : input.toCharArray()) {
+            if (c >= 'A' && c <= 'Z') {
+                sum += c - 'A' + 1;
+            } else if (c >= '0' && c <= '9') {
+                sum += c - '0';
+            } else {
+                throw new IllegalArgumentException("La stringa contiene caratteri non validi: " + c);
+            }
+        }
+
+        return sum;
     }
 
     public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
         List<AutoNuova> autoList = map.get(marca);
-
-
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
             return null;
         }
-
         for (AutoNuova auto : autoList) {
             if (auto.getModello().equals(modello)) { // Cerca il modello
                 return auto; // Se il modello corrisponde, restituisce l'auto
@@ -540,7 +572,6 @@ public class Model {
     public static void aggiungiValutazione(String idPreventivo,int prezzo) throws IOException {
         BufferedReader reader;
         BufferedWriter writer;
-
         try {
             reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
             StringBuilder fileContent = new StringBuilder();
@@ -558,7 +589,6 @@ public class Model {
                 fileContent.append(String.join(",", campi)).append("\n");
             }
             reader.close();
-
             writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
             writer.write(fileContent.toString());
             writer.close();
@@ -566,6 +596,34 @@ public class Model {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void Cancella(String idPreventivo) throws IOException {
+        File inputFile = new File("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt");
+        File tempFile = new File("src/main/resources/com/example/elaborato_ing/TXT/Preventivi_temp.txt");
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+
+            String riga;
+            while ((riga = reader.readLine()) != null) {
+                String[] campi = riga.split(",");
+                if (!campi[0].equals(idPreventivo)) {
+                    writer.write(riga);
+                    writer.newLine();
+                }
+            }
+        }
+
+        // Sostituisce il file originale con quello temporaneo
+        if (!inputFile.delete()) {
+            throw new IOException("Could not delete the original file");
+        }
+        if (!tempFile.renameTo(inputFile)) {
+            throw new IOException("Could not rename the temporary file");
+        }
+
+        System.out.println("Preventivo cancellato");
     }
 
     public static void aggiungiPagamento(String idPreventivo) throws IOException {
@@ -637,13 +695,34 @@ public class Model {
         reader.close();
     }
 
+    public void avvisa(String idPreventivo) {
+        BufferedReader reader;
+        BufferedWriter writer;
 
-    public void valuta(String text) {
+            try {
+                reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+                StringBuilder fileContent = new StringBuilder();
+                String riga;
 
-    }
+                while ((riga = reader.readLine()) != null) {
+                    String[] campi = riga.split(",");
 
-    public void avvisa() {
+                    if (campi[0].equals(idPreventivo)) {
+                        if (campi.length >= 17 && campi[16].equals(Stato.PAGATO.toString())) {
+                            campi[16] = Stato.PRONTA.toString();
+                        }
+                    }
+                    fileContent.append(String.join(",", campi)).append("\n");
+                }
+                reader.close();
 
+                writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+                writer.write(fileContent.toString());
+                writer.close();
+                System.out.println("Sostituzione completata.");
+            } catch (IOException e) {
+                e.printStackTrace();
+       }
     }
 
     public void setMarca(ComboBox<Marca> marca) {

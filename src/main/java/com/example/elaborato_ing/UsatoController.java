@@ -80,8 +80,6 @@ public class UsatoController {
             }
         });
     }
-
-
     public void caricaImgs() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleziona un'immagine");
@@ -107,9 +105,6 @@ public class UsatoController {
             e.printStackTrace();
         }
     }
-
-
-
 
     public void RimuoviImgs() {
         // Trova il primo ImageView con un'immagine e rimuovila

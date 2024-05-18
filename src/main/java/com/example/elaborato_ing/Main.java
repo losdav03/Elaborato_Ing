@@ -14,22 +14,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        // Carica il file FXML
-      /*  FXMLLoader loader = new FXMLLoader(getClass().getResource("FXML/Configuratore.fxml"));
-        Parent root = loader.load();
-
-        // Ottieni il controller
-        InitController controller = loader.getController();
-
-        // Passa lo stage al controller
-        controller.setStage(primaryStage);
-
-
-        // Imposta il titolo e la scena e mostra lo stage
-        primaryStage.setTitle("JavaFX App with FXML and CSS");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.show();
-        */
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("FXML/Configuratore.fxml")));
 
         Scene scene = new Scene(root);

@@ -48,6 +48,10 @@ public class ValutaController {
               //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista3,3);
             }
         });
+        model.Numeric(prezzo);
+        prezzo.textProperty().addListener((observable, oldValue, newValue) -> {
+            valuta.setDisable(newValue.trim().isEmpty());
+        });
     }
 
     public void Valuta(ActionEvent actionEvent) {
@@ -58,5 +62,11 @@ public class ValutaController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void Cancella(ActionEvent event) throws IOException {
+        model.Cancella(idPreventivo);
+        listaPreventivi.getItems().clear();
+        listaPreventivi.getItems().addAll(model.vediPreventivi());
     }
 }
