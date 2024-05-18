@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 
+import java.io.IOException;
+
 public class AvvisaController {
     @FXML
     private ListView listaPreventivi;
@@ -29,5 +31,9 @@ public class AvvisaController {
 
     public void Avvisa(ActionEvent actionEvent) {
         model.avvisa(idPreventivo);
+    }
+
+    public void back(ActionEvent event) throws IOException {
+        model.OpenCloseFXML("src/main/resources/com/example/elaborato_ing/FXML/Dipendente.fxml", event);
     }
 }

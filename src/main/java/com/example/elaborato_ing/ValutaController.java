@@ -69,4 +69,8 @@ public class ValutaController {
         listaPreventivi.getItems().clear();
         listaPreventivi.getItems().addAll(model.vediPreventivi());
     }
+
+    public void back(ActionEvent event) throws IOException {
+        model.OpenCloseFXML("src/main/resources/com/example/elaborato_ing/FXML/Dipendente.fxml", event);
+    }
 }
