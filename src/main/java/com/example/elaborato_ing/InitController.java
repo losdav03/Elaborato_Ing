@@ -240,6 +240,7 @@ public class InitController {
             // Controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {
                 AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
+                prezzo.setText(""+autoConfigurata.calcolaPrezzoScontato());
                 model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
                 // Abilita il bottone PDF
                 btnPDF.setVisible(true);

@@ -1,14 +1,30 @@
 package com.example.elaborato_ing;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 
 public class AutoNuova extends Auto {
     private int prezzo;
     private String sconto;
     private List<String> colori;
     private List<Optionals> optionalScelti;
+
+    private static final Map<Character, Integer> mappaSconti = new HashMap<>();
+
+    static {
+        mappaSconti.put('A', 10);
+        mappaSconti.put('B', 5);
+        mappaSconti.put('C', 20);
+        mappaSconti.put('D', 15);
+        mappaSconti.put('E', 25);
+        mappaSconti.put('F', 5);
+        mappaSconti.put('G', 30);
+        mappaSconti.put('H', 10);
+        mappaSconti.put('I', 20);
+        mappaSconti.put('J', 15);
+        mappaSconti.put('K', 10);
+        mappaSconti.put('L', 5);
+    }
 
     public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto, List<Optionals> optionalSelezionabili) {
         super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, optionalSelezionabili);
@@ -23,7 +39,19 @@ public class AutoNuova extends Auto {
         this.optionalScelti = optionalScelti;
     }
 
+    public int calcolaPrezzoScontato() {
+        char currentMonthCode = getCurrentMonthCode();
+        if (sconto.indexOf(currentMonthCode) >= 0) {
+            int discountPercentage = mappaSconti.getOrDefault(currentMonthCode, 0);
+            return prezzo - (prezzo * discountPercentage / 100);
+        }
+        return prezzo;
+    }
 
+    private char getCurrentMonthCode() {
+        int month = LocalDate.now().getMonthValue();
+        return (char) ('A' + (month - 1));
+    }
 
     public void caricaImmagini() {
         for (String c : colori) {
