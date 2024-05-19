@@ -59,12 +59,6 @@ public class Auto {
         return null;
     }
 
-    public void addImgs(String img1, String img2, String img3) {
-        immagini.add(img1);
-        immagini.add(img2);
-        immagini.add(img3);
-    }
-
     public Marca getMarca() {
         return marca;
     }

@@ -294,6 +294,19 @@ public class Model {
         }
     }
 
+    public void rimuoviImgs(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
+        // Trova il primo ImageView con un'immagine e rimuovila
+        if (imageView3.getImage() != null) {
+            imageView3.setImage(null);
+        } else if (imageView2.getImage() != null) {
+            imageView2.setImage(null);
+        } else if (imageView1.getImage() != null) {
+            imageView1.setImage(null);
+        } else {
+            System.out.println("Tutte le ImageView sono già vuote.");
+        }
+    }
+
     public void openFXML(String fxmlPath, ActionEvent event) {
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
@@ -356,7 +369,7 @@ public class Model {
     }
 
     //REGISTRAZIONE
-    public void Registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
+    public void registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
 
 
         if (!email.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && !password.isEmpty()) {
@@ -462,7 +475,7 @@ public class Model {
         }
     }
 
-    public void Doouble(TextField txt) {
+    public void isDouble(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
 
@@ -487,7 +500,7 @@ public class Model {
         });
     }
 
-    public void Numeric(TextField txt) {
+    public void numeric(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
             // Consenti solo numeri (0-9) e impedisci input di altri caratteri
@@ -666,7 +679,7 @@ public class Model {
             writer.close();
             System.out.println("Sostituzione completata.");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new IOException();
         }
     }
 
@@ -693,7 +706,7 @@ public class Model {
                             Optionals optional = new Optionals(finalLine, doubleValue);
                             listaOp.add(optional);
                         } catch (NumberFormatException e) {
-                            e.printStackTrace();
+                            throw new NumberFormatException();
                         }
                     });
                 } else {
@@ -735,9 +748,10 @@ public class Model {
             writer.close();
             System.out.println("Sostituzione completata.");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
     }
+
 
     public void setMarca(ComboBox<Marca> marca) {
         marca.getItems().addAll(getMap().keySet());

@@ -1,16 +1,10 @@
 package com.example.elaborato_ing;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.FileChooser;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
 
 public class UsatoController {
@@ -20,7 +14,7 @@ public class UsatoController {
     @FXML
     private ComboBox<String> alimentazione, sede;
     @FXML
-    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colori, cilindrata, potenza, consumi;
+    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, cilindrata, potenza, consumi;
     @FXML
     private ImageView imageView1, imageView2, imageView3;
 
@@ -31,99 +25,32 @@ public class UsatoController {
         marca.getItems().setAll(Marca.values());
         alimentazione.getItems().setAll(Arrays.toString(Alimentazione.values()));
         sede.getItems().setAll(Arrays.toString(Sede.values()));
-        Doouble(altezza);
-        Doouble(lunghezza);
-        Doouble(larghezza);
-        Doouble(peso);
-        Doouble(volume);
-        Numeric(cilindrata);
-        Numeric(potenza);
-        Doouble(consumi);
-    }
-
-    private void Doouble(TextField txt) {
-        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            String character = event.getCharacter();
-
-            // Consenti solo numeri, punto decimale, e segno meno
-            if (!character.matches("[\\d\\.-]")) {
-                event.consume(); // Blocca l'evento se non è un numero, punto o segno meno
-                return;
-            }
-
-            // Assicurati che ci sia solo un punto decimale
-            if (character.equals(".") && txt.getText().contains(".")) {
-                event.consume(); // Blocca l'evento se c'è già un punto decimale
-                return;
-            }
-
-            // Assicurati che il segno meno sia solo all'inizio
-            if (character.equals("-")) {
-                if (txt.getText().contains("-")) {
-                    event.consume(); // Blocca se c'è già un segno meno
-                } else if (txt.getCaretPosition() > 0) {
-                    event.consume(); // Blocca se il segno meno non è all'inizio
-                }
-            }
-        });
-    }
-
-    private void Numeric(TextField txt) {
-        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            String character = event.getCharacter();
-            // Consenti solo numeri (0-9) e impedisci input di altri caratteri
-            if (!character.matches("\\d")) {
-                event.consume(); // Blocca l'evento se non è un numero
-            }
-        });
+        model.isDouble(altezza);
+        model.isDouble(lunghezza);
+        model.isDouble(larghezza);
+        model.isDouble(peso);
+        model.isDouble(volume);
+        model.numeric(cilindrata);
+        model.numeric(potenza);
+        model.isDouble(consumi);
     }
 
     public void caricaImgs() {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleziona un'immagine");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png"));
-
-        File Immagine = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
-        if (Immagine != null) {
-            Image image = new Image(Immagine.toURI().toString());
-            if (imageView1.getImage() == null) {
-                imageView1.setImage(image);
-            } else if (imageView2.getImage() == null) {
-                imageView2.setImage(image);
-            } else {
-                imageView3.setImage(image);
-            }
-        }
-
-        String destinationFolder = "src/main/resources/com/example/elaborato_ing/images/";
-        try {
-            Files.copy(Immagine.toPath(), new File(destinationFolder + Immagine.getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("Immagine salvata con successo in: " + destinationFolder + Immagine.getName());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
     }
-
-    public void RimuoviImgs() {
-        // Trova il primo ImageView con un'immagine e rimuovila
-        if (imageView3.getImage() != null) {
-            imageView3.setImage(null);
-        } else if (imageView2.getImage() != null) {
-            imageView2.setImage(null);
-        } else if (imageView1.getImage() != null) {
-            imageView1.setImage(null);
-        } else {
-            System.out.println("Tutte le ImageView sono già vuote.");
-        }
+    @FXML
+    public void rimuoviImgs() {
+        model.rimuoviImgs(imageView1, imageView2, imageView3);
     }
 
     public void vendi() throws IOException {
-        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colori.getText().isEmpty() && !motore.getText().isEmpty() && !String.valueOf(alimentazione.getValue()).isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
-            String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colori.getText();
-
-            auto = new AutoUsata(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colori.getText().toLowerCase(), Enum.valueOf(Sede.class, String.valueOf(sede.getValue())));
-            auto.addImgs(path + "1.png", path + "2.png", path + "3.png");
-            model.inoltraPreventivo(auto, colori.getText().toLowerCase(), 0, Enum.valueOf(Sede.class, String.valueOf(sede.getValue())));
+        if (!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !String.valueOf(alimentazione.getValue()).isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
+            model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText());
+            model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText());
+            model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText());
+            auto = new AutoUsata(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), colore.getText().toLowerCase(), Enum.valueOf(Sede.class, String.valueOf(sede.getValue())));
+            model.inoltraPreventivo(auto, colore.getText().toLowerCase(), 0, Enum.valueOf(Sede.class, String.valueOf(sede.getValue())));
+            model.aggiornaFileCatalogo();
         }
     }
 }

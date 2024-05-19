@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
-public class ValutaController {
+public class ValutaUsatoController {
     @FXML
     private TextField prezzo;
     @FXML
@@ -47,7 +47,7 @@ public class ValutaController {
                 //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista3,3);
             }
         });
-        model.Numeric(prezzo);
+        model.numeric(prezzo);
         prezzo.textProperty().addListener((observable, oldValue, newValue) -> {
             valutaBtn.setDisable(newValue.trim().isEmpty());
         });

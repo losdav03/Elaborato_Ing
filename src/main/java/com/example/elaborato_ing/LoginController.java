@@ -45,7 +45,7 @@ public class LoginController {
             model.OpenCloseFXML("FXML/Dipendente.fxml", event);
         } else if (model.autenticato(username, password) == 1) {
             System.out.println("Amministrazione Loggata!");
-            model.OpenCloseFXML("FXML/Amministrazione.fxml", event);
+            model.OpenCloseFXML("FXML/Segreteria.fxml", event);
         } else
             System.out.println("Credenziali non valide.");
 
@@ -53,9 +53,9 @@ public class LoginController {
 
     @FXML
     public void registrati(ActionEvent event) {
-        model.Registrazione(emailField.getText(), passwordField.getText(), nameField.getText(), surnameField.getText(), event);
+        model.registrazione(emailField.getText(), passwordField.getText(), nameField.getText(), surnameField.getText(), event);
     }
 
-    public void setInitController(InitController initController) {
+    public void setInitController(ConfiguratoreController configuratoreController) {
     }
 }

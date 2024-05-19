@@ -17,16 +17,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 
-public class InitController {
+public class ConfiguratoreController {
     @FXML
     private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, motore, prezzo;
     @FXML

@@ -1,5 +1,6 @@
 package com.example.elaborato_ing;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -32,15 +33,15 @@ public class AggiungiAutoController {
 
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
-        IsDouble(altezza);
-        IsDouble(lunghezza);
-        IsDouble(larghezza);
-        IsDouble(peso);
-        IsDouble(volume);
-        Numeric(cilindrata);
-        Numeric(prezzo);
-        Numeric(potenza);
-        IsDouble(consumi);
+        model.isDouble(altezza);
+        model.isDouble(lunghezza);
+        model.isDouble(larghezza);
+        model.isDouble(peso);
+        model.isDouble(volume);
+        model.numeric(cilindrata);
+        model.numeric(prezzo);
+        model.numeric(potenza);
+        model.isDouble(consumi);
         alimentazione.getItems().setAll(Alimentazione.values());
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
 
@@ -51,59 +52,14 @@ public class AggiungiAutoController {
  */
     }
 
-    private void IsDouble(TextField txt) {
-        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            String character = event.getCharacter();
-
-            // Consenti solo numeri, punto decimale, e segno meno
-            if (!character.matches("[\\d.-]")) {
-                event.consume(); // Blocca l'evento se non è un numero, punto o segno meno
-                return;
-            }
-
-            // Assicurati che ci sia solo un punto decimale
-            if (character.equals(".") && txt.getText().contains(".")) {
-                event.consume(); // Blocca l'evento se c'è già un punto decimale
-                return;
-            }
-
-            // Assicurati che il segno meno sia solo all'inizio
-            if (character.equals("-")) {
-                if (txt.getText().contains("-")) {
-                    event.consume(); // Blocca se c'è già un segno meno
-                } else if (txt.getCaretPosition() > 0) {
-                    event.consume(); // Blocca se il segno meno non è all'inizio
-                }
-            }
-        });
-    }
-
-    private void Numeric(TextField txt) {
-        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-            String character = event.getCharacter();
-            // Consenti solo numeri (0-9) e impedisci input di altri caratteri
-            if (!character.matches("\\d")) {
-                event.consume(); // Blocca l'evento se non è un numero
-            }
-        });
-    }
-
     @FXML
     public void caricaImgs() {
         model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
     }
 
-    public void RimuoviImgs() {
-        // Trova il primo ImageView con un'immagine e rimuovila
-        if (imageView3.getImage() != null) {
-            imageView3.setImage(null);
-        } else if (imageView2.getImage() != null) {
-            imageView2.setImage(null);
-        } else if (imageView1.getImage() != null) {
-            imageView1.setImage(null);
-        } else {
-            System.out.println("Tutte le ImageView sono già vuote.");
-        }
+    @FXML
+    public void rimuoviImgs() {
+        model.rimuoviImgs(imageView1, imageView2, imageView3);
     }
 
     public void aggiungiAuto() throws IOException {
@@ -118,6 +74,8 @@ public class AggiungiAutoController {
             model.aggiornaFileCatalogo();
         }
     }
+
+
 }
 
 

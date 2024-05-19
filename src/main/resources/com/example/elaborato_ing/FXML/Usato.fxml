@@ -31,7 +31,7 @@
     <ComboBox fx:id="alimentazione" layoutX="95.0" layoutY="357.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="potenza" layoutX="95.0" layoutY="437.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="consumi" layoutX="95.0" layoutY="477.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="colori" layoutX="319.0" layoutY="37.0" prefHeight="25.0" prefWidth="104.0" />
+    <TextField fx:id="colore" layoutX="319.0" layoutY="37.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="cilindrata" layoutX="95.0" layoutY="397.0" prefHeight="25.0" prefWidth="104.0" />
     <ComboBox fx:id="sede" layoutX="319.0" layoutY="77.0" prefHeight="25.0" prefWidth="104.0" />
     <Button fx:id="vendibtn" layoutX="238.0" layoutY="452.0" mnemonicParsing="false" onAction="#vendi" prefHeight="50.0" prefWidth="319.0" text="Vendi auto" />
@@ -39,7 +39,7 @@
     <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="342.0" layoutY="121.0" />
     <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="121.0" />
     <Button fx:id="caricaImg" layoutX="232.0" layoutY="291.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
-    <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="291.0" mnemonicParsing="false" onAction="#RimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
+    <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="291.0" mnemonicParsing="false" onAction="#rimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
     <ScrollPane fx:id="scrollPane" layoutX="235.0" layoutY="340.0" prefHeight="105.0" prefWidth="319.0">
         <content>
             <VBox fx:id="vBox" prefHeight="114.0" prefWidth="302.0" />
