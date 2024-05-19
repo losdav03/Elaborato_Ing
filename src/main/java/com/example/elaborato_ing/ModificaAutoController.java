@@ -36,6 +36,7 @@ public class ModificaAutoController {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> inizializzaCheckboxeColore());
+        model.aggiornaFileCatalogo();
     }
 
     private void inizializzaCheckboxeColore() {

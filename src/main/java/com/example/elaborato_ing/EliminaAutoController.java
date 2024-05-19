@@ -23,6 +23,7 @@ public class EliminaAutoController {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaImg());
+        model.aggiornaFileCatalogo();
     }
 
     private void aggiornaImg() {

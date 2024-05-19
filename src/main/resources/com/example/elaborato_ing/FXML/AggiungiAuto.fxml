@@ -65,4 +65,9 @@
          <Font size="18.0" />
       </font>
    </Label>
+   <Label fx:id="errore" layoutX="357.0" layoutY="498.0" textFill="RED">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
 </AnchorPane>

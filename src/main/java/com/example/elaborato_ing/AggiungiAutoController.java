@@ -44,10 +44,8 @@ public class AggiungiAutoController {
         model.isDouble(consumi);
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
 
-        vendibtn.setDisable(true);
+        vendibtn.setDisable(false);
 
-        // Add listeners to all fields to enable the button when all are filled
-        addListeners();
     }
 
     @FXML
@@ -93,7 +91,7 @@ public class AggiungiAutoController {
                             new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())),
                             Integer.parseInt(prezzo.getText()),
                             colori,
-                            sconto.getText(),
+                            "ABC",
                             listaOp
                     );
 
