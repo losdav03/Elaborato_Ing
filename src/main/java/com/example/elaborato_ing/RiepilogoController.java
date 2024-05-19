@@ -19,7 +19,7 @@ public class RiepilogoController {
 
 
     public void initialize() {
-        listaPreventivi.getItems().addAll(model.vediPreventivi());
+        listaPreventivi.getItems().addAll(model.vediPreventivi(model.getCliente().getEmail()));
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((_, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
@@ -64,7 +64,7 @@ public class RiepilogoController {
         try {
             model.aggiungiPagamento(idPreventivo);
             listaPreventivi.getItems().clear();
-            listaPreventivi.getItems().addAll(model.vediPreventivi());
+            listaPreventivi.getItems().addAll(model.vediPreventivi(model.getCliente().getEmail()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -23,6 +23,8 @@ public class AggiungiAutoController {
     @FXML
     private VBox checkBoxContainer;
     @FXML
+    private Button vendibtn;
+    @FXML
     private Label errore;
     private final Model model = new Model();
     private final List<Optionals> listaOp = new ArrayList<>();
@@ -41,16 +43,23 @@ public class AggiungiAutoController {
         model.numeric(potenza);
         model.isDouble(consumi);
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
+
+        vendibtn.setDisable(true);
+
+        // Add listeners to all fields to enable the button when all are filled
+        addListeners();
     }
 
     @FXML
     public void caricaImgs() {
         model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
+        checkFields();
     }
 
     @FXML
     public void rimuoviImgs() {
         model.rimuoviImgs(imageView1, imageView2, imageView3);
+        checkFields();
     }
 
     @FXML
@@ -114,5 +123,58 @@ public class AggiungiAutoController {
             errore.setText("Errore durante il salvataggio");
             errore.setVisible(true);
         }
+    }
+
+    private void addListeners() {
+        // Add listeners to ImageViews
+        imageView1.imageProperty().addListener((obs, oldImage, newImage) -> checkFields());
+        imageView2.imageProperty().addListener((obs, oldImage, newImage) -> checkFields());
+        imageView3.imageProperty().addListener((obs, oldImage, newImage) -> checkFields());
+
+        // Add listeners to ComboBoxes
+        marca.valueProperty().addListener((obs, oldVal, newVal) -> checkFields());
+        alimentazione.valueProperty().addListener((obs, oldVal, newVal) -> checkFields());
+
+        // Add listeners to TextFields
+        addTextFieldListener(modello);
+        addTextFieldListener(altezza);
+        addTextFieldListener(lunghezza);
+        addTextFieldListener(larghezza);
+        addTextFieldListener(peso);
+        addTextFieldListener(volume);
+        addTextFieldListener(motore);
+        addTextFieldListener(colore);
+        addTextFieldListener(cilindrata);
+        addTextFieldListener(potenza);
+        addTextFieldListener(consumi);
+        addTextFieldListener(prezzo);
+        addTextFieldListener(sconto);
+    }
+
+    private void addTextFieldListener(TextField textField) {
+        textField.textProperty().addListener((obs, oldText, newText) -> checkFields());
+    }
+
+    private void checkFields() {
+        boolean allFieldsFilled =
+                marca.getValue() != null &&
+                        alimentazione.getValue() != null &&
+                        !modello.getText().isEmpty() &&
+                        !altezza.getText().isEmpty() &&
+                        !lunghezza.getText().isEmpty() &&
+                        !larghezza.getText().isEmpty() &&
+                        !peso.getText().isEmpty() &&
+                        !volume.getText().isEmpty() &&
+                        !motore.getText().isEmpty() &&
+                        !colore.getText().isEmpty() &&
+                        !cilindrata.getText().isEmpty() &&
+                        !potenza.getText().isEmpty() &&
+                        !consumi.getText().isEmpty() &&
+                        !prezzo.getText().isEmpty() &&
+                        imageView1.getImage() != null &&
+                        imageView2.getImage() != null &&
+                        imageView3.getImage() != null;
+
+        vendibtn.setDisable(!allFieldsFilled);
     }
 }

@@ -22,7 +22,8 @@ public class ModificaAutoController {
     private ComboBox<Marca> marca;
     @FXML
     private ComboBox<String> modello, colore;
-
+    @FXML
+    private Button modifica;
     @FXML
     private ImageView imageView1, imageView2, imageView3;
 

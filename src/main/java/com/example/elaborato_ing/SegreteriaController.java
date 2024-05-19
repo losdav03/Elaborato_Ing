@@ -50,7 +50,7 @@ public class SegreteriaController {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] elements = line.split(",");
-                if (elements.length >= 15) {
+                if (elements.length >= 15 && !elements[14].equals("ritiro auto da definire")) {
                     // Estrai i singoli elementi
                     String id = elements[0];
                     String clienteEmail = elements[1];
@@ -81,17 +81,23 @@ public class SegreteriaController {
                     Date dataCreazione = sdf.parse(elements[13]);
                     Date dataScadenza = sdf.parse(elements[14]);
                     int prezzo = Integer.parseInt(elements[15]);
+
                     // Creare oggetto Cliente
                     Cliente cliente = new Cliente(clienteEmail);
+
                     // Creare oggetto Auto
                     Motore motore = new Motore(tipoMotore, alimentazione, cilindrata, potenza, consumi);
                     AutoNuova auto = new AutoNuova(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motore, prezzo, colore, null, null);
                     auto.setOptionalScelti(optionalScelti);
-                    // Parsing delle date
-                    // Creare e restituire l'oggetto Preventivo
-                    Preventivo preventivo = new Preventivo(id, dataCreazione, dataScadenza, cliente, auto, sede);
-                    // Aggiungi il preventivo alla lista preventivi
-                    preventivi.add(preventivo);
+
+                    // Ottenere la data odierna
+                    Date dataOdierna = Calendar.getInstance().getTime();
+
+                    // Creare e aggiungere il preventivo alla lista solo se la data di scadenza è maggiore della data odierna
+                    if (dataScadenza.after(dataOdierna)) {
+                        Preventivo preventivo = new Preventivo(id, dataCreazione, dataScadenza, cliente, auto, sede);
+                        preventivi.add(preventivo);
+                    }
                 }
             }
             scanner.close();

@@ -33,7 +33,7 @@
       <Button fx:id="caricaImg" layoutX="258.0" layoutY="79.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="46.0" prefWidth="155.0" text="carica immagini relative&#10;al nuovo colore" />
       <Button fx:id="rimuoviImg" layoutX="423.0" layoutY="79.0" mnemonicParsing="false" onAction="#rimuoviImgs" prefHeight="46.0" prefWidth="155.0" text="rimuovi immagini relative&#10;al nuovo colore" />
 
-      <Button fx:id="modifica" layoutX="377.0" layoutY="305.0" mnemonicParsing="false" onAction="#modificaAuto" prefHeight="34.0" prefWidth="130.0" text="Modifica Auto" />
+      <Button fx:id="modifica" disable="true" layoutX="377.0" layoutY="305.0" mnemonicParsing="false" onAction="#modificaAuto" prefHeight="34.0" prefWidth="130.0" text="Modifica Auto" />
       <Label layoutX="258.0" layoutY="52.0" text="Inserisci nuova colorazione" />
       <TextField fx:id="coloreNuovo" layoutX="413.0" layoutY="48.0" />
    </children>

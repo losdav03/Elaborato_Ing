@@ -35,7 +35,7 @@
     <TextField fx:id="consumi" layoutX="95.0" layoutY="454.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="colore" layoutX="95.0" layoutY="494.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="prezzo" layoutX="95.0" layoutY="534.0" prefHeight="25.0" prefWidth="104.0" />
-    <Button fx:id="vendibtn" layoutX="230.0" layoutY="519.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="40.0" prefWidth="325.0" text="Aggiungi&#10;  Auto" />
+    <Button fx:id="vendibtn" disable="true" layoutX="230.0" layoutY="519.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="40.0" prefWidth="325.0" text="Aggiungi&#10;  Auto" />
     <Button fx:id="caricaImg" layoutX="232.0" layoutY="300.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
     <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="300.0" mnemonicParsing="false" onAction="#rimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
     <ScrollPane fx:id="scrollPane" layoutX="230.0" layoutY="336.0" prefHeight="158.0" prefWidth="325.0">

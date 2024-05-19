@@ -15,7 +15,7 @@ public class AvvisaController {
     Model model = new Model();
 
     public void initialize() {
-        listaPreventivi.getItems().addAll(model.vediPreventivi());
+        listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.PAGATO)));
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
                 String[] utili = newValue.split("\n");
@@ -32,7 +32,7 @@ public class AvvisaController {
     public void avvisa() {
         model.avvisa(idPreventivo);
         listaPreventivi.getItems().clear();
-        listaPreventivi.getItems().addAll(model.vediPreventivi());
+        listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.PAGATO)));
     }
 
     @FXML

@@ -20,7 +20,7 @@ public class ValutaUsatoController {
 
 
     public void initialize() {
-        listaPreventivi.getItems().addAll(model.vediPreventivi());
+        listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.DA_VALUTARE)));
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
@@ -57,7 +57,7 @@ public class ValutaUsatoController {
         try {
             model.aggiungiValutazione(idPreventivo, Integer.parseInt(prezzo.getText()));
             listaPreventivi.getItems().clear();
-            listaPreventivi.getItems().addAll(model.vediPreventivi());
+            listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.DA_VALUTARE)));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,7 +66,7 @@ public class ValutaUsatoController {
     public void Cancella(ActionEvent event) throws IOException {
         model.cancella(idPreventivo);
         listaPreventivi.getItems().clear();
-        listaPreventivi.getItems().addAll(model.vediPreventivi());
+        listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.DA_VALUTARE)));
     }
 
     public void backBtn(ActionEvent event) throws IOException {

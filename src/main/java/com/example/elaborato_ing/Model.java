@@ -602,17 +602,17 @@ public class Model {
         return null;
     }
 
-    public List<String> vediPreventivi() {
+    public List<String> vediPreventivi(String s) {
         List<String> filteredLines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length > 16 && parts[16].equals(String.valueOf(Stato.DA_VALUTARE))) {
+                if (parts.length > 16 && parts[16].equals(s)) {
                     filteredLines.add(creaStringaPreventivo(parts));
-                } else if (parts.length > 16 && parts[1].equals(cliente.getEmail())) {
+                } else if (parts.length > 16 && parts[1].equals(s)) {
                     filteredLines.add(creaStringaPreventivo(parts));
-                } else if (parts.length > 16 && parts[16].equals(String.valueOf(Stato.PAGATO))) {
+                } else if (parts.length > 16 && parts[16].equals(s)) {
                     filteredLines.add(creaStringaPreventivo(parts));
                 }
             }
