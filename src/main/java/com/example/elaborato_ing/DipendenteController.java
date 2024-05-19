@@ -10,14 +10,11 @@ public class DipendenteController {
 
     Model model = new Model();
 
-    @FXML
-    private Button valutaBtn,avvisaBtn;
-
     public void avvisaCliente(ActionEvent event) throws IOException {
-        model.OpenCloseFXML("FXML/Avvisa.fxml",event);
+        model.OpenCloseFXML("FXML/Avvisa.fxml", event);
     }
 
     public void valutaUsato(ActionEvent event) throws IOException {
-        model.OpenCloseFXML("FXML/ValutaUsato.fxml",event);
-        }
+        model.OpenCloseFXML("FXML/ValutaUsato.fxml", event);
+    }
 }

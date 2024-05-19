@@ -34,24 +34,31 @@ public class Model {
     private Stage stage;
     private Scene scene;
     private Parent root;
+
     public Model() {
 
     }
+
     public Map<Marca, List<AutoNuova>> getMap() {
         return map;
     }
+
     public Catalogo getCatalogo() {
         return catalogo;
     }
+
     public Cliente getCliente() {
         return cliente;
     }
+
     public Dipendente getDipendente() {
         return dipendente;
     }
+
     public Amministrazione getAmministrazione() {
         return amministrazione;
     }
+
     public void aggiornaFileCatalogo() {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt"))) {
             for (AutoNuova auto : catalogo.getListaAuto()) {
@@ -174,6 +181,7 @@ public class Model {
         }
 
     }
+
     public void generaCheckBoxOptionalAmministrazione(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
 
         scrollPane.setContent(checkBoxContainer);
@@ -242,9 +250,11 @@ public class Model {
             }
         }
     }
+
     public String getImmagineAuto(Marca marca, String modello, String colore, int vista) {
         return getMarcaModello(marca, modello, map).getImmagine(colore.toLowerCase(), vista);
     }
+
     public void caricaImmaginiImageView(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleziona un'immagine");
@@ -262,6 +272,7 @@ public class Model {
             }
         }
     }
+
     public void salvaImageViewImage(ImageView imageView, int vista, Marca marca, String modello, String colore) throws IOException {
         if (imageView.getImage() != null) {
             String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
@@ -282,6 +293,7 @@ public class Model {
             }
         }
     }
+
     public void openFXML(String fxmlPath, ActionEvent event) {
         try {
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
@@ -302,7 +314,8 @@ public class Model {
         stage.setScene(scene);
         stage.show();
     }
-//LOGIN
+
+    //LOGIN
     public int autenticato(String username, String password) throws IOException {
         if (username.equals("amm") && password.equals("amm")) {
             amministrazione.setEmail("amm");
@@ -337,10 +350,12 @@ public class Model {
         }
         return -1;
     }
+
     public void eliminaCliente() {
         cliente = new Cliente();
     }
-//REGISTRAZIONE
+
+    //REGISTRAZIONE
     public void Registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
 
 
@@ -411,6 +426,7 @@ public class Model {
     public void PDF() {
 
     }
+
     public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
         LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
@@ -455,13 +471,11 @@ public class Model {
                 event.consume(); // Blocca l'evento se non è un numero, punto o segno meno
                 return;
             }
-
             // Assicurati che ci sia solo un punto decimale
             if (character.equals(".") && txt.getText().contains(".")) {
                 event.consume(); // Blocca l'evento se c'è già un punto decimale
                 return;
             }
-
             // Assicurati che il segno meno sia solo all'inizio
             if (character.equals("-")) {
                 if (txt.getText().contains("-")) {
@@ -492,7 +506,7 @@ public class Model {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return false;
     }
@@ -569,7 +583,7 @@ public class Model {
                 "\nStato Preventivo : " + parts[16];
     }
 
-    public static void aggiungiValutazione(String idPreventivo,int prezzo) throws IOException {
+    public static void aggiungiValutazione(String idPreventivo, int prezzo) throws IOException {
         BufferedReader reader;
         BufferedWriter writer;
         try {
@@ -598,7 +612,7 @@ public class Model {
         }
     }
 
-    public static void Cancella(String idPreventivo) throws IOException {
+    public static void cancella(String idPreventivo) throws IOException {
         File inputFile = new File("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt");
         File tempFile = new File("src/main/resources/com/example/elaborato_ing/TXT/Preventivi_temp.txt");
 
@@ -699,30 +713,30 @@ public class Model {
         BufferedReader reader;
         BufferedWriter writer;
 
-            try {
-                reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
-                StringBuilder fileContent = new StringBuilder();
-                String riga;
+        try {
+            reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            StringBuilder fileContent = new StringBuilder();
+            String riga;
 
-                while ((riga = reader.readLine()) != null) {
-                    String[] campi = riga.split(",");
+            while ((riga = reader.readLine()) != null) {
+                String[] campi = riga.split(",");
 
-                    if (campi[0].equals(idPreventivo)) {
-                        if (campi.length >= 17 && campi[16].equals(Stato.PAGATO.toString())) {
-                            campi[16] = Stato.PRONTA.toString();
-                        }
+                if (campi[0].equals(idPreventivo)) {
+                    if (campi.length >= 17 && campi[16].equals(Stato.PAGATO.toString())) {
+                        campi[16] = Stato.PRONTA.toString();
                     }
-                    fileContent.append(String.join(",", campi)).append("\n");
                 }
-                reader.close();
+                fileContent.append(String.join(",", campi)).append("\n");
+            }
+            reader.close();
 
-                writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
-                writer.write(fileContent.toString());
-                writer.close();
-                System.out.println("Sostituzione completata.");
-            } catch (IOException e) {
-                e.printStackTrace();
-       }
+            writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            writer.write(fileContent.toString());
+            writer.close();
+            System.out.println("Sostituzione completata.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setMarca(ComboBox<Marca> marca) {

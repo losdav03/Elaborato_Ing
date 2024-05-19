@@ -34,16 +34,8 @@ public class Persona {
         this.nome = nome;
     }
 
-    public String getCognome() {
-        return cognome;
-    }
-
     public void setCognome(String cognome) {
         this.cognome = cognome;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public void setPassword(String password) {

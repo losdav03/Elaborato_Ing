@@ -19,8 +19,6 @@ public class SegreteriaController {
     @FXML
     private ComboBox<String> modello, allOptionals;
     @FXML
-    private Button aggiungiAuto, aggiungiOptional, rimuoviOptional, modificaAuto, eliminaAuto;
-    @FXML
     private ScrollPane scrollPane;
     @FXML
     private VBox vBox;
@@ -68,7 +66,7 @@ public class SegreteriaController {
                     Alimentazione alimentazione = Alimentazione.valueOf(motoreElements[1]);
                     int cilindrata = Integer.parseInt(motoreElements[2]);
                     int potenza = Integer.parseInt(motoreElements[3]);
-                    Double consumi = Double.parseDouble(motoreElements[4]);
+                    double consumi = Double.parseDouble(motoreElements[4]);
                     List<Optionals> optionalScelti = new ArrayList<>();
                     List<String> op = List.of(elements[10].trim().split(";"));
                     for (String o : op) {
@@ -100,9 +98,7 @@ public class SegreteriaController {
                 }
             }
             scanner.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (FileNotFoundException | ParseException e) {
             throw new RuntimeException(e);
         }
     }
@@ -121,21 +117,21 @@ public class SegreteriaController {
         model.generaCheckBoxOptionalAmministrazione((AutoNuova) auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
     }
 
-    public void xcliente(ActionEvent actionEvent) {
+    public void xcliente() {
         preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
-    public void xmarca(ActionEvent actionEvent) {
+    public void xmarca() {
         preventivi.sort(Comparator.comparing(p -> p.getAuto().getMarca()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
-    public void xsede(ActionEvent actionEvent) {
+    public void xsede() {
         preventivi.sort(Comparator.comparing(p -> p.getSede().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
@@ -143,11 +139,11 @@ public class SegreteriaController {
     }
 
     public void aggiungiAuto(ActionEvent event) {
-        model.openFXML("FXML/AggiungiAuto.fxml",event);
+        model.openFXML("FXML/AggiungiAuto.fxml", event);
     }
 
-    public void aggiungiOptional(ActionEvent event) {
-        if(nomeOptional.getText() != null && !nomeOptional.getText().isEmpty()) {
+    public void aggiungiOptional() {
+        if (nomeOptional.getText() != null && !nomeOptional.getText().isEmpty()) {
             model.aggiungiOptionalDaFile(nomeOptional.getText());
             allOptionals.getItems().setAll(model.caricaOptionalDaFile());
             aggiornaCheckbox();
@@ -156,7 +152,7 @@ public class SegreteriaController {
     }
 
 
-    public void rimuoviOptional(ActionEvent event) {
+    public void rimuoviOptional() {
         if (allOptionals.getValue() != null) {
             model.rimuoviOptionalDaFile(allOptionals.getValue());
             allOptionals.getItems().setAll(model.caricaOptionalDaFile());
@@ -169,10 +165,10 @@ public class SegreteriaController {
     }
 
     public void modificaAuto(ActionEvent event) {
-        model.openFXML("FXML/ModificaAuto.fxml",event);
+        model.openFXML("FXML/ModificaAuto.fxml", event);
     }
 
     public void eliminaAuto(ActionEvent event) {
-        model.openFXML("FXML/EliminaAuto.fxml",event);
+        model.openFXML("FXML/EliminaAuto.fxml", event);
     }
 }

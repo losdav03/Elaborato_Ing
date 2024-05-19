@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 
@@ -13,13 +12,13 @@ public class ValutaController {
     @FXML
     private TextField prezzo;
     @FXML
-    private ListView listaPreventivi;
+    private ListView<String> listaPreventivi;
     @FXML
-    private Button valuta;
-    @FXML
-    private ImageView vista1,vista2,vista3;
+    private Button valutaBtn;
     Model model = new Model();
     private static String idPreventivo = "";
+
+
     public void initialize() {
         listaPreventivi.getItems().addAll(model.vediPreventivi());
 
@@ -43,14 +42,14 @@ public class ValutaController {
                         idPreventivo = riga.split(":")[1].trim();
                     }
                 }
-             //   model.riempiVista(Marca.valueOf(marca),modello,colore,vista1,1);
-              //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista2,2);
-              //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista3,3);
+                //   model.riempiVista(Marca.valueOf(marca),modello,colore,vista1,1);
+                //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista2,2);
+                //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista3,3);
             }
         });
         model.Numeric(prezzo);
         prezzo.textProperty().addListener((observable, oldValue, newValue) -> {
-            valuta.setDisable(newValue.trim().isEmpty());
+            valutaBtn.setDisable(newValue.trim().isEmpty());
         });
     }
 
@@ -65,12 +64,12 @@ public class ValutaController {
     }
 
     public void Cancella(ActionEvent event) throws IOException {
-        model.Cancella(idPreventivo);
+        model.cancella(idPreventivo);
         listaPreventivi.getItems().clear();
         listaPreventivi.getItems().addAll(model.vediPreventivi());
     }
 
-    public void back(ActionEvent event) throws IOException {
-        model.OpenCloseFXML("src/main/resources/com/example/elaborato_ing/FXML/Dipendente.fxml", event);
+    public void backBtn(ActionEvent event) throws IOException {
+        model.OpenCloseFXML("FXML/Dipendente.fxml", event);
     }
 }

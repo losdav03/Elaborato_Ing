@@ -26,22 +26,6 @@ public class Preventivo {
         }
     }
 
-    public Date getCreazione() {
-        return creazione;
-    }
-
-    public Date getScadenza() {
-        return scadenza;
-    }
-
-    public Stato getStato() {
-        return stato;
-    }
-
-    public void setStato(Stato stato) {
-        this.stato = stato;
-    }
-
     public String toString() {
         return id + "," + cliente.toString() + "," + auto.toString() + "," + sede;
     }

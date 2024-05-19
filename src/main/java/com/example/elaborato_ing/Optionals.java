@@ -12,17 +12,17 @@ public class Optionals {
     public Optionals(String nome) {
         this.nome = nome;
     }
+
     public String getNome() {
         return nome;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public int getCosto() {
         return costo;
-    }
-    public void setCosto(int costo) {
-        this.costo = costo;
     }
 
     @Override

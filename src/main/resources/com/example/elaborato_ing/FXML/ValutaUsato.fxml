@@ -4,14 +4,22 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0" prefWidth="573.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.ValutaController">
-    <ListView fx:id="listaPreventivi" layoutX="12.0" layoutY="14.0" prefHeight="400.0" prefWidth="231.0" />
-    <Button fx:id="Valuta" disable="true" layoutX="14.0" layoutY="416.0" onAction="#Valuta" prefHeight="47.0" prefWidth="185.0" text="Valuta Usato" />
-   <TextField fx:id="prezzo" layoutX="234.0" layoutY="433.0" prefHeight="30.0" prefWidth="106.0" />
-    <Button fx:id="CancellaPreventivo" layoutX="370.0" layoutY="416.0" onAction="#Cancella" prefHeight="47.0" prefWidth="185.0" text="Cancella Preventivo" />
-    <Button fx:id="indietro" layoutX="469.0" layoutY="14.0" onAction="#back" prefHeight="25.0" prefWidth="95.0" text="Torna indietro" />
-    <Label layoutX="243.0" layoutY="412.0" prefHeight="21.0" prefWidth="88.0" text="inserisci importo" />
-   <ImageView fx:id="vista1" fitHeight="130.0" fitWidth="200.0" layoutX="270.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-   <ImageView fx:id="vista3" fitHeight="130.0" fitWidth="200.0" layoutX="270.0" layoutY="284.0" pickOnBounds="true" preserveRatio="true" />
-   <ImageView fx:id="vista2" fitHeight="130.0" fitWidth="200.0" layoutX="270.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true" />
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="477.0"
+      prefWidth="573.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.elaborato_ing.ValutaController">
+    <ListView fx:id="listaPreventivi" layoutX="12.0" layoutY="14.0" prefHeight="400.0" prefWidth="231.0"/>
+    <Button fx:id="valutaBtn" disable="true" layoutX="14.0" layoutY="416.0" onAction="#Valuta" prefHeight="47.0"
+            prefWidth="185.0" text="Valuta Usato"/>
+    <TextField fx:id="prezzo" layoutX="234.0" layoutY="433.0" prefHeight="30.0" prefWidth="106.0"/>
+    <Button fx:id="CancellaPreventivo" layoutX="370.0" layoutY="416.0" onAction="#Cancella" prefHeight="47.0"
+            prefWidth="185.0" text="Cancella Preventivo"/>
+    <Button fx:id="indietro" layoutX="469.0" layoutY="14.0" onAction="#backBtn" prefHeight="25.0" prefWidth="95.0"
+            text="Torna indietro"/>
+    <Label layoutX="243.0" layoutY="412.0" prefHeight="21.0" prefWidth="88.0" text="inserisci importo"/>
+    <ImageView fx:id="vista1" fitHeight="130.0" fitWidth="200.0" layoutX="270.0" layoutY="14.0" pickOnBounds="true"
+               preserveRatio="true"/>
+    <ImageView fx:id="vista3" fitHeight="130.0" fitWidth="200.0" layoutX="270.0" layoutY="284.0" pickOnBounds="true"
+               preserveRatio="true"/>
+    <ImageView fx:id="vista2" fitHeight="130.0" fitWidth="200.0" layoutX="270.0" layoutY="149.0" pickOnBounds="true"
+               preserveRatio="true"/>
 </Pane>

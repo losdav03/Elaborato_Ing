@@ -11,9 +11,9 @@ public class Auto {
     private final double larghezza;
     private final double peso;
     private final double volumeBagagliaio;
-    private List<String> immagini = new ArrayList<>();
+    private final List<String> immagini = new ArrayList<>();
     private final Motore motore;
-    private List<Optionals> optionalSelezionabili;
+    private final List<Optionals> optionalSelezionabili;
 
     public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<Optionals> optionalSelezionabili) {
         this.marca = marca;
@@ -33,25 +33,25 @@ public class Auto {
     }
 
     public String stampaSelezionabili() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         if (optionalSelezionabili != null) {
 
             if (optionalSelezionabili.isEmpty()) {
-                res = ":";
+                res = new StringBuilder(":");
             } else {
                 for (Optionals op : optionalSelezionabili) {
-                    res += op.getNome() + ";" + op.getCosto() + ":";
+                    res.append(op.getNome()).append(";").append(op.getCosto()).append(":");
                 }
 
             }
         }
-        return res;
+        return res.toString();
     }
 
     public String getImmagine(String colore, int vista) {
         for (String imgPath : getImmagini()) {
-            if (imgPath.contains("audirs3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
-                return "/com/example/elaborato_ing/images/audirs3" + colore.toLowerCase() + "3.png";
+            if (modello.contains("3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
+                return "/com/example/elaborato_ing/images/" + marca + modello + colore.toLowerCase() + "3.png";
             else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                 return imgPath;
             }

@@ -6,24 +6,21 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.*;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.Arrays;
 
 public class UsatoController {
 
     @FXML
-    private ComboBox marca,alimentazione,sede;
-
+    private ComboBox<Marca> marca;
+    @FXML
+    private ComboBox<String> alimentazione, sede;
     @FXML
     private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colori, cilindrata, potenza, consumi;
-
     @FXML
     private ImageView imageView1, imageView2, imageView3;
 
@@ -32,8 +29,8 @@ public class UsatoController {
 
     public void initialize() {
         marca.getItems().setAll(Marca.values());
-        alimentazione.getItems().setAll(Alimentazione.values());
-        sede.getItems().setAll(Sede.values());
+        alimentazione.getItems().setAll(Arrays.toString(Alimentazione.values()));
+        sede.getItems().setAll(Arrays.toString(Sede.values()));
         Doouble(altezza);
         Doouble(lunghezza);
         Doouble(larghezza);
@@ -80,6 +77,7 @@ public class UsatoController {
             }
         });
     }
+
     public void caricaImgs() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleziona un'immagine");
@@ -102,7 +100,7 @@ public class UsatoController {
             Files.copy(Immagine.toPath(), new File(destinationFolder + Immagine.getName()).toPath(), StandardCopyOption.REPLACE_EXISTING);
             System.out.println("Immagine salvata con successo in: " + destinationFolder + Immagine.getName());
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
@@ -119,7 +117,7 @@ public class UsatoController {
         }
     }
 
-    public void vendi(ActionEvent actionEvent) throws IOException {
+    public void vendi() throws IOException {
         if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && !String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colori.getText().isEmpty() && !motore.getText().isEmpty() && !String.valueOf(alimentazione.getValue()).isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
             String path = "src/main/resources/com/example/elaborato_ing/images/" + marca.getValue().toString().toLowerCase() + modello.getText().toLowerCase() + colori.getText();
 

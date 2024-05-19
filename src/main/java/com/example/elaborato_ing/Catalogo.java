@@ -11,34 +11,18 @@ public class Catalogo {
 
     }
 
-    public void add(Auto a) {
-        if(!catalogo.contains(a))
-            catalogo.add((AutoNuova) a);
+    public void add(AutoNuova a) {
+        if (!catalogo.contains(a))
+            catalogo.add(a);
     }
 
     public List<AutoNuova> getListaAuto() {
         return catalogo;
     }
 
-    public AutoNuova getAuto(Marca marca, String modello) {
-        for (AutoNuova auto : catalogo) {
-            if (auto.getMarca().equals(marca)) {
-                if (auto.getModello().equals(modello)) {
-                    return auto;
-                }
-            }
-        }
-        return null;
-    }
-
     public void remove(Marca marca, String s) {
-        Iterator<AutoNuova> iterator = catalogo.iterator();
-        while (iterator.hasNext()) {
-            AutoNuova auto = iterator.next();
-            if (auto.getMarca().equals(marca) && auto.getModello().equals(s)) {
-                iterator.remove(); // Rimuovi l'elemento corrente usando l'iteratore
-            }
-        }
+        // Rimuovi l'elemento corrente usando l'iteratore
+        catalogo.removeIf(auto -> auto.getMarca().equals(marca) && auto.getModello().equals(s));
     }
 
 }

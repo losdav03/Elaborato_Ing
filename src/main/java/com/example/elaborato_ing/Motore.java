@@ -27,16 +27,4 @@ public class Motore {
     public Alimentazione getAlimentazione() {
         return alimentazione;
     }
-
-    public int getCilindrata() {
-        return cilindrata;
-    }
-
-    public int getPotenza() {
-        return potenza;
-    }
-
-    public double getConsumi() {
-        return consumi;
-    }
 }

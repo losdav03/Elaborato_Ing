@@ -1,23 +1,22 @@
 package com.example.elaborato_ing;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.awt.event.ActionEvent;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.List;
 
 public class EliminaAutoController {
     @FXML
-    private ComboBox marca,modello;
+    private ComboBox<Marca> marca;
     @FXML
-    private Button elimina;
+    private ComboBox<String> modello;
     @FXML
     private ImageView autoImg;
+
     Model model = new Model();
 
     public void initialize() {
@@ -45,8 +44,8 @@ public class EliminaAutoController {
         modello.setDisable(false);
     }
 
-    public void elimina(javafx.event.ActionEvent event) {
-        model.getCatalogo().remove((Marca) marca.getValue(), String.valueOf(modello.getValue()));
+    public void elimina() {
+        model.getCatalogo().remove(marca.getValue(), String.valueOf(modello.getValue()));
         model.aggiornaFileCatalogo();
     }
 }

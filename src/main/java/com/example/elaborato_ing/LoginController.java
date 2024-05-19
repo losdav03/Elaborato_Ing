@@ -2,11 +2,6 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -23,25 +18,8 @@ public class LoginController {
     private TextField nameField;
     @FXML
     private TextField surnameField;
-    @FXML
-    private Hyperlink registerHL;
-    @FXML
-    private Hyperlink loginHL;
-    @FXML
-    private Button accedi, registrati;
+    private final Model model = new Model();
 
-    private Model model;
-    private InitController initController;
-
-    public void initialize() {
-        model = new Model();
-
-
-    }
-
-    // SERVE NON ELIMINARE
-    public void setMainWindow(Stage mainWindow) {
-    }
 
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
@@ -73,13 +51,11 @@ public class LoginController {
 
     }
 
-    public void setInitController(InitController initController) {
-        this.initController = initController;
-    }
-
     @FXML
     public void registrati(ActionEvent event) {
         model.Registrazione(emailField.getText(), passwordField.getText(), nameField.getText(), surnameField.getText(), event);
     }
 
+    public void setInitController(InitController initController) {
+    }
 }

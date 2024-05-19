@@ -6,7 +6,7 @@ import java.util.*;
 public class AutoNuova extends Auto {
     private int prezzo;
     private String sconto;
-    private List<String> colori;
+    private final List<String> colori;
     private List<Optionals> optionalScelti;
 
     private static final Map<Character, Integer> mappaSconti = new HashMap<>();
@@ -102,11 +102,11 @@ public class AutoNuova extends Auto {
     }
 
     public String stampaColori() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (String c : colori) {
-            res += c + ";";
+            res.append(c).append(";");
         }
-        return res;
+        return res.toString();
     }
 
     public void setSconto(String sconto) {
@@ -114,11 +114,11 @@ public class AutoNuova extends Auto {
     }
 
     public String stampaScelti() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (Optionals op : optionalScelti) {
-            res += op.getNome() + ";";
+            res.append(op.getNome()).append(";");
         }
-        return res;
+        return res.toString();
     }
 
     public void setPrezzo(int prezzo) {

@@ -28,31 +28,15 @@ import java.util.List;
 
 public class InitController {
     @FXML
-    private Label altezza;
-    @FXML
-    private Label lunghezza;
-    @FXML
-    private Label larghezza;
-    @FXML
-    private Label peso;
-    @FXML
-    private Label volume;
-    @FXML
-    private Label alimentazione;
-    @FXML
-    private Label motore;
-    @FXML
-    private Label prezzo;
+    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, motore, prezzo;
     @FXML
     private ComboBox<Marca> marca;
     @FXML
     private ComboBox<Sede> sede;
     @FXML
-    private ComboBox<String> modello;
+    private ComboBox<String> modello, colori;
     @FXML
-    private ComboBox<String> colori;
-    @FXML
-    private Button btnPDF, btnSx, btnDx, acquistaBtn, vendiBtn,preventiviBtn,logOutBtn;
+    private Button btnPDF, btnSx, btnDx, acquistaBtn, vendiBtn, preventiviBtn, logOutBtn;
     @FXML
     private ImageView img;
     @FXML
@@ -71,6 +55,7 @@ public class InitController {
             System.err.println("File non trovato: " + filePath);
             return;
         }
+
         sede.getItems().setAll(Sede.values());
         model.caricaDaFile(filePath, model.getCatalogo());
         model.setMarca(marca);
@@ -129,11 +114,11 @@ public class InitController {
                 model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox, auto.getOptionalScelti(), prezzo);
 
 
-                lunghezza.setText(auto.getLunghezza()+" cm");
-                altezza.setText(auto.getAltezza()+" cm");
-                larghezza.setText(auto.getLarghezza()+" cm");
-                peso.setText(auto.getPeso()+" kg");
-                volume.setText(auto.getVolumeBagagliaio()+" L");
+                lunghezza.setText(auto.getLunghezza() + " cm");
+                altezza.setText(auto.getAltezza() + " cm");
+                larghezza.setText(auto.getLarghezza() + " cm");
+                peso.setText(auto.getPeso() + " kg");
+                volume.setText(auto.getVolumeBagagliaio() + " L");
                 alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
                 motore.setText(auto.getMotore().getNome());
                 prezzo.setText(String.valueOf(auto.getPrezzo()));
@@ -240,7 +225,7 @@ public class InitController {
             // Controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {
                 AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
-                prezzo.setText(""+autoConfigurata.calcolaPrezzoScontato());
+                prezzo.setText("" + autoConfigurata.calcolaPrezzoScontato());
                 model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
                 // Abilita il bottone PDF
                 btnPDF.setVisible(true);
@@ -259,6 +244,7 @@ public class InitController {
     public void generaPDF() {
 
     }
+
     @FXML
     public void vediPreventivi(ActionEvent event) {
         model.openFXML("FXML/Riepilogo.fxml", event);
@@ -269,8 +255,6 @@ public class InitController {
         model.eliminaCliente();
         model.OpenCloseFXML("FXML/Configuratore.fxml", event);
     }
-
-
 }
 
 

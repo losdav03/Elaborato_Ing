@@ -19,17 +19,18 @@ public class ModificaAutoController {
     private CheckBox gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre;
 
     @FXML
-    private ComboBox marca,modello,colore;
+    private ComboBox<Marca> marca;
+    @FXML
+    private ComboBox<String> modello, colore;
 
     @FXML
     private ImageView imageView1, imageView2, imageView3;
 
     @FXML
-    private Button caricaImg, rimuoviImg, modifica;
-
-    @FXML
     private TextField coloreNuovo;
+
     Model model = new Model();
+
     public void initialize() {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
@@ -64,45 +65,43 @@ public class ModificaAutoController {
         modello.setDisable(false);
     }
 
-    public void modificaAuto(ActionEvent event) {
+    public void modificaAuto() {
         AutoNuova auto = model.getMarcaModello(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMap());
-        if(prezzo.getText()!=null){
+        if (prezzo.getText() != null) {
             auto.setPrezzo(Integer.parseInt(prezzo.getText()));
         }
-        String scontoAgg="";
-        if (gennaio.isSelected()) scontoAgg+="A";
-        if (febbraio.isSelected()) scontoAgg+="B";
-        if (marzo.isSelected()) scontoAgg+="C";
-        if (aprile.isSelected()) scontoAgg+="D";
-        if (maggio.isSelected()) scontoAgg+="E";
-        if (giugno.isSelected()) scontoAgg+="F";
-        if (luglio.isSelected()) scontoAgg+="G";
-        if (agosto.isSelected()) scontoAgg+="H";
-        if (settembre.isSelected()) scontoAgg+="I";
-        if (ottobre.isSelected()) scontoAgg+="J";
-        if (novembre.isSelected()) scontoAgg+="K";
-        if (dicembre.isSelected()) scontoAgg+="L";
-        if(!auto.getSconto().equals(scontoAgg)) {
+        String scontoAgg = "";
+        if (gennaio.isSelected()) scontoAgg += "A";
+        if (febbraio.isSelected()) scontoAgg += "B";
+        if (marzo.isSelected()) scontoAgg += "C";
+        if (aprile.isSelected()) scontoAgg += "D";
+        if (maggio.isSelected()) scontoAgg += "E";
+        if (giugno.isSelected()) scontoAgg += "F";
+        if (luglio.isSelected()) scontoAgg += "G";
+        if (agosto.isSelected()) scontoAgg += "H";
+        if (settembre.isSelected()) scontoAgg += "I";
+        if (ottobre.isSelected()) scontoAgg += "J";
+        if (novembre.isSelected()) scontoAgg += "K";
+        if (dicembre.isSelected()) scontoAgg += "L";
+        if (!auto.getSconto().equals(scontoAgg)) {
             auto.setSconto(scontoAgg);
         }
-        if(colore.getValue() != null){
+        if (colore.getValue() != null) {
             auto.getColori().remove(colore.getValue());
         }
-        if(coloreNuovo.getText()!=null && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null){
+        if (coloreNuovo.getText() != null && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
             auto.getColori().add(coloreNuovo.getText());
-        }
-        else if(imageView1.getImage() != null || imageView2.getImage() != null || imageView3.getImage() != null){ 
+        } else if (imageView1.getImage() != null || imageView2.getImage() != null || imageView3.getImage() != null) {
             System.out.println("inserisci 3 immagini");
-        }
-        else{
+        } else {
             System.out.println("inserisci nome colore");
         }
     }
 
-    public void caricaImgs(ActionEvent event) {
+    public void caricaImgs() {
 
     }
 
-    public void rimuoviImgs(ActionEvent event) {
+    public void rimuoviImgs() {
     }
 }
