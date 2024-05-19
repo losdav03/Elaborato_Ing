@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="583.0" prefWidth="568.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AggiungiAutoController">
     <Label layoutX="17.0" layoutY="12.0" prefWidth="76.0" text="Marca" />
@@ -19,8 +20,7 @@
     <Label layoutX="14.0" layoutY="418.0" prefWidth="76.0" text="Potenza" />
     <Label layoutX="14.0" layoutY="458.0" prefWidth="76.0" text="Consumi" />
     <Label layoutX="14.0" layoutY="498.0" prefWidth="76.0" text="Colore" />
-    <Label layoutX="14.0" layoutY="538.0" prefWidth="76.0" text="Sconto" />
-    <Label layoutX="238.0" layoutY="16.0" prefWidth="76.0" text="Prezzo" />
+    <Label layoutX="14.0" layoutY="538.0" prefWidth="76.0" text="Prezzo" />
     <ComboBox fx:id="marca" layoutX="95.0" layoutY="8.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="modello" layoutX="95.0" layoutY="48.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="altezza" layoutX="95.0" layoutY="88.0" prefHeight="25.0" prefWidth="104.0" />
@@ -34,9 +34,8 @@
     <TextField fx:id="potenza" layoutX="95.0" layoutY="414.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="consumi" layoutX="95.0" layoutY="454.0" prefHeight="25.0" prefWidth="104.0" />
     <TextField fx:id="colore" layoutX="95.0" layoutY="494.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="sconto" layoutX="95.0" layoutY="534.0" prefHeight="25.0" prefWidth="104.0" />
-    <TextField fx:id="prezzo" layoutX="319.0" layoutY="12.0" prefHeight="25.0" prefWidth="104.0" />
-    <Button fx:id="vendibtn" layoutX="230.0" layoutY="509.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="50.0" prefWidth="325.0" text="Aggiungi&#10;  Auto" />
+    <TextField fx:id="prezzo" layoutX="95.0" layoutY="534.0" prefHeight="25.0" prefWidth="104.0" />
+    <Button fx:id="vendibtn" layoutX="230.0" layoutY="519.0" mnemonicParsing="false" onAction="#aggiungiAuto" prefHeight="40.0" prefWidth="325.0" text="Aggiungi&#10;  Auto" />
     <Button fx:id="caricaImg" layoutX="232.0" layoutY="300.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="25.0" prefWidth="120.0" text="carica immagini" />
     <Button fx:id="rimuoviImg" layoutX="432.0" layoutY="300.0" mnemonicParsing="false" onAction="#rimuoviImgs" prefHeight="25.0" prefWidth="120.0" text="rimuovi immagini" />
     <ScrollPane fx:id="scrollPane" layoutX="230.0" layoutY="336.0" prefHeight="158.0" prefWidth="325.0">
@@ -44,11 +43,26 @@
             <VBox fx:id="checkBoxContainer" prefHeight="152.0" prefWidth="306.0" />
       </content>
    </ScrollPane>
-    <ImageView fx:id="imageView1" fitHeight="150.0" fitWidth="100.0" layoutX="423.0" layoutY="93.0" pickOnBounds="true" />
-    <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="214.0" layoutY="88.0" pickOnBounds="true" />
-    <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="214.0" layoutY="88.0" pickOnBounds="true" />
-    <StackPane fx:id="stackPane" layoutX="286.0" layoutY="88.0" prefHeight="150.0" prefWidth="153.0">
-      <children>
+    <CheckBox fx:id="gennaio" layoutX="317.0" layoutY="11.0" mnemonicParsing="false" text="Gennaio" />
+    <CheckBox fx:id="febbraio" layoutX="391.0" layoutY="11.0" mnemonicParsing="false" text="Febbraio" />
+    <CheckBox fx:id="marzo" layoutX="471.0" layoutY="11.0" mnemonicParsing="false" text="Marzo" />
+    <CheckBox fx:id="aprile" layoutX="317.0" layoutY="33.0" mnemonicParsing="false" text="Aprile" />
+    <CheckBox fx:id="maggio" layoutX="391.0" layoutY="33.0" mnemonicParsing="false" text="Maggio" />
+    <CheckBox fx:id="giugno" layoutX="471.0" layoutY="33.0" mnemonicParsing="false" text="Giugno" />
+    <CheckBox fx:id="luglio" layoutX="317.0" layoutY="55.0" mnemonicParsing="false" text="Luglio" />
+    <CheckBox fx:id="agosto" layoutX="391.0" layoutY="55.0" mnemonicParsing="false" text="Agosto" />
+    <CheckBox fx:id="settembre" layoutX="471.0" layoutY="55.0" mnemonicParsing="false" text="Settembre" />
+    <CheckBox fx:id="ottobre" layoutX="317.0" layoutY="77.0" mnemonicParsing="false" text="Ottobre" />
+    <CheckBox fx:id="novembre" layoutX="391.0" layoutY="77.0" mnemonicParsing="false" text="Novembre" />
+    <CheckBox fx:id="dicembre" layoutX="471.0" layoutY="77.0" mnemonicParsing="false" text="Dicembre" />
 
-      </children></StackPane>
+    <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="452.0" layoutY="137.0" pickOnBounds="true" />
+    <ImageView fx:id="imageView1" fitHeight="150.0" fitWidth="100.0" layoutX="234.0" layoutY="137.0" pickOnBounds="true" />
+    <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="343.0" layoutY="137.0" pickOnBounds="true" />
+   <Label layoutX="232.0" layoutY="38.0" prefWidth="76.0" text="Segna mesi &#10;in sconto" />
+   <Label layoutX="328.0" layoutY="493.0" text="Label" textFill="#fc0000" visible="false">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Label>
 </AnchorPane>

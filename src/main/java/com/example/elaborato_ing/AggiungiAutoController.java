@@ -4,10 +4,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,16 +22,15 @@ public class AggiungiAutoController {
     private ImageView imageView1, imageView2, imageView3;
     @FXML
     private VBox checkBoxContainer;
-
+    @FXML
+    private Label errore;
     private final Model model = new Model();
-
-    Auto auto;
-
     private final List<Optionals> listaOp = new ArrayList<>();
-
+    private Auto auto;
 
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
+        alimentazione.getItems().setAll(Alimentazione.values());
         model.isDouble(altezza);
         model.isDouble(lunghezza);
         model.isDouble(larghezza);
@@ -42,14 +40,7 @@ public class AggiungiAutoController {
         model.numeric(prezzo);
         model.numeric(potenza);
         model.isDouble(consumi);
-        alimentazione.getItems().setAll(Alimentazione.values());
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
-
-/*
-        imageView2.setOnMouseClicked(event -> caricaImgs());
-        stackPane.getChildren().add(imageView2);
-
- */
     }
 
     @FXML
@@ -62,25 +53,66 @@ public class AggiungiAutoController {
         model.rimuoviImgs(imageView1, imageView2, imageView3);
     }
 
-    public void aggiungiAuto() throws IOException {
-        if (!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
-            List<String> colori = new ArrayList<>();
-            colori.add(colore.getText().toUpperCase());
-            model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText(), 0);
-            model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText(), 0);
-            model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText(), 0);
-            auto = new AutoNuova(Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), Double.parseDouble(altezza.getText()), Double.parseDouble(lunghezza.getText()), Double.parseDouble(larghezza.getText()), Double.parseDouble(peso.getText()), Double.parseDouble(volume.getText()), new Motore(motore.getText(), Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue())), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())), Integer.parseInt(prezzo.getText()), colori, sconto.getText(), listaOp);
-            model.getCatalogo().add((AutoNuova) auto);
-            model.aggiornaFileCatalogo();
+    @FXML
+    public void aggiungiAuto() {
+        errore.setVisible(false);
+        try {
+            if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
+                if (marca.getValue() != null && !modello.getText().isEmpty() && !altezza.getText().isEmpty() &&
+                        !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() &&
+                        !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() &&
+                        !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
+
+                    List<String> colori = new ArrayList<>();
+                    colori.add(colore.getText().toUpperCase());
+
+                    Marca selectedMarca = Enum.valueOf(Marca.class, String.valueOf(marca.getValue()));
+                    Alimentazione selectedAlimentazione = Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue()));
+
+                    model.salvaImageViewImage(imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
+                    model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
+                    model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
+
+                    auto = new AutoNuova(
+                            selectedMarca,
+                            modello.getText(),
+                            Double.parseDouble(altezza.getText()),
+                            Double.parseDouble(lunghezza.getText()),
+                            Double.parseDouble(larghezza.getText()),
+                            Double.parseDouble(peso.getText()),
+                            Double.parseDouble(volume.getText()),
+                            new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())),
+                            Integer.parseInt(prezzo.getText()),
+                            colori,
+                            sconto.getText(),
+                            listaOp
+                    );
+
+                    if (model.getCatalogo().getListaAuto().contains(auto)) {
+                        errore.setText("Auto già presente");
+                        errore.setVisible(true);
+                    } else {
+                        model.getCatalogo().add((AutoNuova) auto);
+                        model.aggiornaFileCatalogo();
+                        errore.setVisible(false);
+                    }
+                } else {
+                    errore.setText("Inserisci tutti i campi");
+                    errore.setVisible(true);
+                }
+            } else {
+                errore.setText("Inserisci 3 immagini");
+                errore.setVisible(true);
+            }
+        } catch (NumberFormatException e) {
+            errore.setText("Errore nei campi numerici");
+            errore.setVisible(true);
+        } catch (IllegalArgumentException e) {
+            errore.setText("Errore nei campi di selezione");
+            errore.setVisible(true);
+        } catch (IOException e) {
+            errore.setText("Errore durante il salvataggio");
+            errore.setVisible(true);
         }
     }
-
-
 }
-
-
-
-
-
-
-
