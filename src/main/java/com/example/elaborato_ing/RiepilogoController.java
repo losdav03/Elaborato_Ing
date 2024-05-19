@@ -27,6 +27,7 @@ public class RiepilogoController {
                 String marca = "";
                 String modello = "";
                 String colore = "";
+                String statoPreventivo = "";
                 for (String riga : utili) {
                     if (riga.startsWith("Marca")) {
                         marca = riga.split(":")[1].trim();
@@ -40,8 +41,16 @@ public class RiepilogoController {
                     if (riga.startsWith("Id Preventivo")) {
                         idPreventivo = riga.split(":")[1].trim();
                     }
+                    if (riga.startsWith("Stato Preventivo")) {
+                        statoPreventivo = riga.split(":")[1].trim();
+                    }
                 }
-                String path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1);
+                String path;
+                if (statoPreventivo.equals(String.valueOf(Stato.DA_VALUTARE)) || statoPreventivo.equals(String.valueOf(Stato.VALUTATA)))
+                    path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 1);
+                else
+                    path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 0);
+
                 InputStream imageStream = getClass().getResourceAsStream(path);
                 if (imageStream != null) {
                     Image image = new Image(imageStream);

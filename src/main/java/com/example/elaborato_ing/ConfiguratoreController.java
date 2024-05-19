@@ -56,6 +56,7 @@ public class ConfiguratoreController {
 
         sede.getItems().setAll(Sede.values());
         model.caricaDaFile(filePath, model.getCatalogo());
+       // model.caricaMappaAutoUsate();
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
@@ -88,7 +89,7 @@ public class ConfiguratoreController {
         btnDx.setDisable(true);
 
 
-        List<AutoNuova> listaAuto = model.getMap().getOrDefault(marca.getValue(), Collections.emptyList());
+        List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
         if (listaModelli.isEmpty()) {
@@ -105,7 +106,7 @@ public class ConfiguratoreController {
 
     private void aggiornaColori() {
         if (marca.getValue() != null && modello.getValue() != null) {
-            AutoNuova auto = model.getMap().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
+            AutoNuova auto = model.getMapAutoNuova().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
             colori.setDisable(false);
             sede.setDisable(false);
             if (auto != null) {
@@ -135,7 +136,7 @@ public class ConfiguratoreController {
             btnSx.setDisable(false);
             btnDx.setDisable(false);
 
-            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1));
+            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1, 0));
             if (imageStream != null) {
                 Image image = new Image(imageStream);
                 img.setImage(image);
@@ -148,15 +149,15 @@ public class ConfiguratoreController {
         switch (vista) {
             case 1 -> {
                 vista = 3;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
             }
             case 2 -> {
                 vista = 1;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
             }
             case 3 -> {
                 vista = 2;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
             }
         }
 
@@ -173,15 +174,15 @@ public class ConfiguratoreController {
         switch (vista) {
             case 1 -> {
                 vista = 2;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
             }
             case 2 -> {
                 vista = 3;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
             }
             case 3 -> {
                 vista = 1;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
             }
         }
 
@@ -222,7 +223,7 @@ public class ConfiguratoreController {
         } else {
             // Controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {
-                AutoNuova autoConfigurata = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
+                AutoNuova autoConfigurata = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
                 prezzo.setText("" + autoConfigurata.calcolaPrezzoScontato());
                 model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
                 // Abilita il bottone PDF

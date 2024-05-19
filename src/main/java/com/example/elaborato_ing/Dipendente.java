@@ -11,6 +11,11 @@ public class Dipendente extends Persona {
         this.IdDipendente = dipendente;
     }
 
+
+    public int getIdDipendente() {
+        return IdDipendente;
+    }
+
     public void setIdDipendente(int dipendente) {
         this.IdDipendente = dipendente;
     }

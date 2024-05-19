@@ -76,21 +76,18 @@ public class SegreteriaController {
                     Sede sede = Sede.valueOf(elements[11]);
                     List<String> colore = new ArrayList<>();
                     colore.add(elements[12]);
-                    String creazione = elements[13];
-                    String fine = elements[14];
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    Date dataCreazione = sdf.parse(elements[13]);
+                    Date dataScadenza = sdf.parse(elements[14]);
                     int prezzo = Integer.parseInt(elements[15]);
-                    Stato StatoPreventivo = Stato.valueOf(elements[16]);
                     // Creare oggetto Cliente
                     Cliente cliente = new Cliente(clienteEmail);
                     // Creare oggetto Auto
                     Motore motore = new Motore(tipoMotore, alimentazione, cilindrata, potenza, consumi);
-                    //Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, int prezzo, List<String> colori, String sconto, List<Optionals> optionalSelezionabili
                     AutoNuova auto = new AutoNuova(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motore, prezzo, colore, null, null);
                     auto.setOptionalScelti(optionalScelti);
                     // Parsing delle date
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                    Date dataCreazione = sdf.parse(elements[13]);
-                    Date dataScadenza = sdf.parse(elements[14]);
                     // Creare e restituire l'oggetto Preventivo
                     Preventivo preventivo = new Preventivo(id, dataCreazione, dataScadenza, cliente, auto, sede);
                     // Aggiungi il preventivo alla lista preventivi
@@ -104,7 +101,7 @@ public class SegreteriaController {
     }
 
     private void aggiornaModello() {
-        List<AutoNuova> listaAuto = model.getMap().getOrDefault(marca.getValue(), Collections.emptyList());
+        List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
         modello.getItems().clear();
@@ -113,8 +110,8 @@ public class SegreteriaController {
     }
 
     private void aggiornaCheckbox() {
-        AutoNuova auto = model.getMarcaModello(marca.getValue(), modello.getValue(), model.getMap());
-        model.generaCheckBoxOptionalAmministrazione((AutoNuova) auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
+        AutoNuova auto = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
+        model.generaCheckBoxOptionalAmministrazione(auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
     }
 
     public void xcliente() {

@@ -59,7 +59,6 @@ public class AutoNuova extends Auto {
                 String path = "/com/example/elaborato_ing/images/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + c.toLowerCase() + i + ".png";
                 super.getImmagini().add(path);
             }
-
         }
     }
 

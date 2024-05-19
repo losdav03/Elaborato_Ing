@@ -28,10 +28,14 @@ public class AvvisaController {
         });
     }
 
-    public void Avvisa() {
+    @FXML
+    public void avvisa() {
         model.avvisa(idPreventivo);
+        listaPreventivi.getItems().clear();
+        listaPreventivi.getItems().addAll(model.vediPreventivi());
     }
 
+    @FXML
     public void backBtn(ActionEvent event) throws IOException {
         model.OpenCloseFXML("FXML/Dipendente.fxml", event);
     }

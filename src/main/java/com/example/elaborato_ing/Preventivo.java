@@ -38,6 +38,15 @@ public class Preventivo {
         return auto;
     }
 
+    public Dipendente getDipendente() {
+        return dipendente;
+    }
+
+    public String setDipendente(Dipendente dipendente) {
+        this.dipendente = dipendente;
+        return String.valueOf(dipendente.getIdDipendente());
+    }
+
     public Cliente getCliente() {
         return cliente;
     }

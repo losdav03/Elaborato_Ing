@@ -38,7 +38,7 @@ public class ModificaAutoController {
     }
 
     private void inizializzaCheckboxeColore() {
-        AutoNuova auto = model.getMarcaModello(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMap());
+        AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
         if (auto.getSconto().contains("A")) gennaio.setSelected(true);
         if (auto.getSconto().contains("B")) febbraio.setSelected(true);
         if (auto.getSconto().contains("C")) marzo.setSelected(true);
@@ -52,12 +52,15 @@ public class ModificaAutoController {
         if (auto.getSconto().contains("K")) novembre.setSelected(true);
         if (auto.getSconto().contains("L")) dicembre.setSelected(true);
         colore.getItems().clear();
-        colore.getItems().addAll(auto.getColori());
-        colore.setValue(colore.getItems().getFirst());
+        if(auto.getColori().size() != 1) {
+            colore.getItems().addAll(auto.getColori());
+            colore.setValue(colore.getItems().getFirst());
+        }else
+            colore.setDisable(true);
     }
 
     private void aggiornaModello() {
-        List<AutoNuova> listaAuto = model.getMap().getOrDefault(marca.getValue(), Collections.emptyList());
+        List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
         modello.getItems().clear();
@@ -66,7 +69,7 @@ public class ModificaAutoController {
     }
 
     public void modificaAuto() {
-        AutoNuova auto = model.getMarcaModello(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMap());
+        AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
         if (prezzo.getText() != null) {
             auto.setPrezzo(Integer.parseInt(prezzo.getText()));
         }
@@ -99,9 +102,11 @@ public class ModificaAutoController {
     }
 
     public void caricaImgs() {
+        model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
 
     }
 
     public void rimuoviImgs() {
+        model.rimuoviImgs(imageView1, imageView2, imageView3);
     }
 }

@@ -19,7 +19,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
@@ -28,7 +27,8 @@ public class Model {
     private static Cliente cliente = new Cliente();
     private static Dipendente dipendente = new Dipendente();
     private static Amministrazione amministrazione = new Amministrazione();
-    private static Map<Marca, List<AutoNuova>> map = new HashMap<>();
+    private static final Map<Marca, List<AutoNuova>> mapAutoNuova = new HashMap<>();
+    private static final Map<Marca, List<AutoUsata>> mapAutoUsata = new HashMap<>();
     private static Catalogo catalogo = new Catalogo();
     private List<String> allOptionals = new ArrayList<>();
     private Stage stage;
@@ -39,9 +39,14 @@ public class Model {
 
     }
 
-    public Map<Marca, List<AutoNuova>> getMap() {
-        return map;
+    public Map<Marca, List<AutoNuova>> getMapAutoNuova() {
+        return mapAutoNuova;
     }
+
+    public Map<Marca, List<AutoUsata>> getMapAutoUsata() {
+        return mapAutoUsata;
+    }
+
 
     public Catalogo getCatalogo() {
         return catalogo;
@@ -102,7 +107,7 @@ public class Model {
                     }
                     AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
                     catalogo.add(auto);
-                    map.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
+                    mapAutoNuova.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                 }
             }
         } catch (FileNotFoundException e) {
@@ -113,6 +118,22 @@ public class Model {
             System.err.println("Errore nei dati: " + e.getMessage());
         }
     }
+/*
+    public void caricaMappaAutoUsate() {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 16 && (parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA)))) {
+                    mapAutoUsata.putIfAbsent(Marca.valueOf(parts[2]),);
+                }
+            } catch(IOException e){
+                throw new RuntimeException(e);
+            }
+        }
+    }
+*/
+
 
     public List<String> caricaOptionalDaFile() {
         allOptionals.clear();
@@ -251,8 +272,12 @@ public class Model {
         }
     }
 
-    public String getImmagineAuto(Marca marca, String modello, String colore, int vista) {
-        return getMarcaModello(marca, modello, map).getImmagine(colore.toLowerCase(), vista);
+    public String getImmagineAuto(Marca marca, String modello, String colore, int vista, int tipoAuto) {
+        if (tipoAuto == 0)
+            return getMarcaModelloAutoNuova(marca, modello, mapAutoNuova).getImmagine(colore.toLowerCase(), vista);
+        else
+            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista);
+
     }
 
     public void caricaImmaginiImageView(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
@@ -273,12 +298,21 @@ public class Model {
         }
     }
 
-    public void salvaImageViewImage(ImageView imageView, int vista, Marca marca, String modello, String colore) throws IOException {
+    public void salvaImageViewImage(ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
         if (imageView.getImage() != null) {
-            String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
+            String newFileName;
+            String path;
+            if (tipoAuto == 0) {
+                newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
+                path = "src/main/resources/com/example/elaborato_ing/images";
+            } else {
+                newFileName = getCliente() + marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
+                path = "src/main/resources/com/example/elaborato_ing/imagesAutoUsate";
+            }
+
 
             // Percorso relativo della cartella delle immagini
-            File outputDir = new File("src/main/resources/com/example/elaborato_ing/images");
+            File outputDir = new File(path);
             if (!outputDir.exists()) {
                 outputDir.mkdirs();
             }
@@ -441,7 +475,6 @@ public class Model {
     }
 
     public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
-        LocalDateTime OrarioCreazione = LocalDateTime.now();
         LocalDate inizio = LocalDate.now();
         LocalDate fine;
 
@@ -464,7 +497,7 @@ public class Model {
         String stato = (auto instanceof AutoNuova) ? String.valueOf(Stato.DA_PAGARE) : String.valueOf(Stato.DA_VALUTARE);
         String prv = (auto instanceof AutoNuova) ?
                 String.format("%s,%s,%s,%s,%d,%s\n", preventivo, colore.toUpperCase(), formato.format(dataCreazione), formato.format(dataFine), Prezzo, stato) :
-                String.format("%s,%s,%s,%s,%s,%s\n", preventivo, colore.toUpperCase(), formato.format(dataCreazione), "ritiro auto da definire", "da definire", stato);
+                String.format("%s,%s,%s,%s,%s,%s,%s\n", preventivo, colore.toUpperCase(), formato.format(dataCreazione), "ritiro auto da definire", "da definire", stato, preventivo.setDipendente(dipendente));
 
         if (!rigaUnica(prv)) {
             try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
@@ -541,13 +574,27 @@ public class Model {
         return sum;
     }
 
-    public AutoNuova getMarcaModello(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
+    public AutoNuova getMarcaModelloAutoNuova(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
         List<AutoNuova> autoList = map.get(marca);
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
             return null;
         }
         for (AutoNuova auto : autoList) {
+            if (auto.getModello().equals(modello)) { // Cerca il modello
+                return auto; // Se il modello corrisponde, restituisce l'auto
+            }
+        }
+        return null;
+    }
+
+    public AutoUsata getMarcaModelloAutoUsata(Marca marca, String modello, Map<Marca, List<AutoUsata>> map) {
+        List<AutoUsata> autoList = map.get(marca);
+        if (autoList == null) { // Se non esiste una lista per la marca data
+            System.out.println("Marca non trovata: " + marca);
+            return null;
+        }
+        for (AutoUsata auto : autoList) {
             if (auto.getModello().equals(modello)) { // Cerca il modello
                 return auto; // Se il modello corrisponde, restituisce l'auto
             }
@@ -564,6 +611,8 @@ public class Model {
                 if (parts.length > 16 && parts[16].equals(String.valueOf(Stato.DA_VALUTARE))) {
                     filteredLines.add(creaStringaPreventivo(parts));
                 } else if (parts.length > 16 && parts[1].equals(cliente.getEmail())) {
+                    filteredLines.add(creaStringaPreventivo(parts));
+                } else if (parts.length > 16 && parts[16].equals(String.valueOf(Stato.PAGATO))) {
                     filteredLines.add(creaStringaPreventivo(parts));
                 }
             }
@@ -754,7 +803,7 @@ public class Model {
 
 
     public void setMarca(ComboBox<Marca> marca) {
-        marca.getItems().addAll(getMap().keySet());
+        marca.getItems().addAll(getMapAutoNuova().keySet());
     }
 }
 
