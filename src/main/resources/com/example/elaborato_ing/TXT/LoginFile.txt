@@ -7,4 +7,5 @@ dip2,dip,dip,dip,67890
 dip3,dip,dip,dip,23423
 dip4,dip,dip,dip,34244
 amm,amm,amm,amm
-
+combi,combi,carlo ,combi
+cc,cc,cc,cc

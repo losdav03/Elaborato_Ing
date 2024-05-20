@@ -15,6 +15,7 @@ public class Auto {
     private final Motore motore;
     private final List<Optionals> optionalSelezionabili;
 
+
     public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<Optionals> optionalSelezionabili) {
         this.marca = marca;
         this.modello = modello;
@@ -26,6 +27,7 @@ public class Auto {
         this.motore = motore;
         this.optionalSelezionabili = optionalSelezionabili;
     }
+
 
     @Override
     public String toString() {
@@ -61,7 +63,7 @@ public class Auto {
 
             for (String imgPath : getImmagini()) {
                 if (modello.contains("3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
-                    return "/com/example/elaborato_ing/imagesAutoUsate/" + cliente + marca + modello + colore.toLowerCase() + "3.png";
+                    return "/com/example/elaborato_ing/imagesAutoUsate/" + marca + modello + colore.toLowerCase() + "3.png";
                 else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                     return imgPath;
                 }

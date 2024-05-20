@@ -18,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.imageio.stream.ImageInputStream;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -293,13 +294,12 @@ public class Model {
 
     public void salvaImageViewImage(ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
         if (imageView.getImage() != null) {
-            String newFileName;
+            String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
+
             String path;
             if (tipoAuto == 0) {
-                newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
                 path = "src/main/resources/com/example/elaborato_ing/images";
             } else {
-                newFileName = getCliente() + marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
                 path = "src/main/resources/com/example/elaborato_ing/imagesAutoUsate";
             }
 
@@ -362,7 +362,6 @@ public class Model {
             amministrazione.setNome("amm");
             amministrazione.setCognome("amm");
             amministrazione.setPassword("amm");
-            System.out.println(amministrazione.getEmail());
             return 1;
         } else {
             try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
@@ -374,8 +373,6 @@ public class Model {
                         cliente.setNome(parti[1]);
                         cliente.setCognome(parti[2]);
                         cliente.setPassword(parti[3]);
-                        caricaMappaAutoUsate();
-                        System.out.println(cliente.getEmail());
                         return 2;
                     } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
                         dipendente.setEmail(parti[0]);
@@ -383,7 +380,6 @@ public class Model {
                         dipendente.setCognome(parti[2]);
                         dipendente.setPassword(parti[3]);
                         dipendente.setIdDipendente(Integer.parseInt(String.valueOf(parti[4])));
-                        System.out.println(dipendente.getEmail());
                         return 3;
                     }
                 }
@@ -583,6 +579,7 @@ public class Model {
     }
 
     public AutoUsata getMarcaModelloAutoUsata(Marca marca, String modello, Map<Marca, List<AutoUsata>> map) {
+
         List<AutoUsata> autoList = map.get(marca);
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
@@ -801,12 +798,13 @@ public class Model {
 
 
     public void caricaMappaAutoUsate() {
+        mapAutoUsata.clear();
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA))) {
-                    AutoUsata auto = new AutoUsata(cliente, Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]), Double.parseDouble(parts[8]), new Motore(parts[9].split(";")[0], Enum.valueOf(Alimentazione.class, String.valueOf(parts[9].split(";")[1])), Integer.parseInt(parts[9].split(";")[2]), Integer.parseInt(parts[9].split(";")[3]), Double.parseDouble(parts[9].split(";")[3])), parts[12], Enum.valueOf(Sede.class, String.valueOf(parts[11])));
+                    AutoUsata auto = new AutoUsata(Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]), Double.parseDouble(parts[8]), new Motore(parts[9].split(";")[0], Enum.valueOf(Alimentazione.class, String.valueOf(parts[9].split(";")[1])), Integer.parseInt(parts[9].split(";")[2]), Integer.parseInt(parts[9].split(";")[3]), Double.parseDouble(parts[9].split(";")[3])), parts[12], Enum.valueOf(Sede.class, String.valueOf(parts[11])));
                     auto.caricaImmaginiAutoUsata();
                     mapAutoUsata.computeIfAbsent(Enum.valueOf(Marca.class, String.valueOf(parts[2])), k -> new ArrayList<>()).add(auto);
                 }
@@ -867,7 +865,6 @@ public class Model {
                 InputStream inputStream = ConfiguratoreController.class.getClassLoader().getResourceAsStream(imageName);
                 if (inputStream != null) {
                     Image image = new Image(inputStream);
-
                     document.add((Element) image);
                 }
             }
@@ -892,6 +889,30 @@ public class Model {
     }
 
 
+    public void setImageViewPreventivi(String idPreventivo, ImageView img, int vista) {
+        Auto auto = null;
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[0].equals(idPreventivo) && parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA))) {
+                    auto = getMarcaModelloAutoUsata(Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], mapAutoUsata);
+                    //auto = new AutoUsata(cliente, Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]), Double.parseDouble(parts[8]), new Motore(parts[9].split(";")[0], Enum.valueOf(Alimentazione.class, String.valueOf(parts[9].split(";")[1])), Integer.parseInt(parts[9].split(";")[2]), Integer.parseInt(parts[9].split(";")[3]), Double.parseDouble(parts[9].split(";")[3])), parts[12], Enum.valueOf(Sede.class, String.valueOf(parts[11])));
+                } else if (parts[0].equals(idPreventivo)) {
+                    auto = getMarcaModelloAutoNuova(Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], mapAutoNuova);
+                }
+            }
+            if (auto != null) {
+                InputStream inputStream = getClass().getResourceAsStream(auto.getImmagini().get(vista - 1));
+                if (inputStream != null) {
+                    Image image = new Image(inputStream);
+                    img.setImage(image);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
 
 

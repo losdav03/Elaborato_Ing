@@ -45,6 +45,11 @@ public class RiepilogoController {
                         statoPreventivo = riga.split(":")[1].trim();
                     }
                 }
+
+                model.setImageViewPreventivi(idPreventivo, macchinaPreventivo, 1);
+
+
+/*
                 String path;
                 if (statoPreventivo.equals(String.valueOf(Stato.DA_VALUTARE)) || statoPreventivo.equals(String.valueOf(Stato.VALUTATA)))
                     path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 1,"");
@@ -57,7 +62,11 @@ public class RiepilogoController {
                     Image image = new Image(imageStream);
                     macchinaPreventivo.setImage(image);
                 }
+
+ */
             }
+
+
         });
     }
 

@@ -1,11 +1,5 @@
 package com.example.elaborato_ing;
 
-
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfDocument;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +53,7 @@ public class ConfiguratoreController {
 
         sede.getItems().setAll(Sede.values());
         model.caricaDaFile(filePath, model.getCatalogo());
+        model.caricaMappaAutoUsate();
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
@@ -247,6 +242,7 @@ public class ConfiguratoreController {
     }
     @FXML
     public void vediPreventivi(ActionEvent event) {
+        model.caricaMappaAutoUsate();
         model.openFXML("FXML/Riepilogo.fxml", event);
     }
 

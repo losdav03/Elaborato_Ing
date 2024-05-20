@@ -26,6 +26,7 @@ public class ValutaUsatoController {
 
     public void initialize() {
         listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.DA_VALUTARE)));
+        model.caricaMappaAutoUsate();
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
@@ -51,9 +52,13 @@ public class ValutaUsatoController {
                         nomeUtente = riga.split(":")[1].trim();
                     }
                 }
+                model.setImageViewPreventivi(idPreventivo, vista1, 1);
+                model.setImageViewPreventivi(idPreventivo, vista2, 2);
+                model.setImageViewPreventivi(idPreventivo, vista3, 3);
 
 
 
+/*
                 String path1, path2, path3;
                 path1 = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 1,nomeUtente);
                 path2 = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 2, 1,nomeUtente);
@@ -78,6 +83,8 @@ public class ValutaUsatoController {
                     Image image = new Image(imageStream);
                     vista3.setImage(image);
                 }
+
+ */
             }
         });
         model.numeric(prezzo);
