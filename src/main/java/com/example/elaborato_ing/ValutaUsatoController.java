@@ -51,6 +51,9 @@ public class ValutaUsatoController {
                         nomeUtente = riga.split(":")[1].trim();
                     }
                 }
+
+
+
                 String path1, path2, path3;
                 path1 = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 1,nomeUtente);
                 path2 = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 2, 1,nomeUtente);
