@@ -32,7 +32,7 @@ public class AutoNuova extends Auto {
         this.sconto = sconto;
         this.prezzo = prezzo;
         this.optionalScelti = new ArrayList<>();
-        caricaImmagini();
+        caricaImmaginiAutoNuova();
     }
 
     public void setOptionalScelti(List<Optionals> optionalScelti) {
@@ -53,7 +53,8 @@ public class AutoNuova extends Auto {
         return (char) ('A' + (month - 1));
     }
 
-    public void caricaImmagini() {
+
+    public void caricaImmaginiAutoNuova() {
         for (String c : colori) {
             for (int i = 1; i <= 3; i++) {
                 String path = "/com/example/elaborato_ing/images/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + c.toLowerCase() + i + ".png";

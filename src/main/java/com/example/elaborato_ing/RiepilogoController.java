@@ -47,10 +47,11 @@ public class RiepilogoController {
                 }
                 String path;
                 if (statoPreventivo.equals(String.valueOf(Stato.DA_VALUTARE)) || statoPreventivo.equals(String.valueOf(Stato.VALUTATA)))
-                    path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 1);
+                    path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 1,"");
                 else
-                    path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 0);
+                    path = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 0,"");
 
+                System.out.println(path);
                 InputStream imageStream = getClass().getResourceAsStream(path);
                 if (imageStream != null) {
                     Image image = new Image(imageStream);

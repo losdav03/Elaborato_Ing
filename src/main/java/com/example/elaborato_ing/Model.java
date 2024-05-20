@@ -272,12 +272,14 @@ public class Model {
         }
     }
 
-    public String getImmagineAuto(Marca marca, String modello, String colore, int vista, int tipoAuto) {
+    public String getImmagineAuto(Marca marca, String modello, String colore, int vista, int tipoAuto, String nomeUtente) {
         if (tipoAuto == 0)
-            return getMarcaModelloAutoNuova(marca, modello, mapAutoNuova).getImmagine(colore.toLowerCase(), vista);
-        else
-            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista);
-
+            return getMarcaModelloAutoNuova(marca, modello, mapAutoNuova).getImmagine(colore.toLowerCase(), vista, 0, "");
+        else if (tipoAuto == 1 && !Objects.equals(nomeUtente, "")) {
+            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista, 1, nomeUtente);
+        } else {
+            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista, 1, cliente.getEmail());
+        }
     }
 
     public void caricaImmaginiImageView(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
@@ -381,6 +383,7 @@ public class Model {
                         cliente.setNome(parti[1]);
                         cliente.setCognome(parti[2]);
                         cliente.setPassword(parti[3]);
+                        caricaMappaAutoUsate();
                         System.out.println(cliente.getEmail());
                         return 2;
                     } else if (parti.length == 5 && parti[0].equals(username) && parti[3].equals(password)) {
@@ -612,8 +615,6 @@ public class Model {
                     filteredLines.add(creaStringaPreventivo(parts));
                 } else if (parts.length > 16 && parts[1].equals(s)) {
                     filteredLines.add(creaStringaPreventivo(parts));
-                } else if (parts.length > 16 && parts[16].equals(s)) {
-                    filteredLines.add(creaStringaPreventivo(parts));
                 }
             }
         } catch (IOException e) {
@@ -624,6 +625,7 @@ public class Model {
 
     private String creaStringaPreventivo(String[] parts) {
         return "Id Preventivo : " + parts[0] +
+                "\nUtente : " + parts[1] +
                 "\nMarca : " + parts[2] +
                 "\nModello : " + parts[3] +
                 "\nAltezza : " + parts[4] + " cm" +
@@ -804,6 +806,25 @@ public class Model {
 
     public void setMarca(ComboBox<Marca> marca) {
         marca.getItems().addAll(getMapAutoNuova().keySet());
+    }
+
+
+    public void caricaMappaAutoUsate() {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA))) {
+                    AutoUsata auto = new AutoUsata(cliente, Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]), Double.parseDouble(parts[8]), new Motore(parts[9].split(";")[0], Enum.valueOf(Alimentazione.class, String.valueOf(parts[9].split(";")[1])), Integer.parseInt(parts[9].split(";")[2]), Integer.parseInt(parts[9].split(";")[3]), Double.parseDouble(parts[9].split(";")[3])), parts[12], Enum.valueOf(Sede.class, String.valueOf(parts[11])));
+                    auto.caricaImmaginiAutoUsata();
+                    mapAutoUsata.computeIfAbsent(Enum.valueOf(Marca.class, String.valueOf(parts[2])), k -> new ArrayList<>()).add(auto);
+                }
+
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

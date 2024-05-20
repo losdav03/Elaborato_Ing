@@ -17,11 +17,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,7 +57,6 @@ public class ConfiguratoreController {
 
         sede.getItems().setAll(Sede.values());
         model.caricaDaFile(filePath, model.getCatalogo());
-       // model.caricaMappaAutoUsate();
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
@@ -141,7 +136,7 @@ public class ConfiguratoreController {
             btnSx.setDisable(false);
             btnDx.setDisable(false);
 
-            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1, 0));
+            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1, 0,""));
             if (imageStream != null) {
                 Image image = new Image(imageStream);
                 img.setImage(image);
@@ -154,15 +149,15 @@ public class ConfiguratoreController {
         switch (vista) {
             case 1 -> {
                 vista = 3;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
             }
             case 2 -> {
                 vista = 1;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
             }
             case 3 -> {
                 vista = 2;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
             }
         }
 
@@ -179,15 +174,15 @@ public class ConfiguratoreController {
         switch (vista) {
             case 1 -> {
                 vista = 2;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
             }
             case 2 -> {
                 vista = 3;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
             }
             case 3 -> {
                 vista = 1;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0);
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
             }
         }
 
@@ -246,7 +241,7 @@ public class ConfiguratoreController {
 
     @FXML
     public void generaPDF() {
-        try {
+     /*   try {
             // Creazione del documento PDF
             PDDocument document = new PDDocument();
             PDPage page = new PDPage();
@@ -301,6 +296,8 @@ public class ConfiguratoreController {
             alert.setContentText("Si è verificato un errore durante la generazione del PDF.");
             alert.showAndWait();
         }
+
+      */
     }
 
     @FXML

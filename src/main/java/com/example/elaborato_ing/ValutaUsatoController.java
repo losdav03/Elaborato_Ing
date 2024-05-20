@@ -5,8 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ValutaUsatoController {
     @FXML
@@ -15,6 +18,8 @@ public class ValutaUsatoController {
     private ListView<String> listaPreventivi;
     @FXML
     private Button valutaBtn;
+    @FXML
+    private ImageView vista1, vista2, vista3;
     Model model = new Model();
     private static String idPreventivo = "";
 
@@ -24,10 +29,11 @@ public class ValutaUsatoController {
 
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
-                String[] utili = newValue.toString().split("\n");
+                String[] utili = newValue.split("\n");
                 String marca = "";
                 String modello = "";
                 String colore = "";
+                String nomeUtente = "";
                 for (String riga : utili) {
                     if (riga.startsWith("Marca")) {
                         marca = riga.split(":")[1].trim();
@@ -41,10 +47,34 @@ public class ValutaUsatoController {
                     if (riga.startsWith("Id Preventivo")) {
                         idPreventivo = riga.split(":")[1].trim();
                     }
+                    if (riga.startsWith("Utente")) {
+                        nomeUtente = riga.split(":")[1].trim();
+                    }
                 }
-                //   model.riempiVista(Marca.valueOf(marca),modello,colore,vista1,1);
-                //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista2,2);
-                //  model.riempiVista(Marca.valueOf(marca),modello,colore,vista3,3);
+                String path1, path2, path3;
+                path1 = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 1, 1,nomeUtente);
+                path2 = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 2, 1,nomeUtente);
+                path3 = model.getImmagineAuto(Marca.valueOf(marca), modello, colore, 3, 1,nomeUtente);
+
+
+                InputStream imageStream = getClass().getResourceAsStream(path1);
+
+                if (imageStream != null) {
+                    Image image = new Image(imageStream);
+                    vista1.setImage(image);
+                }
+                imageStream = getClass().getResourceAsStream(path2);
+
+                if (imageStream != null) {
+                    Image image = new Image(imageStream);
+                    vista2.setImage(image);
+                }
+                imageStream = getClass().getResourceAsStream(path3);
+
+                if (imageStream != null) {
+                    Image image = new Image(imageStream);
+                    vista3.setImage(image);
+                }
             }
         });
         model.numeric(prezzo);

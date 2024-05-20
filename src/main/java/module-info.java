@@ -2,7 +2,7 @@ module com.example.elaborato_ing {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
-    requires pdfbox.app;
+  //  requires pdfbox.app;
 
 
     opens com.example.elaborato_ing to javafx.fxml;
