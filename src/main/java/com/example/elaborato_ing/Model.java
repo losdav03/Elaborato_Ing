@@ -1,5 +1,9 @@
 package com.example.elaborato_ing;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,6 +25,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+import java.util.List;
+
 
 public class Model {
 
@@ -118,21 +124,6 @@ public class Model {
             System.err.println("Errore nei dati: " + e.getMessage());
         }
     }
-/*
-    public void caricaMappaAutoUsate() {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length > 16 && (parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA)))) {
-                    mapAutoUsata.putIfAbsent(Marca.valueOf(parts[2]),);
-                }
-            } catch(IOException e){
-                throw new RuntimeException(e);
-            }
-        }
-    }
-*/
 
 
     public List<String> caricaOptionalDaFile() {
@@ -577,7 +568,7 @@ public class Model {
         return sum;
     }
 
-    public AutoNuova getMarcaModelloAutoNuova(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
+    public static AutoNuova getMarcaModelloAutoNuova(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
         List<AutoNuova> autoList = map.get(marca);
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
@@ -826,6 +817,81 @@ public class Model {
             throw new RuntimeException(e);
         }
     }
+
+    public void generaPDF() {
+        AutoNuova auto = getMarcaModelloAutoNuova(Marca.LAMBORGHINI, "REVUELTO", mapAutoNuova);
+        try {
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
+            document.open();
+            aggiungiContenuto(document, auto);
+            aggiungiImmagine(document, auto);
+            document.close();
+        } catch (FileNotFoundException | DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void aggiungiContenuto(Document document, AutoNuova auto) throws DocumentException {
+        Font font = FontFactory.getFont(FontFactory.HELVETICA, 18, BaseColor.BLACK);
+
+        Paragraph header = new Paragraph("Configuratore Auto", font);
+        header.setAlignment(Element.ALIGN_CENTER);
+        document.add(header);
+        document.add(Chunk.NEWLINE);
+
+        PdfPTable table = new PdfPTable(2);
+        table.setWidthPercentage(100);
+
+        aggiungiCella(table, "Marca:", auto.getMarca().toString());
+        aggiungiCella(table, "Modello:", auto.getModello());
+        aggiungiCella(table, "Altezza (cm):", String.valueOf(auto.getAltezza()));
+        aggiungiCella(table, "Lunghezza (cm):", String.valueOf(auto.getLunghezza()));
+        aggiungiCella(table, "Larghezza (cm):", String.valueOf(auto.getLarghezza()));
+        aggiungiCella(table, "Peso (kg):", String.valueOf(auto.getPeso()));
+        aggiungiCella(table, "Volume Bagagliaio (L):", String.valueOf(auto.getVolumeBagagliaio()));
+        aggiungiCella(table, "Motore:", auto.getMotore().getNome());
+        aggiungiCella(table, "Alimentazione:", auto.getMotore().getAlimentazione().toString());
+        aggiungiCella(table, "Optional Disponibili:", "");
+
+        for (Optionals optional : auto.getOptionalSelezionabili()) {
+            aggiungiCella(table, "", "- " + optional.getNome() + " (Costo: " + optional.getCosto() + ")");
+        }
+
+        document.add(table);
+    }
+
+    private static void aggiungiImmagine(Document document, Auto auto) throws DocumentException {
+        try {
+            for (String imageName : auto.getImmagini()) {
+                InputStream inputStream = ConfiguratoreController.class.getClassLoader().getResourceAsStream(imageName);
+                if (inputStream != null) {
+                    Image image = new Image(inputStream);
+
+                    document.add((Element) image);
+                }
+            }
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    private static void aggiungiCella(PdfPTable table, String label, String value) {
+        Font fontLabel = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+        Font fontValue = FontFactory.getFont(FontFactory.HELVETICA);
+
+        PdfPCell cellLabel = new PdfPCell(new Phrase(label, fontLabel));
+        PdfPCell cellValue = new PdfPCell(new Phrase(value, fontValue));
+
+        cellLabel.setBorder(Rectangle.NO_BORDER);
+        cellValue.setBorder(Rectangle.NO_BORDER);
+
+        table.addCell(cellLabel);
+        table.addCell(cellValue);
+    }
+
+
 }
 
 

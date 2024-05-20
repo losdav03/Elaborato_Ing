@@ -1,6 +1,11 @@
 package com.example.elaborato_ing;
 
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,14 +18,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -136,7 +138,7 @@ public class ConfiguratoreController {
             btnSx.setDisable(false);
             btnDx.setDisable(false);
 
-            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1, 0,""));
+            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1, 0, ""));
             if (imageStream != null) {
                 Image image = new Image(imageStream);
                 img.setImage(image);
@@ -149,15 +151,15 @@ public class ConfiguratoreController {
         switch (vista) {
             case 1 -> {
                 vista = 3;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0, "");
             }
             case 2 -> {
                 vista = 1;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0, "");
             }
             case 3 -> {
                 vista = 2;
-                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
+                pathSx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0, "");
             }
         }
 
@@ -174,15 +176,15 @@ public class ConfiguratoreController {
         switch (vista) {
             case 1 -> {
                 vista = 2;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0, "");
             }
             case 2 -> {
                 vista = 3;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0, "");
             }
             case 3 -> {
                 vista = 1;
-                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0,"");
+                pathDx = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), vista, 0, "");
             }
         }
 
@@ -240,66 +242,9 @@ public class ConfiguratoreController {
     }
 
     @FXML
-    public void generaPDF() {
-     /*   try {
-            // Creazione del documento PDF
-            PDDocument document = new PDDocument();
-            PDPage page = new PDPage();
-            document.addPage(page);
-            PDPageContentStream contentStream = new PDPageContentStream(document, page);
-            //contentStream.setFont(PDType1Font.HELVETICA_BOLD, 12);
-            contentStream.beginText();
-            contentStream.newLineAtOffset(100, 700);
-
-            // Scrittura dei dati dell'auto nel PDF
-            contentStream.showText("Dati dell'auto:");
-            contentStream.newLine();
-            contentStream.showText("Marca: " + marca.getValue());
-            contentStream.newLine();
-            contentStream.showText("Modello: " + modello.getValue());
-            contentStream.newLine();
-            contentStream.showText("Altezza: " + altezza.getText());
-            contentStream.newLine();
-            contentStream.showText("Lunghezza: " + lunghezza.getText());
-            contentStream.newLine();
-            contentStream.showText("Larghezza: " + larghezza.getText());
-            contentStream.newLine();
-            contentStream.showText("Peso: " + peso.getText());
-            contentStream.newLine();
-            contentStream.showText("Volume: " + volume.getText());
-            contentStream.newLine();
-            contentStream.showText("Alimentazione: " + alimentazione.getText());
-            contentStream.newLine();
-            contentStream.showText("Motore: " + motore.getText());
-            contentStream.newLine();
-            contentStream.showText("Prezzo: " + prezzo.getText());
-            contentStream.endText();
-
-            // Chiusura del content stream
-            contentStream.close();
-
-            // Salvataggio del PDF
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf"));
-            fileChooser.setInitialFileName("auto_info.pdf");
-            File file = fileChooser.showSaveDialog(new Stage());
-            if (file != null) {
-                document.save(file);
-                document.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Gestione degli errori durante la creazione del PDF
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Errore");
-            alert.setHeaderText(null);
-            alert.setContentText("Si è verificato un errore durante la generazione del PDF.");
-            alert.showAndWait();
-        }
-
-      */
+   public void generaPDF() {
+        model.generaPDF();
     }
-
     @FXML
     public void vediPreventivi(ActionEvent event) {
         model.openFXML("FXML/Riepilogo.fxml", event);
@@ -311,6 +256,7 @@ public class ConfiguratoreController {
         model.OpenCloseFXML("FXML/Configuratore.fxml", event);
     }
 }
+
 
 
 
