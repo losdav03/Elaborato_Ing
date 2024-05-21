@@ -43,6 +43,8 @@ public class ModificaAutoController {
         model.numeric(prezzo);
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
+
+        model.ciccioGamerFXML("FXML/Segreteria.fxml",marca);
     }
 
     private void inizializzaCheckboxeColore() {
@@ -138,9 +140,9 @@ public class ModificaAutoController {
                 List<String> coloriModificabili = new ArrayList<>(auto.getColori());
                 coloriModificabili.add(colore);
                 auto.setColori(coloriModificabili);
-                model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
-                model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
-                model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
+                model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
 
             } else if (imageView1.getImage() == null || imageView2.getImage() == null || imageView3.getImage() == null) {
                 System.out.println("inserisci 3 immagini");

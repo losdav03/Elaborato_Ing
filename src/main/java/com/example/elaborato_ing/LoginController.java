@@ -23,12 +23,12 @@ public class LoginController {
 
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
-        model.OpenCloseFXML("FXML/Registration.fxml", event);
+        model.openCloseFXML("FXML/Registration.fxml", event);
     }
 
     @FXML
     private void goToLogin(ActionEvent event) throws IOException {
-        model.OpenCloseFXML("FXML/Login.fxml", event);
+        model.openCloseFXML("FXML/Login.fxml", event);
     }
 
     @FXML
@@ -42,10 +42,10 @@ public class LoginController {
             stage.close();
         } else if (model.autenticato(username, password) == 3) {
             System.out.println("Dipendente Loggato!");
-            model.OpenCloseFXML("FXML/Dipendente.fxml", event);
+            model.openCloseFXML("FXML/Dipendente.fxml", event);
         } else if (model.autenticato(username, password) == 1) {
             System.out.println("Segreteria Loggata!");
-            model.OpenCloseFXML("FXML/Segreteria.fxml", event);
+            model.openCloseFXML("FXML/Segreteria.fxml", event);
         } else
             System.out.println("Credenziali non valide.");
 

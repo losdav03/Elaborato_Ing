@@ -4,6 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -367,12 +368,38 @@ public class Model {
         }
     }
 
-    public void OpenCloseFXML(String fxmlPath, ActionEvent event) throws IOException {
+    public void openCloseFXML(String fxmlPath, ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setOnCloseRequest(e -> {
+            aggiornaFileCatalogo();
+            caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", getCatalogo());
+        });
         scene = new Scene(root);
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void ciccioGamerFXML(String path, Node nodo) {
+
+        Platform.runLater(() -> {
+            Stage stage = (Stage) nodo.getScene().getWindow();
+            stage.setOnCloseRequest(event -> handleCloseRequest(path));
+        });
+    }
+
+    private void handleCloseRequest(String path) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        try {
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Gestisci eventuali eccezioni
+        }
     }
 
     //LOGIN
@@ -439,7 +466,7 @@ public class Model {
                             try {
                                 // Scrivi i dati dell'utente nel file, separati da virgole
                                 writer.write(email + "," + nome + "," + cognome + "," + password + "\n");
-                                OpenCloseFXML("FXML/Login.fxml", event);
+                                openCloseFXML("FXML/Login.fxml", event);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

@@ -1,13 +1,20 @@
 package com.example.elaborato_ing;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -38,13 +45,17 @@ public class SegreteriaController {
         modello.setOnAction(_ -> aggiornaCheckbox());
         allOptionals.getItems().setAll(model.caricaOptionalDaFile());
         modello.setDisable(true);
+
+        model.ciccioGamerFXML("FXML/Configuratore.fxml",marca);
+
+
     }
 
     private void setMarche(ComboBox<Marca> marca) {
         marca.getItems().clear();
         List<Marca> marche = new ArrayList<>();
-        for(Auto x : model.getCatalogo().getListaAuto()){
-            if(!marche.contains(x.getMarca())) {
+        for (Auto x : model.getCatalogo().getListaAuto()) {
+            if (!marche.contains(x.getMarca())) {
                 marche.add(x.getMarca());
             }
         }
@@ -154,10 +165,10 @@ public class SegreteriaController {
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
-    public void aggiungiAuto(ActionEvent event) {
+    public void aggiungiAuto(ActionEvent event) throws IOException {
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
-        model.openFXML("FXML/AggiungiAuto.fxml", event);
+        model.openCloseFXML("FXML/AggiungiAuto.fxml", event);
     }
 
     public void aggiungiOptional() {
@@ -182,11 +193,11 @@ public class SegreteriaController {
         allOptionals.setValue(null);
     }
 
-    public void modificaAuto(ActionEvent event) {
-        model.openFXML("FXML/ModificaAuto.fxml", event);
+    public void modificaAuto(ActionEvent event) throws IOException {
+        model.openCloseFXML("FXML/ModificaAuto.fxml", event);
     }
 
-    public void eliminaAuto(ActionEvent event) {
-        model.openFXML("FXML/EliminaAuto.fxml", event);
+    public void eliminaAuto(ActionEvent event) throws IOException {
+        model.openCloseFXML("FXML/EliminaAuto.fxml", event);
     }
 }

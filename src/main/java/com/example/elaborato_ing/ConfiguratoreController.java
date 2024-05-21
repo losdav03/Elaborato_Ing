@@ -262,7 +262,7 @@ public class ConfiguratoreController {
     @FXML
     public void logOut(ActionEvent event) throws IOException {
         model.eliminaCliente();
-        model.OpenCloseFXML("FXML/Configuratore.fxml", event);
+        model.openCloseFXML("FXML/Configuratore.fxml", event);
     }
 }
 

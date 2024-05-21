@@ -25,6 +25,8 @@ public class EliminaAutoController {
         modello.setOnAction(_ -> aggiornaImg());
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         model.aggiornaFileCatalogo();
+
+        model.ciccioGamerFXML("FXML/Segreteria.fxml",marca);
     }
 
     private void aggiornaImg() {

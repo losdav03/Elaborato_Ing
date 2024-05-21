@@ -37,6 +37,6 @@ public class AvvisaController {
 
     @FXML
     public void backBtn(ActionEvent event) throws IOException {
-        model.OpenCloseFXML("FXML/Dipendente.fxml", event);
+        model.openCloseFXML("FXML/Dipendente.fxml", event);
     }
 }
