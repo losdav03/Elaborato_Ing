@@ -19,6 +19,8 @@ public class AggiungiAutoController {
     @FXML
     private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, cilindrata, potenza, consumi, prezzo, sconto;
     @FXML
+    private CheckBox gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre;
+    @FXML
     private ImageView imageView1, imageView2, imageView3;
     @FXML
     private VBox checkBoxContainer;
@@ -67,7 +69,7 @@ public class AggiungiAutoController {
             if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
                 if (marca.getValue() != null && !modello.getText().isEmpty() && !altezza.getText().isEmpty() &&
                         !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() &&
-                        !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() &&
+                        !volume.getText().isEmpty() && !colore.getText().isEmpty() && alimentazione.getValue() != null && !motore.getText().isEmpty() &&
                         !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
 
                     List<String> colori = new ArrayList<>();
@@ -80,6 +82,7 @@ public class AggiungiAutoController {
                     model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
                     model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
 
+                    String scontoCheck = mesiChecked();
                     auto = new AutoNuova(
                             selectedMarca,
                             modello.getText(),
@@ -91,7 +94,7 @@ public class AggiungiAutoController {
                             new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())),
                             Integer.parseInt(prezzo.getText()),
                             colori,
-                            "ABC",
+                            scontoCheck,
                             listaOp
                     );
 
@@ -123,34 +126,22 @@ public class AggiungiAutoController {
         }
     }
 
-    private void addListeners() {
-        // Add listeners to ImageViews
-        imageView1.imageProperty().addListener((obs, oldImage, newImage) -> checkFields());
-        imageView2.imageProperty().addListener((obs, oldImage, newImage) -> checkFields());
-        imageView3.imageProperty().addListener((obs, oldImage, newImage) -> checkFields());
+    private String mesiChecked() {
+        String res = "";
+        if (gennaio.isSelected()) res += "A";
+        if (febbraio.isSelected()) res += "B";
+        if (marzo.isSelected()) res += "C";
+        if (aprile.isSelected()) res += "D";
+        if (maggio.isSelected()) res += "E";
+        if (giugno.isSelected()) res += "F";
+        if (luglio.isSelected()) res += "G";
+        if (agosto.isSelected()) res += "H";
+        if (settembre.isSelected()) res += "I";
+        if (ottobre.isSelected()) res += "J";
+        if (novembre.isSelected()) res += "K";
+        if (dicembre.isSelected()) res += "L";
 
-        // Add listeners to ComboBoxes
-        marca.valueProperty().addListener((obs, oldVal, newVal) -> checkFields());
-        alimentazione.valueProperty().addListener((obs, oldVal, newVal) -> checkFields());
-
-        // Add listeners to TextFields
-        addTextFieldListener(modello);
-        addTextFieldListener(altezza);
-        addTextFieldListener(lunghezza);
-        addTextFieldListener(larghezza);
-        addTextFieldListener(peso);
-        addTextFieldListener(volume);
-        addTextFieldListener(motore);
-        addTextFieldListener(colore);
-        addTextFieldListener(cilindrata);
-        addTextFieldListener(potenza);
-        addTextFieldListener(consumi);
-        addTextFieldListener(prezzo);
-        addTextFieldListener(sconto);
-    }
-
-    private void addTextFieldListener(TextField textField) {
-        textField.textProperty().addListener((obs, oldText, newText) -> checkFields());
+        return res;
     }
 
     private void checkFields() {
@@ -173,6 +164,5 @@ public class AggiungiAutoController {
                         imageView2.getImage() != null &&
                         imageView3.getImage() != null;
 
-        vendibtn.setDisable(!allFieldsFilled);
     }
 }

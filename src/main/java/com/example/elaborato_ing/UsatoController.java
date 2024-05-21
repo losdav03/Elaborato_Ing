@@ -1,8 +1,11 @@
 package com.example.elaborato_ing;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -35,6 +38,8 @@ public class UsatoController {
         model.numeric(cilindrata);
         model.numeric(potenza);
         model.isDouble(consumi);
+        model.checkColore(colore);
+
     }
 
     public void caricaImgs() {
@@ -47,7 +52,7 @@ public class UsatoController {
     }
 
     public void vendi() throws IOException {
-        if (!String.valueOf(marca.getValue()).isEmpty() && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && !String.valueOf(alimentazione.getValue()).isEmpty() && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && !String.valueOf(sede.getValue()).isEmpty()) {
+        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && marca.getValue() != null && !modello.getText().isEmpty() && !altezza.getText().isEmpty() && !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() && !volume.getText().isEmpty() && !colore.getText().isEmpty() && !motore.getText().isEmpty() && alimentazione.getValue() != null && !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty() && sede.getValue() != null) {
             model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText(), 1);
             model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText(), 1);
             model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getText(), colore.getText(), 1);
@@ -55,6 +60,11 @@ public class UsatoController {
             model.inoltraPreventivo(auto, colore.getText().toLowerCase(), 0, Enum.valueOf(Sede.class, String.valueOf(sede.getValue())));
             model.getMapAutoUsata().computeIfAbsent(marca.getValue(), k -> new ArrayList<>()).add(auto);
 
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Attenzione");
+            alert.setHeaderText("Assicurati di aver completato tutti i campi, comprese le immagini (3 in totale)");
+            alert.showAndWait();
         }
     }
 }

@@ -4,37 +4,42 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="360.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.ModificaAutoController">
-   <children>
-      <Label layoutX="26.0" layoutY="14.0" text="Seleziona Marca della &#10;macchina da Modificare" />
-      <ComboBox fx:id="marca" layoutX="14.0" layoutY="48.0" prefWidth="150.0" />
-      <Label layoutX="26.0" layoutY="80.0" text="Seleziona Modello della &#10;macchina da Modificare" />
-      <ComboBox fx:id="modello" layoutX="14.0" layoutY="114.0" prefWidth="150.0" />
-      <Label layoutX="12.0" layoutY="145.0" text="Imposta nuovo prezzo&#10;nella macchina da Modificare" />
-      <TextField fx:id="prezzo" layoutX="15.0" layoutY="179.0" />
-      <Label layoutX="14.0" layoutY="210.0" text="Segna i mesi in cui scontare l'auto" />
-      <CheckBox fx:id="gennaio" layoutX="15.0" layoutY="229.0" mnemonicParsing="false" text="Gennaio" />
-      <CheckBox fx:id="febbraio" layoutX="89.0" layoutY="229.0" mnemonicParsing="false" text="Febbraio" />
-      <CheckBox fx:id="marzo" layoutX="169.0" layoutY="229.0" mnemonicParsing="false" text="Marzo" />
-      <CheckBox fx:id="aprile" layoutX="15.0" layoutY="251.0" mnemonicParsing="false" text="Aprile" />
-      <CheckBox fx:id="maggio" layoutX="89.0" layoutY="251.0" mnemonicParsing="false" text="Maggio" />
-      <CheckBox fx:id="giugno" layoutX="169.0" layoutY="251.0" mnemonicParsing="false" text="Giugno" />
-      <CheckBox fx:id="luglio" layoutX="15.0" layoutY="273.0" mnemonicParsing="false" text="Luglio" />
-      <CheckBox fx:id="agosto" layoutX="89.0" layoutY="273.0" mnemonicParsing="false" text="Agosto" />
-      <CheckBox fx:id="settembre" layoutX="169.0" layoutY="273.0" mnemonicParsing="false" text="Settembre" />
-      <CheckBox fx:id="ottobre" layoutX="15.0" layoutY="295.0" mnemonicParsing="false" text="Ottobre" />
-      <CheckBox fx:id="novembre" layoutX="89.0" layoutY="295.0" mnemonicParsing="false" text="Novembre" />
-      <CheckBox fx:id="dicembre" layoutX="169.0" layoutY="295.0" mnemonicParsing="false" text="Dicembre" />
-      <Label layoutX="15.0" layoutY="322.0" text="Rimuovi Colore" />
-      <ComboBox fx:id="colore" layoutX="104.0" layoutY="318.0" prefHeight="25.0" prefWidth="127.0" />
-      <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="258.0" layoutY="137.0" />
-      <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="368.0" layoutY="137.0" />
-      <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="478.0" layoutY="137.0" />
-      <Button fx:id="caricaImg" layoutX="258.0" layoutY="79.0" mnemonicParsing="false" onAction="#caricaImgs" prefHeight="46.0" prefWidth="155.0" text="carica immagini relative&#10;al nuovo colore" />
-      <Button fx:id="rimuoviImg" layoutX="423.0" layoutY="79.0" mnemonicParsing="false" onAction="#rimuoviImgs" prefHeight="46.0" prefWidth="155.0" text="rimuovi immagini relative&#10;al nuovo colore" />
+<AnchorPane prefHeight="360.0" prefWidth="592.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.ModificaAutoController">
+    <children>
+        <Label layoutX="26.0" layoutY="14.0" text="Seleziona Marca della &#10;macchina da Modificare"/>
+        <ComboBox fx:id="marca" layoutX="14.0" layoutY="48.0" prefWidth="150.0"/>
+        <Label layoutX="26.0" layoutY="80.0" text="Seleziona Modello della &#10;macchina da Modificare"/>
+        <ComboBox fx:id="modello" layoutX="14.0" layoutY="114.0" prefWidth="150.0"/>
+        <Label layoutX="12.0" layoutY="145.0" text="Imposta nuovo prezzo&#10;nella macchina da Modificare"/>
+        <TextField fx:id="prezzo" layoutX="15.0" layoutY="179.0"/>
+        <Label layoutX="14.0" layoutY="210.0" text="Segna i mesi in cui scontare l'auto"/>
+        <CheckBox fx:id="gennaio" layoutX="15.0" layoutY="229.0" mnemonicParsing="false" text="Gennaio"/>
+        <CheckBox fx:id="febbraio" layoutX="89.0" layoutY="229.0" mnemonicParsing="false" text="Febbraio"/>
+        <CheckBox fx:id="marzo" layoutX="169.0" layoutY="229.0" mnemonicParsing="false" text="Marzo"/>
+        <CheckBox fx:id="aprile" layoutX="15.0" layoutY="251.0" mnemonicParsing="false" text="Aprile"/>
+        <CheckBox fx:id="maggio" layoutX="89.0" layoutY="251.0" mnemonicParsing="false" text="Maggio"/>
+        <CheckBox fx:id="giugno" layoutX="169.0" layoutY="251.0" mnemonicParsing="false" text="Giugno"/>
+        <CheckBox fx:id="luglio" layoutX="15.0" layoutY="273.0" mnemonicParsing="false" text="Luglio"/>
+        <CheckBox fx:id="agosto" layoutX="89.0" layoutY="273.0" mnemonicParsing="false" text="Agosto"/>
+        <CheckBox fx:id="settembre" layoutX="169.0" layoutY="273.0" mnemonicParsing="false" text="Settembre"/>
+        <CheckBox fx:id="ottobre" layoutX="15.0" layoutY="295.0" mnemonicParsing="false" text="Ottobre"/>
+        <CheckBox fx:id="novembre" layoutX="89.0" layoutY="295.0" mnemonicParsing="false" text="Novembre"/>
+        <CheckBox fx:id="dicembre" layoutX="169.0" layoutY="295.0" mnemonicParsing="false" text="Dicembre"/>
+        <Label layoutX="15.0" layoutY="322.0" text="Rimuovi Colore"/>
+        <ComboBox fx:id="colore" layoutX="104.0" layoutY="318.0" prefHeight="25.0" prefWidth="127.0"/>
+        <ImageView fx:id="imageView1" disable="false" fitHeight="150.0" fitWidth="100.0" layoutX="258.0"
+                   layoutY="137.0"/>
+        <ImageView fx:id="imageView2" fitHeight="150.0" fitWidth="100.0" layoutX="368.0" layoutY="137.0"/>
+        <ImageView fx:id="imageView3" fitHeight="150.0" fitWidth="100.0" layoutX="478.0" layoutY="137.0"/>
+        <Button fx:id="caricaImg" layoutX="258.0" layoutY="79.0" mnemonicParsing="false" onAction="#caricaImgs"
+                prefHeight="46.0" prefWidth="155.0" text="carica immagini relative&#10;al nuovo colore"/>
+        <Button fx:id="rimuoviImg" layoutX="423.0" layoutY="79.0" mnemonicParsing="false" onAction="#rimuoviImgs"
+                prefHeight="46.0" prefWidth="155.0" text="rimuovi immagini relative&#10;al nuovo colore"/>
 
-      <Button fx:id="modifica" disable="true" layoutX="377.0" layoutY="305.0" mnemonicParsing="false" onAction="#modificaAuto" prefHeight="34.0" prefWidth="130.0" text="Modifica Auto" />
-      <Label layoutX="258.0" layoutY="52.0" text="Inserisci nuova colorazione" />
-      <TextField fx:id="coloreNuovo" layoutX="413.0" layoutY="48.0" />
-   </children>
+        <Button fx:id="modifica" layoutX="377.0" layoutY="305.0" mnemonicParsing="false" onAction="#modificaAuto"
+                prefHeight="34.0" prefWidth="130.0" text="Modifica Auto"/>
+        <Label layoutX="258.0" layoutY="52.0" text="Inserisci nuova colorazione"/>
+        <TextField fx:id="coloreNuovo" layoutX="413.0" layoutY="48.0"/>
+    </children>
 </AnchorPane>

@@ -8,6 +8,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,13 +35,32 @@ public class ModificaAutoController {
 
     public void initialize() {
         model.setMarca(marca);
+        modello.setDisable(true);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> inizializzaCheckboxeColore());
+
+        model.numeric(prezzo);
         model.aggiornaFileCatalogo();
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
     }
 
     private void inizializzaCheckboxeColore() {
         AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
+        // Reset dei checkbox
+        gennaio.setSelected(false);
+        febbraio.setSelected(false);
+        marzo.setSelected(false);
+        aprile.setSelected(false);
+        maggio.setSelected(false);
+        giugno.setSelected(false);
+        luglio.setSelected(false);
+        agosto.setSelected(false);
+        settembre.setSelected(false);
+        ottobre.setSelected(false);
+        novembre.setSelected(false);
+        dicembre.setSelected(false);
+
+        // Imposta i checkbox in base agli sconti
         if (auto.getSconto().contains("A")) gennaio.setSelected(true);
         if (auto.getSconto().contains("B")) febbraio.setSelected(true);
         if (auto.getSconto().contains("C")) marzo.setSelected(true);
@@ -53,12 +73,15 @@ public class ModificaAutoController {
         if (auto.getSconto().contains("J")) ottobre.setSelected(true);
         if (auto.getSconto().contains("K")) novembre.setSelected(true);
         if (auto.getSconto().contains("L")) dicembre.setSelected(true);
+
+        // Aggiorna i colori disponibili
         colore.getItems().clear();
-        if(auto.getColori().size() != 1) {
+        if (!auto.getColori().isEmpty()) {
             colore.getItems().addAll(auto.getColori());
-            colore.setValue(colore.getItems().getFirst());
-        }else
+            colore.setDisable(false);
+        } else {
             colore.setDisable(true);
+        }
     }
 
     private void aggiornaModello() {
@@ -71,41 +94,48 @@ public class ModificaAutoController {
     }
 
     public void modificaAuto() {
-        AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
-        if (prezzo.getText() != null) {
-            auto.setPrezzo(Integer.parseInt(prezzo.getText()));
-        }
-        String scontoAgg = "";
-        if (gennaio.isSelected()) scontoAgg += "A";
-        if (febbraio.isSelected()) scontoAgg += "B";
-        if (marzo.isSelected()) scontoAgg += "C";
-        if (aprile.isSelected()) scontoAgg += "D";
-        if (maggio.isSelected()) scontoAgg += "E";
-        if (giugno.isSelected()) scontoAgg += "F";
-        if (luglio.isSelected()) scontoAgg += "G";
-        if (agosto.isSelected()) scontoAgg += "H";
-        if (settembre.isSelected()) scontoAgg += "I";
-        if (ottobre.isSelected()) scontoAgg += "J";
-        if (novembre.isSelected()) scontoAgg += "K";
-        if (dicembre.isSelected()) scontoAgg += "L";
-        if (!auto.getSconto().equals(scontoAgg)) {
-            auto.setSconto(scontoAgg);
-        }
-        if (colore.getValue() != null) {
-            auto.getColori().remove(colore.getValue());
-        }
-        if (coloreNuovo.getText() != null && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
-            auto.getColori().add(coloreNuovo.getText());
-        } else if (imageView1.getImage() != null || imageView2.getImage() != null || imageView3.getImage() != null) {
-            System.out.println("inserisci 3 immagini");
-        } else {
-            System.out.println("inserisci nome colore");
+        if (marca.getValue() != null && modello.getValue() != null) {
+            AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
+            if (!prezzo.getText().isEmpty()) {
+                auto.setPrezzo(Integer.parseInt(prezzo.getText()));
+            }
+            String scontoAgg = "";
+            if (gennaio.isSelected()) scontoAgg += "A";
+            if (febbraio.isSelected()) scontoAgg += "B";
+            if (marzo.isSelected()) scontoAgg += "C";
+            if (aprile.isSelected()) scontoAgg += "D";
+            if (maggio.isSelected()) scontoAgg += "E";
+            if (giugno.isSelected()) scontoAgg += "F";
+            if (luglio.isSelected()) scontoAgg += "G";
+            if (agosto.isSelected()) scontoAgg += "H";
+            if (settembre.isSelected()) scontoAgg += "I";
+            if (ottobre.isSelected()) scontoAgg += "J";
+            if (novembre.isSelected()) scontoAgg += "K";
+            if (dicembre.isSelected()) scontoAgg += "L";
+            if (!auto.getSconto().equals(scontoAgg)) {
+                auto.setSconto(scontoAgg);
+            }
+            if (colore.getValue() != null) {
+                List<String> coloriModificabili = new ArrayList<>(auto.getColori());
+                coloriModificabili.remove(String.valueOf(colore.getValue()));
+                auto.setColori(coloriModificabili);  // Assuming you have a setter for colori in AutoNuova
+            }
+            if (!coloreNuovo.getText().isEmpty() && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
+                List<String> coloriModificabili = new ArrayList<>(auto.getColori());
+                coloriModificabili.add(coloreNuovo.getText());
+                auto.setColori(coloriModificabili);  // Assuming you have a setter for colori in AutoNuova
+            } else if (imageView1.getImage() == null || imageView2.getImage() == null || imageView3.getImage() == null) {
+                System.out.println("inserisci 3 immagini");
+            } else {
+                System.out.println("inserisci nome");
+            }
+            System.out.println(auto.getColori());
         }
     }
 
+
     public void caricaImgs() {
         model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
-
     }
 
     public void rimuoviImgs() {

@@ -6,7 +6,7 @@ import java.util.*;
 public class AutoNuova extends Auto {
     private int prezzo;
     private String sconto;
-    private final List<String> colori;
+    private List<String> colori;
     private List<Optionals> optionalScelti;
 
     private static final Map<Character, Integer> mappaSconti = new HashMap<>();
@@ -73,6 +73,10 @@ public class AutoNuova extends Auto {
 
     public List<String> getColori() {
         return colori;
+    }
+
+    public void setColori(List<String> colori) {
+        this.colori = colori;
     }
 
     public int getPrezzo() {

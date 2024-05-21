@@ -84,6 +84,8 @@ public class Model {
     }
 
     public void caricaDaFile(String file, Catalogo catalogo) {
+        mapAutoNuova.clear();
+        catalogo.getListaAuto().clear();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -408,9 +410,6 @@ public class Model {
                     alert.setContentText("Questa email esiste già");
                     alert.showAndWait();
                 } else {
-                    // Scrivi i dati dell'utente nel file, separati da virgole
-                    writer.write(email + "," + nome + "," + cognome + "," + password + "\n");
-
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Successo");
                     alert.setHeaderText("Registrazione avvenuta con successo");
@@ -420,13 +419,15 @@ public class Model {
                     alert.showAndWait().ifPresent(response -> {
                         if (response == ButtonType.OK) {
                             try {
+                                // Scrivi i dati dell'utente nel file, separati da virgole
+                                writer.write(email + "," + nome + "," + cognome + "," + password + "\n");
                                 OpenCloseFXML("FXML/Login.fxml", event);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
-                    });
 
+                    });
                 }
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -528,6 +529,16 @@ public class Model {
             String character = event.getCharacter();
             // Consenti solo numeri (0-9) e impedisci input di altri caratteri
             if (!character.matches("\\d")) {
+                event.consume(); // Blocca l'evento se non è un numero
+            }
+        });
+    }
+
+    public void checkColore(TextField colore) {
+        colore.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+            String character = event.getCharacter();
+            // Consenti solo numeri (0-9) e impedisci input di altri caratteri
+            if (character.matches("\\d")) {
                 event.consume(); // Blocca l'evento se non è un numero
             }
         });
@@ -793,9 +804,9 @@ public class Model {
 
 
     public void setMarca(ComboBox<Marca> marca) {
+        marca.getItems().clear();
         marca.getItems().addAll(getMapAutoNuova().keySet());
     }
-
 
     public void caricaMappaAutoUsate() {
         mapAutoUsata.clear();

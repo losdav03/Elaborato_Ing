@@ -128,7 +128,7 @@ public class SegreteriaController {
     }
 
     public void xmarca() {
-        preventivi.sort(Comparator.comparing(p -> p.getAuto().getMarca()));
+        preventivi.sort(Comparator.comparing(p -> p.getAuto().getMarca().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
         preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
@@ -142,6 +142,8 @@ public class SegreteriaController {
     }
 
     public void aggiungiAuto(ActionEvent event) {
+        model.aggiornaFileCatalogo();
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         model.openFXML("FXML/AggiungiAuto.fxml", event);
     }
 

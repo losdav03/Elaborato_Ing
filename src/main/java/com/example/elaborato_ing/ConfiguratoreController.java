@@ -51,7 +51,6 @@ public class ConfiguratoreController {
             return;
         }
 
-        sede.getItems().setAll(Sede.values());
         model.caricaDaFile(filePath, model.getCatalogo());
         model.caricaMappaAutoUsate();
         model.setMarca(marca);
@@ -79,6 +78,17 @@ public class ConfiguratoreController {
         img.setImage(null);
         modello.getItems().clear();
         colori.getItems().clear();
+        vBox.getChildren().clear();
+        lunghezza.setText("");
+        altezza.setText("");
+        larghezza.setText("");
+        peso.setText("");
+        volume.setText("");
+        alimentazione.setText("");
+        motore.setText("");
+        prezzo.setText("");
+
+        sede.getItems().clear();
         colori.setDisable(true);
         sede.setDisable(true);
         modello.setDisable(true);
@@ -122,6 +132,7 @@ public class ConfiguratoreController {
                 colori.getItems().clear();
                 colori.getItems().addAll(auto.getColori());
                 colori.setValue(colori.getItems().getFirst());
+                sede.getItems().setAll(Sede.values());
             }
 
         }

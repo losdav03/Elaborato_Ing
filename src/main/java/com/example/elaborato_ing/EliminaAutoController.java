@@ -23,6 +23,7 @@ public class EliminaAutoController {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaImg());
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         model.aggiornaFileCatalogo();
     }
 
@@ -48,5 +49,8 @@ public class EliminaAutoController {
     public void elimina() {
         model.getCatalogo().remove(marca.getValue(), String.valueOf(modello.getValue()));
         model.aggiornaFileCatalogo();
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
+        model.setMarca(marca);
+        autoImg.setImage(null);
     }
 }

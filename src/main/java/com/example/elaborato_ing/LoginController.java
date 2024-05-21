@@ -44,7 +44,7 @@ public class LoginController {
             System.out.println("Dipendente Loggato!");
             model.OpenCloseFXML("FXML/Dipendente.fxml", event);
         } else if (model.autenticato(username, password) == 1) {
-            System.out.println("Amministrazione Loggata!");
+            System.out.println("Segreteria Loggata!");
             model.OpenCloseFXML("FXML/Segreteria.fxml", event);
         } else
             System.out.println("Credenziali non valide.");
