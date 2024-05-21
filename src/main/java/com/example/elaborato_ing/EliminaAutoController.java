@@ -29,7 +29,7 @@ public class EliminaAutoController {
 
     private void aggiornaImg() {
         if (marca.getValue() != null && modello.getValue() != null) {
-            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), (model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova())).getColori().getFirst(), 1, 0,""));
+            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), (model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova())).getColori().getFirst(), 1, 0, ""));
             if (imageStream != null) {
                 Image image = new Image(imageStream);
                 autoImg.setImage(image);
@@ -38,6 +38,8 @@ public class EliminaAutoController {
     }
 
     private void aggiornaModello() {
+        model.aggiornaFileCatalogo();
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 

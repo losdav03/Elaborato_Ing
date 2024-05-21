@@ -17,7 +17,7 @@ public class AggiungiAutoController {
     @FXML
     private ComboBox<Alimentazione> alimentazione;
     @FXML
-    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, cilindrata, potenza, consumi, prezzo, sconto;
+    private TextField modello, altezza, lunghezza, larghezza, peso, volume, motore, colore, cilindrata, potenza, consumi, prezzo;
     @FXML
     private CheckBox gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre;
     @FXML
@@ -26,11 +26,9 @@ public class AggiungiAutoController {
     private VBox checkBoxContainer;
     @FXML
     private Button vendibtn;
-    @FXML
-    private Label errore;
     private final Model model = new Model();
     private final List<Optionals> listaOp = new ArrayList<>();
-    private Auto auto;
+    private AutoNuova auto;
 
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
@@ -44,8 +42,8 @@ public class AggiungiAutoController {
         model.numeric(prezzo);
         model.numeric(potenza);
         model.isDouble(consumi);
+        model.checkColore(colore);
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
-
         vendibtn.setDisable(false);
 
     }
@@ -53,76 +51,81 @@ public class AggiungiAutoController {
     @FXML
     public void caricaImgs() {
         model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
-        checkFields();
     }
 
     @FXML
     public void rimuoviImgs() {
         model.rimuoviImgs(imageView1, imageView2, imageView3);
-        checkFields();
     }
 
     @FXML
-    public void aggiungiAuto() {
-        errore.setVisible(false);
-        try {
-            if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
-                if (marca.getValue() != null && !modello.getText().isEmpty() && !altezza.getText().isEmpty() &&
-                        !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() &&
-                        !volume.getText().isEmpty() && !colore.getText().isEmpty() && alimentazione.getValue() != null && !motore.getText().isEmpty() &&
-                        !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
+    public void aggiungiAuto() throws IOException {
+        if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && marca.getValue() != null && !modello.getText().isEmpty() && !altezza.getText().isEmpty() &&
+                !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() &&
+                !volume.getText().isEmpty() && !colore.getText().isEmpty() && alimentazione.getValue() != null && !motore.getText().isEmpty() &&
+                !cilindrata.getText().isEmpty() && !potenza.getText().isEmpty() && !consumi.getText().isEmpty()) {
+            if (model.getMarcaModelloAutoNuova(marca.getValue(), modello.getText(), model.getMapAutoNuova()) == null) {
+                List<String> colori = new ArrayList<>();
+                colori.add(colore.getText().toUpperCase());
 
-                    List<String> colori = new ArrayList<>();
-                    colori.add(colore.getText().toUpperCase());
+                Marca selectedMarca = Enum.valueOf(Marca.class, String.valueOf(marca.getValue()));
+                Alimentazione selectedAlimentazione = Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue()));
 
-                    Marca selectedMarca = Enum.valueOf(Marca.class, String.valueOf(marca.getValue()));
-                    Alimentazione selectedAlimentazione = Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue()));
+                model.salvaImageViewImage(imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
+                model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
+                model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
 
-                    model.salvaImageViewImage(imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
-                    model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
-                    model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
+                String scontoCheck = mesiChecked();
+                auto = new AutoNuova(
+                        selectedMarca,
+                        modello.getText(),
+                        Double.parseDouble(altezza.getText()),
+                        Double.parseDouble(lunghezza.getText()),
+                        Double.parseDouble(larghezza.getText()),
+                        Double.parseDouble(peso.getText()),
+                        Double.parseDouble(volume.getText()),
+                        new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())),
+                        Integer.parseInt(prezzo.getText()),
+                        colori,
+                        scontoCheck,
+                        listaOp
+                );
 
-                    String scontoCheck = mesiChecked();
-                    auto = new AutoNuova(
-                            selectedMarca,
-                            modello.getText(),
-                            Double.parseDouble(altezza.getText()),
-                            Double.parseDouble(lunghezza.getText()),
-                            Double.parseDouble(larghezza.getText()),
-                            Double.parseDouble(peso.getText()),
-                            Double.parseDouble(volume.getText()),
-                            new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())),
-                            Integer.parseInt(prezzo.getText()),
-                            colori,
-                            scontoCheck,
-                            listaOp
-                    );
+                model.getCatalogo().add(auto);
+                model.aggiornaFileCatalogo();
+                model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt",model.getCatalogo());
 
-                    if (model.getCatalogo().getListaAuto().contains(auto)) {
-                        errore.setText("Auto già presente");
-                        errore.setVisible(true);
-                    } else {
-                        model.getCatalogo().add((AutoNuova) auto);
-                        model.aggiornaFileCatalogo();
-                        errore.setVisible(false);
-                    }
-                } else {
-                    errore.setText("Inserisci tutti i campi");
-                    errore.setVisible(true);
-                }
+                marca.getItems().clear();
+                marca.getItems().setAll(Marca.values());
+                modello.setText("");
+                lunghezza.setText("");
+                altezza.setText("");
+                larghezza.setText("");
+                peso.setText("");
+                volume.setText("");
+                alimentazione.getItems().clear();
+                alimentazione.getItems().setAll(Alimentazione.values());
+                motore.setText("");
+                cilindrata.setText("");
+                potenza.setText("");
+                consumi.setText("");
+                prezzo.setText("");
+                colore.setText("");
+                mesiUnChecked();
+                imageView1.setImage(null);
+                imageView2.setImage(null);
+                imageView3.setImage(null);
             } else {
-                errore.setText("Inserisci 3 immagini");
-                errore.setVisible(true);
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Attenzione");
+                alert.setHeaderText("Auto già presente");
+                alert.showAndWait();
             }
-        } catch (NumberFormatException e) {
-            errore.setText("Errore nei campi numerici");
-            errore.setVisible(true);
-        } catch (IllegalArgumentException e) {
-            errore.setText("Errore nei campi di selezione");
-            errore.setVisible(true);
-        } catch (IOException e) {
-            errore.setText("Errore durante il salvataggio");
-            errore.setVisible(true);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Attenzione");
+            alert.setHeaderText("Assicurati di aver completato tutti i campi, comprese le immagini (3 in totale)");
+            alert.showAndWait();
         }
     }
 
@@ -144,25 +147,18 @@ public class AggiungiAutoController {
         return res;
     }
 
-    private void checkFields() {
-        boolean allFieldsFilled =
-                marca.getValue() != null &&
-                        alimentazione.getValue() != null &&
-                        !modello.getText().isEmpty() &&
-                        !altezza.getText().isEmpty() &&
-                        !lunghezza.getText().isEmpty() &&
-                        !larghezza.getText().isEmpty() &&
-                        !peso.getText().isEmpty() &&
-                        !volume.getText().isEmpty() &&
-                        !motore.getText().isEmpty() &&
-                        !colore.getText().isEmpty() &&
-                        !cilindrata.getText().isEmpty() &&
-                        !potenza.getText().isEmpty() &&
-                        !consumi.getText().isEmpty() &&
-                        !prezzo.getText().isEmpty() &&
-                        imageView1.getImage() != null &&
-                        imageView2.getImage() != null &&
-                        imageView3.getImage() != null;
-
+    private void mesiUnChecked() {
+        gennaio.setSelected(false);
+        febbraio.setSelected(false);
+        marzo.setSelected(false);
+        aprile.setSelected(false);
+        maggio.setSelected(false);
+        giugno.setSelected(false);
+        luglio.setSelected(false);
+        agosto.setSelected(false);
+        settembre.setSelected(false);
+        ottobre.setSelected(false);
+        novembre.setSelected(false);
+        dicembre.setSelected(false);
     }
 }

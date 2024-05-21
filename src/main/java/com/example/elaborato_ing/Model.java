@@ -18,7 +18,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.imageio.stream.ImageInputStream;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -733,8 +732,7 @@ public class Model {
         }
     }
 
-    public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws
-            IOException {
+    public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
         while ((line = reader.readLine()) != null) {
@@ -749,22 +747,21 @@ public class Model {
                     dialog.setContentText("Value:");
 
                     Optional<String> result = dialog.showAndWait();
-                    result.ifPresent(value -> {
-                        try {
-                            int doubleValue = Integer.parseInt(value);
-                            // Create new Optional object and add to list
-                            Optionals optional = new Optionals(finalLine, doubleValue);
+                    if (result.isPresent()) {
+                        String prezzoString = result.get();
+                        if (prezzoString.matches("\\d+")) {
+                            int prezzoOptional = Integer.parseInt(prezzoString);
+                            Optionals optional = new Optionals(finalLine, prezzoOptional);
                             listaOp.add(optional);
-                        } catch (NumberFormatException e) {
-                            throw new NumberFormatException();
+                        } else {
+                            checkBox.setSelected(false);
                         }
-                    });
+                    } else {
+                        checkBox.setSelected(false);
+                    }
                 } else {
                     // Remove Optional from list and reset price
                     listaOp.removeIf(optional -> optional.getNome().equals(finalLine));
-                    // Reset price to 0 if no optional selected
-                    // In this example, "prezzo" refers to the TextField where price is entered
-
                 }
             });
             checkBoxContainer.getChildren().add(checkBox);

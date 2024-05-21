@@ -74,7 +74,8 @@ public class ConfiguratoreController {
     }
 
     private void aggiornaModello() {
-
+        model.aggiornaFileCatalogo();
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         img.setImage(null);
         modello.getItems().clear();
         colori.getItems().clear();
@@ -248,9 +249,10 @@ public class ConfiguratoreController {
     }
 
     @FXML
-   public void generaPDF() {
+    public void generaPDF() {
         model.generaPDF();
     }
+
     @FXML
     public void vediPreventivi(ActionEvent event) {
         model.caricaMappaAutoUsate();

@@ -37,7 +37,7 @@ public class SegreteriaController {
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
         allOptionals.getItems().setAll(model.caricaOptionalDaFile());
-        System.out.println(model.getAmministrazione().getEmail());
+        modello.setDisable(true);
     }
 
     private void caricaPreventivi() {
@@ -107,6 +107,8 @@ public class SegreteriaController {
     }
 
     private void aggiornaModello() {
+        model.aggiornaFileCatalogo();
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 

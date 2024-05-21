@@ -82,13 +82,18 @@ public class ModificaAutoController {
         colore.getItems().clear();
         if (!auto.getColori().isEmpty()) {
             colore.getItems().addAll(auto.getColori());
-            colore.setDisable(false);
+            if (colore.getItems().size() == 1)
+                colore.setDisable(true);
+            else
+                colore.setDisable(false);
         } else {
             colore.setDisable(true);
         }
     }
 
     private void aggiornaModello() {
+        model.aggiornaFileCatalogo();
+        model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
@@ -102,6 +107,7 @@ public class ModificaAutoController {
             AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
             if (!prezzo.getText().isEmpty()) {
                 auto.setPrezzo(Integer.parseInt(prezzo.getText()));
+                prezzo.setText("");
             }
             String scontoAgg = "";
             if (gennaio.isSelected()) scontoAgg += "A";
@@ -116,13 +122,17 @@ public class ModificaAutoController {
             if (ottobre.isSelected()) scontoAgg += "J";
             if (novembre.isSelected()) scontoAgg += "K";
             if (dicembre.isSelected()) scontoAgg += "L";
+
             if (!auto.getSconto().equals(scontoAgg)) {
                 auto.setSconto(scontoAgg);
+                mesiUnChecked();
             }
             if (colore.getValue() != null) {
                 List<String> coloriModificabili = new ArrayList<>(auto.getColori());
                 coloriModificabili.remove(String.valueOf(colore.getValue()));
                 auto.setColori(coloriModificabili);
+                colore.getItems().clear();
+                colore.getItems().setAll(coloriModificabili);
             }
             if (!coloreNuovo.getText().isEmpty() && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
                 String colore = coloreNuovo.getText().toUpperCase();
@@ -130,7 +140,6 @@ public class ModificaAutoController {
                 List<String> coloriModificabili = new ArrayList<>(auto.getColori());
                 coloriModificabili.add(colore);
                 auto.setColori(coloriModificabili);
-                String basePath = "src/main/resources/com/example/elaborato_ing/images/";
                 model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
                 model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
                 model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
@@ -140,9 +149,9 @@ public class ModificaAutoController {
             } else {
                 System.out.println("inserisci nome");
             }
+            model.sostituisciAuto(auto);
             model.aggiornaFileCatalogo();
             model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
-            model.sostituisciAuto(auto);
         }
     }
 
@@ -152,5 +161,20 @@ public class ModificaAutoController {
 
     public void rimuoviImgs() {
         model.rimuoviImgs(imageView1, imageView2, imageView3);
+    }
+
+    private void mesiUnChecked() {
+        gennaio.setSelected(false);
+        febbraio.setSelected(false);
+        marzo.setSelected(false);
+        aprile.setSelected(false);
+        maggio.setSelected(false);
+        giugno.setSelected(false);
+        luglio.setSelected(false);
+        agosto.setSelected(false);
+        settembre.setSelected(false);
+        ottobre.setSelected(false);
+        novembre.setSelected(false);
+        dicembre.setSelected(false);
     }
 }
