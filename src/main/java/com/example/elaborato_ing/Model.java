@@ -924,6 +924,16 @@ public class Model {
             throw new RuntimeException(e);
         }
     }
+
+    public void sostituisciAuto(AutoNuova auto) {
+        for (int i = 0; i < catalogo.getListaAuto().size(); i++) {
+            Auto autoEsistente = catalogo.getListaAuto().get(i);
+            if (autoEsistente.getModello().equals(auto.getModello()) && autoEsistente.getMarca() == auto.getMarca()) {
+                catalogo.getListaAuto().set(i, auto);
+                return;
+            }
+        }
+    }
 }
 
 

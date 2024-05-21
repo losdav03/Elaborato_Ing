@@ -6,8 +6,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -93,7 +97,7 @@ public class ModificaAutoController {
         modello.setDisable(false);
     }
 
-    public void modificaAuto() {
+    public void modificaAuto() throws IOException {
         if (marca.getValue() != null && modello.getValue() != null) {
             AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
             if (!prezzo.getText().isEmpty()) {
@@ -118,21 +122,29 @@ public class ModificaAutoController {
             if (colore.getValue() != null) {
                 List<String> coloriModificabili = new ArrayList<>(auto.getColori());
                 coloriModificabili.remove(String.valueOf(colore.getValue()));
-                auto.setColori(coloriModificabili);  // Assuming you have a setter for colori in AutoNuova
+                auto.setColori(coloriModificabili);
             }
             if (!coloreNuovo.getText().isEmpty() && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
+                String colore = coloreNuovo.getText().toUpperCase();
+
                 List<String> coloriModificabili = new ArrayList<>(auto.getColori());
-                coloriModificabili.add(coloreNuovo.getText());
-                auto.setColori(coloriModificabili);  // Assuming you have a setter for colori in AutoNuova
+                coloriModificabili.add(colore);
+                auto.setColori(coloriModificabili);
+                String basePath = "src/main/resources/com/example/elaborato_ing/images/";
+                model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
+                model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
+                model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 1);
+
             } else if (imageView1.getImage() == null || imageView2.getImage() == null || imageView3.getImage() == null) {
                 System.out.println("inserisci 3 immagini");
             } else {
                 System.out.println("inserisci nome");
             }
-            System.out.println(auto.getColori());
+            model.aggiornaFileCatalogo();
+            model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
+            model.sostituisciAuto(auto);
         }
     }
-
 
     public void caricaImgs() {
         model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
