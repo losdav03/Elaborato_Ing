@@ -28,10 +28,7 @@ public class ModificaAutoController {
     @FXML
     private ComboBox<String> modello, colore;
     @FXML
-    private Button modifica;
-    @FXML
     private ImageView imageView1, imageView2, imageView3;
-
     @FXML
     private TextField coloreNuovo;
 
@@ -123,6 +120,7 @@ public class ModificaAutoController {
             if (novembre.isSelected()) scontoAgg += "K";
             if (dicembre.isSelected()) scontoAgg += "L";
 
+            assert auto != null;
             if (!auto.getSconto().equals(scontoAgg)) {
                 auto.setSconto(scontoAgg);
                 mesiUnChecked();
@@ -178,3 +176,9 @@ public class ModificaAutoController {
         dicembre.setSelected(false);
     }
 }
+/*
+AGGIUNGI AUTO
+pilure i checkbox selezionati dopo add auto
+pulire i campi post modifica auto
+se ce un solo colore disabilitare il checkbox
+ */

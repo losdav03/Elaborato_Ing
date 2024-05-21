@@ -33,11 +33,22 @@ public class SegreteriaController {
 
     public void initialize() {
         caricaPreventivi();
-        model.setMarca(marca);
+        setMarche(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaCheckbox());
         allOptionals.getItems().setAll(model.caricaOptionalDaFile());
         modello.setDisable(true);
+    }
+
+    private void setMarche(ComboBox<Marca> marca) {
+        marca.getItems().clear();
+        List<Marca> marche = new ArrayList<>();
+        for(Auto x : model.getCatalogo().getListaAuto()){
+            if(!marche.contains(x.getMarca())) {
+                marche.add(x.getMarca());
+            }
+        }
+        marca.getItems().setAll(marche);
     }
 
     private void caricaPreventivi() {

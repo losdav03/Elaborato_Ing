@@ -518,7 +518,7 @@ public class Model {
     }
 
     public void isDouble(TextField txt) {
-        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        txt.addEventFilter(KeyEvent.ANY, event -> {
             String character = event.getCharacter();
 
             // Consenti solo numeri, puto decimale, e segno meno
@@ -543,7 +543,7 @@ public class Model {
     }
 
     public void numeric(TextField txt) {
-        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        txt.addEventFilter(KeyEvent.ANY, event -> {
             String character = event.getCharacter();
             // Consenti solo numeri (0-9) e impedisci input di altri caratteri
             if (!character.matches("\\d")) {
@@ -553,7 +553,7 @@ public class Model {
     }
 
     public void checkColore(TextField colore) {
-        colore.addEventFilter(KeyEvent.KEY_TYPED, event -> {
+        colore.addEventFilter(KeyEvent.ANY, event -> {
             String character = event.getCharacter();
             // Consenti solo numeri (0-9) e impedisci input di altri caratteri
             if (character.matches("\\d")) {
