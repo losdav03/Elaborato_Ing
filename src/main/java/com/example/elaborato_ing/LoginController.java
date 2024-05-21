@@ -1,10 +1,12 @@
 package com.example.elaborato_ing;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 import java.io.IOException;
 
@@ -46,9 +48,18 @@ public class LoginController {
         } else if (model.autenticato(username, password) == 1) {
             System.out.println("Segreteria Loggata!");
             model.openCloseFXML("FXML/Segreteria.fxml", event);
+            Platform.runLater(this::closeAllWindows);
         } else
             System.out.println("Credenziali non valide.");
 
+    }
+
+    public void closeAllWindows() {
+        for (Window window : Stage.getWindows()) {
+            if (window instanceof Stage) {
+                ((Stage) window).close();
+            }
+        }
     }
 
     @FXML

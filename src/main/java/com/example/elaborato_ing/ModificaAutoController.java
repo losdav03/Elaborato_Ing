@@ -96,9 +96,14 @@ public class ModificaAutoController {
         List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
-        modello.getItems().clear();
-        modello.getItems().setAll(listaModelli);
-        modello.setDisable(false);
+
+        if (listaModelli.isEmpty()) {
+            modello.getItems().clear();
+            modello.setDisable(true);
+        } else {
+            modello.getItems().setAll(listaModelli);
+            modello.setDisable(false);
+        }
     }
 
     public void modificaAuto() throws IOException {

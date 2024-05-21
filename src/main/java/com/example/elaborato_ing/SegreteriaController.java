@@ -46,7 +46,7 @@ public class SegreteriaController {
         allOptionals.getItems().setAll(model.caricaOptionalDaFile());
         modello.setDisable(true);
 
-        model.ciccioGamerFXML("FXML/Configuratore.fxml",marca);
+        model.ciccioGamerFXML("FXML/Configuratore.fxml", marca);
 
 
     }
@@ -129,14 +129,20 @@ public class SegreteriaController {
     }
 
     private void aggiornaModello() {
+        vBox.getChildren().clear();
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
-        modello.getItems().clear();
-        modello.getItems().setAll(listaModelli);
-        modello.setDisable(false);
+        if (listaModelli.isEmpty()) {
+            modello.getItems().clear();
+            modello.setDisable(true);
+            vBox.getChildren().clear();
+        } else {
+            modello.getItems().setAll(listaModelli);
+            modello.setDisable(false);
+        }
     }
 
     private void aggiornaCheckbox() {

@@ -20,6 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
@@ -506,9 +507,6 @@ public class Model {
         return false;
     }
 
-    public void PDF() {
-
-    }
 
     public void inoltraPreventivo(Auto auto, String colore, int Prezzo, Sede sede) throws IOException {
         LocalDate inizio = LocalDate.now();
@@ -870,17 +868,20 @@ public class Model {
         }
     }
 
-    public void generaPDF() {
-        AutoNuova auto = getMarcaModelloAutoNuova(Marca.LAMBORGHINI, "REVUELTO", mapAutoNuova);
+    public void generaPDF(Marca marca, String modello, String colore) {
+        AutoNuova auto = getMarcaModelloAutoNuova(marca, modello, mapAutoNuova);
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
             document.open();
             aggiungiContenuto(document, auto);
-            aggiungiImmagine(document, auto);
+            System.out.println(auto.getImmagine(colore, 1, 0));
+            aggiungiImmagine(document, auto.getImmagine(colore, 1, 0));
             document.close();
         } catch (FileNotFoundException | DocumentException e) {
             e.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -913,18 +914,16 @@ public class Model {
         document.add(table);
     }
 
-    private static void aggiungiImmagine(Document document, Auto auto) throws DocumentException {
-        try {
-            for (String imageName : auto.getImmagini()) {
-                InputStream inputStream = ConfiguratoreController.class.getClassLoader().getResourceAsStream(imageName);
-                if (inputStream != null) {
-                    Image image = new Image(inputStream);
-                    document.add((Element) image);
-                }
-            }
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
+    private static void aggiungiImmagine(Document document, String imagePath) throws DocumentException, IOException {
+      /*      InputStream inputStream = Model.class.getResourceAsStream(imagePath);
+
+            com.itextpdf.text.Image img =
+
+            img.scaleToFit(500, 500); // Dimensiona l'immagine per adattarla al documento
+            img.setAlignment(Element.ALIGN_CENTER);
+            document.add(img);
+            */
+
     }
 
 
@@ -951,7 +950,6 @@ public class Model {
                 String[] parts = line.split(",");
                 if (parts[0].equals(idPreventivo) && parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA))) {
                     auto = getMarcaModelloAutoUsata(Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], mapAutoUsata);
-                    //auto = new AutoUsata(cliente, Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]), Double.parseDouble(parts[8]), new Motore(parts[9].split(";")[0], Enum.valueOf(Alimentazione.class, String.valueOf(parts[9].split(";")[1])), Integer.parseInt(parts[9].split(";")[2]), Integer.parseInt(parts[9].split(";")[3]), Double.parseDouble(parts[9].split(";")[3])), parts[12], Enum.valueOf(Sede.class, String.valueOf(parts[11])));
                 } else if (parts[0].equals(idPreventivo)) {
                     auto = getMarcaModelloAutoNuova(Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], mapAutoNuova);
                 }
