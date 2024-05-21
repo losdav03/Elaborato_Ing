@@ -2,6 +2,7 @@ package com.example.elaborato_ing;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Auto {
     private final Marca marca;
@@ -50,11 +51,13 @@ public class Auto {
         return res.toString();
     }
 
-    public String getImmagine(String colore, int vista, int tipoAuto, String cliente) {
+    public String getImmagine(String colore, int vista, int tipoAuto) {
         if (tipoAuto == 0) {
             for (String imgPath : getImmagini()) {
-                if (modello.contains("3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
-                    return "/com/example/elaborato_ing/images/" + marca + modello + colore.toLowerCase() + "3.png";
+              if (modello.contains("3") && imgPath.contains(colore.toLowerCase()) && vista == 3) {
+                  System.out.println(imgPath);
+                  return "/com/example/elaborato_ing/images/" + marca + modello + colore.toLowerCase() + "3.png";
+              }
                 else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                     return imgPath;
                 }
@@ -112,4 +115,16 @@ public class Auto {
         return optionalSelezionabili;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Auto auto = (Auto) o;
+        return Double.compare(altezza, auto.altezza) == 0 && Double.compare(lunghezza, auto.lunghezza) == 0 && Double.compare(larghezza, auto.larghezza) == 0 && Double.compare(peso, auto.peso) == 0 && Double.compare(volumeBagagliaio, auto.volumeBagagliaio) == 0 && marca == auto.marca && Objects.equals(modello, auto.modello) && Objects.equals(immagini, auto.immagini) && Objects.equals(motore, auto.motore) && Objects.equals(optionalSelezionabili, auto.optionalSelezionabili);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, immagini, motore, optionalSelezionabili);
+    }
 }

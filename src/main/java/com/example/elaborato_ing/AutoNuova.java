@@ -83,17 +83,19 @@ public class AutoNuova extends Auto {
         return prezzo;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         AutoNuova autoNuova = (AutoNuova) o;
-        return Objects.equals(sconto, autoNuova.sconto) && Objects.equals(colori, autoNuova.colori);
+        return prezzo == autoNuova.prezzo && Objects.equals(sconto, autoNuova.sconto) && Objects.equals(colori, autoNuova.colori) && Objects.equals(optionalScelti, autoNuova.optionalScelti);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sconto, colori);
+        return Objects.hash(super.hashCode(), prezzo, sconto, colori, optionalScelti);
     }
 
     @Override

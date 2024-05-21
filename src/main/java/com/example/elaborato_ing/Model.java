@@ -90,40 +90,59 @@ public class Model {
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length == 12) {
-                    Marca marca = Marca.valueOf(parts[0].trim());
-                    String modello = parts[1].trim();
-                    double altezza = Double.parseDouble(parts[2]);
-                    double lunghezza = Double.parseDouble(parts[3]);
-                    double larghezza = Double.parseDouble(parts[4]);
-                    double peso = Double.parseDouble(parts[5]);
-                    double volumeBagagliaio = Double.parseDouble(parts[6]);
-                    String nomeMotore = parts[7].split(";")[0];
-                    Alimentazione alimentazione = Alimentazione.valueOf(parts[7].split(";")[1].trim());
-                    int cilindrata = Integer.parseInt(parts[7].split(";")[2].trim());
-                    int potenza = Integer.parseInt(parts[7].split(";")[3].trim());
-                    double consumi = Double.parseDouble(parts[7].split(";")[4]);
-                    Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
-                    int prezzo = Integer.parseInt(parts[8]);
-                    String sconto = parts[9];
-                    List<String> colori = List.of(parts[10].trim().split(";"));
-                    List<Optionals> optionalSelezionabili = new ArrayList<>();
-                    List<String> op = List.of(parts[11].trim().split(":"));
-                    for (String o : op) {
-                        // controllo se dentro al catalogo ci sono optional che sono stati rimossi precedentemente dall'amministrazione
-                        Optionals nuovoOp = new Optionals(o.split(";")[0], Integer.parseInt(o.split(";")[1]));
-                        optionalSelezionabili.add(nuovoOp);
+                    try {
+                        Marca marca = Marca.valueOf(parts[0].trim());
+                        String modello = parts[1].trim();
+                        double altezza = Double.parseDouble(parts[2].trim());
+                        double lunghezza = Double.parseDouble(parts[3].trim());
+                        double larghezza = Double.parseDouble(parts[4].trim());
+                        double peso = Double.parseDouble(parts[5].trim());
+                        double volumeBagagliaio = Double.parseDouble(parts[6].trim());
+
+                        // Parsing del motore
+                        String[] motoreParts = parts[7].trim().split(";");
+                        if (motoreParts.length != 5) throw new IllegalArgumentException("Dati del motore non corretti");
+                        String nomeMotore = motoreParts[0].trim();
+                        Alimentazione alimentazione = Alimentazione.valueOf(motoreParts[1].trim());
+                        int cilindrata = Integer.parseInt(motoreParts[2].trim());
+                        int potenza = Integer.parseInt(motoreParts[3].trim());
+                        double consumi = Double.parseDouble(motoreParts[4].trim());
+                        Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
+
+                        int prezzo = Integer.parseInt(parts[8].trim());
+                        String sconto = parts[9].trim();
+                        List<String> colori = List.of(parts[10].trim().split(";"));
+
+                        // Parsing degli optional
+                        List<Optionals> optionalSelezionabili = new ArrayList<>();
+                        if (!parts[11].trim().isEmpty()) {
+                            String[] optionParts = parts[11].trim().split(":");
+                            for (String o : optionParts) {
+                                String[] optionalParts = o.split(";");
+                                if (optionalParts.length == 2) {
+                                    Optionals nuovoOp = new Optionals(optionalParts[0].trim(), Integer.parseInt(optionalParts[1].trim()));
+                                    optionalSelezionabili.add(nuovoOp);
+                                }
+                            }
+                        }
+
+                        // Creazione dell'oggetto AutoNuova e aggiunta al catalogo
+
+                        AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
+                        catalogo.add(auto);
+                        mapAutoNuova.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
+                    } catch (Exception e) {
+                        System.err.println("Errore nel parsing della riga: " + line);
+                        e.printStackTrace();
                     }
-                    AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
-                    catalogo.add(auto);
-                    mapAutoNuova.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
+                } else {
+                    System.err.println("Riga non valida (numero di campi non corretto): " + line);
                 }
             }
         } catch (FileNotFoundException e) {
             System.err.println("File non trovato: " + file);
         } catch (IOException e) {
             System.err.println("Errore nella lettura del file: " + e.getMessage());
-        } catch (IllegalArgumentException e) {
-            System.err.println("Errore nei dati: " + e.getMessage());
         }
     }
 
@@ -267,11 +286,11 @@ public class Model {
 
     public String getImmagineAuto(Marca marca, String modello, String colore, int vista, int tipoAuto, String nomeUtente) {
         if (tipoAuto == 0)
-            return getMarcaModelloAutoNuova(marca, modello, mapAutoNuova).getImmagine(colore.toLowerCase(), vista, 0, "");
+            return getMarcaModelloAutoNuova(marca, modello, mapAutoNuova).getImmagine(colore.toLowerCase(), vista, 0);
         else if (tipoAuto == 1 && !Objects.equals(nomeUtente, "")) {
-            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista, 1, nomeUtente);
+            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista, 1);
         } else {
-            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista, 1, cliente.getEmail());
+            return getMarcaModelloAutoUsata(marca, modello, mapAutoUsata).getImmagine(colore.toLowerCase(), vista, 1);
         }
     }
 
