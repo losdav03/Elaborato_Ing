@@ -102,14 +102,19 @@ public class Model {
                         double volumeBagagliaio = Double.parseDouble(parts[6].trim());
 
                         // Parsing del motore
-                        String[] motoreParts = parts[7].trim().split(";");
-                        if (motoreParts.length != 5) throw new IllegalArgumentException("Dati del motore non corretti");
-                        String nomeMotore = motoreParts[0].trim();
-                        Alimentazione alimentazione = Alimentazione.valueOf(motoreParts[1].trim());
-                        int cilindrata = Integer.parseInt(motoreParts[2].trim());
-                        int potenza = Integer.parseInt(motoreParts[3].trim());
-                        double consumi = Double.parseDouble(motoreParts[4].trim());
-                        Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
+                        String[] motorePartsArray = parts[7].trim().split("%");
+                        List<Motore> motori = new ArrayList<>();
+                        for (String motorePart : motorePartsArray) {
+                            String[] motoreParts = motorePart.split(";");
+                            if (motoreParts.length != 5) throw new IllegalArgumentException("Dati del motore non corretti");
+                            String nomeMotore = motoreParts[0].trim();
+                            Alimentazione alimentazione = Alimentazione.valueOf(motoreParts[1].trim());
+                            int cilindrata = Integer.parseInt(motoreParts[2].trim());
+                            int potenza = Integer.parseInt(motoreParts[3].trim());
+                            double consumi = Double.parseDouble(motoreParts[4].trim());
+                            Motore motore = new Motore(nomeMotore, alimentazione, cilindrata, potenza, consumi);
+                            motori.add(motore);
+                        }
 
                         int prezzo = Integer.parseInt(parts[8].trim());
                         String sconto = parts[9].trim();
@@ -130,7 +135,7 @@ public class Model {
 
                         // Creazione dell'oggetto AutoNuova e aggiunta al catalogo
 
-                        AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, prezzo, colori, sconto, optionalSelezionabili);
+                        AutoNuova auto = new AutoNuova(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motori, prezzo, colori, sconto, optionalSelezionabili);
                         catalogo.add(auto);
                         mapAutoNuova.computeIfAbsent(marca, k -> new ArrayList<>()).add(auto);
                     } catch (Exception e) {
@@ -147,7 +152,6 @@ public class Model {
             System.err.println("Errore nella lettura del file: " + e.getMessage());
         }
     }
-
 
     public List<String> caricaOptionalDaFile() {
         allOptionals.clear();
@@ -904,8 +908,8 @@ public class Model {
         aggiungiCella(table, "Larghezza (cm):", String.valueOf(auto.getLarghezza()));
         aggiungiCella(table, "Peso (kg):", String.valueOf(auto.getPeso()));
         aggiungiCella(table, "Volume Bagagliaio (L):", String.valueOf(auto.getVolumeBagagliaio()));
-        aggiungiCella(table, "Motore:", auto.getMotore().getNome());
-        aggiungiCella(table, "Alimentazione:", auto.getMotore().getAlimentazione().toString());
+        //aggiungiCella(table, "Motore:", auto.getMotore().getNome());
+        //aggiungiCella(table, "Alimentazione:", auto.getMotore().getAlimentazione().toString());
         aggiungiCella(table, "Optional Disponibili:", "");
 
         for (Optionals optional : auto.getOptionalSelezionabili()) {
@@ -960,6 +964,7 @@ public class Model {
                 if (inputStream != null) {
                     Image image = new Image(inputStream);
                     img.setImage(image);
+                    System.out.println(auto.toString());
                 }
             }
         } catch (IOException e) {
@@ -975,6 +980,17 @@ public class Model {
                 return;
             }
         }
+    }
+
+    public String aggiornaAlix(Marca marca, String modello, String motore) {
+        AutoNuova auto = catalogo.getAutoNuova(marca,modello);
+        for (Motore m : auto.getMotori()) {
+                if (m.getNome().equals(motore)) {
+                    System.out.println(motore +" ma rimane"+ m.getNome());
+                    return m.getAlimentazione().toString();
+                }
+            }
+            return "Motore non trovato";
     }
 }
 

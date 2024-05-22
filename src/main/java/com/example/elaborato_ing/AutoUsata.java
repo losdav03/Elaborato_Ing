@@ -10,12 +10,14 @@ import java.util.Objects;
 
 public class AutoUsata extends Auto {
     private final String colore;
+    private final Motore motore;
     private Sede sede;
 
     public AutoUsata(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, String colore, Sede sede) {
-        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, motore, null);
+        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, null);
         this.colore = colore;
         this.sede = sede;
+        this.motore=motore;
     }
 
     public void caricaImmaginiAutoUsata() {
@@ -24,7 +26,6 @@ public class AutoUsata extends Auto {
             super.getImmagini().add(path);
         }
     }
-
 
     public String getColore() {
         return colore;

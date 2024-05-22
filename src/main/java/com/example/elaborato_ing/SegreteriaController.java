@@ -109,7 +109,9 @@ public class SegreteriaController {
 
                     // Creare oggetto Auto
                     Motore motore = new Motore(tipoMotore, alimentazione, cilindrata, potenza, consumi);
-                    AutoNuova auto = new AutoNuova(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motore, prezzo, colore, null, null);
+                    List<Motore> motori = new ArrayList<>();
+                    motori.add(motore);
+                    AutoNuova auto = new AutoNuova(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motori, prezzo, colore, null, null);
                     auto.setOptionalScelti(optionalScelti);
 
                     // Ottenere la data odierna

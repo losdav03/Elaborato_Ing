@@ -17,19 +17,21 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.*;
+import java.security.KeyStore;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
 public class ConfiguratoreController {
     @FXML
-    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, motore, prezzo;
+    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, prezzo;
     @FXML
     private ComboBox<Marca> marca;
     @FXML
     private ComboBox<Sede> sede;
     @FXML
-    private ComboBox<String> modello, colori;
+    private ComboBox<String> modello, colori, motore;
     @FXML
     private Button btnPDF, btnSx, btnDx, acquistaBtn, vendiBtn, preventiviBtn, logOutBtn;
     @FXML
@@ -56,10 +58,12 @@ public class ConfiguratoreController {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> aggiornaColori());
+        motore.setOnAction(_ -> aggiornaAlimentazione());
         vista = 1;
         colori.setOnAction(_ -> aggiornaImg());
         modello.setDisable(true);
         colori.setDisable(true);
+        motore.setDisable(true);
         sede.setDisable(true);
         colori.getItems().clear();
         vendiBtn.setDisable(true);
@@ -73,12 +77,18 @@ public class ConfiguratoreController {
         model.caricaOptionalDaFile();
     }
 
+    private void aggiornaAlimentazione() {
+        alimentazione.setText("");
+        alimentazione.setText(model.aggiornaAlix(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(),motore.getValue()));
+    }
+
     private void aggiornaModello() {
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         img.setImage(null);
         modello.getItems().clear();
         colori.getItems().clear();
+        motore.getItems().clear();
         vBox.getChildren().clear();
         lunghezza.setText("");
         altezza.setText("");
@@ -86,7 +96,6 @@ public class ConfiguratoreController {
         peso.setText("");
         volume.setText("");
         alimentazione.setText("");
-        motore.setText("");
         prezzo.setText("");
 
         sede.getItems().clear();
@@ -95,7 +104,6 @@ public class ConfiguratoreController {
         modello.setDisable(true);
         btnSx.setDisable(true);
         btnDx.setDisable(true);
-
 
         List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
@@ -106,6 +114,7 @@ public class ConfiguratoreController {
             colori.setDisable(true);
             sede.setDisable(true);
             modello.setDisable(true);
+            motore.setDisable(true);
         } else {
             modello.getItems().setAll(listaModelli);
             modello.setDisable(false);
@@ -117,6 +126,7 @@ public class ConfiguratoreController {
             AutoNuova auto = model.getMapAutoNuova().values().stream().flatMap(List::stream).filter(a -> a.getModello().equals(modello.getValue())).findFirst().orElse(null);
             colori.setDisable(false);
             sede.setDisable(false);
+            motore.setDisable(false);
             if (auto != null) {
                 model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox, auto.getOptionalScelti(), prezzo);
 
@@ -126,13 +136,20 @@ public class ConfiguratoreController {
                 larghezza.setText(auto.getLarghezza() + " cm");
                 peso.setText(auto.getPeso() + " kg");
                 volume.setText(auto.getVolumeBagagliaio() + " L");
-                alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
-                motore.setText(auto.getMotore().getNome());
+                //alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
+                //motore.setText(auto.getMotore().getNome());
                 prezzo.setText(String.valueOf(auto.getPrezzo()));
 
                 colori.getItems().clear();
                 colori.getItems().addAll(auto.getColori());
                 colori.setValue(colori.getItems().getFirst());
+                motore.getItems().clear();
+                List<String> nomiMotori = new ArrayList<>();
+                for(Motore m:auto.getMotori()){
+                    nomiMotori.add(m.getNome());
+                }
+                motore.getItems().addAll(nomiMotori);
+                motore.setValue(motore.getItems().getFirst());
                 sede.getItems().setAll(Sede.values());
             }
 
@@ -234,6 +251,7 @@ public class ConfiguratoreController {
             if (colori.getValue() != null && sede.getValue() != null) {
                 AutoNuova autoConfigurata = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
                 prezzo.setText("" + autoConfigurata.calcolaPrezzoScontato());
+                autoConfigurata.setMotore(model.getCatalogo().getMotore(marca.getValue(), modello.getValue(), motore.getValue()));
                 model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
                 // Abilita il bottone PDF
                 btnPDF.setVisible(true);

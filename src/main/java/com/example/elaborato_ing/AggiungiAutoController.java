@@ -83,8 +83,10 @@ public class AggiungiAutoController {
                 model.salvaImageViewImage(imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
                 model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
                 model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
-
-                String scontoCheck = mesiChecked();
+                List<Motore> motori = new ArrayList<>();
+                Motore mot = new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText()));
+                motori.add(mot);
+                        String scontoCheck = mesiChecked();
                 auto = new AutoNuova(
                         selectedMarca,
                         modello.getText(),
@@ -93,7 +95,7 @@ public class AggiungiAutoController {
                         Double.parseDouble(larghezza.getText()),
                         Double.parseDouble(peso.getText()),
                         Double.parseDouble(volume.getText()),
-                        new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText())),
+                        motori,
                         Integer.parseInt(prezzo.getText()),
                         colori,
                         scontoCheck,

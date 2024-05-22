@@ -3,12 +3,22 @@ package com.example.elaborato_ing;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class Catalogo {
     private final List<AutoNuova> catalogo = new ArrayList<>();
 
     public Catalogo() {
 
+    }
+
+    public AutoNuova getAutoNuova(Marca marca, String modello){
+        for(AutoNuova a:catalogo){
+            if(a.getMarca() == marca && Objects.equals(a.getModello(), modello)){
+                return a;
+            }
+        }
+        return null;
     }
 
     public void add(AutoNuova a) {
@@ -25,4 +35,14 @@ public class Catalogo {
         catalogo.removeIf(auto -> auto.getMarca().equals(marca) && auto.getModello().equals(s));
     }
 
+    public Motore getMotore(Marca marca,String modello,String nomeMotore) {
+        for (AutoNuova auto : catalogo) {
+            if (auto.getMarca()==marca && auto.getModello().equals(modello)) {
+                System.out.println(marca +modello+nomeMotore +"vs"+auto.getMarca()+auto.getModello()+auto.trovaMotore(nomeMotore));
+                return auto.trovaMotore(nomeMotore);
+            }
+        }
+        System.out.println(marca +modello+nomeMotore);
+        return null;
+    }
 }

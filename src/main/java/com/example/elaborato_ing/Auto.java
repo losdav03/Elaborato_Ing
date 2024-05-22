@@ -13,11 +13,10 @@ public class Auto {
     private final double peso;
     private final double volumeBagagliaio;
     private final List<String> immagini = new ArrayList<>();
-    private final Motore motore;
     private final List<Optionals> optionalSelezionabili;
 
 
-    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<Optionals> optionalSelezionabili) {
+    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, List<Optionals> optionalSelezionabili) {
         this.marca = marca;
         this.modello = modello;
         this.altezza = altezza;
@@ -25,14 +24,13 @@ public class Auto {
         this.larghezza = larghezza;
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
-        this.motore = motore;
         this.optionalSelezionabili = optionalSelezionabili;
     }
 
 
     @Override
     public String toString() {
-        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore + "," + stampaSelezionabili();
+        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + stampaSelezionabili();
     }
 
     public String stampaSelezionabili() {
@@ -107,10 +105,6 @@ public class Auto {
         return immagini;
     }
 
-    public Motore getMotore() {
-        return motore;
-    }
-
     public List<Optionals> getOptionalSelezionabili() {
         return optionalSelezionabili;
     }
@@ -120,11 +114,11 @@ public class Auto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Auto auto = (Auto) o;
-        return Double.compare(altezza, auto.altezza) == 0 && Double.compare(lunghezza, auto.lunghezza) == 0 && Double.compare(larghezza, auto.larghezza) == 0 && Double.compare(peso, auto.peso) == 0 && Double.compare(volumeBagagliaio, auto.volumeBagagliaio) == 0 && marca == auto.marca && Objects.equals(modello, auto.modello) && Objects.equals(immagini, auto.immagini) && Objects.equals(motore, auto.motore) && Objects.equals(optionalSelezionabili, auto.optionalSelezionabili);
+        return Double.compare(altezza, auto.altezza) == 0 && Double.compare(lunghezza, auto.lunghezza) == 0 && Double.compare(larghezza, auto.larghezza) == 0 && Double.compare(peso, auto.peso) == 0 && Double.compare(volumeBagagliaio, auto.volumeBagagliaio) == 0 && marca == auto.marca && Objects.equals(modello, auto.modello) && Objects.equals(immagini, auto.immagini) && Objects.equals(optionalSelezionabili, auto.optionalSelezionabili);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, immagini, motore, optionalSelezionabili);
+        return Objects.hash(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, immagini, optionalSelezionabili);
     }
 }
