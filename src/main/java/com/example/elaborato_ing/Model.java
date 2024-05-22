@@ -20,12 +20,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
 
@@ -689,7 +689,7 @@ public class Model {
                 "\nStato Preventivo : " + parts[16];
     }
 
-    public static void aggiungiValutazione(String idPreventivo, int prezzo) throws IOException {
+    public static void aggiungiValutazione(String idPreventivo, int prezzo, LocalDate ritiroData) throws IOException {
         BufferedReader reader;
         BufferedWriter writer;
         try {
@@ -704,6 +704,7 @@ public class Model {
                     if (campi.length >= 17 && campi[16].equals(String.valueOf(Stato.DA_VALUTARE))) {
                         campi[15] = String.valueOf(prezzo);
                         campi[16] = String.valueOf(Stato.VALUTATA);
+                        campi[14] = ritiroData.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
                     }
                 }
                 fileContent.append(String.join(",", campi)).append("\n");
