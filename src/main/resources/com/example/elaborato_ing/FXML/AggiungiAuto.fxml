@@ -3,25 +3,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="583.0" prefWidth="568.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+<AnchorPane prefHeight="583.0" prefWidth="633.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.AggiungiAutoController">
-    <Label layoutX="17.0" layoutY="12.0" prefWidth="76.0" text="Marca"/>
-    <Label layoutX="17.0" layoutY="52.0" prefWidth="76.0" text="Modello"/>
-    <Label layoutX="14.0" layoutY="92.0" prefWidth="76.0" text="Altezza"/>
-    <Label layoutX="14.0" layoutY="132.0" prefWidth="76.0" text="Lunghezza"/>
-    <Label layoutX="14.0" layoutY="172.0" prefWidth="76.0" text="Larghezza"/>
-    <Label layoutX="14.0" layoutY="212.0" prefWidth="76.0" text="Peso"/>
-    <Label layoutX="14.0" layoutY="248.0" prefHeight="17.0" prefWidth="76.0" text="Volume"/>
-    <Label layoutX="14.0" layoutY="258.0" prefWidth="76.0" text="Bagagliaio"/>
-    <Label layoutX="17.0" layoutY="298.0" prefWidth="76.0" text="Motore"/>
-    <Label layoutX="14.0" layoutY="338.0" prefHeight="17.0" prefWidth="89.0" text="Alimentazione"/>
-    <Label layoutX="14.0" layoutY="378.0" prefWidth="76.0" text="Cilindrata"/>
-    <Label layoutX="14.0" layoutY="418.0" prefWidth="76.0" text="Potenza"/>
-    <Label layoutX="14.0" layoutY="458.0" prefWidth="76.0" text="Consumi"/>
-    <Label layoutX="14.0" layoutY="498.0" prefWidth="76.0" text="Colore"/>
-    <Label layoutX="14.0" layoutY="538.0" prefWidth="76.0" text="Prezzo"/>
+    <Label layoutX="4.0" layoutY="12.0" prefHeight="17.0" prefWidth="89.0" text="Marca"/>
+    <Label layoutX="4.0" layoutY="52.0" prefHeight="17.0" prefWidth="89.0" text="Modello"/>
+    <Label layoutX="1.0" layoutY="92.0" prefHeight="17.0" prefWidth="89.0" text="Altezza  [cm]"/>
+    <Label layoutX="1.0" layoutY="132.0" prefHeight="17.0" prefWidth="89.0" text="Lunghezza  [cm]"/>
+    <Label layoutX="1.0" layoutY="172.0" prefHeight="17.0" prefWidth="89.0" text="Larghezza"/>
+    <Label layoutX="1.0" layoutY="212.0" prefHeight="17.0" prefWidth="89.0" text="Peso  [kg]"/>
+    <Label layoutX="1.0" layoutY="248.0" prefHeight="17.0" prefWidth="89.0" text="Volume"/>
+    <Label layoutX="1.0" layoutY="258.0" prefHeight="17.0" prefWidth="89.0" text="Bagagliaio  [L]"/>
+    <Label layoutX="4.0" layoutY="298.0" prefHeight="17.0" prefWidth="89.0" text="Motore"/>
+    <Label layoutX="3.0" layoutY="338.0" prefHeight="17.0" prefWidth="100.0" text="Alimentazione"/>
+    <Label layoutX="1.0" layoutY="378.0" prefHeight="17.0" prefWidth="89.0" text="Cilindrata [m³]"/>
+    <Label layoutX="1.0" layoutY="418.0" prefHeight="17.0" prefWidth="89.0" text="Potenza [kW]"/>
+    <Label layoutX="1.0" layoutY="458.0" prefHeight="17.0" prefWidth="89.0" text="Consumi  [km/L]"/>
+    <Label layoutX="1.0" layoutY="498.0" prefHeight="17.0" prefWidth="89.0" text="Colore"/>
+    <Label layoutX="1.0" layoutY="538.0" prefHeight="17.0" prefWidth="89.0" text="Prezzo  €"/>
     <ComboBox fx:id="marca" layoutX="95.0" layoutY="8.0" prefHeight="25.0" prefWidth="104.0"/>
     <TextField fx:id="modello" layoutX="95.0" layoutY="48.0" prefHeight="25.0" prefWidth="104.0"/>
     <TextField fx:id="altezza" layoutX="95.0" layoutY="88.0" prefHeight="25.0" prefWidth="104.0"/>
