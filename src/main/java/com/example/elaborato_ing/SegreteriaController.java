@@ -156,21 +156,21 @@ public class SegreteriaController {
         preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
+        preventiviListView.setItems(FXCollections.observableArrayList(preventivi.toString()));
     }
 
     public void xmarca() {
         preventivi.sort(Comparator.comparing(p -> p.getAuto().getMarca().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
+        preventiviListView.setItems(FXCollections.observableArrayList(preventivi.toString()));
     }
 
     public void xsede() {
         preventivi.sort(Comparator.comparing(p -> p.getSede().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
+        preventiviListView.setItems(FXCollections.observableArrayList(preventivi.toString()));
     }
 
     public void aggiungiAuto(ActionEvent event) throws IOException {

@@ -30,6 +30,10 @@ public class Preventivo {
         return id + "," + cliente.toString() + "," + auto.toString() + "," + sede;
     }
 
+    public String perListView() {
+        return id + " " + cliente.toString() + " " + auto.getMarca()+ " " + auto.getModello() +" "+ sede;
+    }
+
     public Sede getSede() {
         return sede;
     }

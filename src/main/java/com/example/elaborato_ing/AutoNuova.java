@@ -38,6 +38,14 @@ public class AutoNuova extends Auto {
         caricaImmaginiAutoNuova();
     }
 
+    public void setMotori(List<Motore> motori) {
+        this.motori = motori;
+    }
+
+    public Motore getMotore() {
+        return motore;
+    }
+
     public List<Motore> getMotori() {
         return motori;
     }
