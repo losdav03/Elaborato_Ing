@@ -18,19 +18,17 @@ import java.util.List;
 
 public class ModificaAutoController {
     @FXML
-    private TextField prezzo;
-
+    private TextField prezzo,coloreNuovo,potenza,motore,cilindrata,consumi;
     @FXML
     private CheckBox gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre;
-
+    @FXML
+    private ComboBox<Alimentazione> alimentazione;
     @FXML
     private ComboBox<Marca> marca;
     @FXML
     private ComboBox<String> modello, colore;
     @FXML
     private ImageView imageView1, imageView2, imageView3;
-    @FXML
-    private TextField coloreNuovo;
 
     Model model = new Model();
 
@@ -39,7 +37,7 @@ public class ModificaAutoController {
         modello.setDisable(true);
         marca.setOnAction(_ -> aggiornaModello());
         modello.setOnAction(_ -> inizializzaCheckboxeColore());
-
+        alimentazione.getItems().setAll(Alimentazione.values());
         model.numeric(prezzo);
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
@@ -154,6 +152,14 @@ public class ModificaAutoController {
             } else {
                 System.out.println("inserisci nome");
             }
+            if(motore.getText().isEmpty() && alimentazione.getValue() !=null && cilindrata.getText().isEmpty() && potenza.getText().isEmpty() && consumi.getText().isEmpty()){
+                Motore mot = new Motore(motore.getText(),alimentazione.getValue(),Integer.parseInt(cilindrata.getText()),Integer.parseInt(potenza.getText()),Double.parseDouble(consumi.getText()));
+                auto.getMotori().add(mot);
+            }
+            else{
+                //stampare che deve scrivere tutti i campi per poter aggiungere un motore
+            }
+
             model.sostituisciAuto(auto);
             model.aggiornaFileCatalogo();
             model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());

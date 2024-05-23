@@ -110,10 +110,9 @@ public class SegreteriaController {
                     // Creare oggetto Auto
                     Motore motore = new Motore(tipoMotore, alimentazione, cilindrata, potenza, consumi);
                     List<Motore> motori = new ArrayList<>();
-                    motori.add(motore);
                     AutoNuova auto = new AutoNuova(marca, modelloAuto, altezzaAuto, lunghezzaAuto, larghezzaAuto, pesoAuto, volumeBagagliaioAuto, motori, prezzo, colore, null, null);
                     auto.setOptionalScelti(optionalScelti);
-
+                    auto.setMotore(motore);
                     // Ottenere la data odierna
                     Date dataOdierna = Calendar.getInstance().getTime();
 
@@ -156,21 +155,21 @@ public class SegreteriaController {
         preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi.toString()));
+        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
     public void xmarca() {
         preventivi.sort(Comparator.comparing(p -> p.getAuto().getMarca().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi.toString()));
+        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
     public void xsede() {
         preventivi.sort(Comparator.comparing(p -> p.getSede().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi.toString()));
+        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
     }
 
     public void aggiungiAuto(ActionEvent event) throws IOException {
