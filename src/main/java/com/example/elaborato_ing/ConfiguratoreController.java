@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -72,6 +73,9 @@ public class ConfiguratoreController {
         btnDx.setDisable(true);
         preventiviBtn.setDisable(true);
         logOutBtn.setDisable(true);
+
+
+
 
         // mi serve per riaggiornare il catalogo dopo eliminazione optional nell'amministrazione
         model.caricaOptionalDaFile();
@@ -136,8 +140,6 @@ public class ConfiguratoreController {
                 larghezza.setText(auto.getLarghezza() + " cm");
                 peso.setText(auto.getPeso() + " kg");
                 volume.setText(auto.getVolumeBagagliaio() + " L");
-                //alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
-                //motore.setText(auto.getMotore().getNome());
                 prezzo.setText(auto.getPrezzo() + "€");
                 colori.getItems().clear();
                 colori.getItems().addAll(auto.getColori());

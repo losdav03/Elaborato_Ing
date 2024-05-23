@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane fx:id="sP" dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.ConfiguratoreController">
+<SplitPane fx:id="sP" dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.ConfiguratoreController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="511.0" prefWidth="194.0">
             <children>
@@ -52,23 +52,29 @@
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Label>
-                <Label fx:id="prezzo" layoutX="117.0" layoutY="340.0" prefHeight="17.0" prefWidth="65.0">
+                <Label fx:id="prezzo" layoutX="113.0" layoutY="336.0" prefHeight="25.0" prefWidth="72.0" style="-fx-border-color: gray; -fx-border-width: 1px;" textAlignment="CENTER" wrapText="true">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
+                <Label layoutX="205.0" layoutY="338.0" text="Prezzo Scontato">
+                    <font>
+                        <Font name="System Bold" size="14.0" />
+                    </font>
+                </Label>
+                <Label fx:id="prezzoScontato" layoutX="325.0" layoutY="336.0" prefHeight="25.0" prefWidth="72.0" wrapText="true">
+                    <font>
+                        <Font name="System Bold" size="12.0" />
+                    </font>
+                </Label>
+
                 <Button fx:id="acquistaBtn" layoutX="37.0" layoutY="400.0" mnemonicParsing="false" onAction="#acquistaFunction" prefHeight="43.0" prefWidth="112.0" text="Log in" textFill="#227916" />
                 <Button fx:id="vendiBtn" layoutX="277.0" layoutY="400.0" mnemonicParsing="false" onAction="#goToUsatoForm" prefHeight="43.0" prefWidth="91.0" text="Vendi usato" textFill="RED" />
                 <Button fx:id="btnSx" layoutX="273.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnDx" text="-&gt;" textAlignment="CENTER" />
                 <Button fx:id="btnDx" layoutX="99.0" layoutY="294.0" mnemonicParsing="false" onAction="#btnSx" text="&lt;-" textAlignment="CENTER" />
                 <Button fx:id="btnPDF" layoutX="170.0" layoutY="455.0" mnemonicParsing="false" onAction="#generaPDF" text="Scarica PDF" />
-            <Button fx:id="preventiviBtn" layoutX="416.0" layoutY="14.0" mnemonicParsing="false" onAction="#vediPreventivi" text="Preventivo" />
-            <Button fx:id="logOutBtn" layoutX="416.0" layoutY="45.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="72.0" text="Log out" />
-            <Label fx:id="prezzoScontato" layoutX="208.0" layoutY="341.0" prefHeight="17.0" prefWidth="65.0">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Label>
+                <Button fx:id="preventiviBtn" layoutX="416.0" layoutY="14.0" mnemonicParsing="false" onAction="#vediPreventivi" text="Preventivo" />
+                <Button fx:id="logOutBtn" layoutX="416.0" layoutY="45.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="72.0" text="Log out" />
 
 
             </children>
