@@ -255,6 +255,12 @@ public class ConfiguratoreController {
                 model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
                 // Abilita il bottone PDF
                 btnPDF.setVisible(true);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Attenzione");
+                alert.setHeaderText("Campi mancanti!!!");
+                alert.setContentText("Assicurati di aver completato tutti i campi selezionabili");
+                alert.showAndWait();
             }
         }
 

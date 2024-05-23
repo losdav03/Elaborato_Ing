@@ -52,20 +52,18 @@ public class Auto {
     public String getImmagine(String colore, int vista, int tipoAuto) {
         if (tipoAuto == 0) {
             for (String imgPath : getImmagini()) {
-              if (modello.contains("3") && imgPath.contains(colore.toLowerCase()) && vista == 3) {
-                  System.out.println(imgPath);
-                  return "/com/example/elaborato_ing/images/" + marca + modello + colore.toLowerCase() + "3.png";
-              }
-                else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
+                if ((modello.contains("3") || modello.contains("2") || modello.contains("1")) && imgPath.contains(colore.toLowerCase()) && (vista == 3 || vista == 2 || vista == 1)) {
+                    return "/com/example/elaborato_ing/images/" + marca + modello + colore.toLowerCase() + vista + ".png";
+                } else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                     return imgPath;
                 }
             }
         } else if (tipoAuto == 1) {
 
             for (String imgPath : getImmagini()) {
-                if (modello.contains("3") && imgPath.contains(colore.toLowerCase()) && vista == 3)
-                    return "/com/example/elaborato_ing/imagesAutoUsate/" + marca + modello + colore.toLowerCase() + "3.png";
-                else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
+                if ((modello.contains("3") || modello.contains("2") || modello.contains("1")) && imgPath.contains(colore.toLowerCase()) && (vista == 3 || vista == 2 || vista == 1)) {
+                    return "/com/example/elaborato_ing/images/" + marca + modello + colore.toLowerCase() + vista + ".png";
+                } else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                     return imgPath;
                 }
             }
