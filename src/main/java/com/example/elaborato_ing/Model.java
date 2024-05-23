@@ -446,9 +446,8 @@ public class Model {
     }
 
     //REGISTRAZIONE
+
     public void registrazione(String email, String nome, String cognome, String password, ActionEvent event) {
-
-
         if (!email.isEmpty() && !nome.isEmpty() && !cognome.isEmpty() && !password.isEmpty()) {
             // Apertura del file in modalità append
             try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt", true)) {
@@ -461,14 +460,9 @@ public class Model {
                     alert.setContentText("Questa email esiste già");
                     alert.showAndWait();
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Successo");
-                    alert.setHeaderText("Registrazione avvenuta con successo");
-                    alert.setContentText("Messaggio dettagliato sull'errore.");
-
-                    // Gestione dell'azione del bottone OK
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confermi la registrazione?", ButtonType.YES, ButtonType.NO);
                     alert.showAndWait().ifPresent(response -> {
-                        if (response == ButtonType.OK) {
+                        if (response == ButtonType.YES) {
                             try {
                                 // Scrivi i dati dell'utente nel file, separati da virgole
                                 writer.write(email + "," + nome + "," + cognome + "," + password + "\n");
@@ -554,21 +548,27 @@ public class Model {
         }
     }
 
-
     public void isDouble(TextField txt) {
-        txt.addEventFilter(KeyEvent.ANY, event -> {
+        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
 
-            // Consenti solo numeri, puto decimale, e segno meno
+            // Consenti il tasto backspace e delete
+            if (character.equals("\b") || character.equals("\u007F")) {
+                return;
+            }
+
+            // Consenti solo numeri, punto decimale e segno meno
             if (!character.matches("[\\d\\.-]")) {
                 event.consume(); // Blocca l'evento se non è un numero, punto o segno meno
                 return;
             }
+
             // Assicurati che ci sia solo un punto decimale
             if (character.equals(".") && txt.getText().contains(".")) {
                 event.consume(); // Blocca l'evento se c'è già un punto decimale
                 return;
             }
+
             // Assicurati che il segno meno sia solo all'inizio
             if (character.equals("-")) {
                 if (txt.getText().contains("-")) {
@@ -581,12 +581,17 @@ public class Model {
     }
 
     public void numeric(TextField txt) {
-        txt.addEventFilter(KeyEvent.ANY, event -> {
+        txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
             // Consenti solo numeri (0-9) e impedisci input di altri caratteri
+            // Consenti il tasto backspace e delete
+            if (character.equals("\b") || character.equals("\u007F")) {
+                return;
+            }
             if (!character.matches("\\d")) {
                 event.consume(); // Blocca l'evento se non è un numero
             }
+
         });
     }
 

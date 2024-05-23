@@ -3,6 +3,7 @@ package com.example.elaborato_ing;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -49,9 +50,12 @@ public class LoginController {
             System.out.println("Segreteria Loggata!");
             model.openCloseFXML("FXML/Segreteria.fxml", event);
             Platform.runLater(this::closeAllWindows);
-        } else
-            System.out.println("Credenziali non valide.");
-
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Attenzione");
+            alert.setHeaderText("Credenizali errate");
+            alert.showAndWait();
+        }
     }
 
     public void closeAllWindows() {
@@ -64,7 +68,7 @@ public class LoginController {
 
     @FXML
     public void registrati(ActionEvent event) {
-        model.registrazione(emailField.getText(), passwordField.getText(), nameField.getText(), surnameField.getText(), event);
+        model.registrazione(emailField.getText(), nameField.getText(), surnameField.getText(), passwordField.getText(), event);
     }
 
     public void setInitController(ConfiguratoreController configuratoreController) {

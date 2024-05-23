@@ -154,22 +154,34 @@ public class SegreteriaController {
     public void xcliente() {
         preventivi.sort(Comparator.comparing(p -> p.getCliente().getEmail()));
 
+
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
+        preventiviListView.setItems(FXCollections.observableArrayList(stampaFormattato(preventivi)));
     }
 
     public void xmarca() {
         preventivi.sort(Comparator.comparing(p -> p.getAuto().getMarca().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
+        preventiviListView.setItems(FXCollections.observableArrayList(stampaFormattato(preventivi)));
     }
 
     public void xsede() {
         preventivi.sort(Comparator.comparing(p -> p.getSede().toString()));
 
         // Aggiorna la ListView con la lista di preventivi ordinata
-        preventiviListView.setItems(FXCollections.observableArrayList(preventivi));
+        preventiviListView.setItems(FXCollections.observableArrayList(stampaFormattato(preventivi)));
+    }
+
+    private List<String> stampaFormattato(List<Preventivo> preventivi) {
+        return preventivi.stream()
+                .map(p -> String.format("Id Preventivo : %s\nCliente : %s\nMarca : %s\nModello : %s\nSede : %s",
+                        p.getId(),
+                        p.getCliente().getEmail(),
+                        p.getAuto().getMarca().toString(),
+                        p.getAuto().getModello(),
+                        p.getSede()))
+                .toList();
     }
 
     public void aggiungiAuto(ActionEvent event) throws IOException {

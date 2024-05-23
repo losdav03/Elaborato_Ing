@@ -25,7 +25,7 @@ import java.util.List;
 
 public class ConfiguratoreController {
     @FXML
-    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, prezzo;
+    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, prezzo, prezzoScontato;
     @FXML
     private ComboBox<Marca> marca;
     @FXML
@@ -79,7 +79,7 @@ public class ConfiguratoreController {
 
     private void aggiornaAlimentazione() {
         alimentazione.setText("");
-        alimentazione.setText(model.aggiornaAlix(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(),motore.getValue()));
+        alimentazione.setText(model.aggiornaAlix(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), motore.getValue()));
     }
 
     private void aggiornaModello() {
@@ -138,14 +138,13 @@ public class ConfiguratoreController {
                 volume.setText(auto.getVolumeBagagliaio() + " L");
                 //alimentazione.setText(String.valueOf(auto.getMotore().getAlimentazione()));
                 //motore.setText(auto.getMotore().getNome());
-                prezzo.setText(String.valueOf(auto.getPrezzo()));
-
+                prezzo.setText(auto.getPrezzo() + "€");
                 colori.getItems().clear();
                 colori.getItems().addAll(auto.getColori());
                 colori.setValue(colori.getItems().getFirst());
                 motore.getItems().clear();
                 List<String> nomiMotori = new ArrayList<>();
-                for(Motore m:auto.getMotori()){
+                for (Motore m : auto.getMotori()) {
                     nomiMotori.add(m.getNome());
                 }
                 motore.getItems().addAll(nomiMotori);
@@ -250,12 +249,12 @@ public class ConfiguratoreController {
             // Controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {
                 AutoNuova autoConfigurata = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
-                prezzo.setText("" + autoConfigurata.calcolaPrezzoScontato());
+                prezzoScontato.setText(autoConfigurata.calcolaPrezzoScontato() + "€");
                 autoConfigurata.setMotore(model.getCatalogo().getMotore(marca.getValue(), modello.getValue(), motore.getValue()));
-                model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
+                model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText().split("€")[0]), sede.getValue());
                 // Abilita il bottone PDF
                 btnPDF.setVisible(true);
-            }else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Attenzione");
                 alert.setHeaderText("Campi mancanti!!!");

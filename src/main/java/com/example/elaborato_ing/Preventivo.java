@@ -34,6 +34,10 @@ public class Preventivo {
         return id + " " + cliente.toString() + " " + auto.getMarca()+ " " + auto.getModello() +" "+ sede;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public Sede getSede() {
         return sede;
     }

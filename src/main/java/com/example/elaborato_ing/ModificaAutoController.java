@@ -1,16 +1,12 @@
 package com.example.elaborato_ing;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import javax.imageio.ImageIO;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +14,7 @@ import java.util.List;
 
 public class ModificaAutoController {
     @FXML
-    private TextField prezzo,coloreNuovo,potenza,motore,cilindrata,consumi;
+    private TextField prezzo,coloreNuovo,potenza, motoreNuovo,cilindrata,consumi;
     @FXML
     private CheckBox gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre;
     @FXML
@@ -26,7 +22,7 @@ public class ModificaAutoController {
     @FXML
     private ComboBox<Marca> marca;
     @FXML
-    private ComboBox<String> modello, colore;
+    private ComboBox<String> modello, colore,motore;
     @FXML
     private ImageView imageView1, imageView2, imageView3;
 
@@ -39,6 +35,10 @@ public class ModificaAutoController {
         modello.setOnAction(_ -> inizializzaCheckboxeColore());
         alimentazione.getItems().setAll(Alimentazione.values());
         model.numeric(prezzo);
+        model.numeric(cilindrata);
+        model.numeric(potenza);
+        model.isDouble(consumi);
+        model.checkColore(coloreNuovo);
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
 
@@ -136,24 +136,35 @@ public class ModificaAutoController {
                 auto.setColori(coloriModificabili);
                 colore.getItems().clear();
                 colore.getItems().setAll(coloriModificabili);
+                if(coloriModificabili.size() == 1)
+                    colore.setDisable(true);
             }
             if (!coloreNuovo.getText().isEmpty() && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
-                String colore = coloreNuovo.getText().toUpperCase();
+                String coloreText = coloreNuovo.getText().toUpperCase();
 
                 List<String> coloriModificabili = new ArrayList<>(auto.getColori());
-                coloriModificabili.add(colore);
-                auto.setColori(coloriModificabili);
-                model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
-                model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
-                model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
-
+                if(!coloriModificabili.contains(coloreText)) {
+                    coloriModificabili.add(coloreText);
+                    auto.setColori(coloriModificabili);
+                    colore.getItems().clear();
+                    colore.getItems().setAll(coloriModificabili);
+                    colore.setDisable(false);
+                    model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                    model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                    model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Attenzione");
+                    alert.setHeaderText("Colore già presente");
+                    alert.showAndWait();
+                }
             } else if (imageView1.getImage() == null || imageView2.getImage() == null || imageView3.getImage() == null) {
                 System.out.println("inserisci 3 immagini");
             } else {
                 System.out.println("inserisci nome");
             }
-            if(motore.getText().isEmpty() && alimentazione.getValue() !=null && cilindrata.getText().isEmpty() && potenza.getText().isEmpty() && consumi.getText().isEmpty()){
-                Motore mot = new Motore(motore.getText(),alimentazione.getValue(),Integer.parseInt(cilindrata.getText()),Integer.parseInt(potenza.getText()),Double.parseDouble(consumi.getText()));
+            if(motoreNuovo.getText().isEmpty() && alimentazione.getValue() !=null && cilindrata.getText().isEmpty() && potenza.getText().isEmpty() && consumi.getText().isEmpty()){
+                Motore mot = new Motore(motoreNuovo.getText(),alimentazione.getValue(),Integer.parseInt(cilindrata.getText()),Integer.parseInt(potenza.getText()),Double.parseDouble(consumi.getText()));
                 auto.getMotori().add(mot);
             }
             else{
