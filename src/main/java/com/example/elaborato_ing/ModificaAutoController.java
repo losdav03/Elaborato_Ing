@@ -41,12 +41,11 @@ public class ModificaAutoController {
         model.checkColore(coloreNuovo);
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
-
         model.ciccioGamerFXML("FXML/Segreteria.fxml",marca);
     }
 
     private void inizializzaCheckboxeColore() {
-        AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
+        AutoNuova auto = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
         // Reset dei checkbox
         gennaio.setSelected(false);
         febbraio.setSelected(false);
@@ -75,8 +74,9 @@ public class ModificaAutoController {
         if (auto.getSconto().contains("K")) novembre.setSelected(true);
         if (auto.getSconto().contains("L")) dicembre.setSelected(true);
 
-        // Aggiorna i colori disponibili
+        // Aggiorna i colorie i motori disponibili
         colore.getItems().clear();
+        motore.getItems().clear();
         if (!auto.getColori().isEmpty()) {
             colore.getItems().addAll(auto.getColori());
             if (colore.getItems().size() == 1)
@@ -86,6 +86,16 @@ public class ModificaAutoController {
         } else {
             colore.setDisable(true);
         }
+        if(!auto.getMotori().isEmpty()){
+            motore.getItems().addAll(auto.getNomiMotori());
+            if (motore.getItems().size() == 1)
+                motore.setDisable(true);
+            else
+                motore.setDisable(false);
+        }
+        else{
+            motore.setDisable(true);
+        }
     }
 
     private void aggiornaModello() {
@@ -94,10 +104,11 @@ public class ModificaAutoController {
         List<AutoNuova> listaAuto = model.getMapAutoNuova().getOrDefault(marca.getValue(), Collections.emptyList());
         List<String> listaModelli = listaAuto.stream().map(Auto::getModello).distinct().toList();
 
-
         if (listaModelli.isEmpty()) {
             modello.getItems().clear();
             modello.setDisable(true);
+            motore.setDisable(true);
+            motore.getItems().clear();
         } else {
             modello.getItems().setAll(listaModelli);
             modello.setDisable(false);
@@ -163,14 +174,32 @@ public class ModificaAutoController {
             } else {
                 System.out.println("inserisci nome");
             }
-            if(motoreNuovo.getText().isEmpty() && alimentazione.getValue() !=null && cilindrata.getText().isEmpty() && potenza.getText().isEmpty() && consumi.getText().isEmpty()){
-                Motore mot = new Motore(motoreNuovo.getText(),alimentazione.getValue(),Integer.parseInt(cilindrata.getText()),Integer.parseInt(potenza.getText()),Double.parseDouble(consumi.getText()));
-                auto.getMotori().add(mot);
+            if (motore.getValue() != null) {
+                auto.rimuviMotore(motore.getValue());
+                motore.getItems().clear();
+                motore.getItems().setAll(auto.getNomiMotori());
+                if(auto.getMotori().size() == 1)
+                    motore.setDisable(true);
             }
-            else{
-                //stampare che deve scrivere tutti i campi per poter aggiungere un motore
+            if (!motoreNuovo.getText().isEmpty() && !cilindrata.getText().isEmpty() && !consumi.getText().isEmpty() && !potenza.getText().isEmpty() && alimentazione.getValue()!=null) {
+                if(!auto.containsMotore(motoreNuovo.getText())) {
+                    Motore mot = new Motore(motoreNuovo.getText(), alimentazione.getValue(), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText()));
+                    motore.getItems().clear();
+                    auto.getMotori().add(mot);
+                    motore.getItems().setAll(auto.getNomiMotori());
+                    motore.setDisable(false);
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Attenzione");
+                    alert.setHeaderText("Motore già presente");
+                    alert.showAndWait();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Attenzione");
+                alert.setHeaderText("Inserisci tutti i campi del motore");
+                alert.showAndWait();
             }
-
             model.sostituisciAuto(auto);
             model.aggiornaFileCatalogo();
             model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());

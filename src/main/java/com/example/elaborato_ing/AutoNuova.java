@@ -104,6 +104,21 @@ public class AutoNuova extends Auto {
         return prezzo;
     }
 
+    public boolean containsMotore(String value){
+        for(Motore m :motori){
+            if(m.getNome()==value)
+                return true;
+        }
+        return false;
+    }
+
+    public List<String> getNomiMotori(){
+        List<String> nomiMotori = new ArrayList<>();
+        for(Motore m :motori){
+            nomiMotori.add(m.getNome());
+        }
+        return nomiMotori;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -167,5 +182,14 @@ public class AutoNuova extends Auto {
 
     public void setPrezzo(int prezzo) {
         this.prezzo = prezzo;
+    }
+
+    public void rimuviMotore(String value) {
+        for(Motore m:motori)
+        {
+            if(m.getNome().equals(value)){
+                motori.remove(m);
+            }
+        }
     }
 }
