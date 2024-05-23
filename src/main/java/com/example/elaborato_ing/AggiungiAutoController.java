@@ -68,7 +68,7 @@ public class AggiungiAutoController {
     }
 
     @FXML
-    public void aggiungiAuto() throws IOException {
+    public void aggiungiAuto(ActionEvent event) throws IOException {
         if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && marca.getValue() != null && !modello.getText().isEmpty() && !altezza.getText().isEmpty() &&
                 !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() &&
                 !volume.getText().isEmpty() && !colore.getText().isEmpty() && alimentazione.getValue() != null && !motore.getText().isEmpty() &&
@@ -105,27 +105,9 @@ public class AggiungiAutoController {
                 model.getCatalogo().add(auto);
                 model.aggiornaFileCatalogo();
                 model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
+                model.openCloseFXML("FXML/AggiungiAuto.fxml",event);
 
-                marca.getItems().clear();
-                marca.getItems().setAll(Marca.values());
-                modello.setText("");
-                lunghezza.setText("");
-                altezza.setText("");
-                larghezza.setText("");
-                peso.setText("");
-                volume.setText("");
-                alimentazione.getItems().clear();
-                alimentazione.getItems().setAll(Alimentazione.values());
-                motore.setText("");
-                cilindrata.setText("");
-                potenza.setText("");
-                consumi.setText("");
-                prezzo.setText("");
-                colore.setText("");
-                mesiUnChecked();
-                imageView1.setImage(null);
-                imageView2.setImage(null);
-                imageView3.setImage(null);
+
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Attenzione");

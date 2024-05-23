@@ -1,10 +1,8 @@
 package com.example.elaborato_ing;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
@@ -14,7 +12,7 @@ import java.util.List;
 
 public class ModificaAutoController {
     @FXML
-    private TextField prezzo,coloreNuovo,potenza, motoreNuovo,cilindrata,consumi;
+    private TextField prezzo, coloreNuovo, potenza, motoreNuovo, cilindrata, consumi;
     @FXML
     private CheckBox gennaio, febbraio, marzo, aprile, maggio, giugno, luglio, agosto, settembre, ottobre, novembre, dicembre;
     @FXML
@@ -22,9 +20,11 @@ public class ModificaAutoController {
     @FXML
     private ComboBox<Marca> marca;
     @FXML
-    private ComboBox<String> modello, colore,motore;
+    private ComboBox<String> modello, colore, motore;
     @FXML
     private ImageView imageView1, imageView2, imageView3;
+    @FXML
+    private Button modifica;
 
     Model model = new Model();
 
@@ -41,7 +41,7 @@ public class ModificaAutoController {
         model.checkColore(coloreNuovo);
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
-        model.ciccioGamerFXML("FXML/Segreteria.fxml",marca);
+        model.ciccioGamerFXML("FXML/Segreteria.fxml", marca);
     }
 
     private void inizializzaCheckboxeColore() {
@@ -79,21 +79,16 @@ public class ModificaAutoController {
         motore.getItems().clear();
         if (!auto.getColori().isEmpty()) {
             colore.getItems().addAll(auto.getColori());
-            if (colore.getItems().size() == 1)
-                colore.setDisable(true);
-            else
-                colore.setDisable(false);
+            if (colore.getItems().size() == 1) colore.setDisable(true);
+            else colore.setDisable(false);
         } else {
             colore.setDisable(true);
         }
-        if(!auto.getMotori().isEmpty()){
+        if (!auto.getMotori().isEmpty()) {
             motore.getItems().addAll(auto.getNomiMotori());
-            if (motore.getItems().size() == 1)
-                motore.setDisable(true);
-            else
-                motore.setDisable(false);
-        }
-        else{
+            if (motore.getItems().size() == 1) motore.setDisable(true);
+            else motore.setDisable(false);
+        } else {
             motore.setDisable(true);
         }
     }
@@ -115,95 +110,115 @@ public class ModificaAutoController {
         }
     }
 
-    public void modificaAuto() throws IOException {
+    public void modificaAuto(ActionEvent event) throws IOException {
+
         if (marca.getValue() != null && modello.getValue() != null) {
             AutoNuova auto = model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova());
-            if (!prezzo.getText().isEmpty()) {
-                auto.setPrezzo(Integer.parseInt(prezzo.getText()));
-                prezzo.setText("");
-            }
-            String scontoAgg = "";
-            if (gennaio.isSelected()) scontoAgg += "A";
-            if (febbraio.isSelected()) scontoAgg += "B";
-            if (marzo.isSelected()) scontoAgg += "C";
-            if (aprile.isSelected()) scontoAgg += "D";
-            if (maggio.isSelected()) scontoAgg += "E";
-            if (giugno.isSelected()) scontoAgg += "F";
-            if (luglio.isSelected()) scontoAgg += "G";
-            if (agosto.isSelected()) scontoAgg += "H";
-            if (settembre.isSelected()) scontoAgg += "I";
-            if (ottobre.isSelected()) scontoAgg += "J";
-            if (novembre.isSelected()) scontoAgg += "K";
-            if (dicembre.isSelected()) scontoAgg += "L";
+            if (auto != null) {
 
-            assert auto != null;
-            if (!auto.getSconto().equals(scontoAgg)) {
-                auto.setSconto(scontoAgg);
-                mesiUnChecked();
-            }
-            if (colore.getValue() != null) {
-                List<String> coloriModificabili = new ArrayList<>(auto.getColori());
-                coloriModificabili.remove(String.valueOf(colore.getValue()));
-                auto.setColori(coloriModificabili);
-                colore.getItems().clear();
-                colore.getItems().setAll(coloriModificabili);
-                if(coloriModificabili.size() == 1)
-                    colore.setDisable(true);
-            }
-            if (!coloreNuovo.getText().isEmpty() && imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
-                String coloreText = coloreNuovo.getText().toUpperCase();
+                if (!prezzo.getText().isEmpty()) {
+                    auto.setPrezzo(Integer.parseInt(prezzo.getText()));
+                    prezzo.setText("");
+                }
 
-                List<String> coloriModificabili = new ArrayList<>(auto.getColori());
-                if(!coloriModificabili.contains(coloreText)) {
-                    coloriModificabili.add(coloreText);
+                String scontoAgg = "";
+                if (gennaio.isSelected()) scontoAgg += "A";
+                if (febbraio.isSelected()) scontoAgg += "B";
+                if (marzo.isSelected()) scontoAgg += "C";
+                if (aprile.isSelected()) scontoAgg += "D";
+                if (maggio.isSelected()) scontoAgg += "E";
+                if (giugno.isSelected()) scontoAgg += "F";
+                if (luglio.isSelected()) scontoAgg += "G";
+                if (agosto.isSelected()) scontoAgg += "H";
+                if (settembre.isSelected()) scontoAgg += "I";
+                if (ottobre.isSelected()) scontoAgg += "J";
+                if (novembre.isSelected()) scontoAgg += "K";
+                if (dicembre.isSelected()) scontoAgg += "L";
+
+                if (!auto.getSconto().equals(scontoAgg)) {
+                    auto.setSconto(scontoAgg);
+                }
+
+                if (colore.getValue() != null) {
+                    List<String> coloriModificabili = new ArrayList<>(auto.getColori());
+                    coloriModificabili.remove(String.valueOf(colore.getValue()));
                     auto.setColori(coloriModificabili);
                     colore.getItems().clear();
                     colore.getItems().setAll(coloriModificabili);
-                    colore.setDisable(false);
-                    model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
-                    model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
-                    model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Attenzione");
-                    alert.setHeaderText("Colore già presente");
-                    alert.showAndWait();
+                    if (coloriModificabili.size() == 1) colore.setDisable(true);
                 }
-            } else if (imageView1.getImage() == null || imageView2.getImage() == null || imageView3.getImage() == null) {
-                System.out.println("inserisci 3 immagini");
-            } else {
-                System.out.println("inserisci nome");
-            }
-            if (motore.getValue() != null) {
-                auto.rimuviMotore(motore.getValue());
-                motore.getItems().clear();
-                motore.getItems().setAll(auto.getNomiMotori());
-                if(auto.getMotori().size() == 1)
-                    motore.setDisable(true);
-            }
-            if (!motoreNuovo.getText().isEmpty() && !cilindrata.getText().isEmpty() && !consumi.getText().isEmpty() && !potenza.getText().isEmpty() && alimentazione.getValue()!=null) {
-                if(!auto.containsMotore(motoreNuovo.getText())) {
-                    Motore mot = new Motore(motoreNuovo.getText(), alimentazione.getValue(), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText()));
+
+
+                if (!coloreNuovo.getText().isEmpty()) {
+                    if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null) {
+                        String coloreText = coloreNuovo.getText().toUpperCase();
+
+                        List<String> coloriModificabili = new ArrayList<>(auto.getColori());
+                        if (!coloriModificabili.contains(coloreText)) {
+                            coloriModificabili.add(coloreText);
+                            auto.setColori(coloriModificabili);
+                            colore.getItems().clear();
+                            colore.getItems().setAll(coloriModificabili);
+                            colore.setDisable(false);
+                            model.salvaImageViewImage(imageView1, 1, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                            model.salvaImageViewImage(imageView2, 2, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                            model.salvaImageViewImage(imageView3, 3, Enum.valueOf(Marca.class, String.valueOf(marca.getValue())), modello.getValue(), coloreNuovo.getText(), 0);
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Attenzione");
+                            alert.setHeaderText("Colore già presente");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Attenzione");
+                        alert.setHeaderText("Inserisci 3 immagini");
+                        alert.showAndWait();
+                    }
+                }
+                if (motore.getValue() != null) {
+                    List<Motore> motoriModificabili = new ArrayList<>(auto.getMotori());
+                    motoriModificabili.remove(auto.trovaMotore(motore.getValue()));
+                    auto.setMotori(motoriModificabili);
                     motore.getItems().clear();
-                    auto.getMotori().add(mot);
-                    motore.getItems().setAll(auto.getNomiMotori());
-                    motore.setDisable(false);
-                }else{
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Attenzione");
-                    alert.setHeaderText("Motore già presente");
-                    alert.showAndWait();
+                    for (Motore m : motoriModificabili) {
+                        motore.getItems().add(m.getNome());
+                    }
+                    if (motoriModificabili.size() == 1) motore.setDisable(true);
+                }
+                if (!motoreNuovo.getText().isEmpty()) {
+                    if (!cilindrata.getText().isEmpty() && !consumi.getText().isEmpty() && !potenza.getText().isEmpty() && alimentazione.getValue() != null) {
+                        if (!auto.containsMotore(motoreNuovo.getText())) {
+                            Motore mot = new Motore(motoreNuovo.getText(), alimentazione.getValue(), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText()));
+                            motore.getItems().clear();
+                            auto.getMotori().add(mot);
+                            motore.getItems().setAll(auto.getNomiMotori());
+                            motore.setDisable(false);
+                        } else {
+                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                            alert.setTitle("Attenzione");
+                            alert.setHeaderText("Motore già presente");
+                            alert.showAndWait();
+                        }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Attenzione");
+                        alert.setHeaderText("Inserisci tutti i campi del motore");
+                        alert.showAndWait();
+                    }
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Attenzione");
-                alert.setHeaderText("Inserisci tutti i campi del motore");
+                alert.setHeaderText("Non puoi eliminare ed allo stesso tempo aggiungere lo stesso motore");
                 alert.showAndWait();
             }
             model.sostituisciAuto(auto);
             model.aggiornaFileCatalogo();
             model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         }
+
+        model.openCloseFXML("FXML/ModificaAuto.fxml", event);
     }
 
     public void caricaImgs() {

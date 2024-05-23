@@ -106,7 +106,7 @@ public class AutoNuova extends Auto {
 
     public boolean containsMotore(String value){
         for(Motore m :motori){
-            if(m.getNome()==value)
+            if(m.getNome().equals(value))
                 return true;
         }
         return false;
@@ -184,7 +184,7 @@ public class AutoNuova extends Auto {
         this.prezzo = prezzo;
     }
 
-    public void rimuviMotore(String value) {
+    public void rimuoviMotore(String value) {
         for(Motore m:motori)
         {
             if(m.getNome().equals(value)){

@@ -330,7 +330,6 @@ public class Model {
                 path = "src/main/resources/com/example/elaborato_ing/imagesAutoUsate";
             }
 
-
             // Percorso relativo della cartella delle immagini
             File outputDir = new File(path);
             if (!outputDir.exists()) {
@@ -345,6 +344,7 @@ public class Model {
                 // Copia il file immagine nella directory di output
                 Files.copy(inputFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
+
         }
     }
 
@@ -638,7 +638,8 @@ public class Model {
         return sum;
     }
 
-    public static AutoNuova getMarcaModelloAutoNuova(Marca marca, String modello, Map<Marca, List<AutoNuova>> map) {
+    public static AutoNuova getMarcaModelloAutoNuova(Marca marca, String
+            modello, Map<Marca, List<AutoNuova>> map) {
         List<AutoNuova> autoList = map.get(marca);
         if (autoList == null) { // Se non esiste una lista per la marca data
             System.out.println("Marca non trovata: " + marca);
@@ -709,7 +710,8 @@ public class Model {
                 "\nStato Preventivo : " + parts[16];
     }
 
-    public static void aggiungiValutazione(String idPreventivo, int prezzo, LocalDate ritiroData) throws IOException {
+    public static void aggiungiValutazione(String idPreventivo, int prezzo, LocalDate ritiroData) throws
+            IOException {
         BufferedReader reader;
         BufferedWriter writer;
         try {
@@ -823,7 +825,8 @@ public class Model {
         }
     }
 
-    public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws IOException {
+    public void caricaOpzionalDaFile(String filePath, List<Optionals> listaOp, VBox checkBoxContainer) throws
+            IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
         while ((line = reader.readLine()) != null) {
@@ -961,7 +964,8 @@ public class Model {
         document.add(table);
     }
 
-    private static void aggiungiImmagine(Document document, String imagePath) throws DocumentException, IOException {
+    private static void aggiungiImmagine(Document document, String imagePath) throws
+            DocumentException, IOException {
       /*      InputStream inputStream = Model.class.getResourceAsStream(imagePath);
 
             com.itextpdf.text.Image img =

@@ -26,12 +26,13 @@ public class EliminaAutoController {
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         model.aggiornaFileCatalogo();
 
-        model.ciccioGamerFXML("FXML/Segreteria.fxml",marca);
+        model.ciccioGamerFXML("FXML/Segreteria.fxml", marca);
     }
 
     private void aggiornaImg() {
         if (marca.getValue() != null && modello.getValue() != null) {
-            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), (model.getMarcaModelloAutoNuova(Marca.valueOf(String.valueOf(marca.getValue())), String.valueOf(modello.getValue()), model.getMapAutoNuova())).getColori().getFirst(), 1, 0, ""));
+            System.out.println(model.getImmagineAuto(marca.getValue(), String.valueOf(modello.getValue()), (model.getMarcaModelloAutoNuova(marca.getValue(), String.valueOf(modello.getValue()), model.getMapAutoNuova())).getColori().getFirst(), 1, 0, ""));
+            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(marca.getValue(), String.valueOf(modello.getValue()), (model.getMarcaModelloAutoNuova(marca.getValue(), String.valueOf(modello.getValue()), model.getMapAutoNuova())).getColori().getFirst(), 1, 0, ""));
             if (imageStream != null) {
                 Image image = new Image(imageStream);
                 autoImg.setImage(image);
