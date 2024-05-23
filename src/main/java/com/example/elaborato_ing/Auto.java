@@ -55,7 +55,7 @@ public class Auto {
         if (tipoAuto == 0) {
             for (String imgPath : getImmagini()) {
                 if ((modello.contains("3") || modello.contains("2") || modello.contains("1")) && imgPath.contains(colore.toLowerCase()) && (vista == 3 || vista == 2 || vista == 1)) {
-                    return "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toLowerCase() + colore.toLowerCase() + vista + ".png";
+                    return "/src/main/resources/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toLowerCase() + colore.toLowerCase() + vista + ".png";
                 } else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                     return imgPath;
                 }
@@ -64,7 +64,7 @@ public class Auto {
 
             for (String imgPath : getImmagini()) {
                 if ((modello.contains("3") || modello.contains("2") || modello.contains("1")) && imgPath.contains(colore.toLowerCase()) && (vista == 3 || vista == 2 || vista == 1)) {
-                    return "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toLowerCase() + colore.toLowerCase() + vista + ".png";
+                    return "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/" + marca.toString().toLowerCase() + modello.toLowerCase() + colore.toLowerCase() + vista + ".png";
                 } else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
                     return imgPath;
                 }

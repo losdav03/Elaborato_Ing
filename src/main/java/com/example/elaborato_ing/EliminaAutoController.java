@@ -31,7 +31,6 @@ public class EliminaAutoController {
 
     private void aggiornaImg() {
         if (marca.getValue() != null && modello.getValue() != null) {
-            System.out.println(model.getImmagineAuto(marca.getValue(), String.valueOf(modello.getValue()), (model.getMarcaModelloAutoNuova(marca.getValue(), String.valueOf(modello.getValue()), model.getMapAutoNuova())).getColori().getFirst(), 1, 0, ""));
             InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(marca.getValue(), String.valueOf(modello.getValue()), (model.getMarcaModelloAutoNuova(marca.getValue(), String.valueOf(modello.getValue()), model.getMapAutoNuova())).getColori().getFirst(), 1, 0, ""));
             if (imageStream != null) {
                 Image image = new Image(imageStream);

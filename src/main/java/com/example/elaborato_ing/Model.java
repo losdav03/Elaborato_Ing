@@ -19,6 +19,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javax.imageio.stream.ImageInputStream;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -325,13 +326,13 @@ public class Model {
 
             String path;
             if (tipoAuto == 0) {
-                path = "src/main/resources/com/example/elaborato_ing/images";
+                path = "/src/main/resources/com/example/elaborato_ing/images/";
             } else {
-                path = "src/main/resources/com/example/elaborato_ing/imagesAutoUsate";
+                path = "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
             }
 
             // Percorso relativo della cartella delle immagini
-            File outputDir = new File(path);
+            File outputDir = new File(String.valueOf(path));
             if (!outputDir.exists()) {
                 outputDir.mkdirs();
             }
