@@ -106,7 +106,8 @@ public class Model {
                         List<Motore> motori = new ArrayList<>();
                         for (String motorePart : motorePartsArray) {
                             String[] motoreParts = motorePart.split(";");
-                            if (motoreParts.length != 5) throw new IllegalArgumentException("Dati del motore non corretti");
+                            if (motoreParts.length != 5)
+                                throw new IllegalArgumentException("Dati del motore non corretti");
                             String nomeMotore = motoreParts[0].trim();
                             Alimentazione alimentazione = Alimentazione.valueOf(motoreParts[1].trim());
                             int cilindrata = Integer.parseInt(motoreParts[2].trim());
@@ -766,6 +767,26 @@ public class Model {
                 if (campi[0].equals(idPreventivo)) {
                     if (campi.length >= 17 && campi[16].equals(Stato.DA_PAGARE.toString())) {
                         campi[16] = Stato.PAGATO.toString();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Attenzione");
+                        alert.setHeaderText("Preventivo non pagabile");
+                        switch (campi[16]) {
+                            case "DA_VALUTARE":
+                            case "VALUTATO":
+                                alert.setContentText("Questo preventivo è di tipo auto usata");
+                                break;
+                            case "PAGATO":
+                                alert.setContentText("Questo preventivo è già stato pagato");
+                                break;
+                            case "PRONTO":
+                                alert.setContentText("Questo preventivo è già pronto per il ritiro");
+                                break;
+                            case "SCADUTO":
+                                alert.setContentText("Questo preventivo è scaduto");
+                                break;
+                        }
+                        alert.showAndWait();
                     }
                 }
                 fileContent.append(String.join(",", campi)).append("\n");
@@ -983,14 +1004,14 @@ public class Model {
     }
 
     public String aggiornaAlix(Marca marca, String modello, String motore) {
-        AutoNuova auto = catalogo.getAutoNuova(marca,modello);
+        AutoNuova auto = catalogo.getAutoNuova(marca, modello);
         for (Motore m : auto.getMotori()) {
-                if (m.getNome().equals(motore)) {
-                    System.out.println(motore +" ma rimane"+ m.getNome());
-                    return m.getAlimentazione().toString();
-                }
+            if (m.getNome().equals(motore)) {
+                System.out.println(motore + " ma rimane" + m.getNome());
+                return m.getAlimentazione().toString();
             }
-            return "Motore non trovato";
+        }
+        return "Motore non trovato";
     }
 }
 
