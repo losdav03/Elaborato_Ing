@@ -2,14 +2,13 @@ package com.example.elaborato_ing;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
+import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDate;
+
 
 public class ValutaUsatoController {
     @FXML
@@ -63,7 +62,24 @@ public class ValutaUsatoController {
             valutaBtn.setDisable(newValue.trim().isEmpty() || dataRitiro.getValue() == null);
         });
 
+        dataRitiro.getEditor().setDisable(true);
+        dataRitiro.setDayCellFactory(new Callback<>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item.isBefore(LocalDate.now().plusDays(1))) {
+                            setDisable(true);
+                        }
+                    }
+                };
+            }
+        });
+
         dataRitiro.valueProperty().addListener((observable, oldValue, newValue) -> {
+            dataRitiro.getEditor().setOnMouseClicked(event -> dataRitiro.show());
             valutaBtn.setDisable(newValue == null || prezzo.getText().trim().isEmpty());
         });
     }

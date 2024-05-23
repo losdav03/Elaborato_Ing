@@ -12,11 +12,12 @@ public class Auto {
     private final double larghezza;
     private final double peso;
     private final double volumeBagagliaio;
+    private Motore motore;
     private final List<String> immagini = new ArrayList<>();
     private final List<Optionals> optionalSelezionabili;
 
 
-    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, List<Optionals> optionalSelezionabili) {
+    public Auto(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, Motore motore, List<Optionals> optionalSelezionabili) {
         this.marca = marca;
         this.modello = modello;
         this.altezza = altezza;
@@ -24,13 +25,14 @@ public class Auto {
         this.larghezza = larghezza;
         this.peso = peso;
         this.volumeBagagliaio = volumeBagagliaio;
+        this.motore = motore;
         this.optionalSelezionabili = optionalSelezionabili;
     }
 
 
     @Override
     public String toString() {
-        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + stampaSelezionabili();
+        return marca + "," + modello + "," + altezza + "," + lunghezza + "," + larghezza + "," + peso + "," + volumeBagagliaio + "," + motore.toString() + "," + stampaSelezionabili();
     }
 
     public String stampaSelezionabili() {
@@ -97,6 +99,14 @@ public class Auto {
 
     public double getVolumeBagagliaio() {
         return volumeBagagliaio;
+    }
+
+    public Motore getMotore() {
+        return motore;
+    }
+
+    public void setMotore(Motore motore) {
+        this.motore = motore;
     }
 
     public List<String> getImmagini() {

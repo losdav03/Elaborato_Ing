@@ -541,11 +541,19 @@ public class Model {
         if (!rigaUnica(prv)) {
             try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
                 writer.write(prv);
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setHeaderText("Corretto");
+                alert.setContentText("Preventivo inviato");
+                alert.showAndWait();
             }
         } else {
-            System.out.println("Auto già presente");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Fallito");
+            alert.setContentText("Hai già effettuato un preventivo identico");
+            alert.showAndWait();
         }
     }
+
 
     public void isDouble(TextField txt) {
         txt.addEventFilter(KeyEvent.ANY, event -> {
@@ -611,7 +619,9 @@ public class Model {
         input = input.toUpperCase();
 
         for (char c : input.toCharArray()) {
-            if (c >= 'A' && c <= 'Z') {
+            if (c == '_') {
+                sum += 10;
+            } else if (c >= 'A' && c <= 'Z') {
                 sum += c - 'A' + 1;
             } else if (c >= '0' && c <= '9') {
                 sum += c - '0';
@@ -718,7 +728,10 @@ public class Model {
             writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
             writer.write(fileContent.toString());
             writer.close();
-            System.out.println("Auto valutata");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Corretto");
+            alert.setContentText("La valutazione dell'auto è andata a buon fine");
+            alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -796,7 +809,10 @@ public class Model {
             writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
             writer.write(fileContent.toString());
             writer.close();
-            System.out.println("Sostituzione completata.");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setHeaderText("Corretto");
+            alert.setContentText("Il pagamento del preventivo è andato a buon fine");
+            alert.showAndWait();
         } catch (IOException e) {
             throw new IOException();
         }

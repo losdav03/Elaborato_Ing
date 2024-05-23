@@ -9,7 +9,6 @@ public class AutoNuova extends Auto {
     private List<String> colori;
     private List<Optionals> optionalScelti;
     private List<Motore> motori;
-    private Motore motore;
 
     private static final Map<Character, Integer> mappaSconti = new HashMap<>();
 
@@ -29,8 +28,8 @@ public class AutoNuova extends Auto {
     }
 
     public AutoNuova(Marca marca, String modello, double altezza, double lunghezza, double larghezza, double peso, double volumeBagagliaio, List<Motore> motore, int prezzo, List<String> colori, String sconto, List<Optionals> optionalSelezionabili) {
-        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, optionalSelezionabili);
-        this.motori=motore;
+        super(marca, modello, altezza, lunghezza, larghezza, peso, volumeBagagliaio, null, optionalSelezionabili);
+        this.motori = motore;
         this.colori = colori;
         this.sconto = sconto;
         this.prezzo = prezzo;
@@ -38,17 +37,15 @@ public class AutoNuova extends Auto {
         caricaImmaginiAutoNuova();
     }
 
-    public void setMotori(List<Motore> motori) {
-        this.motori = motori;
-    }
-
-    public Motore getMotore() {
-        return motore;
-    }
 
     public List<Motore> getMotori() {
         return motori;
     }
+
+    public void setMotori(List<Motore> motori) {
+        this.motori = motori;
+    }
+
 
     public String trovaTipoAlimentazione(AutoNuova auto, String nomeMotore) {
         for (Motore m : motori) {
@@ -57,10 +54,6 @@ public class AutoNuova extends Auto {
             }
         }
         return "";
-    }
-
-    public void setMotore(Motore motore) {
-        this.motore = motore;
     }
 
     public void setOptionalScelti(List<Optionals> optionalScelti) {
@@ -128,27 +121,28 @@ public class AutoNuova extends Auto {
 
     @Override
     public String toString() {
-        return super.getMarca() + "," + super.getModello() + "," + super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + motore.toString() + "," + stampaScelti();
+        return super.getMarca() + "," + super.getModello() + "," + super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + stampaMotori() + "," + stampaScelti();
     }
 
-    public Motore trovaMotore(String nome){
-        for(Motore m : motori){
-            if(m.getNome().equals(nome)){
+    public Motore trovaMotore(String nome) {
+        for (Motore m : motori) {
+            if (m.getNome().equals(nome)) {
                 return m;
             }
         }
-        return new Motore("ciao", Alimentazione.ELETTRICO, 5,5,5);
+        return new Motore("ciao", Alimentazione.ELETTRICO, 5, 5, 5);
     }
-    public String stampaMotore() {
-        String res="";
-        for(Motore m:motori){
-            res+=m.toString()+"%";
+
+    public String stampaMotori() {
+        String res = "";
+        for (Motore m : motori) {
+            res += m.toString() + "%";
         }
         return res;
     }
 
     public String stampaAutoCatalogo() {
-        return super.getMarca() + "," + super.getModello().toUpperCase() + "," + super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + stampaMotore() + "," + prezzo + "," + sconto + "," + stampaColori() + "," + super.stampaSelezionabili();
+        return super.getMarca() + "," + super.getModello().toUpperCase() + "," + super.getAltezza() + "," + super.getLunghezza() + "," + super.getLarghezza() + "," + super.getPeso() + "," + super.getVolumeBagagliaio() + "," + stampaMotori() + "," + prezzo + "," + sconto + "," + stampaColori() + "," + super.stampaSelezionabili();
     }
 
     public String stampaColori() {
