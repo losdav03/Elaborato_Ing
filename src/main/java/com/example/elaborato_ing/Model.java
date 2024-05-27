@@ -6,6 +6,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -21,14 +22,14 @@ import javafx.stage.Stage;
 
 import javax.imageio.stream.ImageInputStream;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
+
 
 
 public class Model {
@@ -331,6 +332,7 @@ public class Model {
                 path = "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
             }
 
+
             // Percorso relativo della cartella delle immagini
             File outputDir = new File(String.valueOf(path));
             if (!outputDir.exists()) {
@@ -348,6 +350,47 @@ public class Model {
 
         }
     }
+/*
+    public void salvaImmagineProva(ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
+        if (imageView.getImage() != null) {
+            String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
+
+            String path;
+            if (tipoAuto == 0) {
+                path = "/src/main/resources/com/example/elaborato_ing/images/";
+            } else {
+                path = "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
+            }
+
+            // Costruisci il percorso completo del file sorgente
+            String sourceFilePath = System.getProperty("user.dir") + path + newFileName;
+
+            // Costruisci il percorso di destinazione nella cartella nascosta dell'applicazione
+            Path applicationDataPath = Paths.get(System.getProperty("user.home"), ".my-application");
+            Files.createDirectories(applicationDataPath);
+
+            Path destination = applicationDataPath.resolve("newImageUploaded"+fileExtension);
+
+            try {
+
+                Files.copy(sourceFilePath, destination, StandardCopyOption.REPLACE_EXISTING);
+
+                System.out.println("Changing image: " + imagePath);
+
+                // Set the uploaded image in the ImageView in GUI.
+                postImage.setImage(new Image(destination.toUri().toURL().toExternalForm()));
+
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+                System.out.println("Exception Caught");
+            }
+        }
+
+
+    }
+
+ */
+
 
     public void rimuoviImgs(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
         // Trova il primo ImageView con un'immagine e rimuovila
