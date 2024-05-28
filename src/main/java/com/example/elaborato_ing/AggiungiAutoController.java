@@ -68,7 +68,7 @@ public class AggiungiAutoController {
     }
 
     @FXML
-    public void aggiungiAuto(ActionEvent event) throws IOException {
+    public void aggiungiAuto(ActionEvent event) throws IOException, InterruptedException {
         if (imageView1.getImage() != null && imageView2.getImage() != null && imageView3.getImage() != null && marca.getValue() != null && !modello.getText().isEmpty() && !altezza.getText().isEmpty() &&
                 !lunghezza.getText().isEmpty() && !larghezza.getText().isEmpty() && !peso.getText().isEmpty() &&
                 !volume.getText().isEmpty() && !colore.getText().isEmpty() && alimentazione.getValue() != null && !motore.getText().isEmpty() &&
@@ -87,6 +87,8 @@ public class AggiungiAutoController {
                 Motore mot = new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText()));
                 motori.add(mot);
                         String scontoCheck = mesiChecked();
+
+
                 auto = new AutoNuova(
                         selectedMarca,
                         modello.getText(),
