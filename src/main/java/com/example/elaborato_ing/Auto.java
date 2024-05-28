@@ -13,7 +13,7 @@ public class Auto {
     private final double peso;
     private final double volumeBagagliaio;
     private Motore motore;
-    private final List<String> immagini = new ArrayList<>();
+    private List<String> immagini = new ArrayList<>();
     private final List<Optionals> optionalSelezionabili;
 
 
@@ -52,26 +52,31 @@ public class Auto {
     }
 
     public String getImmagine(String colore, int vista, int tipoAuto) {
-        if (tipoAuto == 0) {
-            for (String imgPath : getImmagini()) {
-                if ((modello.contains("3") || modello.contains("2") || modello.contains("1")) && imgPath.contains(colore.toLowerCase()) && (vista == 3 || vista == 2 || vista == 1)) {
-                    return "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toLowerCase() + colore.toLowerCase() + vista + ".png";
-                } else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
-                    return imgPath;
-                }
-            }
-        } else if (tipoAuto == 1) {
+        colore = colore.toLowerCase();
+        String basePath;
 
-            for (String imgPath : getImmagini()) {
-                if ((modello.contains("3") || modello.contains("2") || modello.contains("1")) && imgPath.contains(colore.toLowerCase()) && (vista == 3 || vista == 2 || vista == 1)) {
-                    return "/com/example/elaborato_ing/images/" + marca.toString().toLowerCase() + modello.toLowerCase() + colore.toLowerCase() + vista + ".png";
-                } else if (imgPath.contains(colore.toLowerCase()) && imgPath.contains(String.valueOf(vista))) {
-                    return imgPath;
-                }
+        if (tipoAuto == 0) {
+            basePath = "/src/main/resources/com/example/elaborato_ing/images/";
+        } else if (tipoAuto == 1) {
+            basePath = "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
+        } else {
+            return null; // Gestisci i casi in cui tipoAuto non è né 0 né 1
+        }
+
+        for (String imgPath : getImmagini()) {
+            boolean isMatchingModel = modello.contains("3") || modello.contains("2") || modello.contains("1");
+            boolean isMatchingColor = imgPath.contains(colore);
+            boolean isMatchingView = imgPath.contains(String.valueOf(vista));
+
+            if (isMatchingModel && isMatchingColor && (vista == 3 || vista == 2 || vista == 1)) {
+                return basePath + String.valueOf(marca).toLowerCase() + modello.toLowerCase() + colore + vista + ".png";
+            } else if (isMatchingColor && isMatchingView) {
+                return imgPath;
             }
         }
         return null;
     }
+
 
     public Marca getMarca() {
         return marca;

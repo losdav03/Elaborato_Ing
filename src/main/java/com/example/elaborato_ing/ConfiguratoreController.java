@@ -271,6 +271,7 @@ public class ConfiguratoreController {
     @FXML
     public void goToUsatoForm(ActionEvent event) {
         model.openFXML("FXML/Usato.fxml", event);
+        //oaracadute sulel spalle
     }
 
     @FXML
@@ -290,10 +291,3 @@ public class ConfiguratoreController {
         model.openCloseFXML("FXML/Configuratore.fxml", event);
     }
 }
-
-
-
-
-
-
-
