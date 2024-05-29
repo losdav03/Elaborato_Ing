@@ -350,6 +350,7 @@ public class Model {
 
         }
     }
+
 /*
     public void salvaImmagineProva(ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
         if (imageView.getImage() != null) {
