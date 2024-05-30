@@ -1,17 +1,16 @@
 package com.example.elaborato_ing;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
+
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -20,7 +19,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import javax.imageio.stream.ImageInputStream;
+
+import java.awt.*;
 import java.io.*;
 import java.nio.file.*;
 import java.text.SimpleDateFormat;
@@ -29,7 +29,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
-
 
 
 public class Model {
@@ -321,33 +320,53 @@ public class Model {
         }
     }
 
+
+
+
     public void salvaImageViewImage(ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
         if (imageView.getImage() != null) {
             String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
 
+            System.out.println("Img : " + imageView.getImage().getUrl());
             String path;
             if (tipoAuto == 0) {
-                path = "/src/main/resources/com/example/elaborato_ing/images/";
+                path = "src/main/resources/com/example/elaborato_ing/images/";
             } else {
-                path = "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
+                path = "src/main/resources/com/example/Elaborato_ing/imagesAutoUsate/";
             }
 
+            String pathCompleto = path + newFileName;
 
-            // Percorso relativo della cartella delle immagini
-            File outputDir = new File(String.valueOf(path));
+            // Converti il percorso relativo in percorso assoluto
+            File outputDir = new File(path);
             if (!outputDir.exists()) {
                 outputDir.mkdirs();
             }
-            File outputFile = new File(outputDir, newFileName);
+
+            File outputFile = new File(pathCompleto);
 
             // Leggi il contenuto dell'immagine da ImageView
             String imageUrl = imageView.getImage().getUrl();
-            File inputFile = new File(imageUrl.replace("file:", ""));
-            if (inputFile.exists()) {
-                // Copia il file immagine nella directory di output
-                Files.copy(inputFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            if (imageUrl.startsWith("file:")) {
+                imageUrl = imageUrl.replace("file:", "");
             }
 
+            File inputFile = new File(imageUrl);
+            System.out.println("Percorso immagine di input: " + inputFile.getAbsolutePath());
+            if (!inputFile.exists()) {
+                throw new IOException("File di input non trovato: " + inputFile.getAbsolutePath());
+            }
+
+            System.out.println("Percorso immagine di output: " + outputFile.getAbsolutePath());
+
+            // Copia il file
+            try {
+                Files.copy(inputFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                throw new IOException("Errore durante la copia del file: " + e.getMessage(), e);
+            }
+        } else {
+            throw new IOException("L'ImageView non contiene un'immagine.");
         }
     }
 
@@ -963,81 +982,82 @@ public class Model {
         }
     }
 
-    public void generaPDF(Marca marca, String modello, String colore) {
-        AutoNuova auto = getMarcaModelloAutoNuova(marca, modello, mapAutoNuova);
-        try {
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
-            document.open();
-            aggiungiContenuto(document, auto);
-            System.out.println(auto.getImmagine(colore, 1, 0));
-            aggiungiImmagine(document, auto.getImmagine(colore, 1, 0));
-            document.close();
-        } catch (FileNotFoundException | DocumentException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static void aggiungiContenuto(Document document, AutoNuova auto) throws DocumentException {
-        Font font = FontFactory.getFont(FontFactory.HELVETICA, 18, BaseColor.BLACK);
-
-        Paragraph header = new Paragraph("Configuratore Auto", font);
-        header.setAlignment(Element.ALIGN_CENTER);
-        document.add(header);
-        document.add(Chunk.NEWLINE);
-
-        PdfPTable table = new PdfPTable(2);
-        table.setWidthPercentage(100);
-
-        aggiungiCella(table, "Marca:", auto.getMarca().toString());
-        aggiungiCella(table, "Modello:", auto.getModello());
-        aggiungiCella(table, "Altezza (cm):", String.valueOf(auto.getAltezza()));
-        aggiungiCella(table, "Lunghezza (cm):", String.valueOf(auto.getLunghezza()));
-        aggiungiCella(table, "Larghezza (cm):", String.valueOf(auto.getLarghezza()));
-        aggiungiCella(table, "Peso (kg):", String.valueOf(auto.getPeso()));
-        aggiungiCella(table, "Volume Bagagliaio (L):", String.valueOf(auto.getVolumeBagagliaio()));
-        //aggiungiCella(table, "Motore:", auto.getMotore().getNome());
-        //aggiungiCella(table, "Alimentazione:", auto.getMotore().getAlimentazione().toString());
-        aggiungiCella(table, "Optional Disponibili:", "");
-
-        for (Optionals optional : auto.getOptionalSelezionabili()) {
-            aggiungiCella(table, "", "- " + optional.getNome() + " (Costo: " + optional.getCosto() + ")");
+    /*
+        public void generaPDF(Marca marca, String modello, String colore) {
+            AutoNuova auto = getMarcaModelloAutoNuova(marca, modello, mapAutoNuova);
+            try {
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
+                document.open();
+                aggiungiContenuto(document, auto);
+                System.out.println(auto.getImmagine(colore, 1, 0));
+                aggiungiImmagine(document, auto.getImmagine(colore, 1, 0));
+                document.close();
+            } catch (FileNotFoundException | DocumentException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
-        document.add(table);
-    }
+        private static void aggiungiContenuto(Document document, AutoNuova auto) throws DocumentException {
+            Font font = FontFactory.getFont(FontFactory.HELVETICA, 18, BaseColor.BLACK);
 
-    private static void aggiungiImmagine(Document document, String imagePath) throws
-            DocumentException, IOException {
-      /*      InputStream inputStream = Model.class.getResourceAsStream(imagePath);
+            Paragraph header = new Paragraph("Configuratore Auto", font);
+            header.setAlignment(Element.ALIGN_CENTER);
+            document.add(header);
+            document.add(Chunk.NEWLINE);
 
-            com.itextpdf.text.Image img =
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
 
-            img.scaleToFit(500, 500); // Dimensiona l'immagine per adattarla al documento
-            img.setAlignment(Element.ALIGN_CENTER);
-            document.add(img);
-            */
+            aggiungiCella(table, "Marca:", auto.getMarca().toString());
+            aggiungiCella(table, "Modello:", auto.getModello());
+            aggiungiCella(table, "Altezza (cm):", String.valueOf(auto.getAltezza()));
+            aggiungiCella(table, "Lunghezza (cm):", String.valueOf(auto.getLunghezza()));
+            aggiungiCella(table, "Larghezza (cm):", String.valueOf(auto.getLarghezza()));
+            aggiungiCella(table, "Peso (kg):", String.valueOf(auto.getPeso()));
+            aggiungiCella(table, "Volume Bagagliaio (L):", String.valueOf(auto.getVolumeBagagliaio()));
+            //aggiungiCella(table, "Motore:", auto.getMotore().getNome());
+            //aggiungiCella(table, "Alimentazione:", auto.getMotore().getAlimentazione().toString());
+            aggiungiCella(table, "Optional Disponibili:", "");
 
-    }
+            for (Optionals optional : auto.getOptionalSelezionabili()) {
+                aggiungiCella(table, "", "- " + optional.getNome() + " (Costo: " + optional.getCosto() + ")");
+            }
+
+            document.add(table);
+        }
+
+        private static void aggiungiImmagine(Document document, String imagePath) throws
+                DocumentException, IOException {
+          /*      InputStream inputStream = Model.class.getResourceAsStream(imagePath);
+
+                com.itextpdf.text.Image img =
+
+                img.scaleToFit(500, 500); // Dimensiona l'immagine per adattarla al documento
+                img.setAlignment(Element.ALIGN_CENTER);
+                document.add(img);
 
 
-    private static void aggiungiCella(PdfPTable table, String label, String value) {
-        Font fontLabel = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-        Font fontValue = FontFactory.getFont(FontFactory.HELVETICA);
-
-        PdfPCell cellLabel = new PdfPCell(new Phrase(label, fontLabel));
-        PdfPCell cellValue = new PdfPCell(new Phrase(value, fontValue));
-
-        cellLabel.setBorder(Rectangle.NO_BORDER);
-        cellValue.setBorder(Rectangle.NO_BORDER);
-
-        table.addCell(cellLabel);
-        table.addCell(cellValue);
-    }
 
 
+
+        private static void aggiungiCella(PdfPTable table, String label, String value) {
+            Font fontLabel = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
+            Font fontValue = FontFactory.getFont(FontFactory.HELVETICA);
+
+            PdfPCell cellLabel = new PdfPCell(new Phrase(label, fontLabel));
+            PdfPCell cellValue = new PdfPCell(new Phrase(value, fontValue));
+
+            cellLabel.setBorder(Rectangle.NO_BORDER);
+            cellValue.setBorder(Rectangle.NO_BORDER);
+
+            table.addCell(cellLabel);
+            table.addCell(cellValue);
+        }
+
+    */
     public void setImageViewPreventivi(String idPreventivo, ImageView img, int vista) {
         Auto auto = null;
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
