@@ -276,7 +276,7 @@ public class ConfiguratoreController {
 
     @FXML
     public void generaPDF() {
-        model.generaPDF(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue().trim().toLowerCase());
+     //   model.generaPDF(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue().trim().toLowerCase());
     }
 
     @FXML

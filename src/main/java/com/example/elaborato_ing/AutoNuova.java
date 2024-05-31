@@ -47,14 +47,7 @@ public class AutoNuova extends Auto {
     }
 
 
-    public String trovaTipoAlimentazione(AutoNuova auto, String nomeMotore) {
-        for (Motore m : motori) {
-            if (m.getNome().equals(nomeMotore)) {
-                return m.getAlimentazione().toString();
-            }
-        }
-        return "";
-    }
+
 
     public void setOptionalScelti(List<Optionals> optionalScelti) {
         this.optionalScelti = optionalScelti;
@@ -78,7 +71,7 @@ public class AutoNuova extends Auto {
     public void caricaImmaginiAutoNuova() {
         for (String c : colori) {
             for (int i = 1; i <= 3; i++) {
-                String path = "/com/example/elaborato_ing/images/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + c.toLowerCase() + i + ".png";
+                String path = "src/main/resources/com/example/elaborato_ing/images/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + c.toLowerCase() + i + ".png";
                 super.getImmagini().add(path);
             }
         }

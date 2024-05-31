@@ -8,11 +8,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,7 @@ public class AggiungiAutoController {
     private final Model model = new Model();
     private final List<Optionals> listaOp = new ArrayList<>();
     private AutoNuova auto;
+    private File fileScelto;
 
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
@@ -54,12 +60,28 @@ public class AggiungiAutoController {
         model.caricaOpzionalDaFile("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt", listaOp, checkBoxContainer);
         vendibtn.setDisable(false);
 
-        model.ciccioGamerFXML("FXML/Segreteria.fxml",marca);
+        model.ciccioGamerFXML("FXML/Segreteria.fxml", marca);
     }
 
     @FXML
     public void caricaImgs() {
-        model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
+     //   model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleziona un'immagine");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png"));
+
+        File immagine = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
+        if (immagine != null) {
+            Image image = new Image(immagine.toURI().toString());
+            if (imageView1.getImage() == null) {
+                imageView1.setImage(image);
+            } else if (imageView2.getImage() == null) {
+                imageView2.setImage(image);
+            } else {
+                imageView3.setImage(image);
+            }
+            fileScelto = immagine;
+        }
     }
 
     @FXML
@@ -79,14 +101,10 @@ public class AggiungiAutoController {
 
                 Marca selectedMarca = Enum.valueOf(Marca.class, String.valueOf(marca.getValue()));
                 Alimentazione selectedAlimentazione = Enum.valueOf(Alimentazione.class, String.valueOf(alimentazione.getValue()));
-
-                model.salvaImageViewImage(imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
-                model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
-                model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
                 List<Motore> motori = new ArrayList<>();
                 Motore mot = new Motore(motore.getText(), selectedAlimentazione, Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText()));
                 motori.add(mot);
-                        String scontoCheck = mesiChecked();
+                String scontoCheck = mesiChecked();
 
 
                 auto = new AutoNuova(
@@ -103,11 +121,23 @@ public class AggiungiAutoController {
                         scontoCheck,
                         listaOp
                 );
+            //    model.salvaImageViewImage(imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
+           //     model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
+            //    model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
+                String newFileName = selectedMarca.toString().trim().toLowerCase() + modello.getText().trim().toLowerCase() + colore.getText().trim().toLowerCase() + "1.png";
+
+                File destination = new File("src/main/resources/com/example/elaborato_ing/images/" + newFileName);
+                copyFile(new File(fileScelto.toURI().getPath()), destination);
+
+                // PROBLEMA PRECEDENTE LE FOTO VECCHIE SALVATE CON com/example...
+                // LE FOTO NUOVE SALVATE CON src/main/resources/... e soprattutto come FILE vengono salvate
+                //SOLUZIONE SALVATAGGIO IN AUTONUOVA DELLE IMMAGINI CON PATH CHE PARTE DA SRC/...
+                // E CAMBIO METODO PER VISUALIZZARLE NELLE IMAGEVIEW -> PER IL MOMENTO è CAMBIATO SOLO IN ELIMINA AUTO QUINDI IL CONFIGURATORE NON SI VEDONO LE FOTO
 
                 model.getCatalogo().add(auto);
                 model.aggiornaFileCatalogo();
                 model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
-                model.openCloseFXML("FXML/AggiungiAuto.fxml",event);
+                model.openCloseFXML("FXML/AggiungiAuto.fxml", event);
 
 
             } else {
@@ -121,6 +151,17 @@ public class AggiungiAutoController {
             alert.setTitle("Attenzione");
             alert.setHeaderText("Assicurati di aver completato tutti i campi, comprese le immagini (3 in totale)");
             alert.showAndWait();
+        }
+    }
+
+    private void copyFile(File source, File destination) throws IOException {
+        try (FileInputStream fis = new FileInputStream(source);
+             FileOutputStream fos = new FileOutputStream(destination)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, length);
+            }
         }
     }
 
