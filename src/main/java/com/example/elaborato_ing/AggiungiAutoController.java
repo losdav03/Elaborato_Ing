@@ -130,7 +130,7 @@ public class AggiungiAutoController {
                 copyFile(new File(fileScelto.toURI().getPath()), destination);
 
                 // PROBLEMA PRECEDENTE LE FOTO VECCHIE SALVATE CON com/example...
-                // LE FOTO NUOVE SALVATE CON src/main/resources/... e soprattutto come file vengono salvate
+                // LE FOTO NUOVE SALVATE CON src/main/resources/... e soprattutto come FILE vengono salvate
                 //SOLUZIONE SALVATAGGIO IN AUTONUOVA DELLE IMMAGINI CON PATH CHE PARTE DA SRC/...
                 // E CAMBIO METODO PER VISUALIZZARLE NELLE IMAGEVIEW -> PER IL MOMENTO è CAMBIATO SOLO IN ELIMINA AUTO QUINDI IL CONFIGURATORE NON SI VEDONO LE FOTO
 
