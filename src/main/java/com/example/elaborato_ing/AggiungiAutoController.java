@@ -133,7 +133,7 @@ public class AggiungiAutoController {
                 // LE FOTO NUOVE SALVATE CON src/main/resources/... e soprattutto come FILE vengono salvate
                 //SOLUZIONE SALVATAGGIO IN AUTONUOVA DELLE IMMAGINI CON PATH CHE PARTE DA SRC/...
                 // E CAMBIO METODO PER VISUALIZZARLE NELLE IMAGEVIEW -> PER IL MOMENTO è CAMBIATO SOLO IN ELIMINA AUTO QUINDI IL CONFIGURATORE NON SI VEDONO LE FOTO
-
+//non si capisce cosa hai scritto ahahahahaha
                 model.getCatalogo().add(auto);
                 model.aggiornaFileCatalogo();
                 model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
