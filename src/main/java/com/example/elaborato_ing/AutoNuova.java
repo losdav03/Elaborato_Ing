@@ -47,8 +47,6 @@ public class AutoNuova extends Auto {
     }
 
 
-
-
     public void setOptionalScelti(List<Optionals> optionalScelti) {
         this.optionalScelti = optionalScelti;
     }
@@ -97,17 +95,17 @@ public class AutoNuova extends Auto {
         return prezzo;
     }
 
-    public boolean containsMotore(String value){
-        for(Motore m :motori){
-            if(m.getNome().equals(value))
+    public boolean containsMotore(String value) {
+        for (Motore m : motori) {
+            if (m.getNome().equals(value))
                 return true;
         }
         return false;
     }
 
-    public List<String> getNomiMotori(){
+    public List<String> getNomiMotori() {
         List<String> nomiMotori = new ArrayList<>();
-        for(Motore m :motori){
+        for (Motore m : motori) {
             nomiMotori.add(m.getNome());
         }
         return nomiMotori;
@@ -141,12 +139,18 @@ public class AutoNuova extends Auto {
         return new Motore("ciao", Alimentazione.ELETTRICO, 5, 5, 5);
     }
 
+    public void soloUnMotore(String nome) {
+        Motore appoggio = trovaMotore(nome);
+        motori.clear();
+        motori.add(appoggio);
+    }
+
     public String stampaMotori() {
-        String res = "";
+        StringBuilder res = new StringBuilder();
         for (Motore m : motori) {
-            res += m.toString() + "%";
+            res.append(m.toString()).append("%");
         }
-        return res;
+        return res.toString();
     }
 
     public String stampaAutoCatalogo() {
@@ -177,12 +181,4 @@ public class AutoNuova extends Auto {
         this.prezzo = prezzo;
     }
 
-    public void rimuoviMotore(String value) {
-        for(Motore m:motori)
-        {
-            if(m.getNome().equals(value)){
-                motori.remove(m);
-            }
-        }
-    }
 }

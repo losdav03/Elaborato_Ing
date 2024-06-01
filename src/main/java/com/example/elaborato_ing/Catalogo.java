@@ -38,11 +38,9 @@ public class Catalogo {
     public Motore getMotore(Marca marca,String modello,String nomeMotore) {
         for (AutoNuova auto : catalogo) {
             if (auto.getMarca()==marca && auto.getModello().equals(modello)) {
-                System.out.println(marca +modello+nomeMotore +"vs"+auto.getMarca()+auto.getModello()+auto.trovaMotore(nomeMotore));
                 return auto.trovaMotore(nomeMotore);
             }
         }
-        System.out.println(marca +modello+nomeMotore);
         return null;
     }
 }

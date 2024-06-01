@@ -20,9 +20,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
-import java.awt.*;
 import java.io.*;
-import java.nio.file.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -43,6 +41,8 @@ public class Model {
     private Stage stage;
     private Scene scene;
     private Parent root;
+    private File fileScelto1, fileScelto2, fileScelto3;
+
 
     public Model() {
 
@@ -65,12 +65,16 @@ public class Model {
         return cliente;
     }
 
-    public Dipendente getDipendente() {
-        return dipendente;
+    public File getFileScelto1() {
+        return fileScelto1;
     }
 
-    public Amministrazione getAmministrazione() {
-        return amministrazione;
+    public File getFileScelto2() {
+        return fileScelto2;
+    }
+
+    public File getFileScelto3() {
+        return fileScelto3;
     }
 
     public void aggiornaFileCatalogo() {
@@ -195,7 +199,7 @@ public class Model {
         }
     }
 
-    public void generaCheckBoxOptionalConfiguratore(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo) {
+    public void generaCheckBoxOptionalConfiguratore(AutoNuova auto, ScrollPane scrollPane, VBox checkBoxContainer, List<Optionals> optionalScelti, Label costo, Label costoScontato) {
         {
             scrollPane.setContent(checkBoxContainer);
             checkBoxContainer.getChildren().clear();
@@ -209,12 +213,16 @@ public class Model {
                     if (newValue) {
                         optionalScelti.add(op);
                         int prezzoAggiornato = Integer.parseInt(costo.getText()) + item.getCosto();
+                        int prezzoScontato = Integer.parseInt(costoScontato.getText()) + item.getCosto();
                         costo.setText(String.valueOf(prezzoAggiornato));
+                        costoScontato.setText(String.valueOf(prezzoScontato));
 
                     } else {
                         optionalScelti.remove(op);
                         int prezzoAggiornato = Integer.parseInt(costo.getText()) - item.getCosto();
+                        int prezzoScontato = Integer.parseInt(costoScontato.getText()) - item.getCosto();
                         costo.setText(String.valueOf(prezzoAggiornato));
+                        costoScontato.setText(String.valueOf(prezzoScontato));
 
                     }
                 });
@@ -311,106 +319,44 @@ public class Model {
         if (immagine != null) {
             Image image = new Image(immagine.toURI().toString());
             if (imageView1.getImage() == null) {
+                fileScelto1 = immagine;
                 imageView1.setImage(image);
             } else if (imageView2.getImage() == null) {
+                fileScelto2 = immagine;
                 imageView2.setImage(image);
             } else {
+                fileScelto3 = immagine;
                 imageView3.setImage(image);
             }
         }
     }
 
 
-
-
-    public void salvaImageViewImage(ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
+    public void salvaImageViewImage(File fileScelto, ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
         if (imageView.getImage() != null) {
-            String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
+            String newFileName = marca.toString().trim().toLowerCase() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
 
-            System.out.println("Img : " + imageView.getImage().getUrl());
             String path;
             if (tipoAuto == 0) {
                 path = "src/main/resources/com/example/elaborato_ing/images/";
             } else {
                 path = "src/main/resources/com/example/Elaborato_ing/imagesAutoUsate/";
             }
-
-            String pathCompleto = path + newFileName;
-
-            // Converti il percorso relativo in percorso assoluto
-            File outputDir = new File(path);
-            if (!outputDir.exists()) {
-                outputDir.mkdirs();
-            }
-
-            File outputFile = new File(pathCompleto);
-
-            // Leggi il contenuto dell'immagine da ImageView
-            String imageUrl = imageView.getImage().getUrl();
-            if (imageUrl.startsWith("file:")) {
-                imageUrl = imageUrl.replace("file:", "");
-            }
-
-            File inputFile = new File(imageUrl);
-            System.out.println("Percorso immagine di input: " + inputFile.getAbsolutePath());
-            if (!inputFile.exists()) {
-                throw new IOException("File di input non trovato: " + inputFile.getAbsolutePath());
-            }
-
-            System.out.println("Percorso immagine di output: " + outputFile.getAbsolutePath());
-
-            // Copia il file
-            try {
-                Files.copy(inputFile.toPath(), outputFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                throw new IOException("Errore durante la copia del file: " + e.getMessage(), e);
-            }
-        } else {
-            throw new IOException("L'ImageView non contiene un'immagine.");
+            File destination = new File(path + newFileName);
+            copyFile(new File(fileScelto.toURI().getPath()), destination);
         }
     }
 
-/*
-    public void salvaImmagineProva(ImageView imageView, int vista, Marca marca, String modello, String colore, int tipoAuto) throws IOException {
-        if (imageView.getImage() != null) {
-            String newFileName = marca.toString().toLowerCase().trim() + modello.trim().toLowerCase() + colore.trim().toLowerCase() + vista + ".png";
-
-            String path;
-            if (tipoAuto == 0) {
-                path = "/src/main/resources/com/example/elaborato_ing/images/";
-            } else {
-                path = "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
-            }
-
-            // Costruisci il percorso completo del file sorgente
-            String sourceFilePath = System.getProperty("user.dir") + path + newFileName;
-
-            // Costruisci il percorso di destinazione nella cartella nascosta dell'applicazione
-            Path applicationDataPath = Paths.get(System.getProperty("user.home"), ".my-application");
-            Files.createDirectories(applicationDataPath);
-
-            Path destination = applicationDataPath.resolve("newImageUploaded"+fileExtension);
-
-            try {
-
-                Files.copy(sourceFilePath, destination, StandardCopyOption.REPLACE_EXISTING);
-
-                System.out.println("Changing image: " + imagePath);
-
-                // Set the uploaded image in the ImageView in GUI.
-                postImage.setImage(new Image(destination.toUri().toURL().toExternalForm()));
-
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-                System.out.println("Exception Caught");
+    private void copyFile(File source, File destination) throws IOException {
+        try (FileInputStream fis = new FileInputStream(source);
+             FileOutputStream fos = new FileOutputStream(destination)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                fos.write(buffer, 0, length);
             }
         }
-
-
     }
-
- */
-
 
     public void rimuoviImgs(ImageView imageView1, ImageView imageView2, ImageView imageView3) {
         // Trova il primo ImageView con un'immagine e rimuovila
@@ -760,11 +706,11 @@ public class Model {
                 "\nLarghezza : " + parts[6] + " cm" +
                 "\nPeso : " + parts[7] + " kg" +
                 "\nVolume Bagagliaio : " + parts[8] + " L" +
-                "\nNome motore : " + parts[9].split(";")[0] +
-                "\nAlimentazione : " + parts[9].split(";")[1] +
-                "\nCilindrata : " + parts[9].split(";")[2] + " m³" +
-                "\nPotenza : " + parts[9].split(";")[3] + " kW" +
-                "\nConsumi : " + parts[9].split(";")[4] + " km/L" +
+                "\nNome motore : " + parts[9].split("%")[0].split(";")[0] +
+                "\nAlimentazione : " + parts[9].split("%")[0].split(";")[1] +
+                "\nCilindrata : " + parts[9].split("%")[0].split(";")[2] + " m³" +
+                "\nPotenza : " + parts[9].split("%")[0].split(";")[3] + " kW" +
+                "\nConsumi : " + parts[9].split("%")[0].split(";")[4] + " km/L" +
                 "\nOptional : " + (parts[10].isEmpty() ? " nessun optional" : parts[10]) +
                 "\nSede : " + parts[11] +
                 "\nColore : " + parts[12] +
@@ -1071,12 +1017,11 @@ public class Model {
                 }
             }
             if (auto != null) {
-                InputStream inputStream = getClass().getResourceAsStream(auto.getImmagini().get(vista - 1));
-                if (inputStream != null) {
-                    Image image = new Image(inputStream);
-                    img.setImage(image);
-                    System.out.println(auto.toString());
-                }
+                String path = auto.getImmagini().get(vista - 1);
+                File file = new File(path);
+                FileInputStream stream = new FileInputStream(file);
+                Image image = new Image(stream);
+                img.setImage(image);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

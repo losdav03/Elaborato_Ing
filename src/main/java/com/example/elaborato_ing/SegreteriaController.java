@@ -88,7 +88,7 @@ public class SegreteriaController {
                     Alimentazione alimentazione = Alimentazione.valueOf(motoreElements[1]);
                     int cilindrata = Integer.parseInt(motoreElements[2]);
                     int potenza = Integer.parseInt(motoreElements[3]);
-                    double consumi = Double.parseDouble(motoreElements[4]);
+                    double consumi = Double.parseDouble(motoreElements[4].split("%")[0]);
                     List<Optionals> optionalScelti = new ArrayList<>();
                     List<String> op = List.of(elements[10].trim().split(";"));
                     for (String o : op) {

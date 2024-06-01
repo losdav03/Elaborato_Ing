@@ -42,7 +42,6 @@ public class AggiungiAutoController {
     private final Model model = new Model();
     private final List<Optionals> listaOp = new ArrayList<>();
     private AutoNuova auto;
-    private File fileScelto;
 
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
@@ -65,23 +64,7 @@ public class AggiungiAutoController {
 
     @FXML
     public void caricaImgs() {
-     //   model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleziona un'immagine");
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Immagini", "*.png"));
-
-        File immagine = fileChooser.showOpenDialog(imageView1.getScene().getWindow());
-        if (immagine != null) {
-            Image image = new Image(immagine.toURI().toString());
-            if (imageView1.getImage() == null) {
-                imageView1.setImage(image);
-            } else if (imageView2.getImage() == null) {
-                imageView2.setImage(image);
-            } else {
-                imageView3.setImage(image);
-            }
-            fileScelto = immagine;
-        }
+        model.caricaImmaginiImageView(imageView1, imageView2, imageView3);
     }
 
     @FXML
@@ -121,19 +104,11 @@ public class AggiungiAutoController {
                         scontoCheck,
                         listaOp
                 );
-            //    model.salvaImageViewImage(imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
-           //     model.salvaImageViewImage(imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
-            //    model.salvaImageViewImage(imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
-                String newFileName = selectedMarca.toString().trim().toLowerCase() + modello.getText().trim().toLowerCase() + colore.getText().trim().toLowerCase() + "1.png";
 
-                File destination = new File("src/main/resources/com/example/elaborato_ing/images/" + newFileName);
-                copyFile(new File(fileScelto.toURI().getPath()), destination);
+                model.salvaImageViewImage(model.getFileScelto1(), imageView1, 1, selectedMarca, modello.getText(), colore.getText(), 0);
+                model.salvaImageViewImage(model.getFileScelto2(), imageView2, 2, selectedMarca, modello.getText(), colore.getText(), 0);
+                model.salvaImageViewImage(model.getFileScelto3(), imageView3, 3, selectedMarca, modello.getText(), colore.getText(), 0);
 
-                // PROBLEMA PRECEDENTE LE FOTO VECCHIE SALVATE CON com/example...
-                // LE FOTO NUOVE SALVATE CON src/main/resources/... e soprattutto come FILE vengono salvate
-                //SOLUZIONE SALVATAGGIO IN AUTONUOVA DELLE IMMAGINI CON PATH CHE PARTE DA SRC/...
-                // E CAMBIO METODO PER VISUALIZZARLE NELLE IMAGEVIEW -> PER IL MOMENTO è CAMBIATO SOLO IN ELIMINA AUTO QUINDI IL CONFIGURATORE NON SI VEDONO LE FOTO
-//non si capisce cosa hai scritto ahahahahaha
                 model.getCatalogo().add(auto);
                 model.aggiornaFileCatalogo();
                 model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
@@ -151,17 +126,6 @@ public class AggiungiAutoController {
             alert.setTitle("Attenzione");
             alert.setHeaderText("Assicurati di aver completato tutti i campi, comprese le immagini (3 in totale)");
             alert.showAndWait();
-        }
-    }
-
-    private void copyFile(File source, File destination) throws IOException {
-        try (FileInputStream fis = new FileInputStream(source);
-             FileOutputStream fos = new FileOutputStream(destination)) {
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = fis.read(buffer)) > 0) {
-                fos.write(buffer, 0, length);
-            }
         }
     }
 

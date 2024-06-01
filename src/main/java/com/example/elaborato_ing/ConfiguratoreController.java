@@ -61,7 +61,13 @@ public class ConfiguratoreController {
         modello.setOnAction(_ -> aggiornaColori());
         motore.setOnAction(_ -> aggiornaAlimentazione());
         vista = 1;
-        colori.setOnAction(_ -> aggiornaImg());
+        colori.setOnAction(_ -> {
+            try {
+                aggiornaImg();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        });
         modello.setDisable(true);
         colori.setDisable(true);
         motore.setDisable(true);
@@ -75,15 +81,15 @@ public class ConfiguratoreController {
         logOutBtn.setDisable(true);
 
 
-
-
         // mi serve per riaggiornare il catalogo dopo eliminazione optional nell'amministrazione
         model.caricaOptionalDaFile();
     }
 
     private void aggiornaAlimentazione() {
-        alimentazione.setText("");
-        alimentazione.setText(model.aggiornaAlix(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), motore.getValue()));
+        if (marca.getValue() != null && modello.getValue() != null) {
+            alimentazione.setText("");
+            alimentazione.setText(model.aggiornaAlix(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), motore.getValue()));
+        }
     }
 
     private void aggiornaModello() {
@@ -101,9 +107,11 @@ public class ConfiguratoreController {
         volume.setText("");
         alimentazione.setText("");
         prezzo.setText("");
+        prezzoScontato.setText("");
 
         sede.getItems().clear();
         colori.setDisable(true);
+        motore.setDisable(true);
         sede.setDisable(true);
         modello.setDisable(true);
         btnSx.setDisable(true);
@@ -132,7 +140,7 @@ public class ConfiguratoreController {
             sede.setDisable(false);
             motore.setDisable(false);
             if (auto != null) {
-                model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox, auto.getOptionalScelti(), prezzo);
+                model.generaCheckBoxOptionalConfiguratore(auto, scrollPane, vBox, auto.getOptionalScelti(), prezzo, prezzoScontato);
 
 
                 lunghezza.setText(auto.getLunghezza() + " cm");
@@ -140,7 +148,7 @@ public class ConfiguratoreController {
                 larghezza.setText(auto.getLarghezza() + " cm");
                 peso.setText(auto.getPeso() + " kg");
                 volume.setText(auto.getVolumeBagagliaio() + " L");
-                prezzo.setText(auto.getPrezzo() + "€");
+                prezzo.setText(String.valueOf(auto.getPrezzo()));
                 colori.getItems().clear();
                 colori.getItems().addAll(auto.getColori());
                 colori.setValue(colori.getItems().getFirst());
@@ -152,26 +160,30 @@ public class ConfiguratoreController {
                 motore.getItems().addAll(nomiMotori);
                 motore.setValue(motore.getItems().getFirst());
                 sede.getItems().setAll(Sede.values());
+                sede.setValue(sede.getItems().getFirst());
+                prezzoScontato.setText(String.valueOf(auto.calcolaPrezzoScontato()));
+
             }
 
         }
     }
 
-    private void aggiornaImg() {
+    private void aggiornaImg() throws FileNotFoundException {
 
         if (marca.getValue() != null && modello.getValue() != null && colori.getValue() != null) {
             btnSx.setDisable(false);
             btnDx.setDisable(false);
 
-            InputStream imageStream = getClass().getResourceAsStream(model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1, 0, ""));
-            if (imageStream != null) {
-                Image image = new Image(imageStream);
-                img.setImage(image);
-            }
+            String pathImg = model.getImmagineAuto(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue(), 1, 0, "");
+            File file = new File(pathImg);
+            FileInputStream stream = new FileInputStream(file);
+            Image image = new Image(stream);
+            img.setImage(image);
+
         }
     }
 
-    public void btnSx() {
+    public void btnSx() throws FileNotFoundException {
         String pathSx = "";
         switch (vista) {
             case 1 -> {
@@ -189,14 +201,13 @@ public class ConfiguratoreController {
         }
 
 
-        InputStream imageStream = getClass().getResourceAsStream(pathSx);
-        if (imageStream != null) {
-            Image image = new Image(imageStream);
-            img.setImage(image);
-        }
+        File file = new File(pathSx);
+        FileInputStream stream = new FileInputStream(file);
+        Image image = new Image(stream);
+        img.setImage(image);
     }
 
-    public void btnDx() {
+    public void btnDx() throws FileNotFoundException {
         String pathDx = "";
         switch (vista) {
             case 1 -> {
@@ -213,12 +224,10 @@ public class ConfiguratoreController {
             }
         }
 
-        InputStream imageStream = getClass().getResourceAsStream(pathDx);
-        if (imageStream != null) {
-            Image image = new Image(imageStream);
-            img.setImage(image);
-
-        }
+        File file = new File(pathDx);
+        FileInputStream stream = new FileInputStream(file);
+        Image image = new Image(stream);
+        img.setImage(image);
     }
 
     @FXML
@@ -251,11 +260,15 @@ public class ConfiguratoreController {
             // Controlli per vedere se il preventivo è fattibile
             if (colori.getValue() != null && sede.getValue() != null) {
                 AutoNuova autoConfigurata = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
-                prezzoScontato.setText(autoConfigurata.calcolaPrezzoScontato() + "€");
-                autoConfigurata.setMotore(model.getCatalogo().getMotore(marca.getValue(), modello.getValue(), motore.getValue()));
-                model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText().split("€")[0]), sede.getValue());
-                // Abilita il bottone PDF
-                btnPDF.setVisible(true);
+                if (autoConfigurata != null) {
+
+                    autoConfigurata.soloUnMotore(motore.getValue());
+                    System.out.println("QUA :" + motore.getValue());
+                    // autoConfigurata.setMotore(model.getCatalogo().getMotore(marca.getValue(), modello.getValue(), motore.getValue()));
+                    model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText()), sede.getValue());
+                    // Abilita il bottone PDF
+                    btnPDF.setVisible(true);
+                }
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Attenzione");
@@ -276,7 +289,7 @@ public class ConfiguratoreController {
 
     @FXML
     public void generaPDF() {
-     //   model.generaPDF(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue().trim().toLowerCase());
+        //   model.generaPDF(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue().trim().toLowerCase());
     }
 
     @FXML

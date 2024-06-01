@@ -56,9 +56,9 @@ public class Auto {
         String basePath;
 
         if (tipoAuto == 0) {
-            basePath = "/src/main/resources/com/example/elaborato_ing/images/";
+            basePath = "src/main/resources/com/example/elaborato_ing/images/";
         } else if (tipoAuto == 1) {
-            basePath = "/src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
+            basePath = "src/main/resources/com/example/elaborato_ing/imagesAutoUsate/";
         } else {
             return null; // Gestisci i casi in cui tipoAuto non è né 0 né 1
         }
