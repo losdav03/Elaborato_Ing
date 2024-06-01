@@ -20,7 +20,7 @@ public class AutoUsata extends Auto {
 
     public void caricaImmaginiAutoUsata() {
         for (int i = 1; i <= 3; i++) {
-            String path = "/com/example/elaborato_ing/imagesAutoUsate/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + colore.toLowerCase() + i + ".png";
+            String path = "src/main/resources/com/example/elaborato_ing/imagesAutoUsate/" + super.getMarca().toString().toLowerCase() + super.getModello().toLowerCase() + colore.toLowerCase() + i + ".png";
             super.getImmagini().add(path);
         }
     }

@@ -191,7 +191,9 @@ public class ModificaAutoController {
                         if (!auto.containsMotore(motoreNuovo.getText())) {
                             Motore mot = new Motore(motoreNuovo.getText(), alimentazione.getValue(), Integer.parseInt(cilindrata.getText()), Integer.parseInt(potenza.getText()), Double.parseDouble(consumi.getText()));
                             motore.getItems().clear();
-                            auto.getMotori().add(mot);
+                            List<Motore> temp = auto.getMotori();
+                            temp.add(mot);
+                            auto.setMotori(temp);
                             motore.getItems().setAll(auto.getNomiMotori());
                             motore.setDisable(false);
                         } else {

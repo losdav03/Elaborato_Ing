@@ -1,6 +1,9 @@
 package com.example.elaborato_ing;
 
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -481,7 +483,6 @@ public class Model {
                                 throw new RuntimeException(e);
                             }
                         }
-
                     });
                 }
             } catch (IOException e) {
@@ -545,10 +546,6 @@ public class Model {
         if (!rigaUnica(prv)) {
             try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
                 writer.write(prv);
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setHeaderText("Corretto");
-                alert.setContentText("Preventivo inviato");
-                alert.showAndWait();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -734,9 +731,14 @@ public class Model {
 
                 if (campi[0].equals(idPreventivo)) {
                     if (campi.length >= 17 && campi[16].equals(String.valueOf(Stato.DA_VALUTARE))) {
-                        campi[15] = String.valueOf(prezzo);
-                        campi[16] = String.valueOf(Stato.VALUTATA);
-                        campi[14] = ritiroData.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Sicuro di voler valutare?", ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.YES) {
+                                campi[15] = String.valueOf(prezzo);
+                                campi[16] = String.valueOf(Stato.VALUTATA);
+                                campi[14] = ritiroData.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                            }
+                        });
                     }
                 }
                 fileContent.append(String.join(",", campi)).append("\n");
@@ -745,10 +747,6 @@ public class Model {
             writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
             writer.write(fileContent.toString());
             writer.close();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText("Corretto");
-            alert.setContentText("La valutazione dell'auto è andata a buon fine");
-            alert.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -796,11 +794,16 @@ public class Model {
 
                 if (campi[0].equals(idPreventivo)) {
                     if (campi.length >= 17 && campi[16].equals(Stato.DA_PAGARE.toString())) {
-                        campi[16] = Stato.PAGATO.toString();
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confermi il pagamento?", ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.YES) {
+                                campi[16] = Stato.PAGATO.toString();
+                            }
+                        });
                     } else {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Attenzione");
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
                         alert.setHeaderText("Preventivo non pagabile");
+
                         switch (campi[16]) {
                             case "DA_VALUTARE":
                             case "VALUTATO":
@@ -826,10 +829,6 @@ public class Model {
             writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
             writer.write(fileContent.toString());
             writer.close();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setHeaderText("Corretto");
-            alert.setContentText("Il pagamento del preventivo è andato a buon fine");
-            alert.showAndWait();
         } catch (IOException e) {
             throw new IOException();
         }
@@ -887,17 +886,20 @@ public class Model {
 
                 if (campi[0].equals(idPreventivo)) {
                     if (campi.length >= 17 && campi[16].equals(Stato.PAGATO.toString())) {
-                        campi[16] = Stato.PRONTA.toString();
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Vuoi avvisare il cliente?", ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.YES) {
+                                campi[16] = Stato.PRONTA.toString();
+                            }
+                        });
                     }
                 }
                 fileContent.append(String.join(",", campi)).append("\n");
             }
             reader.close();
-
             writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
             writer.write(fileContent.toString());
             writer.close();
-            System.out.println("Sostituzione completata.");
         } catch (IOException e) {
             throw new RuntimeException();
         }
@@ -928,82 +930,14 @@ public class Model {
         }
     }
 
-    /*
-        public void generaPDF(Marca marca, String modello, String colore) {
-            AutoNuova auto = getMarcaModelloAutoNuova(marca, modello, mapAutoNuova);
-            try {
-                Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
-                document.open();
-                aggiungiContenuto(document, auto);
-                System.out.println(auto.getImmagine(colore, 1, 0));
-                aggiungiImmagine(document, auto.getImmagine(colore, 1, 0));
-                document.close();
-            } catch (FileNotFoundException | DocumentException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
 
-        private static void aggiungiContenuto(Document document, AutoNuova auto) throws DocumentException {
-            Font font = FontFactory.getFont(FontFactory.HELVETICA, 18, BaseColor.BLACK);
-
-            Paragraph header = new Paragraph("Configuratore Auto", font);
-            header.setAlignment(Element.ALIGN_CENTER);
-            document.add(header);
-            document.add(Chunk.NEWLINE);
-
-            PdfPTable table = new PdfPTable(2);
-            table.setWidthPercentage(100);
-
-            aggiungiCella(table, "Marca:", auto.getMarca().toString());
-            aggiungiCella(table, "Modello:", auto.getModello());
-            aggiungiCella(table, "Altezza (cm):", String.valueOf(auto.getAltezza()));
-            aggiungiCella(table, "Lunghezza (cm):", String.valueOf(auto.getLunghezza()));
-            aggiungiCella(table, "Larghezza (cm):", String.valueOf(auto.getLarghezza()));
-            aggiungiCella(table, "Peso (kg):", String.valueOf(auto.getPeso()));
-            aggiungiCella(table, "Volume Bagagliaio (L):", String.valueOf(auto.getVolumeBagagliaio()));
-            //aggiungiCella(table, "Motore:", auto.getMotore().getNome());
-            //aggiungiCella(table, "Alimentazione:", auto.getMotore().getAlimentazione().toString());
-            aggiungiCella(table, "Optional Disponibili:", "");
-
-            for (Optionals optional : auto.getOptionalSelezionabili()) {
-                aggiungiCella(table, "", "- " + optional.getNome() + " (Costo: " + optional.getCosto() + ")");
-            }
-
-            document.add(table);
-        }
-
-        private static void aggiungiImmagine(Document document, String imagePath) throws
-                DocumentException, IOException {
-          /*      InputStream inputStream = Model.class.getResourceAsStream(imagePath);
-
-                com.itextpdf.text.Image img =
-
-                img.scaleToFit(500, 500); // Dimensiona l'immagine per adattarla al documento
-                img.setAlignment(Element.ALIGN_CENTER);
-                document.add(img);
+    public void generaPDF() throws FileNotFoundException, DocumentException {
+        var doc = new Document();
+        PdfWriter.getInstance(doc, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
+        doc.open();
+    }
 
 
-
-
-
-        private static void aggiungiCella(PdfPTable table, String label, String value) {
-            Font fontLabel = FontFactory.getFont(FontFactory.HELVETICA_BOLD);
-            Font fontValue = FontFactory.getFont(FontFactory.HELVETICA);
-
-            PdfPCell cellLabel = new PdfPCell(new Phrase(label, fontLabel));
-            PdfPCell cellValue = new PdfPCell(new Phrase(value, fontValue));
-
-            cellLabel.setBorder(Rectangle.NO_BORDER);
-            cellValue.setBorder(Rectangle.NO_BORDER);
-
-            table.addCell(cellLabel);
-            table.addCell(cellValue);
-        }
-
-    */
     public void setImageViewPreventivi(String idPreventivo, ImageView img, int vista) {
         Auto auto = null;
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {

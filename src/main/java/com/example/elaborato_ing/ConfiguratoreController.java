@@ -1,5 +1,6 @@
 package com.example.elaborato_ing;
 
+import com.itextpdf.text.DocumentException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -262,12 +263,20 @@ public class ConfiguratoreController {
                 AutoNuova autoConfigurata = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
                 if (autoConfigurata != null) {
 
-                    autoConfigurata.soloUnMotore(motore.getValue());
-                    System.out.println("QUA :" + motore.getValue());
-                    // autoConfigurata.setMotore(model.getCatalogo().getMotore(marca.getValue(), modello.getValue(), motore.getValue()));
-                    model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText()), sede.getValue());
-                    // Abilita il bottone PDF
-                    btnPDF.setVisible(true);
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confermi l'inoltro del preventivo?", ButtonType.YES, ButtonType.NO);
+                    alert.showAndWait().ifPresent(response -> {
+                        if (response == ButtonType.YES) {
+                            try {
+                                autoConfigurata.soloUnMotore(motore.getValue());
+                                model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText()), sede.getValue());
+                                // Abilita il bottone PDF
+                                btnPDF.setVisible(true);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+
+                    });
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -288,8 +297,8 @@ public class ConfiguratoreController {
     }
 
     @FXML
-    public void generaPDF() {
-        //   model.generaPDF(Marca.valueOf(String.valueOf(marca.getValue())), modello.getValue(), colori.getValue().trim().toLowerCase());
+    public void generaPDF() throws DocumentException, FileNotFoundException {
+        model.generaPDF();
     }
 
     @FXML

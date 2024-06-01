@@ -2,6 +2,7 @@ module com.example.elaborato_ing {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires itextpdf;
     //  requires pdfbox.app;
 
 
