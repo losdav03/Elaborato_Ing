@@ -753,31 +753,37 @@ public class Model {
     }
 
     public static void cancella(String idPreventivo) throws IOException {
-        File inputFile = new File("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt");
-        File tempFile = new File("src/main/resources/com/example/elaborato_ing/TXT/Preventivi_temp.txt");
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
-
+        BufferedReader reader;
+        BufferedWriter writer;
+        try {
+            reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            StringBuilder fileContent = new StringBuilder();
             String riga;
+
             while ((riga = reader.readLine()) != null) {
                 String[] campi = riga.split(",");
-                if (!campi[0].equals(idPreventivo)) {
-                    writer.write(riga);
-                    writer.newLine();
+
+                if (campi[0].equals(idPreventivo)) {
+                    if (campi.length >= 17 && campi[16].equals(Stato.DA_VALUTARE.toString())) {
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Confermi la cancellazione?", ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait().ifPresent(response -> {
+                            if (response == ButtonType.YES) {
+                                campi[16] = Stato.RIFIUTATO.toString();
+                            }
+                        });
+                    }
+                    fileContent.append(String.join(",", campi)).append("\n");
                 }
             }
-        }
+            reader.close();
 
-        // Sostituisce il file originale con quello temporaneo
-        if (!inputFile.delete()) {
-            throw new IOException("Could not delete the original file");
-        }
-        if (!tempFile.renameTo(inputFile)) {
-            throw new IOException("Could not rename the temporary file");
-        }
+            writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"));
+            writer.write(fileContent.toString());
+            writer.close();
+        } catch (IOException e) {
+            throw new IOException();
 
-        System.out.println("Preventivo cancellato");
+        }
     }
 
     public static void aggiungiPagamento(String idPreventivo) throws IOException {
@@ -983,6 +989,3 @@ public class Model {
         return "Motore non trovato";
     }
 }
-
-
-

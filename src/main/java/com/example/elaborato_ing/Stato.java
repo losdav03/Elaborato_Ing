@@ -6,4 +6,6 @@ public enum Stato {
     DA_PAGARE,
     PAGATO,
     PRONTA,
+
+    RIFIUTATO,
 }

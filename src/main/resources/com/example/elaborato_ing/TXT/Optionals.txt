@@ -4,8 +4,8 @@ SediliRiscaldati
 CruiseControl
 InterniInPelle
 RuoteGrandi
-TettoPanoramico
 CerchiInLega
 AssistenzaParcheggio
 RiscaldamentoSedili
 VetriOscurati
+TettoPanoramico
