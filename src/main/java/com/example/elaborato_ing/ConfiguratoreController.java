@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ConfiguratoreController {
     @FXML
-    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, prezzo, prezzoScontato;
+    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, prezzo, prezzoScontato,labelEuro,labelScontato;
     @FXML
     private ComboBox<Marca> marca;
     @FXML
@@ -80,6 +80,9 @@ public class ConfiguratoreController {
         btnDx.setDisable(true);
         preventiviBtn.setDisable(true);
         logOutBtn.setDisable(true);
+        prezzoScontato.setVisible(false);
+        labelScontato.setVisible(false);
+        labelEuro.setVisible(false);
 
 
         // mi serve per riaggiornare il catalogo dopo eliminazione optional nell'amministrazione
@@ -109,6 +112,9 @@ public class ConfiguratoreController {
         alimentazione.setText("");
         prezzo.setText("");
         prezzoScontato.setText("");
+        prezzoScontato.setVisible(false);
+        labelScontato.setVisible(false);
+        labelEuro.setVisible(false);
 
         sede.getItems().clear();
         colori.setDisable(true);
@@ -162,7 +168,16 @@ public class ConfiguratoreController {
                 motore.setValue(motore.getItems().getFirst());
                 sede.getItems().setAll(Sede.values());
                 sede.setValue(sede.getItems().getFirst());
-                prezzoScontato.setText(String.valueOf(auto.calcolaPrezzoScontato()));
+                if (Integer.parseInt(prezzo.getText()) != auto.calcolaPrezzoScontato()) {
+                    prezzoScontato.setVisible(true);
+                    labelScontato.setVisible(true);
+                    labelEuro.setVisible(true);
+                    prezzoScontato.setText(String.valueOf(auto.calcolaPrezzoScontato()));
+                }else{
+                    prezzoScontato.setVisible(false);
+                    labelScontato.setVisible(false);
+                    labelEuro.setVisible(false);
+                }
 
             }
 

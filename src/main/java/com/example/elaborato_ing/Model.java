@@ -32,7 +32,6 @@ import java.util.List;
 
 
 public class Model {
-    private static Model instance;
     private static Cliente cliente = new Cliente();
     private static Dipendente dipendente = new Dipendente();
     private static Amministrazione amministrazione = new Amministrazione();
@@ -44,20 +43,16 @@ public class Model {
     private Scene scene;
     private Parent root;
     private File fileScelto1, fileScelto2, fileScelto3;
+    private static Model instance = new Model();
     private Model() {
 
     }
 
     public static Model getInstance(){
-        if (instance == null) {
-            synchronized (Model.class) {
-                if (instance == null) {
-                    instance = new Model();
-                }
-            }
-        }
         return instance;
     }
+
+
 
     public Map<Marca, List<AutoNuova>> getMapAutoNuova() {
         return mapAutoNuova;
@@ -989,7 +984,6 @@ public class Model {
         AutoNuova auto = catalogo.getAutoNuova(marca, modello);
         for (Motore m : auto.getMotori()) {
             if (m.getNome().equals(motore)) {
-                System.out.println(motore + " ma rimane" + m.getNome());
                 return m.getAlimentazione().toString();
             }
         }

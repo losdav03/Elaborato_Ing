@@ -50,7 +50,7 @@
                 </font>
             </Label>
             <Label fx:id="prezzo" layoutX="113.0" layoutY="336.0" prefHeight="25.0" prefWidth="72.0" wrapText="true" />
-            <Label layoutX="224.0" layoutY="339.0" text="Prezzo Scontato">
+            <Label fx:id="labelScontato"  layoutX="224.0" layoutY="339.0" text="Prezzo Scontato">
                 <font>
                     <Font name="System Bold" size="13.0" />
                 </font>
@@ -64,7 +64,7 @@
             <Button fx:id="btnPDF" layoutX="170.0" layoutY="455.0" mnemonicParsing="false" onAction="#generaPDF" text="Scarica PDF" />
             <Button fx:id="preventiviBtn" layoutX="416.0" layoutY="14.0" mnemonicParsing="false" onAction="#vediPreventivi" prefHeight="25.0" prefWidth="72.0" text="Preventivi" />
             <Button fx:id="logOutBtn" layoutX="416.0" layoutY="45.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="72.0" text="Log out" />
-            <Label layoutX="407.0" layoutY="332.0" prefHeight="25.0" prefWidth="16.0" text="€" wrapText="true" />
+            <Label fx:id="labelEuro" layoutX="407.0" layoutY="336.0" prefHeight="25.0" prefWidth="16.0" text="€" wrapText="true" />
         </AnchorPane>
     </items>
 </SplitPane>
