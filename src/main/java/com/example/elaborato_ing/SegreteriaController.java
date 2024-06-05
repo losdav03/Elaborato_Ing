@@ -146,9 +146,11 @@ public class SegreteriaController {
         }
     }
 
-    private void aggiornaCheckbox() {
+    public void aggiornaCheckbox() {
         AutoNuova auto = model.getMarcaModelloAutoNuova(marca.getValue(), modello.getValue(), model.getMapAutoNuova());
-        model.generaCheckBoxOptionalAmministrazione(auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
+        if (auto != null) {
+            model.generaCheckBoxOptionalAmministrazione(auto, scrollPane, vBox, auto.getOptionalSelezionabili(), null);
+        }
     }
 
     public void xcliente() {

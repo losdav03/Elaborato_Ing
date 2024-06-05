@@ -146,19 +146,4 @@ public class AggiungiAutoController {
 
         return res;
     }
-
-    private void mesiUnChecked() {
-        gennaio.setSelected(false);
-        febbraio.setSelected(false);
-        marzo.setSelected(false);
-        aprile.setSelected(false);
-        maggio.setSelected(false);
-        giugno.setSelected(false);
-        luglio.setSelected(false);
-        agosto.setSelected(false);
-        settembre.setSelected(false);
-        ottobre.setSelected(false);
-        novembre.setSelected(false);
-        dicembre.setSelected(false);
-    }
 }

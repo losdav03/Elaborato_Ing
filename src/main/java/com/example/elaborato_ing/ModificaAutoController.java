@@ -246,9 +246,3 @@ public class ModificaAutoController {
         dicembre.setSelected(false);
     }
 }
-/*
-AGGIUNGI AUTO
-pilure i checkbox selezionati dopo add auto
-pulire i campi post modifica auto
-se ce un solo colore disabilitare il checkbox
- */

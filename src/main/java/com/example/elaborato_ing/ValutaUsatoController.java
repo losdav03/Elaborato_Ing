@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 
 import javafx.util.Callback;
+
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -104,6 +105,9 @@ public class ValutaUsatoController {
         model.cancella(idPreventivo);
         listaPreventivi.getItems().clear();
         listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.DA_VALUTARE)));
+        vista1.setImage(null);
+        vista2.setImage(null);
+        vista3.setImage(null);
     }
 
     public void backBtn(ActionEvent event) throws IOException {

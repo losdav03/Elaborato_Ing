@@ -1,0 +1,1 @@
+234,utente,SUBARU,dvsv,43535.0,345.0,534.0,345.0,354534.0,534;BENZINA;345;345;345.0,,ROMA,BIANCO,04/06/2024,ritiro auto da definire,da definire,RIFIUTATO,0

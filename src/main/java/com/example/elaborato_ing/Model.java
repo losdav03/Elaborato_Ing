@@ -96,7 +96,7 @@ public class Model {
         catalogo.getListaAuto().clear();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && !line.isEmpty()) {
                 String[] parts = line.split(",");
                 if (parts.length == 12) {
                     try {
@@ -166,7 +166,7 @@ public class Model {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"));
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && !line.isEmpty()) {
                 allOptionals.add(line);
             }
         } catch (IOException e) {
@@ -176,15 +176,23 @@ public class Model {
     }
 
     public void aggiungiOptionalDaFile(String optional) {
-        allOptionals.add(optional);
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"))) {
-            for (String op : allOptionals) {
-                writer.write(op); // Supponendo che Auto abbia un metodo toString appropriato
-                writer.newLine();
+        if (!rigaUnica(optional, "src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt")) {
+            allOptionals.add(optional);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"))) {
+                for (String op : allOptionals) {
+                    writer.write(op); // Supponendo che Auto abbia un metodo toString appropriato
+                    writer.newLine();
+                }
+                System.out.println("Optionals aggiornati e salvati su " + "Optionals.txt");
+            } catch (IOException e) {
+                System.err.println("Errore durante la scrittura del file: " + e.getMessage());
             }
-            System.out.println("Optionals aggiornati e salvati su " + "Optionals.txt");
-        } catch (IOException e) {
-            System.err.println("Errore durante la scrittura del file: " + e.getMessage());
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Attenzione");
+            alert.setHeaderText("L'optional è già presente");
+            alert.setContentText("Questo optional esiste già");
+            alert.showAndWait();
         }
     }
 
@@ -239,7 +247,7 @@ public class Model {
         checkBoxContainer.getChildren().clear();
         try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Optionals.txt"))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && !line.isEmpty()) {
                 String nomeOptional = line;
                 int costoOptional = auto.getOptionalSelezionabili().stream().filter(op -> op.getNome().equals(nomeOptional)).findFirst().map(Optionals::getCosto).orElse(0);
 
@@ -431,7 +439,7 @@ public class Model {
         } else {
             try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
                 String line;
-                while ((line = br.readLine()) != null) {
+                while ((line = br.readLine()) != null && !line.isEmpty()) {
                     String[] parti = line.split(",");
                     if (parti.length == 4 && parti[0].equals(username) && parti[3].equals(password)) {
                         cliente.setEmail(parti[0]);
@@ -507,7 +515,7 @@ public class Model {
     private boolean utenteEsiste(String email) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && !line.isEmpty()) {
                 String[] parti = line.split(",");
                 if (parti[0].equals(email)) {
                     return true;
@@ -543,7 +551,7 @@ public class Model {
                 String.format("%s,%s,%s,%s,%d,%s\n", preventivo, colore.toUpperCase(), formato.format(dataCreazione), formato.format(dataFine), Prezzo, stato) :
                 String.format("%s,%s,%s,%s,%s,%s,%s\n", preventivo, colore.toUpperCase(), formato.format(dataCreazione), "ritiro auto da definire", "da definire", stato, preventivo.setDipendente(dipendente));
 
-        if (!rigaUnica(prv)) {
+        if (!rigaUnica(prv, "src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt")) {
             try (FileWriter writer = new FileWriter("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt", true)) {
                 writer.write(prv);
             }
@@ -612,10 +620,10 @@ public class Model {
         });
     }
 
-    private boolean rigaUnica(String lineToCheck) {
-        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
+    private boolean rigaUnica(String lineToCheck, String path) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null && !line.isEmpty()) {
                 if (line.equals(lineToCheck.trim())) {
                     return true;
                 }
@@ -679,7 +687,7 @@ public class Model {
         List<String> filteredLines = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && !line.isEmpty()) {
                 String[] parts = line.split(",");
                 if (parts.length > 16 && parts[16].equals(s)) {
                     filteredLines.add(creaStringaPreventivo(parts));
@@ -726,7 +734,7 @@ public class Model {
             StringBuilder fileContent = new StringBuilder();
             String riga;
 
-            while ((riga = reader.readLine()) != null) {
+            while ((riga = reader.readLine()) != null && !riga.isEmpty()) {
                 String[] campi = riga.split(",");
 
                 if (campi[0].equals(idPreventivo)) {
@@ -760,7 +768,7 @@ public class Model {
             StringBuilder fileContent = new StringBuilder();
             String riga;
 
-            while ((riga = reader.readLine()) != null) {
+            while ((riga = reader.readLine()) != null && !riga.isEmpty()) {
                 String[] campi = riga.split(",");
 
                 if (campi[0].equals(idPreventivo)) {
@@ -795,7 +803,7 @@ public class Model {
             StringBuilder fileContent = new StringBuilder();
             String riga;
 
-            while ((riga = reader.readLine()) != null) {
+            while ((riga = reader.readLine()) != null && !riga.isEmpty()) {
                 String[] campi = riga.split(",");
 
                 if (campi[0].equals(idPreventivo)) {
@@ -844,7 +852,7 @@ public class Model {
             IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         String line;
-        while ((line = reader.readLine()) != null) {
+        while ((line = reader.readLine()) != null && !line.isEmpty()) {
             CheckBox checkBox = new CheckBox(line);
             String finalLine = line;
             checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -887,7 +895,7 @@ public class Model {
             StringBuilder fileContent = new StringBuilder();
             String riga;
 
-            while ((riga = reader.readLine()) != null) {
+            while ((riga = reader.readLine()) != null && !riga.isEmpty()) {
                 String[] campi = riga.split(",");
 
                 if (campi[0].equals(idPreventivo)) {
@@ -921,7 +929,7 @@ public class Model {
         mapAutoUsata.clear();
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && !line.isEmpty()) {
                 String[] parts = line.split(",");
                 if (parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA))) {
                     AutoUsata auto = new AutoUsata(Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], Double.parseDouble(parts[4]), Double.parseDouble(parts[5]), Double.parseDouble(parts[6]), Double.parseDouble(parts[7]), Double.parseDouble(parts[8]), new Motore(parts[9].split(";")[0], Enum.valueOf(Alimentazione.class, String.valueOf(parts[9].split(";")[1])), Integer.parseInt(parts[9].split(";")[2]), Integer.parseInt(parts[9].split(";")[3]), Double.parseDouble(parts[9].split(";")[3])), parts[12], Enum.valueOf(Sede.class, String.valueOf(parts[11])));
@@ -948,7 +956,7 @@ public class Model {
         Auto auto = null;
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/Preventivi.txt"))) {
             String line;
-            while ((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null && !line.isEmpty()) {
                 String[] parts = line.split(",");
                 if (parts[0].equals(idPreventivo) && parts[16].equals(String.valueOf(Stato.DA_VALUTARE)) || parts[16].equals(String.valueOf(Stato.VALUTATA))) {
                     auto = getMarcaModelloAutoUsata(Enum.valueOf(Marca.class, String.valueOf(parts[2])), parts[3], mapAutoUsata);
