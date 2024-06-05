@@ -32,25 +32,10 @@ public class ValutaUsatoController {
         listaPreventivi.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) { // Verifica se il nuovo valore selezionato non è nullo
                 String[] utili = newValue.split("\n");
-                String marca = "";
-                String modello = "";
-                String colore = "";
-                String nomeUtente = "";
+
                 for (String riga : utili) {
-                    if (riga.startsWith("Marca")) {
-                        marca = riga.split(":")[1].trim();
-                    }
-                    if (riga.startsWith("Modello")) {
-                        modello = riga.split(":")[1].trim();
-                    }
-                    if (riga.startsWith("Colore")) {
-                        colore = riga.split(":")[1].trim().toLowerCase();
-                    }
                     if (riga.startsWith("Id Preventivo")) {
                         idPreventivo = riga.split(":")[1].trim();
-                    }
-                    if (riga.startsWith("Utente")) {
-                        nomeUtente = riga.split(":")[1].trim();
                     }
                 }
                 model.setImageViewPreventivi(idPreventivo, vista1, 1);
@@ -90,7 +75,11 @@ public class ValutaUsatoController {
             LocalDate ritiroData = dataRitiro.getValue();
             if (ritiroData == null) {
                 // Mostra un messaggio di errore se la data non è selezionata
-                System.out.println("Data di ritiro non selezionata");
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Attenzione");
+                alert.setHeaderText("Inserire una data di ritiro");
+                alert.setContentText("Scegli una data di ritiro opportuna");
+                alert.showAndWait();
                 return;
             }
             model.aggiungiValutazione(idPreventivo, Integer.parseInt(prezzo.getText()), ritiroData);

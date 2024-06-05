@@ -38,14 +38,11 @@ public class LoginController {
         String password = passwordField.getText();
 
         if (model.autenticato(username, password) == 2) {
-            System.out.println("Cliente Loggato!");
             Stage stage = (Stage) emailField.getScene().getWindow();
             stage.close();
         } else if (model.autenticato(username, password) == 3) {
-            System.out.println("Dipendente Loggato!");
             model.openCloseFXML("FXML/Dipendente.fxml", event);
         } else if (model.autenticato(username, password) == 1) {
-            System.out.println("Segreteria Loggata!");
             model.openCloseFXML("FXML/Segreteria.fxml", event);
             Platform.runLater(this::closeAllWindows);
         } else {
