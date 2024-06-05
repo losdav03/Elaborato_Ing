@@ -407,7 +407,7 @@ public class Model {
         stage.show();
     }
 
-    public void ciccioGamerFXML(String path, Node nodo) {
+    public void onCloseFXML(String path, Node nodo) {
 
         Platform.runLater(() -> {
             Stage stage = (Stage) nodo.getScene().getWindow();
