@@ -12,7 +12,7 @@ public class AvvisaController {
 
     private static String idPreventivo = "";
 
-    Model model = new Model();
+    private Model model = Model.getInstance();
 
     public void initialize() {
         listaPreventivi.getItems().addAll(model.vediPreventivi(String.valueOf(Stato.PAGATO)));

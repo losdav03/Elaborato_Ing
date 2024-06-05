@@ -21,9 +21,7 @@ public class LoginController {
     private TextField nameField;
     @FXML
     private TextField surnameField;
-    private final Model model = new Model();
-
-
+    private Model model = Model.getInstance();
     @FXML
     private void goToRegistration(ActionEvent event) throws IOException {
         model.openCloseFXML("FXML/Registration.fxml", event);

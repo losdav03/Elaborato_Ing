@@ -6,7 +6,8 @@ import java.io.IOException;
 
 public class DipendenteController {
 
-    Model model = new Model();
+    private Model model = Model.getInstance();
+
 
     public void avvisaCliente(ActionEvent event) throws IOException {
         model.openCloseFXML("FXML/Avvisa.fxml", event);

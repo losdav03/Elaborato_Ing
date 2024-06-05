@@ -20,7 +20,7 @@ public class ValutaUsatoController {
     private Button valutaBtn;
     @FXML
     private ImageView vista1, vista2, vista3;
-    Model model = new Model();
+    private Model model = Model.getInstance();
     private static String idPreventivo = "";
     @FXML
     private DatePicker dataRitiro;

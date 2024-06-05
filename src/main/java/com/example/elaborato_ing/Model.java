@@ -32,7 +32,7 @@ import java.util.List;
 
 
 public class Model {
-
+    private static Model instance;
     private static Cliente cliente = new Cliente();
     private static Dipendente dipendente = new Dipendente();
     private static Amministrazione amministrazione = new Amministrazione();
@@ -44,10 +44,19 @@ public class Model {
     private Scene scene;
     private Parent root;
     private File fileScelto1, fileScelto2, fileScelto3;
+    private Model() {
 
+    }
 
-    public Model() {
-
+    public static Model getInstance(){
+        if (instance == null) {
+            synchronized (Model.class) {
+                if (instance == null) {
+                    instance = new Model();
+                }
+            }
+        }
+        return instance;
     }
 
     public Map<Marca, List<AutoNuova>> getMapAutoNuova() {
@@ -543,7 +552,7 @@ public class Model {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         Date dataCreazione = Date.from(inizio.atStartOfDay(ZoneId.systemDefault()).toInstant());
         Date dataFine = Date.from(fine.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        String idPreventivo = String.valueOf(creazioneIdPreventivo(auto.getMarca() + auto.getModello() + cliente.getEmail()));
+        String idPreventivo = String.valueOf(creazioneIdPreventivo(auto.hashCode()+ cliente.getEmail()));
         Preventivo preventivo = new Preventivo(idPreventivo, dataCreazione, (auto instanceof AutoNuova) ? dataFine : null, cliente, auto, sede);
 
         String stato = (auto instanceof AutoNuova) ? String.valueOf(Stato.DA_PAGARE) : String.valueOf(Stato.DA_VALUTARE);
@@ -646,7 +655,7 @@ public class Model {
             } else if (c >= '0' && c <= '9') {
                 sum += c - '0';
             } else {
-                throw new IllegalArgumentException("La stringa contiene caratteri non validi: " + c);
+                sum+=10;
             }
         }
 

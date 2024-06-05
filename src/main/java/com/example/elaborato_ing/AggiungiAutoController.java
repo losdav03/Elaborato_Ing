@@ -26,7 +26,7 @@ public class AggiungiAutoController {
     private VBox checkBoxContainer;
     @FXML
     private Button vendibtn;
-    private final Model model = new Model();
+    private Model model = Model.getInstance();
     private final List<Optionals> listaOp = new ArrayList<>();
     private AutoNuova auto;
 

@@ -13,7 +13,7 @@ public class RiepilogoController {
     public ImageView macchinaPreventivo;
     @FXML
     private ListView<String> listaPreventivi;
-    private final Model model = new Model();
+    private Model model = Model.getInstance();
     private static String idPreventivo = "";
 
 
