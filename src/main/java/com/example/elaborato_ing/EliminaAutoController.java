@@ -32,7 +32,7 @@ public class EliminaAutoController {
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
         model.aggiornaFileCatalogo();
 
-        model.ciccioGamerFXML("FXML/Segreteria.fxml", marca);
+        model.onCloseFXML("FXML/Segreteria.fxml", marca);
     }
 
     private void aggiornaImg() throws FileNotFoundException {

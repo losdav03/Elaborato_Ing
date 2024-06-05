@@ -94,7 +94,6 @@ public class Model {
                 writer.write(auto.stampaAutoCatalogo());
                 writer.newLine();
             }
-            System.out.println("Catalogo aggiornato e salvato su Catalogo.txt");
         } catch (IOException e) {
             System.err.println("Errore durante la scrittura del file: " + e.getMessage());
         }
@@ -192,7 +191,6 @@ public class Model {
                     writer.write(op); // Supponendo che Auto abbia un metodo toString appropriato
                     writer.newLine();
                 }
-                System.out.println("Optionals aggiornati e salvati su " + "Optionals.txt");
             } catch (IOException e) {
                 System.err.println("Errore durante la scrittura del file: " + e.getMessage());
             }
@@ -212,7 +210,6 @@ public class Model {
                 writer.write(op); // Supponendo che Auto abbia un metodo toString appropriato
                 writer.newLine();
             }
-            System.out.println("Optionals aggiornati e salvati su " + "Optionals.txt");
         } catch (IOException e) {
             System.err.println("Errore durante la scrittura del file: " + e.getMessage());
         }
@@ -280,7 +277,6 @@ public class Model {
                                 int prezzoOptional = Integer.parseInt(prezzoString);
                                 auto.getOptionalSelezionabili().add(new Optionals(nomeOptional, prezzoOptional));
                                 checkBox.setText(nomeOptional + " : +" + prezzoOptional + " €");
-                                System.out.println(auto.stampaSelezionabili());
                                 aggiornaFileCatalogo();
                             } else {
                                 checkBox.setSelected(false);
@@ -292,8 +288,6 @@ public class Model {
                         // Rimuovo l'optional dalla lista degli optional dell'auto se deselezionato
                         auto.getOptionalSelezionabili().removeIf(optionals -> optionals.getNome().equals(nomeOptional));
                         checkBox.setText(nomeOptional + " : +" + 0 + " €");
-                        System.out.println("Rimosso");
-                        System.out.println(auto.stampaSelezionabili());
                         aggiornaFileCatalogo();
                     }
                 });
@@ -385,8 +379,6 @@ public class Model {
             imageView2.setImage(null);
         } else if (imageView1.getImage() != null) {
             imageView1.setImage(null);
-        } else {
-            System.out.println("Tutte le ImageView sono già vuote.");
         }
     }
 
@@ -416,7 +408,7 @@ public class Model {
         stage.show();
     }
 
-    public void ciccioGamerFXML(String path, Node nodo) {
+    public void onCloseFXML(String path, Node nodo) {
 
         Platform.runLater(() -> {
             Stage stage = (Stage) nodo.getScene().getWindow();
@@ -666,7 +658,6 @@ public class Model {
             modello, Map<Marca, List<AutoNuova>> map) {
         List<AutoNuova> autoList = map.get(marca);
         if (autoList == null) { // Se non esiste una lista per la marca data
-            System.out.println("Marca non trovata: " + marca);
             return null;
         }
         for (AutoNuova auto : autoList) {
@@ -681,7 +672,6 @@ public class Model {
 
         List<AutoUsata> autoList = map.get(marca);
         if (autoList == null) { // Se non esiste una lista per la marca data
-            System.out.println("Marca non trovata: " + marca);
             return null;
         }
         for (AutoUsata auto : autoList) {

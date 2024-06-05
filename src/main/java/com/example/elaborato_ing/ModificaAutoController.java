@@ -38,7 +38,7 @@ public class ModificaAutoController {
         model.checkColore(coloreNuovo);
         model.aggiornaFileCatalogo();
         model.caricaDaFile("src/main/resources/com/example/elaborato_ing/TXT/Catalogo.txt", model.getCatalogo());
-        model.ciccioGamerFXML("FXML/Segreteria.fxml", marca);
+        model.onCloseFXML("FXML/Segreteria.fxml", marca);
     }
 
     private void inizializzaCheckboxeColore() {
