@@ -42,7 +42,7 @@ public class ConfiguratoreController {
     private ScrollPane scrollPane;
     @FXML
     private VBox vBox;
-    private final Model model = new Model();
+    private Model model = Model.getInstance();
     private int vista = 1;
 
 

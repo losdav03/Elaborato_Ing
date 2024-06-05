@@ -33,9 +33,7 @@ public class SegreteriaController {
     private TextField nomeOptional;
     @FXML
     private ListView preventiviListView;
-
-
-    Model model = new Model();
+    private Model model = Model.getInstance();
     private List<Preventivo> preventivi = new ArrayList<>();
 
     public void initialize() {

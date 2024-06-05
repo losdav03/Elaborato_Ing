@@ -24,7 +24,7 @@ public class UsatoController {
     @FXML
     private ImageView imageView1, imageView2, imageView3;
 
-    private final Model model = new Model();
+    private Model model = Model.getInstance();
     AutoUsata auto;
 
     public void initialize() {

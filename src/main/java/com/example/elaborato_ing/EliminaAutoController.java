@@ -18,8 +18,7 @@ public class EliminaAutoController {
     @FXML
     private ImageView autoImg;
 
-    Model model = new Model();
-
+    private Model model = Model.getInstance();
     public void initialize() {
         model.setMarca(marca);
         marca.setOnAction(_ -> aggiornaModello());

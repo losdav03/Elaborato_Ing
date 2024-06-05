@@ -23,10 +23,7 @@ public class ModificaAutoController {
     private ComboBox<String> modello, colore, motore;
     @FXML
     private ImageView imageView1, imageView2, imageView3;
-    @FXML
-    private Button modifica;
-
-    Model model = new Model();
+    private Model model = Model.getInstance();
 
     public void initialize() {
         model.setMarca(marca);
