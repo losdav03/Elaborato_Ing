@@ -7,7 +7,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.elaborato_ing.LoginController">
     <!-- Immagine di sfondo -->
     <ImageView fitHeight="400.0" fitWidth="609.0" layoutX="-4.0">
-        <Image url="@../sfondoLogin.jpeg" />
+        <Image url="/src/main/resources/com/example/elaborato_ing/images/sfondoLogin.jpeg" />
     </ImageView>
 
     <!-- Titolo -->
