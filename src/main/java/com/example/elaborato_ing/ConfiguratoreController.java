@@ -283,7 +283,11 @@ public class ConfiguratoreController {
                         if (response == ButtonType.YES) {
                             try {
                                 autoConfigurata.soloUnMotore(motore.getValue());
-                                model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText()), sede.getValue());
+                                if(!prezzoScontato.getText().isEmpty()) {
+                                    model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText()), sede.getValue());
+                                }else{
+                                    model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
+                                }
                                 // Abilita il bottone PDF
                                 btnPDF.setVisible(true);
                             } catch (IOException e) {
