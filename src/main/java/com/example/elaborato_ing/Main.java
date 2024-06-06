@@ -13,7 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("FXML/Configuratore.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("viewUtente/Configuratore.fxml")));
 
         Scene scene = new Scene(root);
         primaryStage.setResizable(false);

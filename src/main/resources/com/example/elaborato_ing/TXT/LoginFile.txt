@@ -8,3 +8,5 @@ dip3,dip,dip,dip,23423
 dip4,dip,dip,dip,34244
 amm,amm,amm,amm
 dlosco,davide,losco,ciao
+kb,kilian,mbappè,tartaruga
+c,cr7,cr7,cr7
