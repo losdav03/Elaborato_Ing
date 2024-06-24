@@ -27,7 +27,7 @@ import java.util.List;
 
 public class ConfiguratoreController {
     @FXML
-    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, prezzo, prezzoScontato,labelEuro,labelScontato;
+    private Label altezza, lunghezza, larghezza, peso, volume, alimentazione, prezzo, prezzoScontato, labelEuro, labelScontato;
     @FXML
     private ComboBox<Marca> marca;
     @FXML
@@ -177,7 +177,7 @@ public class ConfiguratoreController {
                     labelScontato.setVisible(true);
                     labelEuro.setVisible(true);
                     prezzoScontato.setText(String.valueOf(auto.calcolaPrezzoScontato()));
-                }else{
+                } else {
                     prezzoScontato.setVisible(false);
                     labelScontato.setVisible(false);
                     labelEuro.setVisible(false);
@@ -289,9 +289,9 @@ public class ConfiguratoreController {
                         if (response == ButtonType.YES) {
                             try {
                                 autoConfigurata.soloUnMotore(motore.getValue());
-                                if(!prezzoScontato.getText().isEmpty()) {
+                                if (!prezzoScontato.getText().isEmpty()) {
                                     model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzoScontato.getText()), sede.getValue());
-                                }else{
+                                } else {
                                     model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
                                 }
                                 // Abilita il bottone PDF
@@ -323,7 +323,7 @@ public class ConfiguratoreController {
 
     @FXML
     public void generaPDF() throws DocumentException, FileNotFoundException {
-        model.generaPDF(autoPDF, colori.getValue());
+        model.generaPDF(autoPDF, colori.getValue(), Integer.parseInt(prezzo.getText()), prezzoScontato.getText().isEmpty() ? 0 : Integer.parseInt(prezzoScontato.getText()));
     }
 
     @FXML

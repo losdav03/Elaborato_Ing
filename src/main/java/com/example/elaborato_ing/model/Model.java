@@ -977,7 +977,7 @@ public class Model {
     }
 
 
-    public void generaPDF(AutoNuova auto, String colore) throws FileNotFoundException, DocumentException {
+    public void generaPDF(AutoNuova auto, String colore, int prezzo, int prezzoScontato) throws FileNotFoundException, DocumentException {
         try {
             // Crea il documento PDF
             Document doc = new Document();
@@ -997,32 +997,31 @@ public class Model {
             table.setWidths(new int[]{1, 3});
 
             // Aggiungi le celle alla tabella
-            table.addCell(createCell("Marca:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Marca:", Element.ALIGN_LEFT));
             table.addCell(createCell(String.valueOf(auto.getMarca()), Element.ALIGN_LEFT));
-            table.addCell(createCell("Modello:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Modello:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getModello(), Element.ALIGN_LEFT));
-            table.addCell(createCell("Altezza:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Altezza:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getAltezza() + " m", Element.ALIGN_LEFT));
-            table.addCell(createCell("Lunghezza:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Lunghezza:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getLunghezza() + " m", Element.ALIGN_LEFT));
-            table.addCell(createCell("Larghezza:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Larghezza:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getLarghezza() + " m", Element.ALIGN_LEFT));
-            table.addCell(createCell("Peso:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Peso:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getPeso() + " kg", Element.ALIGN_LEFT));
-            table.addCell(createCell("Volume Bagagliaio:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Volume Bagagliaio:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getVolumeBagagliaio() + " litri", Element.ALIGN_LEFT));
-            table.addCell(createCell("Motori disponibili:", Element.ALIGN_RIGHT));
-            PdfPCell motoriCell = new PdfPCell();
-            for (Motore motore : auto.getMotori()) {
-                motoriCell.addElement(new Paragraph(" - " + motore.toString()));
+            table.addCell(createCell("Motore:", Element.ALIGN_LEFT));
+            table.addCell(createCell(auto.getMotori().toString(), Element.ALIGN_LEFT));
+            table.addCell(createCell("Prezzo:", Element.ALIGN_LEFT));
+            table.addCell(createCell(prezzo + " €", Element.ALIGN_LEFT));
+            if (prezzoScontato != 0) {
+                table.addCell(createCell("Prezzo scontato:", Element.ALIGN_LEFT));
+                table.addCell(createCell(prezzoScontato + " €", Element.ALIGN_LEFT));
             }
-            motoriCell.setBorder(Rectangle.NO_BORDER);
-            table.addCell(motoriCell);
-            table.addCell(createCell("Prezzo:", Element.ALIGN_RIGHT));
-            table.addCell(createCell(auto.getPrezzo() + " €", Element.ALIGN_LEFT));
-            table.addCell(createCell("Colori disponibili:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Colore scelto:", Element.ALIGN_LEFT));
             table.addCell(createCell(String.join(", ", colore), Element.ALIGN_LEFT));
-            table.addCell(createCell("Optional selezionati:", Element.ALIGN_RIGHT));
+            table.addCell(createCell("Optional selezionati:", Element.ALIGN_LEFT));
             PdfPCell optionalCell = new PdfPCell();
             for (Optionals optional : auto.getOptionalScelti()) {
                 optionalCell.addElement(new Paragraph(" - " + optional.getNome() + ": " + optional.getCosto() + " €"));
@@ -1030,12 +1029,23 @@ public class Model {
             optionalCell.setBorder(Rectangle.NO_BORDER);
             table.addCell(optionalCell);
 
-            // Aggiungi la tabella al documento
             doc.add(table);
 
-            // Chiudi il documento
+            String path1 = "src/main/resources/com/example/elaborato_ing/images/" + auto.getMarca().toString().toLowerCase() + auto.getModello().toLowerCase() + colore.toLowerCase() + "1.png";
+            String path2 = "src/main/resources/com/example/elaborato_ing/images/" + auto.getMarca().toString().toLowerCase() + auto.getModello().toLowerCase() + colore.toLowerCase() + "2.png";
+            String path3 = "src/main/resources/com/example/elaborato_ing/images/" + auto.getMarca().toString().toLowerCase() + auto.getModello().toLowerCase() + colore.toLowerCase() + "3.png";
+            com.itextpdf.text.Image img1 = com.itextpdf.text.Image.getInstance(path1);
+            com.itextpdf.text.Image img2 = com.itextpdf.text.Image.getInstance(path2);
+            com.itextpdf.text.Image img3 = com.itextpdf.text.Image.getInstance(path3);
+            img1.scaleToFit(250, 250);
+            img2.scaleToFit(250, 250);
+            img3.scaleToFit(250, 250);
+            doc.add(img1);
+            doc.add(img2);
+            doc.add(img3);
+
             doc.close();
-        } catch (DocumentException | FileNotFoundException e) {
+        } catch (DocumentException | IOException e) {
             throw new RuntimeException(e);
         }
     }
