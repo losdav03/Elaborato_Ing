@@ -2,8 +2,9 @@ package com.example.elaborato_ing.model;
 
 
 import com.example.elaborato_ing.utils.*;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -31,7 +32,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class Model {
@@ -48,7 +48,7 @@ public class Model {
     private File fileScelto1, fileScelto2, fileScelto3;
     private static Model instance = new Model();
 
-    private Model() {
+    Model() {
 
     }
 
@@ -517,7 +517,7 @@ public class Model {
     }
 
     // se trovo l'email allora return TRUE se no FALSE
-    private boolean utenteEsiste(String email) throws IOException {
+    public boolean utenteEsiste(String email) throws IOException {
         try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/com/example/elaborato_ing/TXT/LoginFile.txt"))) {
             String line;
             while ((line = br.readLine()) != null && !line.isEmpty()) {
@@ -977,12 +977,75 @@ public class Model {
     }
 
 
-    public void generaPDF() throws FileNotFoundException, DocumentException {
-        var doc = new Document();
-        PdfWriter.getInstance(doc, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
-        doc.open();
+    public void generaPDF(AutoNuova auto, String colore) throws FileNotFoundException, DocumentException {
+        try {
+            // Crea il documento PDF
+            Document doc = new Document();
+            PdfWriter.getInstance(doc, new FileOutputStream("src/main/resources/com/example/elaborato_ing/Preventivo.pdf"));
+            doc.open();
+
+            // Aggiungi un titolo
+            Font titleFont = new Font(Font.FontFamily.HELVETICA, 18, Font.BOLD);
+            Paragraph title = new Paragraph("Riepilogo Auto Nuova", titleFont);
+            title.setAlignment(Element.ALIGN_CENTER);
+            doc.add(title);
+            doc.add(Chunk.NEWLINE);
+
+            // Crea una tabella per i dettagli dell'auto
+            PdfPTable table = new PdfPTable(2);
+            table.setWidthPercentage(100);
+            table.setWidths(new int[]{1, 3});
+
+            // Aggiungi le celle alla tabella
+            table.addCell(createCell("Marca:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(String.valueOf(auto.getMarca()), Element.ALIGN_LEFT));
+            table.addCell(createCell("Modello:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(auto.getModello(), Element.ALIGN_LEFT));
+            table.addCell(createCell("Altezza:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(auto.getAltezza() + " m", Element.ALIGN_LEFT));
+            table.addCell(createCell("Lunghezza:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(auto.getLunghezza() + " m", Element.ALIGN_LEFT));
+            table.addCell(createCell("Larghezza:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(auto.getLarghezza() + " m", Element.ALIGN_LEFT));
+            table.addCell(createCell("Peso:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(auto.getPeso() + " kg", Element.ALIGN_LEFT));
+            table.addCell(createCell("Volume Bagagliaio:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(auto.getVolumeBagagliaio() + " litri", Element.ALIGN_LEFT));
+            table.addCell(createCell("Motori disponibili:", Element.ALIGN_RIGHT));
+            PdfPCell motoriCell = new PdfPCell();
+            for (Motore motore : auto.getMotori()) {
+                motoriCell.addElement(new Paragraph(" - " + motore.toString()));
+            }
+            motoriCell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(motoriCell);
+            table.addCell(createCell("Prezzo:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(auto.getPrezzo() + " €", Element.ALIGN_LEFT));
+            table.addCell(createCell("Colori disponibili:", Element.ALIGN_RIGHT));
+            table.addCell(createCell(String.join(", ", colore), Element.ALIGN_LEFT));
+            table.addCell(createCell("Optional selezionati:", Element.ALIGN_RIGHT));
+            PdfPCell optionalCell = new PdfPCell();
+            for (Optionals optional : auto.getOptionalScelti()) {
+                optionalCell.addElement(new Paragraph(" - " + optional.getNome() + ": " + optional.getCosto() + " €"));
+            }
+            optionalCell.setBorder(Rectangle.NO_BORDER);
+            table.addCell(optionalCell);
+
+            // Aggiungi la tabella al documento
+            doc.add(table);
+
+            // Chiudi il documento
+            doc.close();
+        } catch (DocumentException | FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    private PdfPCell createCell(String content, int alignment) {
+        PdfPCell cell = new PdfPCell(new Phrase(content));
+        cell.setBorder(Rectangle.NO_BORDER);
+        cell.setHorizontalAlignment(alignment);
+        return cell;
+    }
 
     public void setImageViewPreventivi(String idPreventivo, ImageView img, int vista) {
         Auto auto = null;

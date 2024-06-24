@@ -12,6 +12,17 @@ public class Preventivo {
     private Stato stato;
     private final Sede sede;
 
+    public Preventivo(){
+        this.id = null;
+        this.creazione = null;
+        this.scadenza = null;
+        this.cliente = null;
+        this.dipendente = null;
+        this.auto = null;
+        this.stato = null;
+        this.sede = null;
+    }
+
     public Preventivo(String id, Date creazione, Date scadenza, Cliente cliente, Auto auto, Sede sede) {
         this.id = id;
         this.creazione = creazione;

@@ -44,6 +44,7 @@ public class ConfiguratoreController {
     private VBox vBox;
     private Model model = Model.getInstance();
     private int vista = 1;
+    private AutoNuova autoPDF = null;
 
 
     public void initialize() {
@@ -294,6 +295,7 @@ public class ConfiguratoreController {
                                     model.inoltraPreventivo(autoConfigurata, colori.getValue(), Integer.parseInt(prezzo.getText()), sede.getValue());
                                 }
                                 // Abilita il bottone PDF
+                                autoPDF = autoConfigurata;
                                 btnPDF.setVisible(true);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
@@ -321,7 +323,7 @@ public class ConfiguratoreController {
 
     @FXML
     public void generaPDF() throws DocumentException, FileNotFoundException {
-        model.generaPDF();
+        model.generaPDF(autoPDF, colori.getValue());
     }
 
     @FXML
