@@ -1,12 +1,9 @@
 dlosco03@gmail.com,Davide,Losco,ciao123
 roccocantaro@gmail.com,Rocco,Cantaro,ciao2003
 utente,utente,utente,utente
-cr7,cr7,cr7,cr7
 dip1,dip,dip,dip,12345
 dip2,dip,dip,dip,67890
 dip3,dip,dip,dip,23423
 dip4,dip,dip,dip,34244
 amm,amm,amm,amm
-dlosco,davide,losco,ciao
-kb,kilian,mbappè,tartaruga
-c,cr7,cr7,cr7
+

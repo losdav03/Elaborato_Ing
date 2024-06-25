@@ -1002,11 +1002,11 @@ public class Model {
             table.addCell(createCell("Modello:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getModello(), Element.ALIGN_LEFT));
             table.addCell(createCell("Altezza:", Element.ALIGN_LEFT));
-            table.addCell(createCell(auto.getAltezza() + " m", Element.ALIGN_LEFT));
+            table.addCell(createCell(auto.getAltezza() + " cm", Element.ALIGN_LEFT));
             table.addCell(createCell("Lunghezza:", Element.ALIGN_LEFT));
-            table.addCell(createCell(auto.getLunghezza() + " m", Element.ALIGN_LEFT));
+            table.addCell(createCell(auto.getLunghezza() + " cm", Element.ALIGN_LEFT));
             table.addCell(createCell("Larghezza:", Element.ALIGN_LEFT));
-            table.addCell(createCell(auto.getLarghezza() + " m", Element.ALIGN_LEFT));
+            table.addCell(createCell(auto.getLarghezza() + " cm", Element.ALIGN_LEFT));
             table.addCell(createCell("Peso:", Element.ALIGN_LEFT));
             table.addCell(createCell(auto.getPeso() + " kg", Element.ALIGN_LEFT));
             table.addCell(createCell("Volume Bagagliaio:", Element.ALIGN_LEFT));
