@@ -34,6 +34,7 @@ public class AggiungiAutoController {
     public void initialize() throws IOException {
         marca.getItems().setAll(Marca.values());
         alimentazione.getItems().setAll(Alimentazione.values());
+        model.checkModello(modello);
         model.isDouble(altezza);
         model.isDouble(lunghezza);
         model.isDouble(larghezza);

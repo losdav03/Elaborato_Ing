@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -603,6 +604,7 @@ public class Model {
     public void numeric(TextField txt) {
         txt.addEventFilter(KeyEvent.KEY_TYPED, event -> {
             String character = event.getCharacter();
+
             // Consenti solo numeri (0-9) e impedisci input di altri caratteri
             // Consenti il tasto backspace e delete
             if (character.equals("\b") || character.equals("\u007F")) {
@@ -613,14 +615,27 @@ public class Model {
             }
 
         });
+
+    }
+
+    public void checkModello(TextField modello) {
+        modello.addEventFilter(KeyEvent.ANY, event -> {
+            String character = event.getCharacter();
+            KeyCode keyCode = event.getCode();
+            // Consenti solo numeri (0-9) e impedisci input di altri caratteri
+            if (!character.matches("[a-zA-Z0-9]") && keyCode != KeyCode.BACK_SPACE) {
+                event.consume();
+            }
+        });
     }
 
     public void checkColore(TextField colore) {
         colore.addEventFilter(KeyEvent.ANY, event -> {
             String character = event.getCharacter();
+            KeyCode keyCode = event.getCode();
             // Consenti solo numeri (0-9) e impedisci input di altri caratteri
-            if (character.matches("\\d")) {
-                event.consume(); // Blocca l'evento se non è un numero
+            if (!character.matches("[a-zA-Z]") && keyCode != KeyCode.BACK_SPACE) {
+                event.consume();
             }
         });
     }

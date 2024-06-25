@@ -1,0 +1,1 @@
+142,utente,TESLA,dasd233<<,342.0,324.0,334.0,324.0,546.0,fdsf<<32;DIESEL;324;324;324.0,,NAPOLI,BIANCO,25/06/2024,ritiro auto da definire,da definire,DA_VALUTARE,0

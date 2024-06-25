@@ -30,6 +30,7 @@ public class UsatoController {
         marca.getItems().setAll(Marca.values());
         alimentazione.getItems().setAll(Alimentazione.values());
         sede.getItems().setAll(Sede.values());
+        model.checkModello(modello);
         model.isDouble(altezza);
         model.isDouble(lunghezza);
         model.isDouble(larghezza);
